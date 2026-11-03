@@ -1232,3 +1232,44 @@ Almost: you start the **acquisition command**, and it calls the application code
 ```
 
 The flow is: **your command → acquisition entry point → application coordinates → acquisition downloads and storage saves**. You don’t need to run the application file directly.
+
+## 2026-11-03
+
+### User
+
+```text
+Ok, if I want to run the worker starting from other part of the code, what can i do?
+```
+
+### Assistant — progress
+
+I’ll check how the existing command assembles and runs the IFIX job, including any safeguards you’d need when calling it from other code.
+
+### Assistant — final
+
+You can create an `IfixAcquisition` object in the other part of the code and call its `run()` method. Give it a B3 client to download the files and a storage object to save them:
+
+```python
+from pathlib import Path
+
+from backend.src.acquisition.ifix_source import B3IfixClient
+from backend.src.application.ifix_acquisition import IfixAcquisition
+from backend.src.storage.ifix import FileStore
+
+
+def download_ifix():
+    data_dir = Path(__file__).resolve().parents[3] / "data"  # Adjust for this file's location.
+    worker = IfixAcquisition(B3IfixClient(), FileStore(data_dir))
+    report = worker.run()
+
+    if report.complete:
+        print("IFIX download completed")
+    else:
+        print("IFIX download incomplete:", report.errors)
+
+    return report
+```
+
+Call `download_ifix()` when you want the work to start. Adjust `data_dir` to point to the project’s `data` folder: the example’s `parents[3]` depends on where you place this code.
+
+`run()` handles the storage lock and returns a report with `saved`, `updated`, `unchanged` and `errors`. It runs synchronously, so the caller waits while downloads finish. Keep the call behind an explicit action; importing a module or starting the application should not automatically contact B3.
