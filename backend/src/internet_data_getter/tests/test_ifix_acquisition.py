@@ -13,14 +13,9 @@ from unittest.mock import patch
 import urllib.error
 import hashlib
 
-from backend.src.acquisition.ifix import (
-    B3IfixClient,
-    DownloadError,
-    FileStore,
-    IfixAcquisition,
-    LockError,
-    available_years,
-)
+from backend.src.internet_data_getter.ifix.b3_source import B3IfixClient, DownloadError, available_years
+from backend.src.internet_data_getter.ifix.service import IfixAcquisition
+from backend.src.internet_data_getter.ifix.storage import FileStore, LockError
 
 
 def csv_bytes(year: int, marker: str = "TEST_FIXTURE_A") -> bytes:
@@ -184,7 +179,7 @@ class FileStoreTests(unittest.TestCase):
         new = csv_bytes(2011, "TEST_FIXTURE_NEW")
         self.store.save(2011, old, datetime(2026, 11, 3, tzinfo=timezone.utc))
         active = self.root / "data/ifix/source/IFIX_2011_Evolucao_Diaria.csv"
-        from backend.src.storage import ifix as storage_ifix
+        from backend.src.internet_data_getter.ifix import storage as storage_ifix
 
         atomic_write = storage_ifix._atomic_write
 
@@ -193,7 +188,7 @@ class FileStoreTests(unittest.TestCase):
                 raise OSError("replace failed")
             atomic_write(path, content)
 
-        with patch("backend.src.storage.ifix._atomic_write", side_effect=fail_active_write):
+        with patch("backend.src.internet_data_getter.ifix.storage._atomic_write", side_effect=fail_active_write):
             with self.assertRaisesRegex(OSError, "replace failed"):
                 self.store.save(2011, new, datetime(2026, 11, 4, tzinfo=timezone.utc))
         backups = list((self.root / "data/backups/ifix/2011").glob("*.csv"))
@@ -237,7 +232,7 @@ class FileStoreTests(unittest.TestCase):
         old = csv_bytes(2011, "TEST_FIXTURE_OLD")
         new = csv_bytes(2011, "TEST_FIXTURE_NEW")
         self.store.save(2011, old, datetime(2026, 11, 3, tzinfo=timezone.utc))
-        from backend.src.storage import ifix as storage_ifix
+        from backend.src.internet_data_getter.ifix import storage as storage_ifix
 
         atomic_write = storage_ifix._atomic_write
         active = self.root / "data/ifix/source/IFIX_2011_Evolucao_Diaria.csv"
@@ -247,7 +242,7 @@ class FileStoreTests(unittest.TestCase):
                 raise OSError("manifest replace failed")
             atomic_write(path, content)
 
-        with patch("backend.src.storage.ifix._atomic_write", side_effect=fail_after_active_replacement):
+        with patch("backend.src.internet_data_getter.ifix.storage._atomic_write", side_effect=fail_after_active_replacement):
             with self.assertRaisesRegex(OSError, "manifest replace failed"):
                 self.store.save(2011, new, datetime(2026, 11, 4, tzinfo=timezone.utc))
         result = self.store.save(2011, new, datetime(2026, 11, 5, tzinfo=timezone.utc))
@@ -293,10 +288,10 @@ class AcquisitionTests(unittest.TestCase):
         self.assertIn("discovery", result.errors)
 
     def test_cli_reports_destination_errors_without_a_traceback(self):
-        from backend.src.acquisition import ifix
+        from backend.src.internet_data_getter import __main__ as ifix
 
         output = io.StringIO()
-        with patch.object(ifix.IfixAcquisition, "run", side_effect=OSError("permission denied")):
+        with patch.object(ifix, "acquire", side_effect=OSError("permission denied")):
             with contextlib.redirect_stdout(output):
                 result = ifix.main(["--data-dir", tempfile.gettempdir()])
         self.assertEqual(result, 1)
@@ -305,7 +300,7 @@ class AcquisitionTests(unittest.TestCase):
 
     def test_cli_help_exits_without_making_a_network_request(self):
         completed = subprocess.run(
-            [sys.executable, "-m", "backend.src.acquisition.ifix", "--help"],
+            [sys.executable, "-m", "backend.src.internet_data_getter", "--help"],
             capture_output=True,
             text=True,
             check=False,
@@ -314,7 +309,7 @@ class AcquisitionTests(unittest.TestCase):
         self.assertIn("Download or restore B3 IFIX", completed.stdout)
 
     def test_offline_restore_command_is_available_without_downloading(self):
-        from backend.src.acquisition import ifix
+        from backend.src.internet_data_getter import __main__ as ifix
         with tempfile.TemporaryDirectory() as temp:
             data_root = Path(temp) / "data"
             store = FileStore(data_root)
@@ -326,7 +321,7 @@ class AcquisitionTests(unittest.TestCase):
             backup_ref = manifest["files"]["2011"]["previous_versions"][0]["path"]
             old_digest = hashlib.sha256(old).hexdigest()
 
-            with patch.object(ifix.B3IfixClient, "download_year", side_effect=AssertionError("network used")):
+            with patch.object(B3IfixClient, "download_year", side_effect=AssertionError("network used")):
                 exit_code = ifix.main(
                     ["--data-dir", str(data_root), "restore", "--year", "2011", "--backup", backup_ref]
                 )
@@ -343,7 +338,7 @@ class AcquisitionTests(unittest.TestCase):
             self.assertEqual(displaced.read_bytes(), new)
 
     def test_restore_cli_reports_invalid_year_as_a_command_error(self):
-        from backend.src.acquisition import ifix
+        from backend.src.internet_data_getter import __main__ as ifix
 
         with tempfile.TemporaryDirectory() as temp:
             output = io.StringIO()

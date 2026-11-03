@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import date, datetime, timezone
 
-from backend.src.acquisition.ifix_source import available_years
+from backend.src.internet_data_getter.ifix.b3_source import available_years
 
 
 @dataclass

@@ -14,7 +14,7 @@ import tempfile
 from typing import Iterator
 import uuid
 
-from backend.src.acquisition.ifix_source import PAGE_URL, SOURCE_FILENAME, validate_csv
+from backend.src.internet_data_getter.ifix.b3_source import PAGE_URL, SOURCE_FILENAME, validate_csv
 
 
 _DIGEST = re.compile(r"^[0-9a-f]{64}$")

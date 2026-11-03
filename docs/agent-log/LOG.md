@@ -1162,3 +1162,576 @@ Organized the IFIX acquisition on branch `codex/ifix-acquisition` in two commits
 I redacted a local Windows temp path from the committed test output. Both staged diffs passed `git diff --cached --check`; tests were not rerun.
 
 The task record still shows final human acceptance pending, including RF-005 disposition. The only remaining working-tree change is this required interaction-log entry.
+
+## 2026-11-03 02:34:06 America/Sao_Paulo (UTC-03:00)
+
+### User
+
+```text
+put on master branch and pull from origin
+```
+
+### Assistant — progress
+
+You’re already on `master`. There’s one untracked IFIX CSV in the working tree; I’ll leave it in place and pull `origin/master` with fast-forward-only behavior.
+
+The pull couldn’t write `.git/FETCH_HEAD` because this workspace’s sandbox grants read access to `.git`. I’m requesting the needed access to complete your requested pull.
+
+The local CSV is byte-for-byte identical to the copy in the fetched `origin/master` commit. Git still treats it as untracked and blocks the pull, so I’ll stage that identical file and retry the fast-forward.
+
+The fast-forward succeeded from `91e63ff` to `0d9142b`, and the branch is clean. I’m recording this interaction in the project log as required.
+
+### Assistant — final
+
+Already on `master`. Pulled `origin/master` successfully with a fast-forward from `91e63ff` to `0d9142b`. The local IFIX CSV was byte-identical to the fetched copy. `docs/agent-log/LOG.md` is the only remaining working-tree change.
+
+## 2026-11-03
+
+### User
+
+```text
+explain me what acquisition, application and storage do using ifix as exemple
+```
+
+### Assistant — progress
+
+I’ll trace how the project handles IFIX through those three areas, then explain the flow with a concrete example.
+
+### Assistant — final
+
+Think of the three parts as a team handling one job: **get IFIX data from B3 and keep it safely on your computer**.
+
+1. **Acquisition gets the data.** When you explicitly run the IFIX download command, it contacts B3, downloads an annual file, decodes it, and checks that it has the expected IFIX structure. For example, it can request the 2024 IFIX file. It keeps B3’s original CSV content rather than converting it into a new format. See [acquisition](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/acquisition/README.md).
+
+2. **Application coordinates the job.** It decides the sequence: go through the available years from 2011 to the current year, ask acquisition for each file, and ask storage to save it. It collects the results and reports whether the run was complete or had errors. If one year fails, it continues with the others. See [application](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/application/ifix_acquisition.py).
+
+3. **Storage keeps the data safe.** It saves the original file under `data/ifix/source/` and records details such as its source, retrieval time and a fingerprint in `data/ifix/manifest.json`. If a later download is identical, it leaves the file alone. If it has changed, storage preserves a verified backup before replacing the active file. See [storage](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/storage/README.md).
+
+For example, on a run that reaches **2024**, application asks acquisition for B3’s 2024 file → acquisition downloads and validates it → application passes it to storage → storage saves it or safely updates the existing copy → application includes the outcome in its report.
+
+Currently, this flow **collects source files**; it does not yet calculate IFIX returns or run a portfolio backtest. Downloads happen only when the command is explicitly invoked, not when the application starts.
+
+## 2026-11-03
+
+### User
+
+```text
+so to start the script, i use application right?
+```
+
+### Assistant — progress
+
+I’ll check the command’s entry point so I can show you exactly how to start it.
+
+### Assistant — final
+
+Almost: you start the **acquisition command**, and it calls the application code for you. From the project’s root folder in PowerShell, run:
+
+```powershell
+.venv\Scripts\python -m backend.src.acquisition.ifix
+```
+
+The flow is: **your command → acquisition entry point → application coordinates → acquisition downloads and storage saves**. You don’t need to run the application file directly.
+
+## 2026-11-03
+
+### User
+
+```text
+Ok, if I want to run the worker starting from other part of the code, what can i do?
+```
+
+### Assistant — progress
+
+I’ll check how the existing command assembles and runs the IFIX job, including any safeguards you’d need when calling it from other code.
+
+### Assistant — final
+
+You can create an `IfixAcquisition` object in the other part of the code and call its `run()` method. Give it a B3 client to download the files and a storage object to save them:
+
+```python
+from pathlib import Path
+
+from backend.src.acquisition.ifix_source import B3IfixClient
+from backend.src.application.ifix_acquisition import IfixAcquisition
+from backend.src.storage.ifix import FileStore
+
+
+def download_ifix():
+    data_dir = Path(__file__).resolve().parents[3] / "data"  # Adjust for this file's location.
+    worker = IfixAcquisition(B3IfixClient(), FileStore(data_dir))
+    report = worker.run()
+
+    if report.complete:
+        print("IFIX download completed")
+    else:
+        print("IFIX download incomplete:", report.errors)
+
+    return report
+```
+
+Call `download_ifix()` when you want the work to start. Adjust `data_dir` to point to the project’s `data` folder: the example’s `parents[3]` depends on where you place this code.
+
+`run()` handles the storage lock and returns a report with `saved`, `updated`, `unchanged` and `errors`. It runs synchronously, so the caller waits while downloads finish. Keep the call behind an explicit action; importing a module or starting the application should not automatically contact B3.
+
+## 2026-11-03
+
+### User
+
+```text
+help me reply this email:
+
+Thank you! Please do. That way, I’ll know for sure that you’ve completed it in case we experience any additional glitches.
+
+I thought something like:
+
+Deal, 
+
+I'm still working on it. I let you know when I finish
+```
+
+### Assistant — progress
+
+I’ll polish your reply and record it in the project’s interaction log.
+
+### Assistant — final
+
+:::writing{variant="email" id="59371" subject="Re: Update"}
+Deal! I’m still working on it, and I’ll let you know when I’m finished.
+:::
+
+What email address should I add as the recipient?
+
+
+## 2026-11-03
+
+### Interaction — 12:45:10 America/Sao_Paulo
+
+### User
+
+```text
+Delete the last commit
+```
+
+### Assistant — progress
+
+I’ll inspect the latest commit and working tree, then remove that commit while preserving its changes.
+
+The working tree is clean, and the latest commit is a single-parent commit. I’m checking its file changes and the interaction log before undoing it.
+
+Git’s reset was blocked because the workspace marks `.git` as read-only. I’m requesting the required repository metadata write to remove the commit and keep its changes in the working tree.
+
+### Assistant — final
+
+Removed the latest commit (`0723f7c`) from the local branch. Its changes are preserved as unstaged edits in [docs/agent-log/LOG.md](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/docs/agent-log/LOG.md). HEAD is now `3c3fb6b`.
+
+## 2026-11-03
+
+### Interaction — 12:57 America/Sao_Paulo
+
+### User
+
+Explain me how the script to get ifix info works.
+
+Start from here:
+
+"The backend provides an explicit IFIX daily-evolution downloader. Set up the project virtual environment as described in the [download and recovery instructions](https://github.com/brunokrauthamer/investment-portfolio-backtest/blob/master/backend/src/acquisition/README.md), then run `.venv\Scripts\python -m backend.src.acquisition.ifix` from the repository root on Windows; it preserves B3's annual source files for 2011 through the current year under `data/ifix/source/`. No application startup or module import initiates a network request. Other data sources and financial conventions remain to be agreed before implementation. No synthetic market data is included.  "
+
+And show me how the code is organized, why you choose this organization and also show me parts of the code that helps me understand, like how functions communicate themselves, how the arguments are passed from one another
+
+### Assistant — progress
+
+I’ll trace the IFIX downloader from the command you quoted through its functions and files, then explain the flow with excerpts from the code.
+
+### Assistant — final
+
+The command in your quote is the entry point to a small pipeline: it asks B3 for one file per year, checks each response, saves the original CSV bytes, and prints a report. It does not yet turn the files into a daily time series or calculate investment returns.
+
+```powershell
+.venv\Scripts\python -m backend.src.acquisition.ifix
+```
+
+Here, `.venv\Scripts\python` selects the project’s Python environment; `-m` tells Python to run `backend.src.acquisition.ifix` as a module. Running it from the repository root makes the `backend` package available. The setup and recovery commands are in the [acquisition README](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/acquisition/README.md).
+
+The code is divided by responsibility:
+
+- [ifix.py](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/acquisition/ifix.py) handles the command, arguments and printed report.
+- [ifix_acquisition.py](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/application/ifix_acquisition.py) coordinates the complete run, year by year.
+- [ifix_source.py](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/acquisition/ifix_source.py) knows how to request and validate B3’s format.
+- [ifix.py in storage](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/storage/ifix.py) manages local files, the manifest, backups and recovery.
+
+This separation keeps B3’s request format, the flow of a download, and filesystem safety in focused places. It also lets the coordinator receive a different client or store, which helps test the flow without relying on a live B3 request. It’s a design rationale for the current organization, rather than a claim about the author’s private intent.
+
+### 1. The command creates the pieces
+
+Near the end of the command module:
+
+```python
+if __name__ == "__main__":
+    raise SystemExit(main())
+```
+
+This calls `main()` when the module is run as a command. Importing the module does not call `main()`, so importing alone does not start downloads. Inside `main`, after reading optional arguments, the normal download path creates and connects the objects:
+
+```python
+store = FileStore(args.data_dir)
+# ... restore branch omitted ...
+report = IfixAcquisition(B3IfixClient(), store).run()
+_print_report(report)
+return 0 if report.complete else 1
+```
+
+`args.data_dir` comes from `--data-dir`, or defaults to the repository’s `data` folder. `B3IfixClient()` creates the B3 client; `store` is the local storage object. Both are passed to `IfixAcquisition`, whose constructor saves them as `self.client` and `self.store`. Calling `.run()` returns a report, which is passed to `_print_report`. Exit code `0` means complete; `1` means incomplete.
+
+### 2. The coordinator passes each year through the pipeline
+
+The central loop in `IfixAcquisition.run()` is:
+
+```python
+years = available_years(self.current_year)
+with self.store.lock():
+    for year in years:
+        try:
+            content = self.client.download_year(year)
+            result = self.store.save(year, content, timestamp)
+            getattr(report, result.status).append(year)
+        except Exception as exc:
+            report.errors[year] = str(exc)
+```
+
+For example, for 2011, `year` is passed to `download_year(2011)`. The returned `content` is a `bytes` object containing the CSV. The coordinator then passes the same year, those bytes, and the run’s UTC timestamp to `store.save(...)`. That returns a `SaveResult` whose `status` is `saved`, `updated` or `unchanged`. `getattr` selects the corresponding list on the report and adds the year. If a year fails, the error is recorded and the loop continues with the next year. The lock covers the run to prevent concurrent acquisition or restore operations.
+
+By default, `current_year` comes from `date.today().year`; `available_years` creates a list from 2011 through that year, inclusive. The constructor also accepts an explicit year, useful for controlled tests. The current year’s data may be incomplete.
+
+### 3. The client gets and checks B3’s data
+
+The request URL is built from the year:
+
+```python
+payload = json.dumps(
+    {"index": "IFIX", "language": "pt-br", "year": str(year)},
+    separators=(",", ":"),
+).encode("utf-8")
+return DOWNLOAD_ENDPOINT + base64.b64encode(payload).decode("ascii")
+```
+
+So `year` becomes text inside a JSON request description, which is encoded as Base64 and appended to B3’s download endpoint. In `download_year`, the client waits briefly, opens that URL with a timeout, reads the response, and decodes the response’s Base64 into CSV bytes. It then calls `validate_csv(content, year)` before returning those bytes. This use of Base64 is encoding, not encryption.
+
+Validation temporarily reads the bytes as Windows-1252 text and checks the expected year, month headings, 31 day rows, summary rows and at least one observation. Future months can be blank. The original bytes are returned and saved; validation does not rewrite or normalize them. The client’s `opener` and `sleeper` are also constructor arguments with defaults, so tests can substitute them.
+
+### 4. Storage preserves the source and its history
+
+`FileStore.save(year, content, now)` checks the CSV again, computes a SHA-256 fingerprint and compares it with the existing file for that year:
+
+- No existing file: save it and report `saved`.
+- Same bytes: leave the active file in place and report `unchanged`; the manifest is still updated.
+- Different bytes: back up the previous file, install the new one and report `updated`.
+
+Active files go under `data/ifix/source/`, and `data/ifix/manifest.json` records information including the source, retrieval time, fingerprint and previous versions. A fingerprint helps detect whether bytes match; it does not independently establish that the source data is financially correct. Storage uses atomic replacement and a pending-update record to help recover an interrupted update. The README describes the separate `restore` command, which uses a verified backup without contacting B3.
+
+In short, the arguments flow as **command → client and store → coordinator → year and CSV bytes → storage → result → printed report**. The command only contacts B3 when explicitly run; nothing in this flow starts a request merely because the application starts or a module is imported.
+
+## 2026-11-03
+
+### User
+
+About the task 002-ifix-daily-evolution-acquisition
+
+I saw how you implemented it. Although it is working, I want some architectural changes.
+
+First, the acquisition of data from internet should be one module.
+
+Imagine that all the code used to access the internet, downlaod the file, save the file is part of the same module. All of these is one service responsible for getting ifix data. So in the root of backend should be this module, and all the logic to get it inside of the module (instead of having diferent directories such as application, acquisition, storage) all in the root of backend.
+
+Just to make everything clear, api directory in the root of backend makes sense (i know its still empty) because api will be another module in this backend monolith. What I mean is that in future they could be separate microsservices (api, internet_data_getter)
+
+How do you think would be good way to organize those files based in what I said? Do not change anything yet, lets discuss ideas before doing it.
+
+### Assistant progress
+
+I’ll review the current IFIX acquisition structure and project decisions, then suggest a module boundary for us to discuss. I won’t change the implementation.
+
+### Assistant
+
+I agree with organizing the backend by responsibility at the top level. Today, one IFIX acquisition operation is spread across `acquisition`, `application`, and `storage`. Those are useful distinctions inside the operation, but they do not need to be separate top-level backend modules.
+
+I would keep the existing `backend/src` source root and organize it like this:
+
+```text
+backend/
+  src/
+    api/                      # Future HTTP interface
+    internet_data_getter/     # Owns acquiring and preserving source data
+      __init__.py
+      __main__.py             # Explicit download and restore commands
+      service.py              # Coordinates an acquisition run and its report
+      ifix_source.py          # B3 requests and IFIX CSV validation
+      storage.py              # Safe file writes, backups, manifest and restore
+      README.md
+  tests/
+    test_ifix_acquisition.py
+```
+
+The important boundary is `internet_data_getter`: it owns the complete process from contacting B3 through safely saving the original files. The files inside it simply keep the individual jobs readable; they are not separate backend services. `api` remains a sibling module. For now, the acquisition module could expose a small Python entry point for other modules to call, while retaining the explicit command. Importing it or starting the API would still never download data automatically.
+
+I would preserve the existing data locations, backup and recovery behavior, validation, and tests during a move. The command and imports would need updating, as would the documentation; we could decide whether to keep the old command as a compatibility alias. A separate deployment later would require an explicit communication and data-access contract, but there is no need to build that infrastructure now.
+
+One naming question: do you expect this module eventually to acquire other assets as well? If so, `internet_data_getter` is a reasonable broad name, and IFIX-specific files can be grouped inside it when a second source arrives. If its responsibility is intended to remain IFIX only, `ifix_data_getter` would make the boundary clearer. Which name fits your intention?
+
+## 2026-11-03
+
+### User
+
+For now, the acquisition module could expose a small Python entry point for other modules to call, while retaining the explicit command. Importing it or starting the API would still never download data automatically.
+
+I agree with that, we should do it.
+
+
+Which name fits your intention? `internet_data_getter` &#x20;
+
+Because we are going to get data from other indexes and etfs. So, how would you organize the files inside this new directory?
+
+### Assistant progress
+
+I’ll outline how the IFIX files could fit inside `internet_data_getter`, with room for other sources as we add them.
+
+### Assistant
+
+Since the module will eventually acquire several assets, I’d group the current implementation under an `ifix` directory, with a small public entry point at the module boundary:
+
+```text
+backend/src/
+  api/
+  internet_data_getter/
+    __init__.py          # Public Python entry point
+    __main__.py          # Explicit command-line entry point
+    ifix/
+      __init__.py
+      service.py         # Coordinates downloads, saving and the run report
+      b3_source.py       # Requests and validates B3's IFIX CSV files
+      storage.py         # Saves files, manages backups, recovery and restore
+    README.md
+```
+
+A call such as `acquire_ifix()` would be available from `internet_data_getter`. It would assemble the IFIX source and storage components and run the acquisition only when explicitly called. The command would use the same entry point; the offline restore command would remain available. Importing the module or starting the API would not trigger a download.
+
+When we add another asset, we can give it its own directory or group it with a related source, depending on how its acquisition actually works. We can move code into a shared file once there is a real common need—for example, if another asset uses the same safe storage process. Until then, IFIX-specific validation and storage stay together rather than assuming every provider has the same format or rules.
+
+I’d keep the existing `data/ifix` layout and its safety behavior. This is a proposed organization for discussion; I haven’t changed the implementation. Does this structure match what you have in mind?
+
+## 2026-11-03
+
+### User
+
+I agree, so later we could have dir ibovespa at the same level as ifix, right?
+
+### Assistant
+
+Yes. When we add Ibovespa acquisition, it could sit alongside IFIX:
+
+```text
+internet_data_getter/
+  ifix/
+  ibovespa/
+```
+
+Each directory could contain the source, coordination and storage logic it needs. If both use the same B3 download format or storage mechanisms, we can share the parts that are actually common. The module could then expose an explicit entry point for each, such as `acquire_ifix()` and `acquire_ibovespa()`.
+
+## 2026-11-03
+
+### User
+
+Ok, so just before organizing the module like we discussed now, its important to write instructions this for future agents know how is this architecture works, so it could be implemented as we expect since the first try. I thought inn some AGENTS.md inside backend just to inform that data getter happens inside `internet_data_getter`  and another AGENTS.md inside `internet_data_getter`  explaining how files and folders should be organized inside the module.
+
+What do you think? If you have other ideas you think are better, let me know
+
+### Assistant progress
+
+I’ll check the existing backend guidance so the proposed instructions fit the current project conventions.
+
+### Assistant
+
+I think two scoped `AGENTS.md` files are a good fit. They would give future agents the relevant instructions where they work:
+
+- `backend/AGENTS.md`: describe the backend’s top-level module boundaries. Data acquisition, including downloading and preserving source files, belongs in `backend/src/internet_data_getter/`; the API is a separate sibling module.
+- `backend/src/internet_data_getter/AGENTS.md`: describe the module’s internal organization. Keep each asset’s acquisition logic together, expose explicit entry points for other modules and commands, and share code when there is a demonstrated common need. Imports and API startup must not trigger downloads.
+
+I’d keep those instructions focused on durable boundaries, rather than requiring every future asset to have exactly the same files as IFIX. Providers may need different validation or storage logic. The existing data safety and provenance requirements should continue to apply.
+
+I’d also update `docs/project-context.md` to reflect the agreed architecture, because it currently describes the backend in terms of application services and storage adapters. That keeps the project’s architecture description consistent with the agent instructions. We can write the guidance before moving the implementation, and make it clear that `internet_data_getter` is the intended destination during the transition.
+
+I haven’t changed the architecture or guidance yet.
+
+## 2026-11-03
+
+### User
+
+So make all those changes we just agreed
+
+### Assistant progress
+
+I’ll add the agreed architecture guidance and reorganize the IFIX acquisition code, preserving its current data and recovery behavior. I’ll use the project’s feature workflow to verify the change.
+
+The agreed boundary fits the existing backend: the IFIX coordinator, B3 client, and safe storage can move together. I’m applying the maintain-agent-guidance skill to document that boundary before the move.
+
+The project’s virtual environment is present but its Python executable is missing. I’m repairing the environment first so the verification uses the project’s required Python setup.
+
+The files and guidance are in their new locations. The first test run caught a Python 3.9 compatibility issue in the new entry point, which I’m correcting before checking the full acquisition suite.
+
+### Assistant
+
+The backend now has an `internet_data_getter` module with the IFIX acquisition code grouped under `ifix/`. It exposes `acquire_ifix()` for explicit Python calls, and the command-line download and offline restore use the new module path. Imports and API startup do not initiate downloads.
+
+I added the agreed backend and module-level agent guidance, updated the project architecture and usage documentation, and retained the existing source-data locations, backup, manifest and recovery logic. The new command is:
+
+```powershell
+.venv\Scripts\python -m backend.src.internet_data_getter
+```
+
+The previous command path has been replaced; restore instructions are in the acquisition guide. All 24 backend tests pass, including the public entry point, safe storage and offline restore tests. No live download was run.
+
+## 2026-11-03
+
+### User
+
+I noticed **init**.py and **main**.py still referes directly about IFIX. They should be an entrypoint to get data from all the data_getters, including future ones.
+So another modules could call for getting all the data if they wanted (or only the data from an specific data_getter must also be a possibiity)
+
+Make this information clear through the AGENTS.md so future implementations will respect that
+
+### Assistant progress
+
+I’ll make the shared entry points support both all getters and a selected getter, then document that contract in the module’s agent guidance. I’ll keep IFIX restore available and verify the current behavior.
+
+The guidance now states that shared entry points must run every registered getter or a selected one. I’m moving IFIX-specific command behavior into its own package so the shared command can coordinate getters without owning IFIX’s restore logic.
+
+### Assistant
+
+The shared entry points now support both choices:
+
+- Python: `acquire_all()` runs all registered getters and returns their reports by name; `acquire("ifix")` runs just IFIX. Both accept an optional data directory.
+- Command line: `python -m backend.src.internet_data_getter` runs all registered getters; add `--getter ifix` to select IFIX.
+
+IFIX-specific reporting and restore handling now live inside the IFIX package. The shared registry connects each getter to both entry points, and the module’s `AGENTS.md` instructs future agents to register new getters there. Imports still do not start downloads. The existing `acquire_ifix()` call and offline restore command remain available.
+
+All 28 backend tests pass, including checks for selecting one getter, running multiple getters and continuing the command-line run after a getter fails. The Python `acquire_all()` call propagates an exception and stops if a getter raises one; incomplete reports are returned normally. No live download was run.
+
+## 2026-11-03
+
+### User
+
+I noticed the tests of this module are outside the module. put them together and 
+
+Make this information clear through the AGENTS.md so future implementations will respect that
+
+### Assistant progress
+
+I’ll move the data getter’s tests into the module, update the test instructions and agent guidance, and run them from their new location.
+
+I’ll use the maintain-agent-guidance skill to record the test location as a lasting module rule. Both the shared entry-point tests and IFIX tests can live together under `internet_data_getter/tests/`.
+
+### Assistant
+
+Moved the data getter tests into `backend/src/internet_data_getter/tests/` and updated the module’s `AGENTS.md` to require future getter tests there. The module README now includes the command for running them.
+
+All 28 tests pass from the new location. No live download was run.
+
+## 2026-11-03
+
+### User
+
+explain me how do I run ifix getter and where i should see the downloaded files?
+
+### Assistant progress
+
+I’ll check the current command and output paths so the instructions match the implementation.
+
+### Assistant
+
+Open PowerShell and run these commands from the project folder:
+
+```powershell
+cd "C:\Users\bruno\Documents\ChatGPT\investment_portfolio_backtest"
+.\.venv\Scripts\python.exe -m backend.src.internet_data_getter --getter ifix
+```
+
+The getter downloads one original B3 CSV per year, from 2011 through the current year. You’ll find them in:
+
+```text
+C:\Users\bruno\Documents\ChatGPT\investment_portfolio_backtest\data\ifix\source\
+```
+
+For example, the 2025 file is named `IFIX_2025_Evolucao_Diaria.csv`. The current year’s file may be incomplete because the year is still in progress.
+
+The command prints which years were saved, updated or unchanged, plus any errors. It also keeps a `data/ifix/manifest.json` file with source and retrieval details. If a previously downloaded file changes, its earlier version is backed up under `data/backups/ifix/<year>/`.
+
+You can safely run the command again to check for updates; unchanged files are left in place. The files retain B3’s original format rather than being converted into a daily series.
+
+## 2026-11-03 16:18:33 America/Sao_Paulo
+
+### User
+
+```text
+[$organize-git-commits]([redacted])
+```
+
+### User
+
+```text
+<skill>
+<name>organize-git-commits</name>
+<path>[redacted]</path>
+---
+name: organize-git-commits
+description: Organize existing Git changes into a suitable branch and focused local commits when asked to commit or organize the work.
+---
+
+# Organize Git commits
+
+Follow repository instructions and conventions. Invocation to organize and commit authorizes creating local branches and commits. Do not push, create a pull request, amend commits, rewrite history, discard changes, or modify remote state without separate authorization.
+
+1. Before changing Git state, inspect the current branch and HEAD, staged and unstaged diffs, renames and deletions, and untracked files. Read relevant changes and surrounding context to understand their purpose and scope. Check for an ongoing merge, rebase, cherry-pick, or unresolved conflicts; stop before changing Git state if they prevent safe organization.
+2. On `master`, create a descriptive branch at the current HEAD while preserving local changes. Follow the repository's branch naming convention, or choose a concise name reflecting the work; resolve name collisions with a different name, never by overwriting a branch. On any other branch, continue there.
+3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
+4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
+5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
+6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+</skill>
+```
+
+### Assistant progress
+
+```text
+I’m applying the `organize-git-commits` workflow: I’ll inspect the repository state and change boundaries first, then organize only the existing work into focused local commits.
+```
+
+```text
+The repository is cleanly on `master` with no staged selections or active merge/rebase/cherry-pick. The pending changes look like one coordinated backend package move: the IFIX getter is being moved under `internet_data_getter`, with its tests, guidance, docs, and manifest updated together. I’m checking the new package and log boundaries now before choosing commit contents.
+```
+
+```text
+The initial branch and staging commands were blocked because `.git` is mounted read-only in the default sandbox; no Git state changed. The organize workflow you invoked explicitly authorizes local branches and commits, so I’m requesting the required sandbox elevation for those local Git operations only.
+```
+
+```text
+The staged diff groups the implementation move, shared all-or-selected getter entry points, tests relocated inside the module, and matching architecture/usage guidance. I’m leaving the manifest’s retrieval-time refresh separate because its content hashes are unchanged and it records an acquisition event, not the code refactor.
+```
+
+```text
+`git diff --check` found trailing whitespace in a verbatim user message already recorded in the interaction log. I’ll preserve that exact wording and commit the reviewed staged diff without normalizing the log entry.
+```
+
+```text
+The code and documentation refactor is committed as `460d266`. The only remaining pre-existing change is the manifest’s refresh time for all years; its hashes are stable, so I’m recording that provenance update in a separate data commit.
+```
+
+### Assistant
+
+```text
+Created branch `codex/internet-data-getter-registry` and organized the work into two local commits:
+
+- `460d266` — `feat: generalize internet data getter entry points`
+- `eacd00c` — `data: refresh IFIX retrieval timestamps`
+
+The only remaining worktree change is the required new entry in `docs/agent-log/LOG.md`; it records your request and this reply, with the local skill path redacted. I left this final log tail unstaged so the reply can be recorded verbatim. No tests were run.
+```
