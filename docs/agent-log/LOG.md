@@ -622,3 +622,52 @@ Before implementing the backtest, please help settle these decisions. My propose
 6. **Illustrative data:** May I include a small, clearly labeled synthetic dataset so the application can run without credentials, while real data acquisition remains unimplemented? Its results would be explicitly illustrative, not market history.
 
 No application files or source data have been changed yet. Inspection and the required interaction log are the only work completed so far; implementation and runnable-command checks follow your answers.
+
+## 2026-11-03 America/Sao_Paulo — Project context
+
+### User
+
+**MVP and audience:** Who is the initial user, and should the first runnable version calculate a portfolio backtest or provide a clearly incomplete application shell? If calculating, I propose one portfolio, a user-selected date range, a value-over-time chart, total return, and maximum drawdown. &#x20;
+
+The initial user is someone that wants to understand how different portfloios would have performed in past. the version  calculates a portfolio backtest. this is ok: user-selected date range, a value-over-time chart, total return, and maximum drawdown.  But we are going to implement together each part. For now, the idea is giving context to agents how to work.
+
+
+**Assets and data:** Which markets, asset classes, and specific indices or ETFs should be included initially, and what currency and date range matter? Do you have a preferred free source or existing CSVs? I propose daily data in one base currency, with manually supplied CSVs initially and no automatic download until a source and its usage terms are chosen.&#x20;
+
+&#x20;we are going to implement together each part. For now, the idea is giving context to agents how to work.
+
+
+**Portfolio rules:** Should users allocate directly to assets or choose asset-class percentages and have the app select assets within each class? May weights include cash, and must they total exactly 100%? I propose explicit asset weights totaling 100%, fractional holdings, and no separate cash allocation for the first version. &#x20;
+
+
+The “assets” used as the basis for the data will be indices or ETFs, such as Ibovespa, IFIX, IVVB11, etc. I will decide which assets will be available at a later date. There is no cash allocation option, but Selic will be available—which is effectively the same thing, though that distinction isn’t particularly important for your purposes. The user will choose the assets, and Selic will be an asset like any other.
+
+And yes, the weights of all assets must add up to exactly 100%.
+
+
+**Calculation and rebalancing:** Which rules should be available initially—buy-and-hold, periodic rebalancing, or both? For a proposed simple baseline: initial investment at the first available close, optional monthly rebalancing at the last available close of each month, fractional holdings, and no transaction costs, taxes, inflation adjustment, or currency conversion. Should dividends be represented through a trusted total-return/adjusted series, or handled separately? &#x20;
+
+We will discus later. For now the idea is giving context to agents how to work.
+
+
+**Data gaps and alignment:** When an asset lacks a price on a requested date or trading day, should the backtest reject the request or use a previous observation? I propose requiring a common set of dates and rejecting missing observations rather than silently filling them; the exact calendar and acceptable gaps need agreement. &#x20;
+
+Let’s align the datasets for all assets so that every date accepted by the system has data for all of them.
+
+**Illustrative data:** May I include a small, clearly labeled synthetic dataset so the application can run without credentials, while real data acquisition remains unimplemented? Its results would be explicitly illustrative, not market history. &#x20;
+
+No, we’ll work on obtaining the data first and then on the frontend, so that won’t be necessary.
+
+### Assistant — progress
+
+I’ll record the decisions you’ve confirmed and keep the financial and data details you want to decide later explicitly open. I’ll focus this step on guidance and project context, with no sample data or backtest implementation.
+
+I’m using the maintain-agent-guidance skill to keep the root instructions concise and put the fuller product and architecture context in project documentation.
+
+### Assistant — final
+
+I’ve recorded the project context for future work. [AGENTS.md](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/AGENTS.md) now points agents to [project-context.md](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/docs/project-context.md), which captures the agreed architecture, MVP goals, asset selection and 100% weight rule, aligned-date requirement, and data safety expectations.
+
+The documentation marks the asset universe, sources, alignment method, financial calculations and rebalancing rules as open decisions. It also records that we’ll obtain real data first, work through each part together, and not use synthetic sample data. No application code or data was created.
+
+I checked the changes for whitespace errors. There are no runnable application checks yet.
