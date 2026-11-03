@@ -924,3 +924,49 @@ Before drafting the specification, I need your decisions on four points:
 4. Do you have permission or a license for the intended automated access and use, or should the plan include confirming the applicable terms before live acquisition? B3’s [general terms](https://www.b3.com.br/main.jsp?doui_processActionId=setLocaleProcessAction&locale=pt_BR&lumA=1&lumII=8AE690F77A1A49BA017A5CE182412193&lumPageId=8AE690F77A1A49BA017A5CDEBBCF67BD) contain index-data restrictions; whether other B3 pages’ automation restrictions apply to this page remains unverified.
 
 The [feature-workflow skill](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md) requires the lead to ask questions where missing answers affect behavior or design. Once you answer, the lead can prepare the specification and plan for your approval.
+
+## 2026-11-03 (America/Sao_Paulo)
+
+### User
+
+```text
+Should the service save B3’s files as downloaded, or also convert and merge them into one daily CSV? I recommend saving the original files first.
+
+Save original first
+
+
+Should it run when you invoke a command, or automatically on a schedule? I recommend a command for the first increment.
+
+on a command
+
+If B3 updates a file already downloaded, should the service replace it after making a recoverable backup? I recommend yes, leaving unchanged files alone.
+
+yes
+
+
+Do you have permission or a license for the intended automated access and use, or should the plan include confirming the applicable terms before live acquisition? B3’s [general terms](https://www.b3.com.br/main.jsp?doui_processActionId=setLocaleProcessAction\&locale=pt_BR\&lumA=1\&lumII=8AE690F77A1A49BA017A5CE182412193\&lumPageId=8AE690F77A1A49BA017A5CDEBBCF67BD) contain index-data restrictions; whether other B3 pages’ automation restrictions apply to this page remains unverified. &#x20;
+
+just download the files, it is for personal use only
+```
+
+### Assistant — progress
+
+I’ll pass these decisions to the feature lead and continue investigating how B3 exposes the files. The specification will cover a manually run download that preserves the originals and backs up changed files.
+
+Your choices are recorded. The first attempt to inspect the page through the browser was blocked by a tool issue, so I’m checking other available ways to verify the download mechanism before presenting the plan.
+
+B3’s pages for other indices show year and semester selectors, but the IFIX download format and available periods are still unverified. The proposed plan will make that source check explicit and require the service to report any periods it cannot retrieve.
+
+### Assistant — final
+
+The proposed [specification s001](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/docs/tasks/002-ifix-daily-evolution-acquisition/spec.md) and [plan p001](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/docs/tasks/002-ifix-daily-evolution-acquisition/plan.md) are ready for your review.
+
+The service would run on an explicit command and discover all IFIX periods B3 offers from 2011 through the latest available period. It would save the original files under `data/ifix/source/`, with a manifest recording their origin and retrieval details. It would not convert or merge the files, generate market data, or run on a schedule.
+
+On later runs, unchanged files would be left untouched. Before replacing a changed file, the service would create and verify a recoverable backup. It would report missing or failed periods and return an error for an incomplete run, while retaining files already downloaded successfully.
+
+The plan calls for inspecting B3’s actual IFIX download flow and applicable access conditions first, then implementing the command with tests, documentation, independent review and QA. The page’s exact file format, available periods and download mechanism remain unverified because the available browser and network access could not inspect them. A live-source check will remain blocked if access cannot be established; it will not be reported as passed.
+
+Do you approve **specification s001 and plan p001** for implementation?
+
+The [feature-workflow skill](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md) explicitly requires us to “wait for explicit human approval of both revisions before implementation.”
