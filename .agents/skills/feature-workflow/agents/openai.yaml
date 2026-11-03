@@ -1,0 +1,7 @@
+interface:
+  display_name: "Feature Workflow"
+  short_description: "Develop features with approved plans and independent checks"
+  default_prompt: "Use $feature-workflow for the current project task."
+
+policy:
+  allow_implicit_invocation: false
