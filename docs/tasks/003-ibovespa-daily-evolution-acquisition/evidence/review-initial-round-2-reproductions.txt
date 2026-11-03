@@ -1,0 +1,11 @@
+ibovespa update before pending replace: active intact, retry consistent, 1 registered backups
+ibovespa update after pending replace: active intact, retry consistent, 2 registered backups
+ibovespa restore before pending replace: active intact, retry consistent, 2 registered backups
+ibovespa restore after pending replace: active intact, retry consistent, 3 registered backups
+ifix update before pending replace: active intact, retry consistent, 1 registered backups
+ifix update after pending replace: active intact, retry consistent, 2 registered backups
+ifix restore before pending replace: active intact, retry consistent, 2 registered backups
+ifix restore after pending replace: active intact, retry consistent, 3 registered backups
+blank label: rejected (year 2011: response has an incomplete summary section)
+unterminated field: rejected (year 2011: response is not a readable B3 CSV)
+duplicate nonblank label: accepted
