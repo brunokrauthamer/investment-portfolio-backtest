@@ -360,3 +360,40 @@ I want to use the feature workflow only when I invokes that
 Done. [The feature-workflow setting]([redacted]) now has `allow_implicit_invocation: false`, so it will activate only when you explicitly invoke `$feature-workflow`. The supporting skills are unchanged.
 
 I updated the task records to preserve your decision. No tests were run for this metadata change. [OpenAI’s skill documentation](https://learn.chatgpt.com/docs/build-skills) confirms that disabled implicit invocation still permits explicit use.
+
+## 2026-11-02 — Organize Git changes (America/Sao_Paulo)
+
+**User message (personal path redacted):**
+
+```text
+[$organize-git-commits]([redacted])&#x20;
+Do it
+```
+
+**Assistant — progress:**
+
+```text
+I’m applying the organize-git-commits workflow and checking the repository instructions and full Git state before making any commits.
+```
+
+```text
+The worktree is on `master` with no staged or tracked edits; the pending work is a new feature workflow skill set, agent profiles, and its task records. I’m checking whether those files form one coherent change and whether the proposed branch name is free.
+```
+
+```text
+The pending files make one cohesive project workflow setup, and the credential scan found no credential-like values. I’ll put that setup on a new `codex/` branch in one commit, then record this interaction in the repo’s established log format.
+```
+
+```text
+The repository metadata blocked branch creation with current write access. The invoked skill authorizes a local branch and commits, so I’m requesting the required access to Git metadata and will continue without disturbing the files.
+```
+
+```text
+The workflow setup is committed on the new branch. I’m recording the required interaction-log entry now, then I’ll verify the final commit list and worktree status.
+```
+
+**Assistant — final:**
+
+```text
+Created branch `codex/add-feature-workflow` and committed the workflow setup as `48c2b25` (`feat: add project feature workflow`). The commit groups the three project skills, six agent profiles and setup records (23 files, 776 insertions). No tests were run, since this was a Git-organization task.
+```
