@@ -2102,3 +2102,19 @@ what libs did you use to scrape the data?
 ```text
 I used Playwright for Python (`playwright.sync_api`) to automate headless Chromium against BCB’s form and paginated table. Playwright is declared in [backend/requirements.txt](C:/Users/bruno/.codex/worktrees/1b1b/investment_portfolio_backtest/backend/requirements.txt). Parsing, validation, and CSV serialization use Python’s standard library. I did not use Requests, Beautiful Soup, or Selenium.
 ```
+
+## 2026-11-03 20:25:27 America/Sao_Paulo
+
+### User
+
+```text
+why you choose those instead of selenium and beaultiful soup?
+```
+
+### Assistant
+
+```text
+The BCB page needs browser interaction: set the date filters, refresh the chart, wait for its iframe-backed update, open the values table, and move through the pages. Playwright drives Chromium and can wait for those UI and network transitions, so the scraper follows the same flow as a user.
+
+Selenium could automate this too. I chose Playwright because its synchronous Python API, frame locators, and response-wait tools fit this flow with little extra setup. Beautiful Soup parses HTML, but by itself it does not run JavaScript or click controls; using it here would require pairing it with a browser or reconstructing the site's requests. For static HTML, Beautiful Soup could be a good, lighter option.
+``` 
