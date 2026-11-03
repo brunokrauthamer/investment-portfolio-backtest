@@ -1,0 +1,28 @@
+{
+  "all_passed": true,
+  "checks": {
+    "canonical_dates_and_decimal_rates": true,
+    "date_coverage_matches_manifest": true,
+    "hash_matches_manifest": true,
+    "header": true,
+    "license_provenance": true,
+    "observed_source_samples_match": true,
+    "requested_start_is_2011": true,
+    "rows_match_both_manifest_counts": true,
+    "series_and_unit": true,
+    "unique_increasing_dates": true,
+    "utf8": true
+  },
+  "csv_bytes": 79566,
+  "csv_path": "data\\selic\\source\\selic_sgs_11.csv",
+  "first_date": "2011-01-03",
+  "last_date": "2026-11-03",
+  "manifest_retrieved_at": "2026-11-03T21:42:42Z",
+  "rows": 3977,
+  "sha256": "b9f3d96ac8504f77bcc08fdbe3024eb2e760c9e8190a8fba726a20ad79414688",
+  "source_samples": {
+    "2011-01-03": "0.040239",
+    "2018-09-28": "0.024620",
+    "2026-11-03": "0.050788"
+  }
+}

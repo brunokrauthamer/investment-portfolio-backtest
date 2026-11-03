@@ -1,0 +1,20 @@
+{
+  "current": {
+    "first_date": "2011-01-03",
+    "format": "UTF-8 CSV; ISO dates; decimal point; rate is percent per day as displayed by BCB",
+    "last_date": "2026-11-03",
+    "observation_count": 3977,
+    "previous_versions": [],
+    "reported_count": 3977,
+    "requested_end": "2026-11-03",
+    "requested_start": "2011-01-01",
+    "retrieved_at": "2026-11-03T21:42:42Z",
+    "sha256": "b9f3d96ac8504f77bcc08fdbe3024eb2e760c9e8190a8fba726a20ad79414688"
+  },
+  "dataset_url": "https://dadosabertos.bcb.gov.br/dataset/11-taxa-de-juros---selic",
+  "license_listed_by_bcb": "Open Data Commons Open Database License (ODbL)",
+  "schema_version": 1,
+  "series_id": 11,
+  "source_url": "https://www3.bcb.gov.br/sgspub/consultarvalores/consultarValoresSeries.do?method=consultarGraficoPorId&hdOidSeriesSelecionadas=11",
+  "unit": "% p.d."
+}

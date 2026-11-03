@@ -1,0 +1,9 @@
+{
+  "prior_code_snapshot": "f218c35e050e196a47e724ee348def9035671601:sha256:fc8f20234e69450785184f5d7af3a56769108c320d56aa7fd7cb875ade042192",
+  "acquired_data_snapshot": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1",
+  "changed_paths": [
+    "data/selic/manifest.json",
+    "data/selic/source/selic_sgs_11.csv"
+  ],
+  "only_acquired_data": true
+}

@@ -306,7 +306,8 @@ class AcquisitionTests(unittest.TestCase):
             check=False,
         )
         self.assertEqual(completed.returncode, 0)
-        self.assertIn("Download or restore B3 IFIX", completed.stdout)
+        self.assertIn("Acquire historical data from registered sources", completed.stdout)
+        self.assertIn("{ifix,selic}", completed.stdout)
 
     def test_offline_restore_command_is_available_without_downloading(self):
         from backend.src.internet_data_getter import __main__ as ifix

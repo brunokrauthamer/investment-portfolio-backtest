@@ -4,6 +4,8 @@ from __future__ import annotations
 from typing import NamedTuple, Callable, Any
 from .ifix import acquire_ifix
 from .ifix import cli as ifix_cli
+from .selic import acquire_selic
+from .selic import cli as selic_cli
 
 
 class _Getter(NamedTuple):
@@ -11,7 +13,10 @@ class _Getter(NamedTuple):
     cli: Any
 
 # Register each supported getter here so acquire_all includes it.
-_GETTERS = {"ifix": _Getter(acquire_ifix, ifix_cli)}
+_GETTERS = {
+    "ifix": _Getter(acquire_ifix, ifix_cli),
+    "selic": _Getter(acquire_selic, selic_cli),
+}
 
 
 def available_getters():

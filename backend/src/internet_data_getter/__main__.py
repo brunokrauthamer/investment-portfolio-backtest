@@ -8,7 +8,7 @@ from . import _GETTERS, acquire, available_getters
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Download or restore B3 IFIX data and other registered sources.")
+    parser = argparse.ArgumentParser(description="Acquire historical data from registered sources.")
     parser.add_argument("--data-dir", type=Path, default=Path(__file__).resolve().parents[3] / "data",
                         help="destination data directory (default: repository data/)")
     parser.add_argument("--getter", choices=available_getters(), help="run only the named getter (default: all)")
