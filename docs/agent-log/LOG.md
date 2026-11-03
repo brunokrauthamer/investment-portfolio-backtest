@@ -1324,3 +1324,109 @@ Git’s reset was blocked because the workspace marks `.git` as read-only. I’m
 ### Assistant — final
 
 Removed the latest commit (`0723f7c`) from the local branch. Its changes are preserved as unstaged edits in [docs/agent-log/LOG.md](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/docs/agent-log/LOG.md). HEAD is now `3c3fb6b`.
+
+## 2026-11-03
+
+### Interaction — 12:57 America/Sao_Paulo
+
+### User
+
+Explain me how the script to get ifix info works.
+
+Start from here:
+
+"The backend provides an explicit IFIX daily-evolution downloader. Set up the project virtual environment as described in the [download and recovery instructions](https://github.com/brunokrauthamer/investment-portfolio-backtest/blob/master/backend/src/acquisition/README.md), then run `.venv\Scripts\python -m backend.src.acquisition.ifix` from the repository root on Windows; it preserves B3's annual source files for 2011 through the current year under `data/ifix/source/`. No application startup or module import initiates a network request. Other data sources and financial conventions remain to be agreed before implementation. No synthetic market data is included.  "
+
+And show me how the code is organized, why you choose this organization and also show me parts of the code that helps me understand, like how functions communicate themselves, how the arguments are passed from one another
+
+### Assistant — progress
+
+I’ll trace the IFIX downloader from the command you quoted through its functions and files, then explain the flow with excerpts from the code.
+
+### Assistant — final
+
+The command in your quote is the entry point to a small pipeline: it asks B3 for one file per year, checks each response, saves the original CSV bytes, and prints a report. It does not yet turn the files into a daily time series or calculate investment returns.
+
+```powershell
+.venv\Scripts\python -m backend.src.acquisition.ifix
+```
+
+Here, `.venv\Scripts\python` selects the project’s Python environment; `-m` tells Python to run `backend.src.acquisition.ifix` as a module. Running it from the repository root makes the `backend` package available. The setup and recovery commands are in the [acquisition README](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/acquisition/README.md).
+
+The code is divided by responsibility:
+
+- [ifix.py](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/acquisition/ifix.py) handles the command, arguments and printed report.
+- [ifix_acquisition.py](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/application/ifix_acquisition.py) coordinates the complete run, year by year.
+- [ifix_source.py](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/acquisition/ifix_source.py) knows how to request and validate B3’s format.
+- [ifix.py in storage](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/storage/ifix.py) manages local files, the manifest, backups and recovery.
+
+This separation keeps B3’s request format, the flow of a download, and filesystem safety in focused places. It also lets the coordinator receive a different client or store, which helps test the flow without relying on a live B3 request. It’s a design rationale for the current organization, rather than a claim about the author’s private intent.
+
+### 1. The command creates the pieces
+
+Near the end of the command module:
+
+```python
+if __name__ == "__main__":
+    raise SystemExit(main())
+```
+
+This calls `main()` when the module is run as a command. Importing the module does not call `main()`, so importing alone does not start downloads. Inside `main`, after reading optional arguments, the normal download path creates and connects the objects:
+
+```python
+store = FileStore(args.data_dir)
+# ... restore branch omitted ...
+report = IfixAcquisition(B3IfixClient(), store).run()
+_print_report(report)
+return 0 if report.complete else 1
+```
+
+`args.data_dir` comes from `--data-dir`, or defaults to the repository’s `data` folder. `B3IfixClient()` creates the B3 client; `store` is the local storage object. Both are passed to `IfixAcquisition`, whose constructor saves them as `self.client` and `self.store`. Calling `.run()` returns a report, which is passed to `_print_report`. Exit code `0` means complete; `1` means incomplete.
+
+### 2. The coordinator passes each year through the pipeline
+
+The central loop in `IfixAcquisition.run()` is:
+
+```python
+years = available_years(self.current_year)
+with self.store.lock():
+    for year in years:
+        try:
+            content = self.client.download_year(year)
+            result = self.store.save(year, content, timestamp)
+            getattr(report, result.status).append(year)
+        except Exception as exc:
+            report.errors[year] = str(exc)
+```
+
+For example, for 2011, `year` is passed to `download_year(2011)`. The returned `content` is a `bytes` object containing the CSV. The coordinator then passes the same year, those bytes, and the run’s UTC timestamp to `store.save(...)`. That returns a `SaveResult` whose `status` is `saved`, `updated` or `unchanged`. `getattr` selects the corresponding list on the report and adds the year. If a year fails, the error is recorded and the loop continues with the next year. The lock covers the run to prevent concurrent acquisition or restore operations.
+
+By default, `current_year` comes from `date.today().year`; `available_years` creates a list from 2011 through that year, inclusive. The constructor also accepts an explicit year, useful for controlled tests. The current year’s data may be incomplete.
+
+### 3. The client gets and checks B3’s data
+
+The request URL is built from the year:
+
+```python
+payload = json.dumps(
+    {"index": "IFIX", "language": "pt-br", "year": str(year)},
+    separators=(",", ":"),
+).encode("utf-8")
+return DOWNLOAD_ENDPOINT + base64.b64encode(payload).decode("ascii")
+```
+
+So `year` becomes text inside a JSON request description, which is encoded as Base64 and appended to B3’s download endpoint. In `download_year`, the client waits briefly, opens that URL with a timeout, reads the response, and decodes the response’s Base64 into CSV bytes. It then calls `validate_csv(content, year)` before returning those bytes. This use of Base64 is encoding, not encryption.
+
+Validation temporarily reads the bytes as Windows-1252 text and checks the expected year, month headings, 31 day rows, summary rows and at least one observation. Future months can be blank. The original bytes are returned and saved; validation does not rewrite or normalize them. The client’s `opener` and `sleeper` are also constructor arguments with defaults, so tests can substitute them.
+
+### 4. Storage preserves the source and its history
+
+`FileStore.save(year, content, now)` checks the CSV again, computes a SHA-256 fingerprint and compares it with the existing file for that year:
+
+- No existing file: save it and report `saved`.
+- Same bytes: leave the active file in place and report `unchanged`; the manifest is still updated.
+- Different bytes: back up the previous file, install the new one and report `updated`.
+
+Active files go under `data/ifix/source/`, and `data/ifix/manifest.json` records information including the source, retrieval time, fingerprint and previous versions. A fingerprint helps detect whether bytes match; it does not independently establish that the source data is financially correct. Storage uses atomic replacement and a pending-update record to help recover an interrupted update. The README describes the separate `restore` command, which uses a verified backup without contacting B3.
+
+In short, the arguments flow as **command → client and store → coordinator → year and CSV bytes → storage → result → printed report**. The command only contacts B3 when explicitly run; nothing in this flow starts a request merely because the application starts or a module is imported.
