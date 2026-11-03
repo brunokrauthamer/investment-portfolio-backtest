@@ -414,3 +414,15 @@ The TDD skill already calls for a failing regression test for existing defects, 
 Updated the feature workflow and TDD instructions. For each confirmed implementation defect found during implementation, review, or QA, the active developer must write a specific test that reproduces the issue, observe it fail before the fix, and record the passing result. This also applies to correction work and late repairs.
 
 I reviewed the changes. The skill validator could not run because the available Python environment lacks PyYAML; the changes are limited to instructions.
+
+## 2026-11-03 — Install PyYAML (America/Sao_Paulo)
+
+### User
+
+fix Python environment lacks PyYAML
+
+### Assistant
+
+I’ll check which Python environment the project uses and install PyYAML there, then rerun the skill validation.
+
+Installed PyYAML 6.0.3 for your Python user account. Both the feature-workflow and feature-tdd skills now pass validation.
