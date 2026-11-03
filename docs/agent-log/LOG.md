@@ -2118,3 +2118,17 @@ The BCB page needs browser interaction: set the date filters, refresh the chart,
 
 Selenium could automate this too. I chose Playwright because its synchronous Python API, frame locators, and response-wait tools fit this flow with little extra setup. Beautiful Soup parses HTML, but by itself it does not run JavaScript or click controls; using it here would require pairing it with a browser or reconstructing the site's requests. For static HTML, Beautiful Soup could be a good, lighter option.
 ``` 
+
+## 2026-11-03 20:28:45 America/Sao_Paulo
+
+### User
+
+```text
+checkout to the branch where you implemented it
+```
+
+### Assistant
+
+```text
+Checked out `internet_data_getter/selic`. I fast-forwarded the existing local branch to the current commit first to retain the interaction-log commits. The Selic implementation, acquired CSV, and task records remain as uncommitted changes in the worktree.
+```
