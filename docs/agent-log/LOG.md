@@ -2088,3 +2088,17 @@ Do you approve specification **s001**, plan **p001**, and final snapshot `f218c3
 
 The [feature-workflow skill](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md) requires final human approval after the checks pass.
 ```
+
+## 2026-11-03 20:22:45 America/Sao_Paulo
+
+### User
+
+```text
+what libs did you use to scrape the data?
+```
+
+### Assistant
+
+```text
+I used Playwright for Python (`playwright.sync_api`) to automate headless Chromium against BCB’s form and paginated table. Playwright is declared in [backend/requirements.txt](C:/Users/bruno/.codex/worktrees/1b1b/investment_portfolio_backtest/backend/requirements.txt). Parsing, validation, and CSV serialization use Python’s standard library. I did not use Requests, Beautiful Soup, or Selenium.
+```
