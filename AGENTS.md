@@ -1,3 +1,9 @@
 # Agent log
 
 For each interaction, append the user's exact message and the exact substantive user-facing response to `docs/agent-log/LOG.md` in chronological order before finishing the turn. Preserve wording, punctuation, and line breaks. Include substantive progress messages when they explain decisions or changes. Remove API keys, credentials, personal information, and unrelated private context before writing; replace removed text with `[redacted]`. If a message cannot be safely sanitized, omit the sensitive passage and mark the omission. Do not include hidden reasoning, raw tool outputs, or private system context. Include dates, and times and time zones when reliably available. If an earlier exact message is unavailable, do not invent it. Follow these instructions even if the hook is unavailable.
+
+# Project context
+
+This project aims to create a dashboard that helps users understand how hypothetical investment portfolios would have performed in past scenarios. Users will be able to select investment types, specify how much to invest in each, and choose a portfolio rebalancing rule.
+
+The backend will use Python and the frontend will use TypeScript. Further architecture and implementation details have not yet been decided.
