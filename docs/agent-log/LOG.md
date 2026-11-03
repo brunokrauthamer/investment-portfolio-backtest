@@ -671,3 +671,25 @@ I’ve recorded the project context for future work. [AGENTS.md](C:/Users/bruno/
 The documentation marks the asset universe, sources, alignment method, financial calculations and rebalancing rules as open decisions. It also records that we’ll obtain real data first, work through each part together, and not use synthetic sample data. No application code or data was created.
 
 I checked the changes for whitespace errors. There are no runnable application checks yet.
+
+## 2026-11-03 America/Sao_Paulo — Base directories
+
+### User
+
+Crete the directoies base, if there is any blind spot ask me
+
+### Assistant — progress
+
+I’ll create a small directory structure for the backend, frontend, and data work, using the boundaries we’ve agreed on. I’ll keep implementation choices and financial conventions open for the relevant future steps.
+
+### Assistant — final
+
+Created the base directories and brief descriptions of their intended responsibilities:
+
+- [backend](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/README.md), with API, application, domain, data acquisition and storage boundaries.
+- [frontend](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/frontend/README.md) for the future React dashboard.
+- [data](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/data/README.md) for acquired datasets.
+
+The new [README](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/README.md) explains the current state. These directories contain documentation only; there is no runnable application or dataset yet. I checked the documentation links and whitespace.
+
+There’s no decision needed to create this base. When we start obtaining data, we’ll need to agree on the initial assets, sources, date ranges and data conventions, as well as the backup and restore layout.
