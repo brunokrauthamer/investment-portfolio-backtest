@@ -348,3 +348,15 @@ the feature workflow was used in this thread or only created? im asking because 
 The feature workflow was created here, but it wasn’t run to build a feature. The sub-agent you saw was an independent reviewer I asked to inspect the new workflow and test its scenarios; it was not the workflow’s tech-lead or implementation cycle.
 
 It can be selected automatically: this project’s skill does not disable implicit invocation, and Codex may choose it when your request matches the skill description. For reliable use, start a feature request with `$feature-workflow`. [OpenAI’s skill documentation](https://learn.chatgpt.com/docs/build-skills) explains that skills can be explicitly invoked or implicitly selected; [the subagent documentation](https://learn.chatgpt.com/docs/agent-configuration/subagents) explains that project or skill instructions can trigger agents.
+
+## 2026-11-02 — Explicit feature-workflow invocation
+
+**User:**
+
+I want to use the feature workflow only when I invokes that
+
+**Assistant:**
+
+Done. [The feature-workflow setting]([redacted]) now has `allow_implicit_invocation: false`, so it will activate only when you explicitly invoke `$feature-workflow`. The supporting skills are unchanged.
+
+I updated the task records to preserve your decision. No tests were run for this metadata change. [OpenAI’s skill documentation](https://learn.chatgpt.com/docs/build-skills) confirms that disabled implicit invocation still permits explicit use.
