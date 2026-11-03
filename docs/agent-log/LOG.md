@@ -1891,3 +1891,200 @@ Do you approve both specification **s001** and plan **p001** for implementation?
 
 The [feature-workflow skill](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md) explicitly requires us to “wait for explicit human approval of both revisions before implementation.”
 ```
+## 2026-11-03 America/Sao_Paulo
+
+### User
+
+```text
+approved
+```
+
+### Assistant progress
+
+```text
+I’ll pass the approval to the feature lead and continue with implementation, review, and verification under the approved plan.
+```
+
+```text
+The approved specification and plan are recorded. The implementation pass is underway; independent review and QA will follow it.
+```
+
+```text
+The implementation is covering the browser navigation and the recovery behavior for CSV and provenance updates. I’m waiting for the integrated result before review.
+```
+
+```text
+The source, storage, and service code is being exercised with offline tests. The developer is also setting up Playwright to check the real BCB browser flow before review.
+```
+
+```text
+The offline tests currently pass. Playwright installation encountered a network restriction, so the developer is checking the available installation route while completing documentation.
+```
+
+```text
+The remaining uncertainty is whether the browser dependency can be installed in this environment. The lead is tracking that separately from the offline test results.
+```
+
+```text
+Playwright and Chromium are installed. A live run safely stopped because BCB returned stale date filters, and the developer is investigating the form interaction before handing the change to review.
+```
+
+```text
+The live BCB form is still being investigated. The existing guard prevents an incomplete or stale response from replacing the dataset.
+```
+
+```text
+The lead is checking whether the live-form issue can be resolved within the current pass or needs a decision.
+```
+
+```text
+The first implementation is ready for independent review. It has not produced the CSV: the live response still has the wrong date range, and the scraper stops safely. Review will identify what needs repair.
+```
+
+```text
+Review traced the date-range issue to timing: the refresh can run before BCB’s chart form is ready. Waiting for the form produced a request with the correct dates; the reviewer is finishing the rest of the assessment.
+```
+
+```text
+Review found seven blocking issues, including refresh timing, pagination validation, and recovery and provenance handling. A second pass is addressing them with regression tests before independent re-review.
+```
+
+```text
+The repair pass is in progress. The live download remains incomplete until the corrected flow and its recovery behavior pass review and QA.
+```
+
+```text
+The developer is still working through the reproduced browser, storage, and pagination failures. I’ll report the next review result when it is available.
+```
+
+```text
+Five review findings have been reproduced with failing regression tests. The storage transaction and restore fixes are underway; pagination and a fresh live run remain.
+```
+
+```text
+The corrected browser synchronization now reaches BCB’s requested range and the 3,976-row table. The live check exposed a source-label parsing issue, which is being fixed with a regression test before another scrape.
+```
+
+```text
+The next live run is still pending while the source-label correction is completed. No incomplete dataset has been published.
+```
+
+```text
+The live check now reaches pagination, where it exposed another timing issue between pages. The scraper stopped safely, and the developer is adding a wait for the page transition.
+```
+
+```text
+The pagination fix is being checked against the live site. Independent re-review and QA still need to assess the resulting snapshot.
+```
+
+```text
+The page-transition fix now waits for BCB’s pagination request, and a full scrape into temporary storage is running before handoff.
+```
+
+```text
+The temporary scrape is still running through the paginated source. Its result will determine whether the repaired flow is ready for re-review.
+```
+
+```text
+The temporary scrape succeeded with 3,976 observations from 3 January 2011 through 30 October 2026. The developer is rerunning checks after a storage adjustment before independent review and QA.
+```
+
+```text
+The repaired snapshot is completing its checks; the successful temporary scrape is encouraging, but it still needs independent review.
+```
+
+```text
+The full temporary scrape succeeded and the 45-test suite passed before the latest storage adjustment. The developer is checking that final adjustment before handing it to review.
+```
+
+```text
+The repaired snapshot is now with a fresh independent reviewer. Its latest temporary scrape and all 45 tests passed.
+```
+
+```text
+The independent reviewer reproduced the full live scrape and matched the developer’s CSV hash; all 45 offline tests also passed. Recovery checks are still in progress.
+```
+
+```text
+Re-review confirmed the earlier fixes but found two more validation gaps: incomplete provenance on an unchanged run and a malformed date row that could be skipped. The final repair pass in this cycle will address both before another review.
+```
+
+```text
+The final repair pass is underway with regression tests for the two new findings. The full scrape remains verified only against the prior snapshot until re-review.
+```
+
+```text
+The prior source timing, pagination, backup, and restore fixes have been independently verified. Work continues on the two remaining validation gaps.
+```
+
+```text
+I’ve asked the lead for the repair status and handoff to review as soon as the fixes are ready.
+```
+
+```text
+Both remaining issues now have failing regression tests. The developer is tightening manifest and row validation, then will rerun the suite and hand off for re-review.
+```
+
+```text
+The validation changes are still being completed. I’m keeping the current review status open until the new snapshot has passed the checks.
+```
+
+```text
+The two validation repairs are complete, and 48 offline tests pass. The updated snapshot is now in independent re-review.
+```
+
+```text
+Independent review passes. Its live run found a newer BCB observation, bringing the source total to 3,977 through 3 November 2026. Independent QA is now checking the complete feature against the source.
+```
+
+```text
+QA is exercising the integrated browser flow and checking the saved values against BCB.
+```
+
+```text
+QA is comparing against the current BCB source, whose latest available date changed during the work, and checking failure paths as well.
+```
+
+```text
+QA matched sampled first, middle, and latest values across the 3,977-row CSV. The documented command also succeeded in temporary storage and correctly reported an unchanged rerun.
+```
+
+```text
+QA passed the service checks and live source comparison. The remaining step is acquiring the requested CSV into the project and verifying that final snapshot.
+```
+
+```text
+The project-data acquisition is running through the same paginated source flow. Review and QA will refresh their checks after the CSV is saved.
+```
+
+```text
+The project CSV and manifest are saved with 3,977 observations from 3 January 2011 through 3 November 2026. The count, coverage, and hash match; independent checks are being refreshed on the saved data.
+```
+
+```text
+The saved CSV and manifest passed independent review against the live scrape. QA is performing its final check of those files.
+```
+
+```text
+The final QA refresh is still running; the independent review of the saved data has passed.
+```
+
+### Assistant
+
+```text
+The Selic scraper is implemented, and the [CSV](C:/Users/bruno/.codex/worktrees/1b1b/investment_portfolio_backtest/data/selic/source/selic_sgs_11.csv) contains **3,977 observations**, from 3 January 2011 through 3 November 2026. Its [manifest](C:/Users/bruno/.codex/worktrees/1b1b/investment_portfolio_backtest/data/selic/manifest.json) records provenance and integrity information.
+
+Independent review and QA passed, including live BCB comparisons and 48 offline tests. Some initial test-first failure runs were not observed and cannot be reconstructed; each confirmed repair did receive a failing regression test. Live access required approved network access outside the default sandbox.
+
+To update the dataset from the repository root, run:
+
+```powershell
+.\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter --getter selic
+```
+
+The requested branch already exists in another worktree. This work remains in the detached worktree; no commit or push was made.
+
+Do you approve specification **s001**, plan **p001**, and final snapshot `f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1`, including the test-evidence limitation described above?
+
+The [feature-workflow skill](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md) requires final human approval after the checks pass.
+```
