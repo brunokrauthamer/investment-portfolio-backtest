@@ -6,6 +6,6 @@ For each interaction, append the user's exact message and the exact substantive 
 
 This project is a historical investment portfolio backtesting dashboard. The frontend will use TypeScript and React; the Python backend will use FastAPI as a modular monolith. See `docs/project-context.md` for confirmed decisions, boundaries, data safety and open questions.
 
-Use the project `.venv` for Python commands and maintain the root `requirements.txt` for Python dependencies in every task; see the project context for setup and dependency conventions.
+Use `backend/.venv` for backend Python commands and maintain `backend/requirements.txt` for backend Python dependencies; see the project context for setup and dependency conventions.
 
 Agree on financial and data conventions with the user before implementing behavior that depends on them. Build the project incrementally with the user, beginning with data acquisition; do not introduce synthetic market data.

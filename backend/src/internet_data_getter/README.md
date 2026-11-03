@@ -4,17 +4,17 @@ Acquisition runs only when explicitly invoked by a caller or operator. Python ca
 
 ## IFIX daily evolution
 
-Install Python 3.9 or later. From the repository root, create the project virtual environment and install its declared dependencies (the downloader currently uses only the Python standard library):
+Install Python 3.9 or later. From the repository root, create the backend virtual environment and install its declared dependencies (the downloader currently uses only the Python standard library):
 
 ```powershell
-python -m venv .venv
-.venv\Scripts\python -m pip install -r requirements.txt
+python -m venv backend/.venv
+.\backend\.venv\Scripts\python.exe -m pip install -r backend/requirements.txt
 ```
 
 Run all registered getters (currently IFIX):
 
 ```powershell
-.venv\Scripts\python -m backend.src.internet_data_getter
+.\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter
 ```
 
 To run IFIX alone, add `--getter ifix` before any subcommand. The command reports failures and continues to the next getter; it exits with status 1 if any getter fails or reports an incomplete run.
@@ -30,7 +30,7 @@ An identical download does not change the active file or create a backup. When B
 To restore an earlier version without contacting B3, use a backup path listed in that year's manifest:
 
 ```powershell
-.venv\Scripts\python -m backend.src.internet_data_getter --data-dir data restore --year 2011 --backup backups/ifix/2011/PASTE_BACKUP_PATH_FROM_MANIFEST.csv
+.\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter --data-dir data restore --year 2011 --backup backups/ifix/2011/PASTE_BACKUP_PATH_FROM_MANIFEST.csv
 ```
 
 Replace the example path with the exact manifest-relative backup path for that year. The restore verifies the listed backup's hash and CSV structure, backs up and records the currently active file, then atomically installs the selected version and updates provenance. It does not redownload the newest file. A later explicit download command may update the restored version again, after preserving it as another backup. Keep backups separate from `data/ifix/source/` so they are not mistaken for active source files.
@@ -44,5 +44,5 @@ The acquisition makes one paced HTTPS request per requested year with certificat
 From the repository root, run the module tests without contacting data providers:
 
 ```powershell
-.venv\Scripts\python -m unittest discover -s backend/src/internet_data_getter/tests
+.\backend\.venv\Scripts\python.exe -m unittest discover -s backend/src/internet_data_getter/tests
 ```

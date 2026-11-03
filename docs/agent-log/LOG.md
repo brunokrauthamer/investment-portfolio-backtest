@@ -1735,3 +1735,47 @@ Created branch `codex/internet-data-getter-registry` and organized the work into
 
 The only remaining worktree change is the required new entry in `docs/agent-log/LOG.md`; it records your request and this reply, with the local skill path redacted. I left this final log tail unstaged so the reply can be recorded verbatim. No tests were run.
 ```
+
+## 2026-11-03
+
+### User
+
+why we need python outside backend?
+
+### Assistant progress
+
+I’ll check which project tools actually use Python so I can distinguish a current need from a possible future one.
+
+### Assistant
+
+We don’t currently have a strong reason to keep the Python environment at the project root. My previous answer overstated that point.
+
+The application’s Python code is in the backend. There are also Python scripts for the agent log under `docs/agent-log/`, but those use Python’s standard library and do not require the virtual environment to be at the root. A virtual environment can run a script located elsewhere in the project.
+
+Given your frontend/backend separation, placing `.venv` and `requirements.txt` inside `backend/` is a reasonable, clearer choice. We would update the setup instructions, commands and agent guidance together. The existing local environment could then be recreated in `backend/`; we wouldn’t move it into Docker. I haven’t made that change.
+
+## 2026-11-03
+
+### User
+
+make this change. Update AGENTS.md and README.md considering this new structure
+
+### Assistant progress
+
+I’ll move the backend’s dependency setup under `backend/`, update the affected guidance and documentation, and verify the tests using the new environment. I’ll use the maintain-agent-guidance skill for the instruction changes.
+
+The current root environment contains only the default Python packaging tools, so there are no extra installed dependencies to carry over. I’ll recreate it under `backend/` and update commands to run from the project root.
+
+The new backend environment is working and all 28 tests pass. I also checked the documented commands against PowerShell and am correcting their executable paths before removing the old environment.
+
+### Assistant
+
+Moved the Python dependency manifest to `backend/requirements.txt` and recreated the virtual environment at `backend/.venv`. The old root environment was removed.
+
+I updated the relevant `AGENTS.md` files, READMEs and project context to use the new paths. From the project root, the IFIX getter now runs with:
+
+```powershell
+.\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter --getter ifix
+```
+
+The dependency installation and all 28 backend tests passed using the new environment. No live download was run.

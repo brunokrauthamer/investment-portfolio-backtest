@@ -2,9 +2,9 @@
 
 This project will help people explore how hypothetical investment portfolios would have performed historically. The planned dashboard uses React and TypeScript, with a Python/FastAPI modular-monolith backend and CSV data storage.
 
-- `backend/`: planned API, application, domain, acquisition and storage boundaries.
+- `backend/`: backend modules, local Python environment and dependency manifest.
 - `frontend/`: planned dashboard.
 - `data/`: reserved for acquired historical datasets.
 - `docs/project-context.md`: confirmed decisions, data safety requirements and open questions.
 
-The backend provides an explicit IFIX daily-evolution downloader. Set up the project virtual environment as described in the [download and recovery instructions](backend/src/internet_data_getter/README.md), then run `.venv\Scripts\python -m backend.src.internet_data_getter` from the repository root on Windows; it preserves B3's annual source files for 2011 through the current year under `data/ifix/source/`. No application startup or module import initiates a network request. Other data sources and financial conventions remain to be agreed before implementation. No synthetic market data is included.
+The backend provides an explicit IFIX daily-evolution downloader. Set up the backend virtual environment as described in the [download and recovery instructions](backend/src/internet_data_getter/README.md), then run `.\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter` from the repository root on Windows; it preserves B3's annual source files for 2011 through the current year under `data/ifix/source/`. No application startup or module import initiates a network request. Other data sources and financial conventions remain to be agreed before implementation. No synthetic market data is included.
