@@ -1184,3 +1184,29 @@ The fast-forward succeeded from `91e63ff` to `0d9142b`, and the branch is clean.
 ### Assistant — final
 
 Already on `master`. Pulled `origin/master` successfully with a fast-forward from `91e63ff` to `0d9142b`. The local IFIX CSV was byte-identical to the fetched copy. `docs/agent-log/LOG.md` is the only remaining working-tree change.
+
+## 2026-11-03
+
+### User
+
+```text
+explain me what acquisition, application and storage do using ifix as exemple
+```
+
+### Assistant — progress
+
+I’ll trace how the project handles IFIX through those three areas, then explain the flow with a concrete example.
+
+### Assistant — final
+
+Think of the three parts as a team handling one job: **get IFIX data from B3 and keep it safely on your computer**.
+
+1. **Acquisition gets the data.** When you explicitly run the IFIX download command, it contacts B3, downloads an annual file, decodes it, and checks that it has the expected IFIX structure. For example, it can request the 2024 IFIX file. It keeps B3’s original CSV content rather than converting it into a new format. See [acquisition](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/acquisition/README.md).
+
+2. **Application coordinates the job.** It decides the sequence: go through the available years from 2011 to the current year, ask acquisition for each file, and ask storage to save it. It collects the results and reports whether the run was complete or had errors. If one year fails, it continues with the others. See [application](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/application/ifix_acquisition.py).
+
+3. **Storage keeps the data safe.** It saves the original file under `data/ifix/source/` and records details such as its source, retrieval time and a fingerprint in `data/ifix/manifest.json`. If a later download is identical, it leaves the file alone. If it has changed, storage preserves a verified backup before replacing the active file. See [storage](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/storage/README.md).
+
+For example, on a run that reaches **2024**, application asks acquisition for B3’s 2024 file → acquisition downloads and validates it → application passes it to storage → storage saves it or safely updates the existing copy → application includes the outcome in its report.
+
+Currently, this flow **collects source files**; it does not yet calculate IFIX returns or run a portfolio backtest. Downloads happen only when the command is explicitly invoked, not when the application starts.
