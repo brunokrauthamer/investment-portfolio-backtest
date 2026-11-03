@@ -458,3 +458,216 @@ Created branch `codex/regression-test-workflow` and committed the two workflow i
 
 I updated `docs/agent-log/LOG.md` with this interaction; that required log entry remains uncommitted. No tests were run. The only uncommitted change is the log entry.
 ```
+
+## 2026-11-03 America/Sao_Paulo — Project initialization
+
+### User
+
+You are helping initialize an investment portfolio backtesting project. Your job is to inspect the existing repository, clarify unresolved decisions with me, document the project context in the appropriate places, and create a practical foundation that follows the architecture described below.
+
+## How to work
+
+1. Inspect the current repository before proposing changes. Look for existing code, documentation, `AGENTS.md` files, skills, agent definitions, configuration, dependencies, and conventions. Follow applicable repository instructions and preserve useful existing work.
+2. Summarize the relevant findings and identify conflicts, missing information, and decisions that cannot be inferred safely.
+3. Ask me focused questions about those blind spots. Group related questions and prioritize decisions that affect the architecture, financial calculations, data sources, and MVP scope. Explain your proposed default when one is reasonable.
+4. While waiting for answers, you may complete independent, reversible inspection and preparation. Do not invent answers to decisions that materially affect financial results, data integrity, or product behavior. Once I answer, incorporate my decisions and proceed without repeatedly asking for confirmation on routine implementation choices.
+5. Create or update documentation and the initial directory and file structure. Reuse and adapt existing code where appropriate. Avoid speculative abstractions, empty placeholder files, and directories with no clear purpose.
+6. Validate the resulting setup with checks appropriate to the files and code created. Finish with a concise report of changes, questions or decisions still open, checks performed, and any limitations.
+
+If the existing repository conflicts with these instructions, explain the conflict and ask me when resolving it requires a product or architectural decision. Otherwise, make a reasonable, documented choice.
+
+## Project context
+
+The application is a dashboard for running historical backtests of investment portfolios. Users should eventually be able to select and filter a portfolio based on the percentage allocated to each asset class and choose a rebalancing rule.
+
+The frontend uses **TypeScript and React**. The backend uses **Python**, with **FastAPI** for the API.
+
+Historical performance data for assets such as indices and ETFs will eventually be obtained from the internet. Initially, acquired data will be stored as CSV files within the project and used as input for calculations.
+
+Do not assume that a particular financial calculation or data convention is correct without establishing it. Ask about relevant missing details, which may include:
+
+- Asset universe, markets, currencies, data frequency, date ranges, and expected sources.
+- Portfolio weight validation, asset-to-class mapping, and whether cash or fractional holdings are supported.
+- Rebalancing triggers, execution timing, transaction costs, taxes, dividends, inflation, and currency conversion.
+- Treatment of missing observations, non-trading days, adjusted prices, and other data-quality issues.
+- Expected output metrics and charts, the intended user, and the scope of the first working MVP.
+
+Do not fabricate historical results or present sample data as real market data. If sample data is useful for a runnable foundation, clearly label it as illustrative and document its origin and limitations.
+
+## Architecture
+
+Organize the backend as a **modular monolith** with clear boundaries, so that modules can be extracted into one or more services later if there is a real need. Include clear responsibilities for the FastAPI interface, backtesting logic, data acquisition, and data access. Choose module boundaries based on the confirmed requirements and existing repository rather than anticipating a particular microservice deployment.
+
+A controller/service/model organization is familiar to me, but apply it pragmatically:
+
+- API controllers or routes handle HTTP requests and responses.
+- Application services coordinate use cases.
+- Domain models and domain logic represent portfolio and backtesting concepts and rules.
+- Repository or storage adapters read and write CSV files behind appropriate contracts.
+
+A relational database is not required for the MVP. A model does not need to access CSV files directly; keep domain concepts separate from file persistence. Introduce interfaces or protocols where they make an actual boundary or variation point clearer, without building unnecessary layers.
+
+Apply SOLID pragmatically:
+
+- **Single responsibility:** Separate external protocols, business rules, and persistence.
+- **Open/closed:** Support extension at variation points justified by requirements; avoid scattered conditionals and speculative generalization.
+- **Liskov substitution:** Alternative implementations must honor the contracts, invariants, results, and errors expected by consumers.
+- **Interface segregation:** Keep contracts small and specific to their consumers.
+- **Dependency inversion:** Business rules depend on clear contracts for persistence and integrations; assemble concrete implementations at the application composition boundary and make them replaceable in tests.
+
+Keep functions and module layers focused, with responsibilities that are easy to explain. Avoid coupling the backtesting domain directly to FastAPI, React, a particular CSV layout, or a future data provider.
+
+## Data acquisition and safety
+
+Changes to source data must be non-destructive and reversible. Before an operation modifies or replaces existing source data, create a recoverable backup of the affected files. Ensure a failed or interrupted update does not leave the active data partially written, and document how to restore a previous version. Define a practical backup location and naming convention, and prevent backups from being mistaken for active input data.
+
+Do not overwrite or remove existing data during scaffolding. Avoid making live network calls as a side effect of importing modules or starting the application. If data acquisition is not yet implemented, document the intended boundary without pretending that it is operational.
+
+Document the provenance of each dataset and any external data source used. If web scraping is used, document the sources and relevant access or usage constraints.
+
+## Repository instructions and documentation
+
+Create or update a root `AGENTS.md` with concise, repository-wide context and rules. Add directory-specific `AGENTS.md` files only where they provide useful instructions for that part of the codebase.
+
+Keep each file short and relevant to its scope. Put specialized instructions close to the code they govern, avoid duplicating root instructions, and do not put detailed frontend, backend, or data-specific guidance in a global file when it is only relevant to one area. Respect existing instruction files and explain any material conflicts or changes.
+
+Record architectural decisions, assumptions, boundaries, data conventions, and unresolved questions in suitable project documentation. Distinguish confirmed decisions from proposals or open questions.
+
+## Frontend conventions
+
+Adapt the following structure to TypeScript and to the actual needs of the project. It is a guide, not a requirement to create every directory immediately:
+
+```text
+src/
+  main.tsx
+  App.tsx
+  index.css
+  components/
+    Button/
+      index.tsx
+      index.css
+  pages/
+    ExamplePage/
+      index.tsx
+      index.css
+      useExamplePage.ts
+      LocalComponent/
+        index.tsx
+        index.css
+  assets/
+  services/
+  shared/
+  store/
+```
+
+- `components`: reusable presentation components and shared business components.
+- `pages`: pages, page-specific components, and local logic.
+- `assets`: static images, videos, fonts, animations, and other assets.
+- `services`: API and external-source communication, without JSX or UI hooks.
+- `shared`: reusable functions and constants without React, global state, or browser side effects.
+- `store`: shared state, session, cache, subscriptions, and coordination of their updates.
+- Keep page- or component-specific hooks near their consumers. Hooks that subscribe to a cache or session belong with that infrastructure; hooks do not automatically belong in `shared`.
+- Use PascalCase for component and page names and descriptive names for hooks and functions. Reserve the `use` prefix for hooks.
+- Use `index.tsx` for component and page entry files. Place component-specific styles in `index.css` when needed. Do not create empty CSS files or directories with no purpose.
+- Place unit tests near the code under test, using `*.test.ts` or `*.test.tsx` as appropriate. Cross-module integration tests may live in a dedicated test directory.
+- Prefer explicit imports. Avoid a central file that re-exports all components and couples independent areas.
+- Preserve existing language choices and conventions when compatible with the requested TypeScript and React stack; do not introduce unrelated migrations as a side effect of reorganizing code.
+
+## Component contracts
+
+- Use semantic HTML. Extract recurring appearance, accessibility, or behavior patterns; simple composition may remain in a page.
+- Before creating a button, input, select, dialog, or message, look for an existing implementation and extend it when appropriate.
+- Visual primitives receive data and callbacks. They do not know about endpoints, authentication rules, or cache keys.
+- Preserve native attributes, accessibility, element references, and keyboard use. Clearly define responsibility for labels, help text, and errors.
+- Prefer composition and a few variants over many boolean props or a generic component that decides every application flow.
+- Buttons default to `type="button"`; form submission is explicit. Icon-only actions have accessible names. Pending states prevent duplicate actions and are communicated to users.
+- Use a native select unless product requirements justify additional behavior. Prepare business rules and options outside the generic control.
+- Distinguish error, success, loading, and refresh states. A failed request must not be represented as an empty list or zero.
+
+## Tooling, execution, and README
+
+Use practical, conventional linting and formatting tools appropriate to both stacks, respecting existing project tooling when it is suitable. ESLint for TypeScript/React and Ruff for Python are reasonable defaults. Configure only what the initial project needs.
+
+The finished application should be runnable locally or through Docker. Docker Compose may be used to start the complete application with one command. Set up what is necessary for the agreed initial scope, and make any incomplete functionality explicit.
+
+Update `README.md` to include:
+
+- One or two clear commands for starting the application, including the Docker Compose option if provided.
+- The local URL and any prerequisites needed for local execution.
+- The problem the application addresses and its intended user.
+- Data provenance, including a clear distinction between illustrative and real data.
+- Main technical and architectural choices.
+- Known limitations and sensible next improvements.
+- How to run relevant checks and, when applicable, how to restore data backups.
+
+Keep the MVP practical: users should not need paid accounts, private credentials, or manual database setup just to run it. Do not imply that a command works unless you have verified it or clearly state what prevented verification.
+
+Begin by inspecting the repository and then ask me the questions needed to resolve the most consequential blind spots.
+
+### Assistant — progress
+
+I’ll inspect the repository’s existing code, instructions, and tooling first, then identify the decisions that need your input before the foundation can be built.
+
+### Assistant — final
+
+The repository currently contains agent instructions, a project-specific feature workflow, and its task records; I found no application code, datasets, README, or frontend/backend dependency configuration. The existing root instructions describe the architecture as undecided, so I’ll update that context to reflect your confirmed React, FastAPI, CSV, and modular-monolith choices. The feature workflow is configured for explicit invocation only; I’ll preserve it and its records.
+
+Before implementing the backtest, please help settle these decisions. My proposed defaults are starting points, not assumptions I’ll silently turn into financial results:
+
+1. **MVP and audience:** Who is the initial user, and should the first runnable version calculate a portfolio backtest or provide a clearly incomplete application shell? If calculating, I propose one portfolio, a user-selected date range, a value-over-time chart, total return, and maximum drawdown.
+2. **Assets and data:** Which markets, asset classes, and specific indices or ETFs should be included initially, and what currency and date range matter? Do you have a preferred free source or existing CSVs? I propose daily data in one base currency, with manually supplied CSVs initially and no automatic download until a source and its usage terms are chosen.
+3. **Portfolio rules:** Should users allocate directly to assets or choose asset-class percentages and have the app select assets within each class? May weights include cash, and must they total exactly 100%? I propose explicit asset weights totaling 100%, fractional holdings, and no separate cash allocation for the first version.
+4. **Calculation and rebalancing:** Which rules should be available initially—buy-and-hold, periodic rebalancing, or both? For a proposed simple baseline: initial investment at the first available close, optional monthly rebalancing at the last available close of each month, fractional holdings, and no transaction costs, taxes, inflation adjustment, or currency conversion. Should dividends be represented through a trusted total-return/adjusted series, or handled separately?
+5. **Data gaps and alignment:** When an asset lacks a price on a requested date or trading day, should the backtest reject the request or use a previous observation? I propose requiring a common set of dates and rejecting missing observations rather than silently filling them; the exact calendar and acceptable gaps need agreement.
+6. **Illustrative data:** May I include a small, clearly labeled synthetic dataset so the application can run without credentials, while real data acquisition remains unimplemented? Its results would be explicitly illustrative, not market history.
+
+No application files or source data have been changed yet. Inspection and the required interaction log are the only work completed so far; implementation and runnable-command checks follow your answers.
+
+## 2026-11-03 America/Sao_Paulo — Project context
+
+### User
+
+**MVP and audience:** Who is the initial user, and should the first runnable version calculate a portfolio backtest or provide a clearly incomplete application shell? If calculating, I propose one portfolio, a user-selected date range, a value-over-time chart, total return, and maximum drawdown. &#x20;
+
+The initial user is someone that wants to understand how different portfloios would have performed in past. the version  calculates a portfolio backtest. this is ok: user-selected date range, a value-over-time chart, total return, and maximum drawdown.  But we are going to implement together each part. For now, the idea is giving context to agents how to work.
+
+
+**Assets and data:** Which markets, asset classes, and specific indices or ETFs should be included initially, and what currency and date range matter? Do you have a preferred free source or existing CSVs? I propose daily data in one base currency, with manually supplied CSVs initially and no automatic download until a source and its usage terms are chosen.&#x20;
+
+&#x20;we are going to implement together each part. For now, the idea is giving context to agents how to work.
+
+
+**Portfolio rules:** Should users allocate directly to assets or choose asset-class percentages and have the app select assets within each class? May weights include cash, and must they total exactly 100%? I propose explicit asset weights totaling 100%, fractional holdings, and no separate cash allocation for the first version. &#x20;
+
+
+The “assets” used as the basis for the data will be indices or ETFs, such as Ibovespa, IFIX, IVVB11, etc. I will decide which assets will be available at a later date. There is no cash allocation option, but Selic will be available—which is effectively the same thing, though that distinction isn’t particularly important for your purposes. The user will choose the assets, and Selic will be an asset like any other.
+
+And yes, the weights of all assets must add up to exactly 100%.
+
+
+**Calculation and rebalancing:** Which rules should be available initially—buy-and-hold, periodic rebalancing, or both? For a proposed simple baseline: initial investment at the first available close, optional monthly rebalancing at the last available close of each month, fractional holdings, and no transaction costs, taxes, inflation adjustment, or currency conversion. Should dividends be represented through a trusted total-return/adjusted series, or handled separately? &#x20;
+
+We will discus later. For now the idea is giving context to agents how to work.
+
+
+**Data gaps and alignment:** When an asset lacks a price on a requested date or trading day, should the backtest reject the request or use a previous observation? I propose requiring a common set of dates and rejecting missing observations rather than silently filling them; the exact calendar and acceptable gaps need agreement. &#x20;
+
+Let’s align the datasets for all assets so that every date accepted by the system has data for all of them.
+
+**Illustrative data:** May I include a small, clearly labeled synthetic dataset so the application can run without credentials, while real data acquisition remains unimplemented? Its results would be explicitly illustrative, not market history. &#x20;
+
+No, we’ll work on obtaining the data first and then on the frontend, so that won’t be necessary.
+
+### Assistant — progress
+
+I’ll record the decisions you’ve confirmed and keep the financial and data details you want to decide later explicitly open. I’ll focus this step on guidance and project context, with no sample data or backtest implementation.
+
+I’m using the maintain-agent-guidance skill to keep the root instructions concise and put the fuller product and architecture context in project documentation.
+
+### Assistant — final
+
+I’ve recorded the project context for future work. [AGENTS.md](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/AGENTS.md) now points agents to [project-context.md](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/docs/project-context.md), which captures the agreed architecture, MVP goals, asset selection and 100% weight rule, aligned-date requirement, and data safety expectations.
+
+The documentation marks the asset universe, sources, alignment method, financial calculations and rebalancing rules as open decisions. It also records that we’ll obtain real data first, work through each part together, and not use synthetic sample data. No application code or data was created.
+
+I checked the changes for whitespace errors. There are no runnable application checks yet.

@@ -4,6 +4,6 @@ For each interaction, append the user's exact message and the exact substantive 
 
 # Project context
 
-This project aims to create a dashboard that helps users understand how hypothetical investment portfolios would have performed in past scenarios. Users will be able to select investment types, specify how much to invest in each, and choose a portfolio rebalancing rule.
+This project is a historical investment portfolio backtesting dashboard. The frontend will use TypeScript and React; the Python backend will use FastAPI as a modular monolith. See `docs/project-context.md` for confirmed decisions, boundaries, data safety and open questions.
 
-The backend will use Python and the frontend will use TypeScript. Further architecture and implementation details have not yet been decided.
+Agree on financial and data conventions with the user before implementing behavior that depends on them. Build the project incrementally with the user, beginning with data acquisition; do not introduce synthetic market data.
