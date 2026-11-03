@@ -1210,3 +1210,25 @@ Think of the three parts as a team handling one job: **get IFIX data from B3 and
 For example, on a run that reaches **2024**, application asks acquisition for B3’s 2024 file → acquisition downloads and validates it → application passes it to storage → storage saves it or safely updates the existing copy → application includes the outcome in its report.
 
 Currently, this flow **collects source files**; it does not yet calculate IFIX returns or run a portfolio backtest. Downloads happen only when the command is explicitly invoked, not when the application starts.
+
+## 2026-11-03
+
+### User
+
+```text
+so to start the script, i use application right?
+```
+
+### Assistant — progress
+
+I’ll check the command’s entry point so I can show you exactly how to start it.
+
+### Assistant — final
+
+Almost: you start the **acquisition command**, and it calls the application code for you. From the project’s root folder in PowerShell, run:
+
+```powershell
+.venv\Scripts\python -m backend.src.acquisition.ifix
+```
+
+The flow is: **your command → acquisition entry point → application coordinates → acquisition downloads and storage saves**. You don’t need to run the application file directly.
