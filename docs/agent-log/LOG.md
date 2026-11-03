@@ -110,3 +110,25 @@ Organized the work on branch `docs/agent-interaction-log`.
 - Updated `docs/agent-log/LOG.md` in a separate `docs: update agent interaction log` commit.
 
 No other changes remain uncommitted.
+
+## 2026-11-02 21:52:59 -03:00 — Project context
+
+**User:**
+
+This project goal is to create a dashboard to help users understand how theorical portolios would have performed in past scenarios. Users will be able to select differents types of investments, how much would be invested in each type, the rule he wants for portfolio rebalancing. The backend will be in python and the frontend in typescript.
+
+We will discuss later more about the architecture. for now, I want a descritpion for github repository and also those relevant informations for the AGENTS.md
+
+Do you think it is worth to write information in another file now?
+
+**Assistant:**
+
+I’ll check the existing project files, then add the project context to `AGENTS.md` and suggest a concise GitHub description. I’ll also assess whether another file would be useful at this stage.
+
+I added the project goal, planned user choices, and intended languages to [AGENTS.md](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/AGENTS.md), leaving architecture decisions open.
+
+Suggested GitHub repository description:
+
+> An investment portfolio backtesting dashboard for exploring historical performance with custom allocations and rebalancing rules.
+
+A short `README.md` would be worthwhile now: it would give visitors the project’s purpose, intended features, and planned Python and TypeScript stack. Keep it brief until the architecture and setup are decided; there’s no need for a separate architecture document yet.
