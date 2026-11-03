@@ -1779,3 +1779,59 @@ I updated the relevant `AGENTS.md` files, READMEs and project context to use the
 ```
 
 The dependency installation and all 28 backend tests passed using the new environment. No live download was run.
+
+## 2026-11-03 16:35:16 America/Sao_Paulo
+
+### User
+
+```text
+[$organize-git-commits]([redacted]) 
+```
+
+### User
+
+```text
+<skill>
+<name>organize-git-commits</name>
+<path>[redacted]</path>
+---
+name: organize-git-commits
+description: Organize existing Git changes into a suitable branch and focused local commits when asked to commit or organize the work.
+---
+
+# Organize Git commits
+
+Follow repository instructions and conventions. Invocation to organize and commit authorizes creating local branches and commits. Do not push, create a pull request, amend commits, rewrite history, discard changes, or modify remote state without separate authorization.
+
+1. Before changing Git state, inspect the current branch and HEAD, staged and unstaged diffs, renames and deletions, and untracked files. Read relevant changes and surrounding context to understand their purpose and scope. Check for an ongoing merge, rebase, cherry-pick, or unresolved conflicts; stop before changing Git state if they prevent safe organization.
+2. On `master`, create a descriptive branch at the current HEAD while preserving local changes. Follow the repository's branch naming convention, or choose a concise name reflecting the work; resolve name collisions with a different name, never by overwriting a branch. On any other branch, continue there.
+3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
+4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
+5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
+6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+</skill>
+```
+
+### Assistant progress
+
+```text
+I’m applying the commit organization workflow again. I’ll inspect the current branch and all pending changes, including the required log entry left from the previous interaction, before deciding whether anything is ready for a focused commit.
+```
+
+```text
+The pending changes are one cohesive update: Python setup and dependency guidance moved under `backend/`, and the IFIX instructions and interaction log were updated to match. The root and backend dependency manifests have the same contents, and the local `backend/.venv` is ignored. I’m checking the target branch name and whitespace before staging this set.
+```
+
+```text
+The staged diff is a single move of the backend Python setup: `requirements.txt` is a 100% rename into `backend/`, setup commands and agent guidance point to `backend/.venv`, and the log records the preceding request. I’m committing those related files together.
+```
+
+### Assistant
+
+```text
+Created branch `codex/backend-python-environment` and committed the backend Python setup change:
+
+- `5d30d60` — `build: move Python setup under backend`
+
+The only remaining worktree change is the required new entry in `docs/agent-log/LOG.md`. It records this request and reply, with the local skill path redacted, and remains unstaged so this final response can be recorded verbatim. No tests were run in this commit-organization turn.
+```
