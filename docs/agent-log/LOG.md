@@ -1666,3 +1666,72 @@ For example, the 2025 file is named `IFIX_2025_Evolucao_Diaria.csv`. The current
 The command prints which years were saved, updated or unchanged, plus any errors. It also keeps a `data/ifix/manifest.json` file with source and retrieval details. If a previously downloaded file changes, its earlier version is backed up under `data/backups/ifix/<year>/`.
 
 You can safely run the command again to check for updates; unchanged files are left in place. The files retain B3’s original format rather than being converted into a daily series.
+
+## 2026-11-03 16:18:33 America/Sao_Paulo
+
+### User
+
+```text
+[$organize-git-commits]([redacted])
+```
+
+### User
+
+```text
+<skill>
+<name>organize-git-commits</name>
+<path>[redacted]</path>
+---
+name: organize-git-commits
+description: Organize existing Git changes into a suitable branch and focused local commits when asked to commit or organize the work.
+---
+
+# Organize Git commits
+
+Follow repository instructions and conventions. Invocation to organize and commit authorizes creating local branches and commits. Do not push, create a pull request, amend commits, rewrite history, discard changes, or modify remote state without separate authorization.
+
+1. Before changing Git state, inspect the current branch and HEAD, staged and unstaged diffs, renames and deletions, and untracked files. Read relevant changes and surrounding context to understand their purpose and scope. Check for an ongoing merge, rebase, cherry-pick, or unresolved conflicts; stop before changing Git state if they prevent safe organization.
+2. On `master`, create a descriptive branch at the current HEAD while preserving local changes. Follow the repository's branch naming convention, or choose a concise name reflecting the work; resolve name collisions with a different name, never by overwriting a branch. On any other branch, continue there.
+3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
+4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
+5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
+6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+</skill>
+```
+
+### Assistant progress
+
+```text
+I’m applying the `organize-git-commits` workflow: I’ll inspect the repository state and change boundaries first, then organize only the existing work into focused local commits.
+```
+
+```text
+The repository is cleanly on `master` with no staged selections or active merge/rebase/cherry-pick. The pending changes look like one coordinated backend package move: the IFIX getter is being moved under `internet_data_getter`, with its tests, guidance, docs, and manifest updated together. I’m checking the new package and log boundaries now before choosing commit contents.
+```
+
+```text
+The initial branch and staging commands were blocked because `.git` is mounted read-only in the default sandbox; no Git state changed. The organize workflow you invoked explicitly authorizes local branches and commits, so I’m requesting the required sandbox elevation for those local Git operations only.
+```
+
+```text
+The staged diff groups the implementation move, shared all-or-selected getter entry points, tests relocated inside the module, and matching architecture/usage guidance. I’m leaving the manifest’s retrieval-time refresh separate because its content hashes are unchanged and it records an acquisition event, not the code refactor.
+```
+
+```text
+`git diff --check` found trailing whitespace in a verbatim user message already recorded in the interaction log. I’ll preserve that exact wording and commit the reviewed staged diff without normalizing the log entry.
+```
+
+```text
+The code and documentation refactor is committed as `460d266`. The only remaining pre-existing change is the manifest’s refresh time for all years; its hashes are stable, so I’m recording that provenance update in a separate data commit.
+```
+
+### Assistant
+
+```text
+Created branch `codex/internet-data-getter-registry` and organized the work into two local commits:
+
+- `460d266` — `feat: generalize internet data getter entry points`
+- `eacd00c` — `data: refresh IFIX retrieval timestamps`
+
+The only remaining worktree change is the required new entry in `docs/agent-log/LOG.md`; it records your request and this reply, with the local skill path redacted. I left this final log tail unstaged so the reply can be recorded verbatim. No tests were run.
+```
