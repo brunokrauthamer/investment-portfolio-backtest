@@ -336,3 +336,15 @@ Created the project-only setup:
 Validation and independent scenario review passed. A full feature run hasn’t been tested yet.
 
 Ready for your approval. To use it, invoke `$feature-workflow` and describe the feature.
+
+## 2026-11-02 — Feature workflow usage question
+
+**User:**
+
+the feature workflow was used in this thread or only created? im asking because i saw sub-agent was triggered here. the skill will be used automatically or only when I specify I want it?
+
+**Assistant:**
+
+The feature workflow was created here, but it wasn’t run to build a feature. The sub-agent you saw was an independent reviewer I asked to inspect the new workflow and test its scenarios; it was not the workflow’s tech-lead or implementation cycle.
+
+It can be selected automatically: this project’s skill does not disable implicit invocation, and Codex may choose it when your request matches the skill description. For reliable use, start a feature request with `$feature-workflow`. [OpenAI’s skill documentation](https://learn.chatgpt.com/docs/build-skills) explains that skills can be explicitly invoked or implicitly selected; [the subagent documentation](https://learn.chatgpt.com/docs/agent-configuration/subagents) explains that project or skill instructions can trigger agents.
