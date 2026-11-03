@@ -1,0 +1,7 @@
+{
+  "description": "Maintain and commit the privacy-reviewed project interaction log.",
+  "hooks": {
+    "UserPromptSubmit": [{"hooks": [{"type": "command", "command": "python3 \"$(git rev-parse --show-toplevel)/docs/agent-log/prompt_hook.py\"", "commandWindows": "powershell -NoProfile -Command \"python (Join-Path (git rev-parse --show-toplevel) 'docs/agent-log/prompt_hook.py')\"", "timeout": 10}]}],
+    "Stop": [{"hooks": [{"type": "command", "command": "python3 \"$(git rev-parse --show-toplevel)/docs/agent-log/commit_hook.py\"", "commandWindows": "powershell -NoProfile -Command \"python (Join-Path (git rev-parse --show-toplevel) 'docs/agent-log/commit_hook.py')\"", "timeout": 30, "statusMessage": "Committing the interaction log"}]}]
+  }
+}
