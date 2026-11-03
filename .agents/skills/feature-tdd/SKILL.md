@@ -13,7 +13,7 @@ For each behavior:
 3. Refactor while tests remain green. Apply SOLID to actual responsibilities/dependencies; avoid speculative interfaces and layers.
 4. Record test path/name, commands, actual red reason and green/refactor results in the task's `verification.md`, with criterion and revision references. Never reconstruct an unobserved red result after the fact.
 
-Use realistic boundaries and integration tests where unit tests cannot demonstrate the requirement. For an existing implementation defect, first reproduce it with a failing regression test. For a documentation-only or non-executable change, explain why an executable red step does not apply and verify the actual artifact; do not add tests that mirror prose.
+Use realistic boundaries and integration tests where unit tests cannot demonstrate the requirement. For each confirmed implementation defect found during implementation, review, or QA, write a specific regression test that reproduces the reported issue and observe it fail before fixing the defect; then run it to demonstrate the fix and record the evidence. This applies in both initial and correction cycles, including late repairs. For a documentation-only or non-executable change, explain why an executable red step does not apply and verify the actual artifact; do not add tests that mirror prose.
 
 Preserve requirements and existing valid tests. Do not delete, skip, loosen or change expected behavior merely to pass. If a test/spec is wrong or architecture is insufficient, present evidence to the lead and wait for the appropriate decision.
 
