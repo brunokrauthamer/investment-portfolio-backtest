@@ -132,3 +132,207 @@ Suggested GitHub repository description:
 > An investment portfolio backtesting dashboard for exploring historical performance with custom allocations and rebalancing rules.
 
 A short `README.md` would be worthwhile now: it would give visitors the project’s purpose, intended features, and planned Python and TypeScript stack. Keep it brief until the architecture and setup are decided; there’s no need for a separate architecture document yet.
+
+
+## 2026-11-02 — Feature workflow setup (America/Sao_Paulo)
+
+**User:**
+
+Create subagents toml
+
+developer&#x20;
+description -> implements a planed feature using TDD (coder)
+model -> gpt 6 luna
+effort -> max
+
+developer-correction
+description -> fixes an implementation with problems
+model -> gpt 6.1 terra
+effort -> medium
+
+qa&#x20;
+description -> independently tests integrated behavior against approved acceptance criteria
+model -> gpt 6 luna
+effort -> max
+
+reviewer
+description -> independently reviews an integrated change against the specification, architecture and tests.
+model -> 6.1 sol
+effort -> high
+
+tech-lead
+description ->Coordinates discovery, specifications, planning, integration and evidence for a feature
+model -> 6.1 terra
+effort -> xhigh
+
+tech-lead-correction
+description ->Coordinates a feature after the approved correction-cycle policy is triggered.
+model -> 6.1 sol
+effort -> high
+
+
+I want to create one main skill (feature-workflow) to develop new features.&#x20;
+This skill must use the subagents to develop a new feature.
+
+Its up to you create orbital skills to help the work to be done (for exemplo a tdd skill, or a skill to create documentati, or others)
+
+The cycle is:
+
+everytime in use this feature-workflow skill it starts with the techlead. He should brainstorme with me to understand exactly what i want to be done. He may ask me questions to understand blind points. When its enough, show me the plan and specs for my approval. It must be created a dir into docs/tasks with the name of the task, and should be recorded the plan, the specs, the state of implementations and verification files.
+
+Now its time for developer sub-agent. It must develop the plan with TDD. And after that update the state.json file in docs/task
+
+Reviewer now should review the implementation and update state.json and create review\.md file in the folder
+
+If there was something to be redone, developer should do it again.
+
+Thi cycle between developer and reviwer should last no more than 3 iteractions
+
+After that, qa sub-agent should verify if everything is ok.
+
+If there is some problem with implementation or architecture, it should go back to the improovment of the technical plan, but now, done by the tech-lead-correction sub-agent
+
+
+So the cycle restarts from there, but now instead of developer sub-agent, we use developer-correction sub-agent
+
+If at the end of the cycle there are still problems, human intervention is needed
+
+After all there should be documentation and final verifications
+
+After that, human approval is also needed
+
+You think we should get another sub-agent just to write in files docs/tasks, other could read those files maybe, other could write docs. Brainstorm that with me
+
+The state.json could be something like this:
+
+{\
+&#x20; "task_id": "001",\
+&#x20; "stage": "implementation",\
+&#x20; "spec_revision": "identifier-of-the-approved-specification",\
+&#x20; "code_revision": "identifier-of-the-evaluated-snapshot",\
+&#x20; "model_policy": "initial",\
+&#x20; "correction_cycle": 0,\
+&#x20; "model_switch_reason": null,\
+&#x20; "active_assignments": [],\
+&#x20; "acceptance_results": [],\
+&#x20; "open_findings": [],\
+&#x20; "attempts_without_progress": 0,\
+&#x20; "next_action": "implement the first behavior"\
+}
+
+
+For web features with user-facing behavior, QA must test the integrated feature in a browser using the available browser tooling.
+
+Keep the architecture explicit and apply SOLID in proportion to the problem.
+
+Keep AGENTS.md files small, with local guidance in subdirectories.
+
+\| Role | Receives | Delivers | Boundaries |\
+\| --- | --- | --- | --- |\
+\| Tech lead | Conversation with the user and existing architecture, Specification, decisions, and state | Specification, plan, boundaries, and risks, Delegation, integration, state, and final report | Does not expand scope without a decision,  Does not substitute agents' opinions for evidence |\
+\| Developer | A bounded slice of the plan | Code, tests, TDD evidence, and affected documentation | Does not weaken requirements to make tests pass |\
+\| Reviewer | Specification, architecture, and integrated diff | Findings with location, consequence, and evidence | Does not take over the author's work during review |\
+\| QA | Acceptance criteria and executable system | Result for each criterion, adverse scenarios, and failure reproduction | Does not redefine expectations to match implemented behavior |
+
+\| Workflow stage or activity | Responsible role and model assignment |\
+\| --- | --- |\
+\| Brainstorming, interview, specification, acceptance criteria, architecture, and technical planning | Coordinator / tech lead — GPT-6.1 Terra, extra high |\
+\| Delegation, state, handoffs, integration coordination, and classification or routing of findings | Coordinator / tech lead — GPT-6.1 Terra, extra high |\
+\| Tests first, implementation, refactoring, regression fixes, and affected documentation or instruction updates | Developer — GPT-6 Luna, max |\
+\| Independent inspection of the integrated diff, tests, architecture compliance, and fixes | Reviewer — GPT-6.1 Sol, high |\
+\| Acceptance scenarios, adverse cases, behavior verification of the integrated version, and affected QA reruns | QA — GPT-6 Luna, max |\
+\| Diagnosis of stalled corrections and architectural replanning | Coordinator / tech lead — GPT-6.1 Terra, extra high |\
+\| Final evidence audit and delivery for human review | Coordinator / tech lead — GPT-6.1 Terra, extra high, using reviewer and QA results |
+
+
+**Documentation and work records**
+
+\| Type of information | Recommended destination |
+\| --- | --- |
+\| How to install, run, and contribute | README and development guide |
+\| Current architecture | `docs/architecture/` |
+\| Significant decision, alternatives, and consequences | ADR in `docs/decisions/` |
+\| Feature requirements and boundaries | `docs/tasks/\<id>/spec.md` |
+\| Plan and stage dependencies | `docs/tasks/\<id>/plan.md` |
+\| Acceptance, review, and results of checks run | `docs/tasks/\<id>/verification.md` |
+\| Coordination state and outstanding items | `docs/tasks/\<id>/state.json` |
+\| Rule that changes how agents should work | AGENTS.md at the appropriate scope |
+\| User-visible change | Changelog or release notes, when applicable |
+\| Complete diff and authorship of changes | Git and PRs |
+
+**Automatic maintenance of AGENTS.md files**
+
+The maintenance skill should ask of the process: does this discovery change how a future agent should work in this area? If so, update the instruction at the smallest appropriate scope. Otherwise, use the documentation or task record.
+
+Proposed procedure:
+
+1\. Inspect the diff and changed commands, paths, or boundaries.
+2\. Update only affected, durable guidance.
+3\. Remove or replace obsolete instructions.
+4\. Check links, examples, and commands against the actual project.
+5\. Review instruction changes alongside the code.
+6\. If a modified rule needs to apply to the current execution, explicitly reread it; do not assume automatic reloading.
+
+Do not turn isolated failures into universal prohibitions. Do not reduce quality requirements to make a task appear complete. Changes to autonomy policy, authorizations, or acceptance criteria require the appropriate decision.
+
+Suggested editorial target: keep the root file short, normally a few dozen lines. The exact length should serve the content; avoid truncating essential information to meet an arbitrary count.
+
+**Assistant:**
+
+I’ll use the skill-creator and openai-docs skills to check the subagent configuration format and build the workflow. I’ll also work through the handoffs and file ownership so the agents can share task records without conflicting edits.
+
+**Assistant — questions:**
+
+Should these agents and skills apply only to this project, or to all your Codex projects?
+
+I recommend keeping six agents: each writes its own evidence, the tech lead coordinates state, and documentation stays with the developer. Add a documentation agent only when the documentation warrants a separate assignment. Which approach do you prefer?
+
+I’ll interpret the limit as up to three developer/reviewer rounds in the initial cycle, followed by one correction cycle with up to three rounds, then human intervention if issues remain. I’ll use Sol/high for tech-lead-correction, as specified in your first list. Does that match your intent?
+
+**Assistant:**
+
+I recommend keeping the six roles. Each agent can read the task folder and write its own evidence; a separate records agent would add handoffs without adding independent judgment. Developers can update `state.json` at handoff, reviewers can record their findings, and the tech lead can own stage transitions—with one writer at a time.
+
+The current official format uses one standalone TOML file per agent. I’m checking that format and making approval, retry limits, and stale verification results explicit in the workflow. [Official subagent documentation](https://learn.chatgpt.com/docs/agent-configuration/subagents)
+
+**User:**
+
+<send_user_message_question_reply>
+[{"questionItemId":"[\"request_user_input_async\",\"call_f3337189277b4c5b80806fa6fdd12f9c\",0]","question":"Should these agents and skills apply only to this project, or to all your Codex projects?","answer":"This project"},{"questionItemId":"[\"request_user_input_async\",\"call_f3337189277b4c5b80806fa6fdd12f9c\",1]","question":"I recommend keeping six agents: each writes its own evidence, the tech lead coordinates state, and documentation stays with the developer. Add a documentation agent only when the documentation warrants a separate assignment. Which approach do you prefer?","answer":"Keep the six agents"},{"questionItemId":"[\"request_user_input_async\",\"call_f3337189277b4c5b80806fa6fdd12f9c\",2]","question":"I’ll interpret the limit as up to three developer/reviewer rounds in the initial cycle, followed by one correction cycle with up to three rounds, then human intervention if issues remain. I’ll use Sol/high for tech-lead-correction, as specified in your first list. Does that match your intent?","answer":"Yes, use those rules"}]
+</send_user_message_question_reply>
+
+**Assistant:**
+
+I’ll make this project-only and keep the six agents. The workflow will allow three developer/reviewer rounds in the initial cycle and three in one correction cycle, using Sol/high for the correction tech lead.
+
+I’ll keep TDD and instruction maintenance as two small supporting skills. The main skill will own the sequence, with revised plans requiring approval and final delivery requiring a separate human approval.
+
+**Assistant:**
+
+The draft defines file ownership and ties approvals, review, and QA results to specific versions. That will help prevent a passing result from being reused after the implementation changes.
+
+Next I’ll validate the files and run an independent scenario review, covering failed review rounds, QA failures, interruptions, and unavailable browser tooling.
+
+**Assistant:**
+
+The independent scenario review found no blocking contradictions. It suggested clarifying how late fixes use the remaining round budget; I’ll make that explicit.
+
+I also found that task-folder instructions need to stay in the verification snapshot even though ordinary task records are excluded. I’m tightening that distinction and finishing the file and helper checks.
+
+**Assistant:**
+
+All three skills passed the required validator. The six agent files match your model and effort assignments, and the snapshot checks passed for changed, deleted, and untracked files.
+
+The final independent review is underway. I’ll record its result in `docs/tasks/001-feature-workflow`. These checks validate the setup files and workflow scenarios; a full feature run has not been tested yet.
+
+**Assistant — final:**
+
+Created the project-only setup:
+
+- [Six agent TOMLs](C:/Users/[redacted]/Documents/ChatGPT/investment_portfolio_backtest/.codex/agents) with your requested models and efforts.
+- [$feature-workflow](C:/Users/[redacted]/Documents/ChatGPT/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md), plus TDD and instruction-maintenance skills.
+- [Task records](C:/Users/[redacted]/Documents/ChatGPT/investment_portfolio_backtest/docs/tasks/001-feature-workflow) containing state, review and verification.
+
+Validation and independent scenario review passed. A full feature run hasn’t been tested yet.
+
+Ready for your approval. To use it, invoke `$feature-workflow` and describe the feature.
