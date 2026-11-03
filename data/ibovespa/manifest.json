@@ -1,0 +1,151 @@
+{
+  "files": {
+    "2011": {
+      "filename": "IBOVESPA_2011_Evolucao_Diaria.csv",
+      "period": "2011",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "c232d0921337496042d9241f7ac0a78db625b6c9de0eb0ca31e69aa4da41df9f",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2012": {
+      "filename": "IBOVESPA_2012_Evolucao_Diaria.csv",
+      "period": "2012",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "060faed25b069d7a6d9cba17a5d7cf7f86d933ebb015125a9663205a4f763e6f",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2013": {
+      "filename": "IBOVESPA_2013_Evolucao_Diaria.csv",
+      "period": "2013",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "a0d1412106d3772a73c5a8194eeacdd3ffe7e5dd2517f1ed5dfc3839dfae10e9",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2014": {
+      "filename": "IBOVESPA_2014_Evolucao_Diaria.csv",
+      "period": "2014",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "63c4ca427cd478df2b58a97c0cb65aa3a82926ddd65c3d3f415520f8a04d7b07",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2015": {
+      "filename": "IBOVESPA_2015_Evolucao_Diaria.csv",
+      "period": "2015",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "62da8b746762feb27f15eef3d1e9c7c1fec609af1aa89365fdc43714f094b1f2",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2016": {
+      "filename": "IBOVESPA_2016_Evolucao_Diaria.csv",
+      "period": "2016",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "89f43fb08f83eb3e36865a3adae1affff5591197d452dac70721b0760ff4493e",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2017": {
+      "filename": "IBOVESPA_2017_Evolucao_Diaria.csv",
+      "period": "2017",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "e4e921e24676fdcc45b0d2fa0fcaefe79a458199ed0c3d30c066005b3aba44b7",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2018": {
+      "filename": "IBOVESPA_2018_Evolucao_Diaria.csv",
+      "period": "2018",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "979d195b1054668239e30717035d0deb6c6c5175e435641d6823e8afccbfcf6d",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2019": {
+      "filename": "IBOVESPA_2019_Evolucao_Diaria.csv",
+      "period": "2019",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "d60dd669465b8bdb894122a885f2e6a6a6a4cf8d2265b9a3e8db08bc61990796",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2020": {
+      "filename": "IBOVESPA_2020_Evolucao_Diaria.csv",
+      "period": "2020",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "96f4e9bdfba52cd374d4a368a7064f84543beff5eed415c4507f7e4b999a5e23",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2021": {
+      "filename": "IBOVESPA_2021_Evolucao_Diaria.csv",
+      "period": "2021",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "415dee91c99b8acd30b1d7704a6dc80ff77ba5f4d3fdfa401f9d4dc080c7b7d1",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2022": {
+      "filename": "IBOVESPA_2022_Evolucao_Diaria.csv",
+      "period": "2022",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "6382dc0974cd319b9a566807f2517c5b328d0ce0cf36e498a1019e59b656f878",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2023": {
+      "filename": "IBOVESPA_2023_Evolucao_Diaria.csv",
+      "period": "2023",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "8477a1c881ed4d2aee1dcadd48c075815dfa0ec314df881c220ac30d5dfccc4f",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2024": {
+      "filename": "IBOVESPA_2024_Evolucao_Diaria.csv",
+      "period": "2024",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "50262a0003987d58ff0650faa2580241e0fe84dcf38b243cda29dbcaf9fe3420",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2025": {
+      "filename": "IBOVESPA_2025_Evolucao_Diaria.csv",
+      "period": "2025",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "4a1388484f66b2418b4a4e6d2b9a5c1812eb25ae47624651dc2dd3e8357ff270",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    },
+    "2026": {
+      "filename": "IBOVESPA_2026_Evolucao_Diaria.csv",
+      "period": "2026",
+      "previous_versions": [],
+      "retrieved_at": "2026-11-03T21:19:48Z",
+      "sha256": "74f1046d61fc6011cbf0ff62873a9475435778a1247ecc3e8b1e0aeedb9450b9",
+      "source_filename": "Evolucao_Diaria.csv",
+      "source_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+    }
+  },
+  "pending_updates": {},
+  "schema_version": 1,
+  "source": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br"
+}
