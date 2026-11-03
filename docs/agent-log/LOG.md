@@ -1091,3 +1091,24 @@ Assistant:
 No. The Python currently available in this workspace is not running in a virtual environment, and I found no `requirements.txt` or other Python dependency manifest in the project.
 
 The existing IFIX downloader uses only Python’s standard library, so it does not currently need packages installed from a requirements file. FastAPI is planned but has not yet been set up. A previous setup installed PyYAML in the user-level Python environment for skill validation, not as a project dependency.
+
+## 2026-11-03
+
+User:
+you have to use both allways, make that clear in architecture documentation so every task asked will follow this. Also, create this for the last implemented feature
+
+Assistant:
+I’ll update the project guidance to require a Python virtual environment and `requirements.txt` for future work, then set them up for the existing IFIX downloader.
+
+Assistant:
+The downloader has no third-party dependencies today, so its requirements file can record that explicitly. I’ll also document how to create and use the environment without committing its local files.
+
+Assistant:
+I’m using the maintain-agent-guidance skill to make the requirement visible to future project tasks as well as in the architecture documentation.
+
+Assistant:
+Done. I created the project’s `.venv` and a root `requirements.txt` for the IFIX downloader. The requirements file currently lists no packages because the downloader uses only Python’s standard library.
+
+The architecture documentation and agent guidance now require the virtual environment and an up-to-date requirements file for Python work. The setup and downloader instructions have been updated, and `.venv` is excluded from Git.
+
+I installed from the requirements file in the new environment and ran the existing test suite there: all 22 tests passed.
