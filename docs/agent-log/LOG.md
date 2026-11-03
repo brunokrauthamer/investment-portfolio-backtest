@@ -2017,3 +2017,60 @@ I’ll record your final approval and close the feature workflow.
 ```text
 Your final approval is recorded, including the test-first evidence limitation, and the IBOVESPA feature workflow is marked complete. The implementation still matches the independently reviewed and QA-tested snapshot.
 ```
+
+## 2026-11-03 America/Sao_Paulo
+
+### User
+
+```text
+[$organize-git-commits]([redacted]) 
+```
+
+### User
+
+````text
+<skill>
+<name>organize-git-commits</name>
+<path>[redacted]</path>
+---
+name: organize-git-commits
+description: Organize existing Git changes into a suitable branch and focused local commits when asked to commit or organize the work.
+---
+
+# Organize Git commits
+
+Follow repository instructions and conventions. Invocation to organize and commit authorizes creating local branches and commits. Do not push, create a pull request, amend commits, rewrite history, discard changes, or modify remote state without separate authorization.
+
+1. Before changing Git state, inspect the current branch and HEAD, staged and unstaged diffs, renames and deletions, and untracked files. Read relevant changes and surrounding context to understand their purpose and scope. Check for an ongoing merge, rebase, cherry-pick, or unresolved conflicts; stop before changing Git state if they prevent safe organization.
+2. On `master`, create a descriptive branch at the current HEAD while preserving local changes. Follow the repository's branch naming convention, or choose a concise name reflecting the work; resolve name collisions with a different name, never by overwriting a branch. On any other branch, continue there.
+3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
+4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
+5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
+6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+
+</skill>
+````
+
+### Assistant progress
+
+```text
+I’ll use the organize-git-commits skill to inspect the working tree and existing staging, then create focused local commits for the changes that can be safely grouped.
+```
+
+```text
+The only existing changes are the IBOVESPA source files and their provenance manifest. They form one dataset commit, consistent with the repository’s tracked IFIX data; I’ll check the manifest hashes before committing them on a new branch.
+```
+
+```text
+The first attempt could not create a branch because the sandbox restricts writes to Git metadata. The hash check also encountered a temporary file-access error, so I’ll retry the verification and Git operations with the required access.
+```
+
+### Assistant
+
+```text
+Created branch `data/ibovespa-source` and committed the IBOVESPA dataset:
+
+- `15c8cc9` — `data: add acquired IBOVESPA annual source files`
+
+All 16 source files matched their manifest hashes. The only uncommitted change is `docs/agent-log/LOG.md`, updated to record this interaction. No changes were pushed.
+```
