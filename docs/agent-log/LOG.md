@@ -52,3 +52,36 @@ Make the hook commit those changes in LOG .md file with a message that makes sen
 Added a stop hook that commits changes to `docs/agent-log/LOG.md` with the message `docs: update agent interaction log`. It leaves other staged changes untouched and skips the commit if the log itself already has staged changes.
 
 The hook was tested in a separate repository. Codex must trust the updated hook definition before it runs automatically; the log still depends on the agent writing privacy-reviewed entries.
+
+## 2026-11-02 — Create a Git commit organization skill
+
+**User:**
+
+[$skill-creator]([redacted])&#x20;
+
+Create a reusable Codex skill for organizing existing Git changes into a suitable branch and focused local commits.
+
+The skill should help Codex understand the actual changes, choose meaningful commit boundaries, and preserve the developer’s work and intent. Keep the skill concise, self-contained, and broadly applicable across repositories. Respect repository-specific instructions and conventions when they exist.
+
+The skill should define this workflow:
+
+1. Inspect the repository state before changing it: identify the current branch and HEAD, and examine staged changes, unstaged changes, renamed or deleted files, and untracked files. Read enough of the changes and surrounding context to understand their purpose. Detect an ongoing merge, rebase, cherry-pick, or unresolved conflicts and stop before changing Git state when they prevent safe organization.
+2. If the current branch is `master`, create a descriptively named branch from its current HEAD, preserving the existing local changes. Follow the repository’s branch naming convention when available; otherwise choose a concise name that reflects the work. Handle name collisions safely. If the current branch is anything other than `master`, continue on that branch.
+3. Plan cohesive commits by purpose and dependency, in an order that makes the history easy to review. A commit may include several related files when they form one logical change. Distinct changes in the same file may belong in separate commits when they can be separated safely. Avoid combining unrelated changes in a large catch-all commit.
+4. Respect the existing staging state as evidence of the developer’s intent. Carefully inspect staged and unstaged changes, and do not accidentally include unrelated work or lose previously staged selections. Stage specific files or portions of files as appropriate. Review the staged content before each commit and write a clear, descriptive message that follows the repository’s conventions.
+5. Account for all changes within the requested scope. If the relationship of a change to the requested work is ambiguous, or if changes cannot be separated safely, preserve the affected work and explain what remains and why. Do not include apparent secrets or credentials in commits.
+6. Report the resulting branch, each commit’s short hash and message, and any changes left uncommitted with the reason.
+
+Creating local branches and commits is authorized when the user invokes the skill to organize and commit the changes. Do not push, create a pull request, amend existing commits, rewrite history, discard changes, or modify remote state unless separately requested.
+
+Prefer one skill with clear instructions. Add scripts or supporting files only if they materially improve reliability for this workflow. Do not require a subagent. Validate the skill using the skill creator’s normal validation procedure.
+
+**Agent:**
+
+I’ll use the skill-creator guidance to build and validate a concise, reusable skill for organizing local Git changes.
+
+The skill is drafted. I’m checking the required validator and preparing it for installation in the discoverable skills folder.
+
+Created and installed [$organize-git-commits]([redacted]). It covers repository inspection, branch selection, focused commits, preservation of existing staging, and reporting, with the requested limits on Git operations.
+
+The skill creator’s validator passed. The skill is available for use across repositories.
