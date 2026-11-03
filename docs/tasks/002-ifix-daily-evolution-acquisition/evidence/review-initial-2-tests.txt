@@ -1,0 +1,29 @@
+Restored IFIX 2011 from backups/ifix/2011/20261104T000000.000000Z-4ee73d1ebb10545fa59dc6ecc007ae5ee5fad768b3d34ff3b091273a4b5bdfd8-d773428a-2011.csv
+Displaced active file backed up to [redacted]\data\backups\ifix\2011\20261103T050237.309768Z-c7e94d93eefc97324318ca2105d16902dc51e808206008b178c33cf4334b857d-207d07f0-2011.csv
+test_cli_help_exits_without_making_a_network_request (test_ifix_acquisition.AcquisitionTests) ... ok
+test_cli_reports_destination_errors_without_a_traceback (test_ifix_acquisition.AcquisitionTests) ... ok
+test_no_available_years_is_incomplete (test_ifix_acquisition.AcquisitionTests) ... ok
+test_offline_restore_command_is_available_without_downloading (test_ifix_acquisition.AcquisitionTests) ... ok
+test_partial_source_error_is_reported_and_successes_are_saved (test_ifix_acquisition.AcquisitionTests) ... ok
+test_restore_cli_reports_invalid_year_as_a_command_error (test_ifix_acquisition.AcquisitionTests) ... ok
+test_backup_failure_preserves_active_file (test_ifix_acquisition.FileStoreTests) ... ok
+test_changed_bytes_are_backed_up_before_atomic_replace (test_ifix_acquisition.FileStoreTests) ... ok
+test_invalid_manifest_prevents_active_file_changes (test_ifix_acquisition.FileStoreTests) ... ok
+test_lock_rejects_an_overlapping_run (test_ifix_acquisition.FileStoreTests) ... ok
+test_manifest_with_wrong_json_shape_fails_safely (test_ifix_acquisition.FileStoreTests) ... ok
+test_manifest_write_interruption_keeps_backup_reference_for_rerun (test_ifix_acquisition.FileStoreTests) ... ok
+test_nested_manifest_record_is_rejected_before_active_replacement (test_ifix_acquisition.FileStoreTests) ... ok
+test_replace_failure_preserves_active_file_and_verified_backup (test_ifix_acquisition.FileStoreTests) ... ok
+test_saves_original_bytes_and_manifest (test_ifix_acquisition.FileStoreTests) ... ok
+test_unchanged_bytes_keep_mtime_and_create_no_backup (test_ifix_acquisition.FileStoreTests) ... ok
+test_client_accepts_partial_current_year_with_blank_future_months (test_ifix_acquisition.IfixSourceTests) ... ok
+test_client_decodes_the_original_annual_csv_bytes (test_ifix_acquisition.IfixSourceTests) ... ok
+test_client_observes_pacing_and_reports_http_errors (test_ifix_acquisition.IfixSourceTests) ... ok
+test_client_rejects_invalid_base64_and_wrong_year (test_ifix_acquisition.IfixSourceTests) ... ok
+test_client_rejects_truncated_annual_matrix (test_ifix_acquisition.IfixSourceTests) ... ok
+test_years_cover_2011_through_current_year (test_ifix_acquisition.IfixSourceTests) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.384s
+
+OK

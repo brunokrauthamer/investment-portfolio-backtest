@@ -1,0 +1,217 @@
+{
+  "head": "d9ac063dfb6abaa5f5a421cbf317a32e62dc39f6",
+  "code_revision": "d9ac063dfb6abaa5f5a421cbf317a32e62dc39f6:sha256:bebad6441c5097b9c296a299c3e6d930f2c1987bd45dca806ef566eee931d132",
+  "excluded_records": [
+    "docs/tasks/",
+    "docs/agent-log/"
+  ],
+  "record_exceptions": [
+    "AGENTS.md"
+  ],
+  "files": [
+    {
+      "path": ".agents/skills/feature-tdd/SKILL.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "6bb861fc98cea9d3fb5af7e369f5b52e7748838807e9da69a04356d60411bb4f"
+    },
+    {
+      "path": ".agents/skills/feature-tdd/agents/openai.yaml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "46dda1e507b234f93f94e235c76549f65779e9da44551ab8cfdfa41fc7f4bb15"
+    },
+    {
+      "path": ".agents/skills/feature-workflow/SKILL.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "197ce57a283c9bb0c70bb885509e0a3653976fd269fcb7013ed1c3f50d690dd6"
+    },
+    {
+      "path": ".agents/skills/feature-workflow/agents/openai.yaml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "c21b05202b08fd7cf5317a64c155f736ee6a80696328f9095eebb8e4c306d649"
+    },
+    {
+      "path": ".agents/skills/feature-workflow/references/task-records.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "6d45c7f96132e202c550ed6368d7fd3017f9fb4358e0ca3d7dbfdaabd47253f2"
+    },
+    {
+      "path": ".agents/skills/feature-workflow/scripts/snapshot.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "2d73f9e944dab8c6fdf60c52fe4855be76e3af382ae5446becf77bccefd6cadd"
+    },
+    {
+      "path": ".agents/skills/maintain-agent-guidance/SKILL.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "843bc9a892534513872f38c707f6e2acb571e0dd43ccebef591ec021b1d2f5a4"
+    },
+    {
+      "path": ".agents/skills/maintain-agent-guidance/agents/openai.yaml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "0b2db14e4dec630d7a4244ef024d4482e7e035e723c110b56eaa4410cada1618"
+    },
+    {
+      "path": ".codex/agents/developer-correction.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "c66e2760e3f060d0e220d337e6ed238667e3e2e7697d79f6915b57065daccd44"
+    },
+    {
+      "path": ".codex/agents/developer.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "72568a41b2303639ff13a89f595a82a0e04c5230f0c2b545faf09afffd6bafdd"
+    },
+    {
+      "path": ".codex/agents/qa.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "afa2ecfca505d4749761967983c6423742adbb7403017d4e9a4c21cf00dc49f4"
+    },
+    {
+      "path": ".codex/agents/reviewer.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "f0b4987fe879ee7b815f6cf83f81700352ab6845d900f17b9c8347c36fc85b36"
+    },
+    {
+      "path": ".codex/agents/tech-lead-correction.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "de69875887f002a0aa4f0db731bae3d748033987c892019279f66f6e7fb430bd"
+    },
+    {
+      "path": ".codex/agents/tech-lead.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "50fc2bbce3e60007346dd0d97003642a2750af00ac248d0da11ee7f92085d1f1"
+    },
+    {
+      "path": ".codex/hooks.json",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "7baaa618c42959ff04936dc10ee8a562d9335593157f6b5af9c79606d9509da6"
+    },
+    {
+      "path": "AGENTS.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "49505a07becdf4b08de3efaa28ca80d4fad317fabb7aa6041afdf88c7d6f7c99"
+    },
+    {
+      "path": "README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "f1f379b713f18b1d93e2402daf03ebfa91816446d1442a0a0cdc54d7ba8e8e81"
+    },
+    {
+      "path": "backend/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "06e7536ec16ef84e6b6153abd2f58eb14fa19ca5a0231c1c26cf5e0f4224de1d"
+    },
+    {
+      "path": "backend/src/acquisition/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "1446f7c2e241c0d1e976d1b2df4bc19b8ff1a6a5340768447dad7ec6d50f6a98"
+    },
+    {
+      "path": "backend/src/api/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "c273cfa2f06844ffa86e9b0a363935ba0dc8a87b8517ea04a115db3d7588a358"
+    },
+    {
+      "path": "backend/src/application/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "3e8ff9c85250083bcc69a33a8507dc03d566660368a7c06a1fa1c408b3cbedd5"
+    },
+    {
+      "path": "backend/src/domain/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "13406b348a29e13edabf7accbe6bbca0f369413068d3ddd2f0fe55685a87a1a1"
+    },
+    {
+      "path": "backend/src/storage/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "6a542b0fc9ab4414d9309cdf1935c8974a437473dc6f892bb7bceef57e9c4cae"
+    },
+    {
+      "path": "data/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "cd8e9cc068f1f3dd5b8678de11503c078508fad69fa2b7289d8ccf462ed8908e"
+    },
+    {
+      "path": "docs/project-context.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "2ab23d6603ef99c6ec403b8979e4f091cc0cd6b47f6f5d285c1e836034f20d7a"
+    },
+    {
+      "path": "docs/tasks/AGENTS.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "55f019aa06b2052a149ceaa1c87e66980da80fed89cf755d52ec4ac7e87f9f6a"
+    },
+    {
+      "path": "frontend/AGENTS.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "487ee5a3ccedffaa423633ef660a3c58ec03ac9cc15b0e702cd224a5c72401fe"
+    },
+    {
+      "path": "frontend/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "feb4da8fc421635abb01f78b9e511d38f7cb5af0120b3458a149fcc1ff2cbe99"
+    },
+    {
+      "path": "frontend/src/assets/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "1976db744a32ed999cb1d7f496cd0485711e64b1e85a918692868067876e38bc"
+    },
+    {
+      "path": "frontend/src/components/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "dd53bf6d6acc7b3363debc0a5ec794923eb2082c2d196d85e74b37095ada9f74"
+    },
+    {
+      "path": "frontend/src/pages/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "8f986364d07efb598a0db52c56c0b787c89703a3a7e133ce20f81187912239bb"
+    },
+    {
+      "path": "frontend/src/services/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "13ce0b5fa52e2fa81f83a56c1d8e0406ca3217b1f521b94d3781be5825dabd26"
+    },
+    {
+      "path": "frontend/src/shared/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "7d65bf8d677249e12abbba433431221dc797f23ec623bacb2dd0e2dfe36080e4"
+    },
+    {
+      "path": "frontend/src/store/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "60015105f02e0772624292085945b4216795d172b2a58b2ec2b859d5539890ec"
+    }
+  ]
+}

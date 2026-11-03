@@ -778,3 +778,387 @@ Organized the scaffold on branch `codex/project-scaffold`.
 - `4b3abf9` — `docs: add project structure scaffold`
 
 The only remaining working-tree change is this required interaction log entry.
+
+## 2026-11-03 (America/Sao_Paulo)
+
+### User
+
+```text
+&#x20;[$maintain-agent-guidance](C:\Users\[redacted]\Documents\ChatGPT\investment_portfolio_backtest\\.agents\skills\maintain-agent-guidance\SKILL.md) is going to see what is going on in each directory to write the agents.md in an specific way?
+```
+
+### User — supplied skill
+
+```text
+<skill>
+<name>maintain-agent-guidance</name>
+<path>C:\Users\[redacted]\Documents\ChatGPT\investment_portfolio_backtest\.agents\skills\maintain-agent-guidance\SKILL.md</path>
+---
+name: maintain-agent-guidance
+description: Update small, scoped AGENTS.md instructions when feature work changes durable commands, paths, boundaries or practices that future agents need.
+---
+
+# Maintain agent guidance
+
+Ask: does this discovery change how a future agent should work in this area? If not, use product documentation, architecture, an ADR or the task record.
+
+Inspect the integrated diff and affected commands, paths and boundaries. Update only durable guidance at the smallest appropriate directory scope. Keep the root AGENTS.md short, normally a few dozen lines; keep essential instructions and move local detail into relevant subdirectories rather than truncating it.
+
+Remove or replace obsolete guidance. Verify referenced files, links, examples and commands against the project. Give instruction changes to the reviewer alongside the code. If a modified rule must govern the current execution, explicitly reread it before proceeding; do not assume it reloads automatically.
+
+Do not generalize an isolated failure into a universal prohibition. Do not lower quality requirements to finish a task. Changes to autonomy, authorization or acceptance criteria require the appropriate human decision, not an incidental instruction edit. Preserve privacy and the root interaction-log requirement.
+
+</skill>
+```
+
+### Assistant — progress
+
+I’ll check the skill’s instructions and explain how much directory inspection it calls for.
+
+### Assistant — final
+
+The skill asks the agent to inspect the changes and the affected commands, paths and boundaries, then put durable instructions at the smallest appropriate directory scope. For example, frontend-specific guidance can go in `frontend/AGENTS.md`, while rules that apply throughout the project belong in the root `AGENTS.md`.
+
+It does **not** explicitly require inspecting every directory or creating an `AGENTS.md` in each one. It is intended for updating guidance when feature work reveals something future agents need to know. If you want a full directory-by-directory review of the project, you can ask for that separately.
+
+## 2026-11-03 (America/Sao_Paulo)
+
+### User
+
+```text
+[$feature-workflow](C:\Users\[redacted]\Documents\ChatGPT\investment_portfolio_backtest\\.agents\skills\feature-workflow\SKILL.md)&#x20;
+We want to create a webscraping service responsible to scrape data from [https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IFIX?language=pt-br](https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IFIX?language=pt-br)
+
+it should download all files from 2011 to the most recent available
+```
+
+### User — supplied skill
+
+```text
+<skill>
+<name>feature-workflow</name>
+<path>C:\Users\[redacted]\Documents\ChatGPT\investment_portfolio_backtest\.agents\skills\feature-workflow\SKILL.md</path>
+---
+name: feature-workflow
+description: Develop a new project feature through a tech lead interview, human-approved specification and plan, delegated TDD, independent review and QA, one bounded correction cycle, and final human approval. Resume an existing feature from its task records.
+---
+
+# Feature workflow
+
+Use the six project agents in `.codex/agents/`. Read [the task-record protocol](references/task-records.md) before creating or resuming a task. Do not turn a setup, status, or explanation request into feature execution.
+
+## Coordinator and delegation
+
+Start every invocation with `tech-lead` (GPT-6.1 Terra / xhigh). For an existing correction task, this opening handoff reads state and routes ongoing work to `tech-lead-correction`; it does not reset counters or reapprove anything. The correction lead is GPT-6.1 Sol / high. Only one lead is active at a time.
+
+The main chat relays the lead's interview questions and approval requests to the human, then sends exact answers back to the lead. The lead owns discovery, the plan, delegation, integration, evidence audit, and the final report. The main chat must not silently replace that role.
+
+Spawn by custom agent name when the available tool supports it. Otherwise read the role's TOML and spawn a fresh agent with its exact `developer_instructions`, explicit `model`, and explicit `model_reasoning_effort`; use no inherited conversation when required for overrides. Include the task path, relevant decisions and repository guidance in the assignment. If the tool cannot honor the requested model/effort, report the limitation and request a decision; do not silently substitute. Configuration alone is not evidence that an agent actually ran.
+
+Each assignment carries the approved spec/plan revisions, criterion IDs, bounded files or behavior, input snapshot, deliverables, writer ownership, and return conditions. Wait for dependent work. Respect available concurrency; use sequential handoffs by default. Only the active lead dispatches workers. Review and QA use fresh agents independent of the author, with primary specifications and executable artifacts, not an author's claimed verdict.
+
+## 1. Discover and obtain approval
+
+The lead interviews the user about outcomes, blind spots, adverse cases, constraints and exclusions, using the existing architecture and code. Ask focused questions only while missing answers affect behavior or design.
+
+Create `docs/tasks/<id>-<task-slug>/` with `spec.md`, `plan.md`, `state.json`, `verification.md`, and `review.md`. Use the task name in the directory and the next available ID. Records must distinguish proposed decisions, executed work and observed evidence.
+
+Specify:
+- Stable acceptance IDs (AC-001, ...), observable outcomes, adverse cases and out-of-scope behavior.
+- Architecture: component responsibilities, dependencies, interfaces/data flow, affected boundaries and risks. Apply SOLID in proportion to the problem; justify new abstractions.
+- Ordered implementation slices, test strategy, integrated run instructions, browser scenarios for user-facing web behavior, documentation and final checks.
+
+Show the complete, concrete spec and plan with revision identifiers and links. Set `awaiting_spec_approval` and wait for explicit human approval of both revisions before implementation. Approval of a previous feature or a general workflow is not approval of this feature's design. Record the decision and exact approved revisions.
+
+## 2. Initial implementation and review
+
+Use `developer` (GPT-6 Luna / max), with the sibling [feature-tdd skill](../feature-tdd/SKILL.md). Implement bounded slices with tests first, then integrate the planned change. The developer updates affected documentation, records TDD evidence in `verification.md`, and updates its assigned state fields before returning the writer token.
+
+A round consists of one implementation/fix pass and the following independent integrated review, across the feature, not per slice. Increment the round when dispatching that pass; a failed or abandoned pass consumes its round. Allow at most three rounds in this initial cycle. If a pass fails before producing a reviewable snapshot, record its failure and let the lead route an implementation retry within the remaining budget; at exhaustion use correction planning initially and human intervention in correction. Environment/tool failures remain blocked pending resolution; they do not justify a model switch.
+
+Use `reviewer` (GPT-6.1 Sol / high). Supply approved spec, plan/architecture and the integrated snapshot. The reviewer independently checks the diff, behavior risks, tests, architecture, documentation and instruction changes; writes a dated entry in `review.md`; and updates the assigned review/findings fields in `state.json`. Findings need ID, severity, location, consequence, evidence and related criteria. The reviewer does not edit the implementation or redefine expectations.
+
+The lead routes actionable findings to the developer while rounds remain. For each confirmed implementation defect found during implementation, review, or QA, the active developer must follow the feature-tdd skill: write a specific regression test that reproduces the issue and observe it fail before fixing it, then record the passing result. This also applies to the correction developer and to late repairs. Disputed findings require evidence or a recorded decision; they cannot disappear because the author disagrees. A fix requires independent re-review. If review passes, move to QA immediately; do not spend unused rounds. If round three still has blocking findings, obtain QA's available independent assessment, marked blocked where execution is unsafe or impossible, then enter correction planning. Never call that a pass.
+
+## 3. Independent integrated QA
+
+Use `qa` (GPT-6 Luna / max). Verify every approved criterion on the integrated snapshot, plus adverse cases and relevant regressions. Record expected/actual behavior, reproduction, environment and evidence in `verification.md`, and update assigned acceptance/QA fields.
+
+For web features with user-facing behavior, QA must exercise the integrated feature in a browser through available browser tooling. Unit tests, source inspection, HTTP calls, mock-only flows, and developer screenshots do not replace this. Use the applicable browser/computer-use instructions. Record actual browser actions and observed results. If QA cannot access browser tools, return a blocked result for the lead to arrange tool access or relay QA-directed browser execution with explicit attribution. Never invent a browser pass.
+
+QA does not change code or redefine criteria. Distinguish implementation/architecture failures from environment/tool blockers and spec ambiguities. Resolve tool blockers without charging a correction cycle; bring ambiguous expectations to the human. Code changes after review require renewed review and affected QA on the new snapshot.
+
+## 4. One correction cycle
+
+Trigger correction when initial review exhausts three rounds, or initial QA finds an implementation/architecture defect. Record the evidence, `correction_cycle = 1`, `model_policy = "correction"`, and `model_switch_reason`. Switch to `tech-lead-correction` and `developer-correction` (GPT-6.1 Terra / medium); reviewer and QA keep their original assignments.
+
+The correction lead diagnoses the failure, revises architecture/technical planning as needed, and presents a concrete revised plan for human approval before correction code is written. Spec changes also require explicit approval. Preserve old revisions and evidence. Within the approved scope, keep valid criteria; never reduce expectations to obtain a pass.
+
+Restart implementation/review with the correction developer for at most three rounds, then independent QA. Keep the original counters and use a separate correction round counter. There is no automatic second correction cycle. If correction review exhausts its limit or correction QA still finds implementation/architecture problems, set `needs_human_intervention`, summarize reproductions, evidence, attempted fixes and options, and wait for the human. Do not reset counters by renaming the task or agent. Human-authorized further work requires a recorded new decision.
+
+## 5. Documentation, final checks, and approval
+
+The active developer owns affected documentation. Use the sibling [maintain-agent-guidance skill](../maintain-agent-guidance/SKILL.md) for durable instruction discoveries. No separate records or documentation agent is required.
+
+Update only relevant destinations: README/development guide for usage, `docs/architecture/` for current design, `docs/decisions/` for significant decisions and consequences, release notes for user-visible changes. Task files hold feature-specific evidence; Git holds the complete diff/authorship.
+
+The active lead audits all approved criteria, unresolved findings, review/QA freshness, documentation, and actual final checks. Record commands, outcomes, limitations and artifact references. Changes to application code, tests, configuration or durable documentation after evaluation create a new snapshot; re-review affected changes and rerun affected checks/QA. Records alone do not invalidate a code snapshot. Late code, test, configuration or documentation repairs use the same remaining development-round budget; they do not create free extra rounds. If another repair pass is needed after round three, route the initial cycle to correction planning or the correction cycle to human intervention. Review-only and QA-only reruns on unchanged inputs do not consume a development round.
+
+Only when all required checks and independent evaluations pass on the current snapshot, no blocking findings remain, and no assignments are active, set `awaiting_final_approval`. Present the result, evidence, risks and any explicitly accepted nonblocking items for human review. Wait for explicit final human approval of that spec and snapshot; then record it and set `completed`. Delivery approval does not authorize a commit, push, merge, deployment, publication, or other external action.
+</skill>
+```
+
+### Assistant — progress
+
+I’ll use the feature-workflow skill to investigate the B3 source, define the service with you, and prepare a concrete specification and plan for approval before implementation.
+
+The project has no acquisition code yet, so this service will establish the first data-ingestion path. I’m checking the source’s available files and download behavior alongside the project’s data-safety rules.
+
+### Assistant — final
+
+Before drafting the specification, I need your decisions on four points:
+
+1. Should the service save B3’s files as downloaded, or also convert and merge them into one daily CSV? I recommend saving the original files first.
+2. Should it run when you invoke a command, or automatically on a schedule? I recommend a command for the first increment.
+3. If B3 updates a file already downloaded, should the service replace it after making a recoverable backup? I recommend yes, leaving unchanged files alone.
+4. Do you have permission or a license for the intended automated access and use, or should the plan include confirming the applicable terms before live acquisition? B3’s [general terms](https://www.b3.com.br/main.jsp?doui_processActionId=setLocaleProcessAction&locale=pt_BR&lumA=1&lumII=8AE690F77A1A49BA017A5CE182412193&lumPageId=8AE690F77A1A49BA017A5CDEBBCF67BD) contain index-data restrictions; whether other B3 pages’ automation restrictions apply to this page remains unverified.
+
+The [feature-workflow skill](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md) requires the lead to ask questions where missing answers affect behavior or design. Once you answer, the lead can prepare the specification and plan for your approval.
+
+## 2026-11-03 (America/Sao_Paulo)
+
+### User
+
+```text
+Should the service save B3’s files as downloaded, or also convert and merge them into one daily CSV? I recommend saving the original files first.
+
+Save original first
+
+
+Should it run when you invoke a command, or automatically on a schedule? I recommend a command for the first increment.
+
+on a command
+
+If B3 updates a file already downloaded, should the service replace it after making a recoverable backup? I recommend yes, leaving unchanged files alone.
+
+yes
+
+
+Do you have permission or a license for the intended automated access and use, or should the plan include confirming the applicable terms before live acquisition? B3’s [general terms](https://www.b3.com.br/main.jsp?doui_processActionId=setLocaleProcessAction\&locale=pt_BR\&lumA=1\&lumII=8AE690F77A1A49BA017A5CE182412193\&lumPageId=8AE690F77A1A49BA017A5CDEBBCF67BD) contain index-data restrictions; whether other B3 pages’ automation restrictions apply to this page remains unverified. &#x20;
+
+just download the files, it is for personal use only
+```
+
+### Assistant — progress
+
+I’ll pass these decisions to the feature lead and continue investigating how B3 exposes the files. The specification will cover a manually run download that preserves the originals and backs up changed files.
+
+Your choices are recorded. The first attempt to inspect the page through the browser was blocked by a tool issue, so I’m checking other available ways to verify the download mechanism before presenting the plan.
+
+B3’s pages for other indices show year and semester selectors, but the IFIX download format and available periods are still unverified. The proposed plan will make that source check explicit and require the service to report any periods it cannot retrieve.
+
+### Assistant — final
+
+The proposed [specification s001](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/docs/tasks/002-ifix-daily-evolution-acquisition/spec.md) and [plan p001](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/docs/tasks/002-ifix-daily-evolution-acquisition/plan.md) are ready for your review.
+
+The service would run on an explicit command and discover all IFIX periods B3 offers from 2011 through the latest available period. It would save the original files under `data/ifix/source/`, with a manifest recording their origin and retrieval details. It would not convert or merge the files, generate market data, or run on a schedule.
+
+On later runs, unchanged files would be left untouched. Before replacing a changed file, the service would create and verify a recoverable backup. It would report missing or failed periods and return an error for an incomplete run, while retaining files already downloaded successfully.
+
+The plan calls for inspecting B3’s actual IFIX download flow and applicable access conditions first, then implementing the command with tests, documentation, independent review and QA. The page’s exact file format, available periods and download mechanism remain unverified because the available browser and network access could not inspect them. A live-source check will remain blocked if access cannot be established; it will not be reported as passed.
+
+Do you approve **specification s001 and plan p001** for implementation?
+
+The [feature-workflow skill](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md) explicitly requires us to “wait for explicit human approval of both revisions before implementation.”
+
+## 2026-11-03
+
+### User
+
+# Files pasted by the user:
+
+## "# IFIX daily-evolution acquisition — plan p001 Status: proposed on 2026-11-03 a…": [redacted]
+
+## 2026-11-03
+
+### User
+
+[@Plugin Management](plugin://plugin-management@openai-curated-remote) 
+
+### Assistant — progress
+
+I’ll check what Plugin Management can help with.
+
+### Assistant — final
+
+What would you like to do with Plugin Management: find a plugin, inspect its permissions, or manage a connection?
+
+## 2026-11-03 (America/Sao_Paulo)
+
+### User
+
+```text
+approved
+```
+
+### Assistant — progress
+
+I’ll record your approval of specification s001 and plan p001, then continue with the source inspection and implementation workflow.
+
+The B3 page identifies a CSV download and has year and semester controls. The lead is checking how those controls map to the downloaded files before implementation begins.
+
+The source check confirmed one CSV per year, including a 2011 file and a partial current-year file. Implementation is underway using the same download flow as B3’s page, preserving the CSV bytes.
+
+The developer is working through the download, safe replacement and failure-handling tests. After integration, the workflow calls for separate review and QA against the approved criteria.
+
+B3 returned annual IFIX downloads for every year from 2011 through 2026 during the source check. The implementation uses Python’s standard library; the developer is resolving a test setup issue before review.
+
+The first implementation is still being verified. I’ll report the independent review and live-source QA results once they are available.
+
+The checks completed so far cover annual downloads and safe replacement. The lead is waiting for the full test evidence before handing the integrated service to the reviewer.
+
+The first implementation has 16 passing tests, and a temporary live run retrieved all 16 annual files. Independent review is now checking the implementation and the completeness of its test evidence.
+
+Review found two issues to fix: an incomplete CSV could be accepted, and an interrupted update could leave a backup missing from the manifest. The reviewer is documenting reproductions before the developer addresses them.
+
+The reviewer is finishing the failure reproductions. The fixes will go back through independent review before QA.
+
+The completed review found four issues, including malformed manifest handling and the backup restore instructions. The lead is routing them into the next test-driven fix round.
+
+The second development round is addressing all four review findings, including the restore procedure. Each reported defect is being covered by a regression test before its fix.
+
+The repair round is still in progress. Once the fixes are integrated, the reviewer will evaluate the updated snapshot and its regression tests.
+
+All four review findings have now been reproduced in failing tests. The developer also found two test mocks that masked errors and is correcting those as part of the repair.
+
+The fixes and regression checks are still underway. The validation is being based on the CSV structure observed from B3, including blank months in the current year.
+
+The developer is completing the regression suite and preparing the updated snapshot for independent review.
+
+The updated service is still being prepared for review; the previous review’s findings remain open until the new snapshot is independently checked.
+
+The repaired version now passes 22 tests, and another live run retrieved all 16 years into a temporary directory. The developer is finalizing the evidence for re-review.
+
+The lead is waiting for the developer’s completed handoff; the 22-test result and live download still need independent verification.
+
+A fresh reviewer is now checking the repairs, particularly interrupted updates and offline restoration. The incomplete test-first evidence from the first round remains recorded for review.
+
+The independent re-review is in progress. QA will follow if the reviewer confirms the fixes and finds no blocking issues.
+
+Independent re-review passed all four fixes and reran the 22 tests successfully. QA is now checking the approved requirements, including the live B3 source.
+
+Independent QA is still exercising the service and its failure cases against the approved specification.
+
+QA is checking recovery paths and comparing downloaded files with B3’s responses. The results will determine whether the service is ready for your final review.
+
+QA passed all seven acceptance criteria, including byte-for-byte checks against B3 for the earliest and latest files. Those checks used temporary files, so the lead is now running the command to populate the project’s data directory.
+
+The project data directory now contains all 16 annual files, from 2011 through 2026. The lead is refreshing the final checks on that state.
+
+The saved files have a matching manifest, and the 2026 file contains data through October 30. Final verification is checking the populated project directory.
+
+The download and manifest are in place. The final independent checks are still running before the lead requests your delivery approval.
+
+### Assistant — final
+
+The service is implemented, and all 16 annual IFIX files from **2011 through 2026** are saved in [data/ifix/source](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/data/ifix/source). The latest file contains data through October 30, 2026.
+
+To check for updates, run:
+
+```powershell
+python -m backend.src.acquisition.ifix
+```
+
+Unchanged files are left alone; changed files receive a verified backup before replacement. The [usage guide](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/src/acquisition/README.md) explains the command and recovery procedure.
+
+Independent review and QA passed all seven acceptance criteria. The 22 tests passed, all saved files matched their manifest hashes, and QA compared the earliest and latest files byte for byte with B3. The [verification record](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/docs/tasks/002-ifix-daily-evolution-acquisition/verification.md) and [review record](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/docs/tasks/002-ifix-daily-evolution-acquisition/review.md) contain the evidence.
+
+One process limitation remains: the first development round did not record a failing test before implementation for every behavior. That history cannot be reconstructed; the four defects later found in review were reproduced in failing tests before repair and independently rechecked.
+
+Do you approve the final result for **specification s001 and plan p001**, and accept that recorded test-evidence limitation? The evaluated snapshot is `f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c`.
+
+The [feature-workflow skill](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md) requires explicit final approval of the specification and snapshot before marking the task complete.
+
+## 2026-11-03
+
+User:
+Are you using virtual environment for python? there are requirements.txt?
+
+Assistant:
+I’ll check the project’s Python setup and dependency files.
+
+Assistant:
+No. The Python currently available in this workspace is not running in a virtual environment, and I found no `requirements.txt` or other Python dependency manifest in the project.
+
+The existing IFIX downloader uses only Python’s standard library, so it does not currently need packages installed from a requirements file. FastAPI is planned but has not yet been set up. A previous setup installed PyYAML in the user-level Python environment for skill validation, not as a project dependency.
+
+## 2026-11-03
+
+User:
+you have to use both allways, make that clear in architecture documentation so every task asked will follow this. Also, create this for the last implemented feature
+
+Assistant:
+I’ll update the project guidance to require a Python virtual environment and `requirements.txt` for future work, then set them up for the existing IFIX downloader.
+
+Assistant:
+The downloader has no third-party dependencies today, so its requirements file can record that explicitly. I’ll also document how to create and use the environment without committing its local files.
+
+Assistant:
+I’m using the maintain-agent-guidance skill to make the requirement visible to future project tasks as well as in the architecture documentation.
+
+Assistant:
+Done. I created the project’s `.venv` and a root `requirements.txt` for the IFIX downloader. The requirements file currently lists no packages because the downloader uses only Python’s standard library.
+
+The architecture documentation and agent guidance now require the virtual environment and an up-to-date requirements file for Python work. The setup and downloader instructions have been updated, and `.venv` is excluded from Git.
+
+I installed from the requirements file in the new environment and ran the existing test suite there: all 22 tests passed.
+
+## 2026-11-03
+
+User:
+everytime now the project is runned, it will be on venv?
+
+Assistant:
+I’ll check whether the project enforces the environment or relies on the documented commands.
+
+Assistant:
+Not automatically in every case. The documented command explicitly uses `.venv`, and the project instructions require future Python work to use it. But someone can still run the code with a different Python interpreter; the project does not currently block that.
+
+On Windows, run the downloader from the project root with:
+
+```powershell
+.venv\Scripts\python -m backend.src.acquisition.ifix
+```
+
+That command always selects the project’s virtual environment, without needing to activate it first.
+
+## 2026-11-03 02:22:57 America/Sao_Paulo (UTC-03:00)
+
+### User
+
+```text
+[$organize-git-commits](C:\Users\[redacted]\\.codex\skills\organize-git-commits\SKILL.md)
+```
+
+### Assistant — progress
+
+I’ll inspect the current branch and the pending log change first. If it’s still the only change, I’ll commit it separately as an agent-log update and preserve the current interaction’s log entry as instructed.
+
+The working tree now contains an IFIX daily-data acquisition feature on `master`, not just the earlier log entry: backend code and tests, acquired CSVs, task evidence, and related documentation are present, with nothing staged. I’ll inspect how these pieces relate and then group only coherent, reviewable parts.
+
+The changes form one IFIX acquisition feature plus its 16 original B3 files. The task records also disclose that final human acceptance is still pending; I’ll preserve that status. One test-output file contains a local Windows temp path with the account name, so I’ll redact that path while keeping the test result intact.
+
+I’ve staged the implementation, tests, operating docs, and task evidence as the first commit; the raw dataset remains separate for traceability. The staged whitespace check is clean, and the task records still show final acceptance and one process-evidence item pending.
+
+Both commits are in place: the acquisition implementation and task evidence, followed by the separate source-data commit. The repository was clean after those commits; I’m adding this turn’s required log entry now. The task’s recorded final-approval status remains unchanged.
+
+### Assistant — final
+
+Organized the IFIX acquisition on branch `codex/ifix-acquisition` in two commits:
+
+- `4f5e47c` — `feat: add B3 IFIX source acquisition`
+- `c024ef9` — `data: add acquired IFIX annual source files`
+
+I redacted a local Windows temp path from the committed test output. Both staged diffs passed `git diff --cached --check`; tests were not rerun.
+
+The task record still shows final human acceptance pending, including RF-005 disposition. The only remaining working-tree change is this required interaction-log entry.

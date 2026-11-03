@@ -7,4 +7,4 @@ This project will help people explore how hypothetical investment portfolios wou
 - `data/`: reserved for acquired historical datasets.
 - `docs/project-context.md`: confirmed decisions, data safety requirements and open questions.
 
-The project is at the directory and documentation stage: there is no application to start, no data or data acquisition implementation, and no configured application checks. Data sources and financial conventions will be agreed before implementation. No synthetic market data is included.
+The backend provides an explicit IFIX daily-evolution downloader. Set up the project virtual environment as described in the [download and recovery instructions](backend/src/acquisition/README.md), then run `.venv\Scripts\python -m backend.src.acquisition.ifix` from the repository root on Windows; it preserves B3's annual source files for 2011 through the current year under `data/ifix/source/`. No application startup or module import initiates a network request. Other data sources and financial conventions remain to be agreed before implementation. No synthetic market data is included.

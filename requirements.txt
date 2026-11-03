@@ -1,0 +1,2 @@
+# The IFIX downloader currently uses only the Python standard library.
+# Add Python project dependencies here as they are introduced.

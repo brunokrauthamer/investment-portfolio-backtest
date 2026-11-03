@@ -1,3 +1,3 @@
 # Data
 
-This directory is reserved for acquired historical datasets. No datasets are included yet. Before implementing acquisition or updates, agree on sources and conventions and define active-data and separate backup locations, naming and restore procedures as required in [project context](../docs/project-context.md).
+This directory holds acquired historical datasets. The IFIX downloader stores original B3 annual files in `ifix/source/` and its metadata in `ifix/manifest.json`; updates place recoverable prior versions under `backups/ifix/<year>/`. Do not use backup files as active inputs. See [acquisition instructions](../backend/src/acquisition/README.md) for download and restore steps.

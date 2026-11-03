@@ -1,0 +1,221 @@
+{
+  "snapshot": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c",
+  "prior_snapshot": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:a130928277e0cc11c444d8e0cbc15d2b3a8a0c0be35d6cda56bde9ad35f10420",
+  "added": [
+    "data/ifix/manifest.json",
+    "data/ifix/source/IFIX_2011_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2012_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2013_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2014_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2015_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2016_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2017_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2018_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2019_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2020_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2021_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2022_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2023_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2024_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2025_Evolucao_Diaria.csv",
+    "data/ifix/source/IFIX_2026_Evolucao_Diaria.csv"
+  ],
+  "removed": [],
+  "changed": [],
+  "checks": "All 16 annual CSVs match manifest hashes, source identity, period/name, source header and matrix; no lock, temporary files or pending updates; observed dates are valid calendar dates; no financial completeness inference.",
+  "observation": "Both summary rows in the original exports are labelled MINIMO with an accented I. No correction or financial interpretation was applied. The independent check initially assumed min/max labels, then checked the actual source structure without treating that assumption as a product defect.",
+  "annual_files": [
+    {
+      "year": 2011,
+      "bytes": 2741,
+      "sha256": "8b338666afc34865d00af732898ea2cd58cdc1bc8b1fe535983fffe2bf4a8d20",
+      "populated_cells": 249,
+      "first_observed_date": "2011-01-03",
+      "last_observed_date": "2011-12-29",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2012,
+      "bytes": 2755,
+      "sha256": "70e0e299197ac2dc99af19fb2a4ebc0ad11bbddd9aa07c32fb7e04036f9fa7ef",
+      "populated_cells": 246,
+      "first_observed_date": "2012-01-02",
+      "last_observed_date": "2012-12-28",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2013,
+      "bytes": 2771,
+      "sha256": "1680b46191e169b9ae0795303ec89fbb35bd78facdba837127986650372ee9f5",
+      "populated_cells": 248,
+      "first_observed_date": "2013-01-02",
+      "last_observed_date": "2013-12-30",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2014,
+      "bytes": 2771,
+      "sha256": "fcf72a2e8b5a0304e331e29e64cafd4cce791df39e5f056efe816d176d53ab8d",
+      "populated_cells": 248,
+      "first_observed_date": "2014-01-02",
+      "last_observed_date": "2014-12-30",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2015,
+      "bytes": 2755,
+      "sha256": "32de20aa166ac50e53b5e62589dce4613eb2d72a041446f5db785d38119b67d5",
+      "populated_cells": 246,
+      "first_observed_date": "2015-01-02",
+      "last_observed_date": "2015-12-30",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2016,
+      "bytes": 2779,
+      "sha256": "8305869f43fd832b0cdc32bcb0d753c457ee9e6b090fcaee5d4ea68ed904e1e4",
+      "populated_cells": 249,
+      "first_observed_date": "2016-01-04",
+      "last_observed_date": "2016-12-29",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2017,
+      "bytes": 2755,
+      "sha256": "85a1a50a3008d33831fdf83551ec489635ba6e0f47a24c2a05c7aa92d8c35938",
+      "populated_cells": 246,
+      "first_observed_date": "2017-01-02",
+      "last_observed_date": "2017-12-28",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2018,
+      "bytes": 2747,
+      "sha256": "3bc5292ff0de82bc9347b11c697e63982028d3694c06388689b11209df40ce0a",
+      "populated_cells": 245,
+      "first_observed_date": "2018-01-02",
+      "last_observed_date": "2018-12-28",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2019,
+      "bytes": 2771,
+      "sha256": "baf5758fa2934b7dc68e37a255d7102a1a5d74275a6f19c69812e15217de6ed8",
+      "populated_cells": 248,
+      "first_observed_date": "2019-01-02",
+      "last_observed_date": "2019-12-30",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2020,
+      "bytes": 2779,
+      "sha256": "93748f6402c6f558a410515914cdec1a26394e79d0ef50e23e5ef12f6e3451e9",
+      "populated_cells": 249,
+      "first_observed_date": "2020-01-02",
+      "last_observed_date": "2020-12-30",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2021,
+      "bytes": 2763,
+      "sha256": "3251fd1c20f661051cbf64c1910957d6cd566ae986ac0fbeb21496b98cd6723d",
+      "populated_cells": 247,
+      "first_observed_date": "2021-01-04",
+      "last_observed_date": "2021-12-30",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2022,
+      "bytes": 2787,
+      "sha256": "8085aedf1ef36437315a02521cb6e1ce9e892c849bd0656e55cc10f00630175b",
+      "populated_cells": 250,
+      "first_observed_date": "2022-01-03",
+      "last_observed_date": "2022-12-29",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2023,
+      "bytes": 2771,
+      "sha256": "d0fdd4d23da721aea04cf901786af38b3beacb34fc93a8798c7b5e4e76e049c7",
+      "populated_cells": 248,
+      "first_observed_date": "2023-01-02",
+      "last_observed_date": "2023-12-28",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2024,
+      "bytes": 2795,
+      "sha256": "a5ee3f7f1fb5e119fb9967bb6f2c917ff15a0603fdd77a6098e7883af1e771d4",
+      "populated_cells": 251,
+      "first_observed_date": "2024-01-02",
+      "last_observed_date": "2024-12-30",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2025,
+      "bytes": 2787,
+      "sha256": "4b80aad9131e6c003e3b954edb27e85b204060825531c301ceb13fe1ada62255",
+      "populated_cells": 250,
+      "first_observed_date": "2025-01-02",
+      "last_observed_date": "2025-12-30",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    },
+    {
+      "year": 2026,
+      "bytes": 2419,
+      "sha256": "48aed9dcc56b44d6b651a4bb20b937606919121ecddffbebb08835b6dcc1050f",
+      "populated_cells": 208,
+      "first_observed_date": "2026-01-02",
+      "last_observed_date": "2026-10-30",
+      "summary_labels": [
+        "M\u00cdNIMO",
+        "M\u00cdNIMO"
+      ]
+    }
+  ]
+}
