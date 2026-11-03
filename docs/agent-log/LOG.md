@@ -1112,3 +1112,22 @@ Done. I created the project’s `.venv` and a root `requirements.txt` for the IF
 The architecture documentation and agent guidance now require the virtual environment and an up-to-date requirements file for Python work. The setup and downloader instructions have been updated, and `.venv` is excluded from Git.
 
 I installed from the requirements file in the new environment and ran the existing test suite there: all 22 tests passed.
+
+## 2026-11-03
+
+User:
+everytime now the project is runned, it will be on venv?
+
+Assistant:
+I’ll check whether the project enforces the environment or relies on the documented commands.
+
+Assistant:
+Not automatically in every case. The documented command explicitly uses `.venv`, and the project instructions require future Python work to use it. But someone can still run the code with a different Python interpreter; the project does not currently block that.
+
+On Windows, run the downloader from the project root with:
+
+```powershell
+.venv\Scripts\python -m backend.src.acquisition.ifix
+```
+
+That command always selects the project’s virtual environment, without needing to activate it first.
