@@ -778,3 +778,45 @@ Organized the scaffold on branch `codex/project-scaffold`.
 - `4b3abf9` — `docs: add project structure scaffold`
 
 The only remaining working-tree change is this required interaction log entry.
+
+## 2026-11-03 (America/Sao_Paulo)
+
+### User
+
+```text
+&#x20;[$maintain-agent-guidance](C:\Users\[redacted]\Documents\ChatGPT\investment_portfolio_backtest\\.agents\skills\maintain-agent-guidance\SKILL.md) is going to see what is going on in each directory to write the agents.md in an specific way?
+```
+
+### User — supplied skill
+
+```text
+<skill>
+<name>maintain-agent-guidance</name>
+<path>C:\Users\[redacted]\Documents\ChatGPT\investment_portfolio_backtest\.agents\skills\maintain-agent-guidance\SKILL.md</path>
+---
+name: maintain-agent-guidance
+description: Update small, scoped AGENTS.md instructions when feature work changes durable commands, paths, boundaries or practices that future agents need.
+---
+
+# Maintain agent guidance
+
+Ask: does this discovery change how a future agent should work in this area? If not, use product documentation, architecture, an ADR or the task record.
+
+Inspect the integrated diff and affected commands, paths and boundaries. Update only durable guidance at the smallest appropriate directory scope. Keep the root AGENTS.md short, normally a few dozen lines; keep essential instructions and move local detail into relevant subdirectories rather than truncating it.
+
+Remove or replace obsolete guidance. Verify referenced files, links, examples and commands against the project. Give instruction changes to the reviewer alongside the code. If a modified rule must govern the current execution, explicitly reread it before proceeding; do not assume it reloads automatically.
+
+Do not generalize an isolated failure into a universal prohibition. Do not lower quality requirements to finish a task. Changes to autonomy, authorization or acceptance criteria require the appropriate human decision, not an incidental instruction edit. Preserve privacy and the root interaction-log requirement.
+
+</skill>
+```
+
+### Assistant — progress
+
+I’ll check the skill’s instructions and explain how much directory inspection it calls for.
+
+### Assistant — final
+
+The skill asks the agent to inspect the changes and the affected commands, paths and boundaries, then put durable instructions at the smallest appropriate directory scope. For example, frontend-specific guidance can go in `frontend/AGENTS.md`, while rules that apply throughout the project belong in the root `AGENTS.md`.
+
+It does **not** explicitly require inspecting every directory or creating an `AGENTS.md` in each one. It is intended for updating guidance when feature work reveals something future agents need to know. If you want a full directory-by-directory review of the project, you can ask for that separately.
