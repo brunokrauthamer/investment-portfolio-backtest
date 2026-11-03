@@ -671,3 +671,110 @@ I’ve recorded the project context for future work. [AGENTS.md](C:/Users/bruno/
 The documentation marks the asset universe, sources, alignment method, financial calculations and rebalancing rules as open decisions. It also records that we’ll obtain real data first, work through each part together, and not use synthetic sample data. No application code or data was created.
 
 I checked the changes for whitespace errors. There are no runnable application checks yet.
+
+## 2026-11-03 America/Sao_Paulo — Base directories
+
+### User
+
+Crete the directoies base, if there is any blind spot ask me
+
+### Assistant — progress
+
+I’ll create a small directory structure for the backend, frontend, and data work, using the boundaries we’ve agreed on. I’ll keep implementation choices and financial conventions open for the relevant future steps.
+
+### Assistant — final
+
+Created the base directories and brief descriptions of their intended responsibilities:
+
+- [backend](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/backend/README.md), with API, application, domain, data acquisition and storage boundaries.
+- [frontend](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/frontend/README.md) for the future React dashboard.
+- [data](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/data/README.md) for acquired datasets.
+
+The new [README](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/README.md) explains the current state. These directories contain documentation only; there is no runnable application or dataset yet. I checked the documentation links and whitespace.
+
+There’s no decision needed to create this base. When we start obtaining data, we’ll need to agree on the initial assets, sources, date ranges and data conventions, as well as the backup and restore layout.
+
+## 2026-11-03 America/Sao_Paulo — Frontend conventions
+
+### User
+
+Create&#x20;
+
+
+
+## Frontend conventions
+
+Adapt the following structure to TypeScript and to the actual needs of the project. It is a guide, not a requirement to create every directory immediately:
+```text
+src/
+  main.tsx
+  App.tsx
+  index.css
+  components/
+    Button/
+      index.tsx
+      index.css
+  pages/
+    ExamplePage/
+      index.tsx
+      index.css
+      useExamplePage.ts
+      LocalComponent/
+        index.tsx
+        index.css
+  assets/
+  services/
+  shared/
+  store/
+```
+
+- `components`: reusable presentation components and shared business components.
+- `pages`: pages, page-specific components, and local logic.
+- `assets`: static images, videos, fonts, animations, and other assets.
+- `services`: API and external-source communication, without JSX or UI hooks.
+- `shared`: reusable functions and constants without React, global state, or browser side effects.
+- `store`: shared state, session, cache, subscriptions, and coordination of their updates.
+- Keep page- or component-specific hooks near their consumers. Hooks that subscribe to a cache or session belong with that infrastructure; hooks do not automatically belong in `shared`.
+- Use PascalCase for component and page names and descriptive names for hooks and functions. Reserve the `use` prefix for hooks.
+- Use `index.tsx` for component and page entry files. Place component-specific styles in `index.css` when needed. Do not create empty CSS files or directories with no purpose.
+- Place unit tests near the code under test, using `*.test.ts` or `*.test.tsx` as appropriate. Cross-module integration tests may live in a dedicated test directory.
+- Prefer explicit imports. Avoid a central file that re-exports all components and couples independent areas.
+- Preserve existing language choices and conventions when compatible with the requested TypeScript and React stack; do not introduce unrelated migrations as a side effect of reorganizing code.
+
+### Assistant — progress
+
+I’ll add the frontend conventions close to the frontend and create the requested source areas with their intended responsibilities. I’ll leave application entry points and example components until there’s functionality to put in them.
+
+I’m using the maintain-agent-guidance skill to make these conventions available to future agents without duplicating them in the repository-wide instructions.
+
+### Assistant — final
+
+Created the six frontend source areas under [frontend/src](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/frontend/src), each with a short description of its responsibility. I also added [frontend/AGENTS.md](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/frontend/AGENTS.md) with the conventions for organization, hooks, naming, tests, imports and accessible components.
+
+The frontend remains documentation-only. I left entry points, example components and styles for when we implement the application. Documentation links and whitespace checks passed; there are no frontend tests to run yet.
+
+## 2026-11-03 01:13:37 America/Sao_Paulo (UTC-03:00)
+
+### User
+
+```text
+[$organize-git-commits](C:\Users\[redacted]\\.codex\skills\organize-git-commits\SKILL.md)
+```
+
+### Assistant — progress
+
+I’m applying the commit organization workflow: I’ll inspect the branch, index, and working tree, then make focused local commits for any suitable changes. I’ll preserve unrelated work and won’t push.
+
+The only working-tree changes are untracked project-structure documentation files, with no staged edits or active merge/rebase state. They form one coherent scaffold change, so I’m putting them on a descriptive branch and reviewing them together as one commit.
+
+The repository sandbox allows reading `.git` but blocked creating a branch or index lock, so the branch has not changed. I’m retrying the authorized Git mutation with elevated access; if the workspace review rejects it, I’ll leave the files untouched and report the block.
+
+The scaffold commit is complete on `codex/project-scaffold` (`4b3abf9`). I’m checking the final Git state now, then I’ll record this interaction in the required agent log.
+
+### Assistant — final
+
+Organized the scaffold on branch `codex/project-scaffold`.
+
+- `4b3abf9` — `docs: add project structure scaffold`
+
+The only remaining working-tree change is this required interaction log entry.
