@@ -11,16 +11,17 @@ Every date accepted by the system must have data for every asset. The method for
 ## Architecture and boundaries
 
 - Use a TypeScript and React frontend and a Python backend with FastAPI, organized as a modular monolith.
+- All Python work must use the project virtual environment at `.venv` and maintain the root `requirements.txt` as the dependency manifest, including when there are no third-party dependencies. Create the environment with `python -m venv .venv`, install dependencies with `.venv\Scripts\python -m pip install -r requirements.txt` on Windows, and run Python commands through `.venv\Scripts\python` (or the corresponding `.venv/bin/python` on Unix). The initial environment creation uses the system Python. Update `requirements.txt` whenever Python dependencies change; do not commit the environment itself.
 - HTTP routes handle requests and responses; application services coordinate use cases; domain logic represents portfolios and backtesting rules. Keep domain logic independent of FastAPI, React, CSV layouts and data providers.
 - Store initially acquired historical data in project CSV files. Storage adapters operate behind focused contracts where they clarify an actual boundary; assemble concrete dependencies at the application boundary. A relational database is not required for the MVP.
-- Data acquisition is a separate responsibility. It is not yet implemented; imports and application startup must not initiate network requests.
+- Data acquisition is a separate responsibility. The first explicit source command downloads B3's original IFIX annual CSV files for 2011 through the current year. Imports and application startup must not initiate network requests. Other assets and backtesting use remain unimplemented.
 - Use interfaces and extension points when justified by real requirements, and keep modules and functions focused rather than anticipating deployment into services.
 
 ## Data safety and provenance
 
-Do not overwrite or remove source data during scaffolding. Before modifying or replacing source files, create recoverable backups outside the active input location. Updates must be atomic so a failure or interruption cannot leave an active file partially written. The data implementation must document its backup location, naming convention and restore procedure, and prevent backup files from being treated as active inputs.
+Do not overwrite or remove source data during scaffolding. Before modifying or replacing source files, create recoverable backups outside the active input location. Updates must be atomic so a failure or interruption cannot leave an active file partially written. Keep a write-ahead recovery record until active data and its provenance manifest are committed. The data implementation must document its backup location, naming convention, offline restore procedure, and prevent backup files from being treated as active inputs.
 
-Document each dataset's origin and relevant source access and usage constraints, including for scraping. Do not fabricate historical results. The user declined synthetic sample data; obtain real data in a future agreed step.
+Document each dataset's origin and relevant source access and usage constraints, including for scraping. Do not fabricate historical results. The IFIX acquisition is limited to the user's stated personal use; it does not grant redistribution rights or decide future financial conventions.
 
 ## Open decisions
 

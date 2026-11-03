@@ -1,0 +1,5 @@
+RF-001: exact earlier truncated payload rejected
+RF-002: failed final manifest commit recovers old-byte backup reference on rerun
+RF-003: null file, wrong version-list type and null history entry rejected before active mutation
+RF-004: documented offline CLI restore retains selected bytes, provenance and displaced-byte backup without network
+Additional: failed active replacement preserves old data and a subsequent retry recovers and succeeds

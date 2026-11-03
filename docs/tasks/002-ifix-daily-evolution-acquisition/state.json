@@ -1,0 +1,620 @@
+{
+  "schema_version": 1,
+  "state_version": 20,
+  "task_id": "002",
+  "task_slug": "ifix-daily-evolution-acquisition",
+  "stage": "awaiting_final_approval",
+  "spec_revision": {
+    "id": "s001",
+    "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+  },
+  "plan_revision": {
+    "id": "p001",
+    "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+  },
+  "code_revision": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c",
+  "baseline_revision": {
+    "head": "d9ac063dfb6abaa5f5a421cbf317a32e62dc39f6",
+    "code_revision": "d9ac063dfb6abaa5f5a421cbf317a32e62dc39f6:sha256:bebad6441c5097b9c296a299c3e6d930f2c1987bd45dca806ef566eee931d132",
+    "worktree_status": [
+      " M docs/agent-log/LOG.md",
+      "?? docs/tasks/002-ifix-daily-evolution-acquisition/"
+    ],
+    "evidence": "evidence/baseline-snapshot.json"
+  },
+  "model_policy": "initial",
+  "correction_cycle": 0,
+  "model_switch_reason": null,
+  "review_rounds": {
+    "initial": 2,
+    "correction": 0
+  },
+  "limits": {
+    "rounds_per_cycle": 3,
+    "correction_cycles": 1
+  },
+  "state_writer": "tech-lead",
+  "active_assignments": [
+    {
+      "id": "initial-round-1",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Implement and integrate approved feature and documentation; source-backed evidence if available",
+      "allowed_files": [
+        "backend/",
+        "data/README.md",
+        "README.md",
+        "docs/architecture/",
+        "docs/decisions/",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/verification.md",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/state.json"
+      ],
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+        },
+        "baseline": "d9ac063dfb6abaa5f5a421cbf317a32e62dc39f6:sha256:bebad6441c5097b9c296a299c3e6d930f2c1987bd45dca806ef566eee931d132"
+      },
+      "writer_ownership": "sole writer of verification.md and state.json assigned implementation fields",
+      "deliverables": [
+        "TDD red/green/refactor evidence",
+        "integrated implementation and docs",
+        "snapshot and checks",
+        "state handoff"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "review-initial-round-1",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Independent integrated review of full feature",
+      "allowed_files": [
+        "docs/tasks/002-ifix-daily-evolution-acquisition/review.md",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/state.json",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/evidence/"
+      ],
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+        },
+        "code": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:0f9eadf197593ee395456c29b7d092baad713f1445636c034735ae0a6b4572e0",
+        "baseline": "d9ac063dfb6abaa5f5a421cbf317a32e62dc39f6:sha256:bebad6441c5097b9c296a299c3e6d930f2c1987bd45dca806ef566eee931d132"
+      },
+      "writer_ownership": "sole writer of review.md, review/findings fields of state.json and reviewer evidence",
+      "deliverables": [
+        "dated review verdict and evidence",
+        "findings with IDs, severity and reproduction",
+        "snapshot freshness"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "initial-round-2",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "slice": "Repair RF-001 through RF-004 with specific failing regressions; align module boundaries and docs",
+      "allowed_files": [
+        "backend/",
+        "data/README.md",
+        "README.md",
+        "docs/project-context.md",
+        "docs/architecture/",
+        "docs/decisions/",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/verification.md",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/state.json",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/evidence/"
+      ],
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+        },
+        "code": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:0f9eadf197593ee395456c29b7d092baad713f1445636c034735ae0a6b4572e0"
+      },
+      "writer_ownership": "sole writer of verification.md and implementation fields of state.json",
+      "deliverables": [
+        "observed regression reds and passing repairs for each defect",
+        "documentation, aligned boundaries, checks and integrated snapshot"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "review-initial-round-2",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Independent integrated re-review of full feature and RF-001\u2013RF-004",
+      "allowed_files": [
+        "docs/tasks/002-ifix-daily-evolution-acquisition/review.md",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/state.json",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/evidence/"
+      ],
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+        },
+        "code": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:a130928277e0cc11c444d8e0cbc15d2b3a8a0c0be35d6cda56bde9ad35f10420"
+      },
+      "writer_ownership": "sole writer of review.md, review/findings fields of state.json and reviewer evidence",
+      "deliverables": [
+        "independent full review",
+        "finding dispositions with evidence",
+        "snapshot freshness"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "qa-initial-round-2",
+      "role": "qa",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Independent integrated QA of approved feature on current snapshot including live source",
+      "allowed_files": [
+        "docs/tasks/002-ifix-daily-evolution-acquisition/verification.md",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/state.json",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/evidence/"
+      ],
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+        },
+        "code": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:a130928277e0cc11c444d8e0cbc15d2b3a8a0c0be35d6cda56bde9ad35f10420"
+      },
+      "writer_ownership": "sole writer of verification.md and acceptance/QA fields of state.json and QA evidence",
+      "deliverables": [
+        "criterion matrix, expected/actual and reproductions",
+        "independent live source QA or precise blocker",
+        "before/after snapshot"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "review-acquired-data",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Review-only refresh after adding acquired source data; no development round consumed",
+      "allowed_files": [
+        "docs/tasks/002-ifix-daily-evolution-acquisition/review.md",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/state.json",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/evidence/"
+      ],
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+        },
+        "code": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c"
+      },
+      "writer_ownership": "sole writer of review.md, review/findings fields of state.json and reviewer evidence",
+      "deliverables": [
+        "current snapshot verdict and impact reasoning",
+        "data/provenance checks",
+        "snapshot freshness"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "qa-acquired-data",
+      "role": "qa",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "QA-only refresh after adding acquired source files",
+      "allowed_files": [
+        "docs/tasks/002-ifix-daily-evolution-acquisition/verification.md",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/state.json",
+        "docs/tasks/002-ifix-daily-evolution-acquisition/evidence/"
+      ],
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+        },
+        "code": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c"
+      },
+      "writer_ownership": "sole writer of verification.md, QA/acceptance fields of state.json and QA evidence",
+      "deliverables": [
+        "current acceptance matrix, impact reasoning and source-data check",
+        "before/after snapshot"
+      ],
+      "status": "completed"
+    }
+  ],
+  "implementation": {
+    "status": "complete",
+    "snapshot": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:a130928277e0cc11c444d8e0cbc15d2b3a8a0c0be35d6cda56bde9ad35f10420",
+    "evidence": [
+      "verification.md: initial-round-2 repair evidence with exact red/green observations for RF-001 through RF-004 and the invalid-year CLI repair",
+      "evidence/implementation-round-2-snapshot.json",
+      "python -B -m unittest discover -s backend/tests -v: 22 tests passed",
+      "python -B -m compileall -q backend: passed; generated caches removed",
+      "python -B -m backend.src.acquisition.ifix --help: passed",
+      "python -B -m backend.src.acquisition.ifix restore --help: passed",
+      "live documented CLI smoke to temporary directory: exit 0, years 2011-2026 (16 files), no errors; temporary directory removed",
+      "Actual project acquisition: exit 0, saved 2011\u20132026, 16 files; evidence/acquired-data-snapshot.json"
+    ]
+  },
+  "review": {
+    "status": "passed",
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+    },
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+    },
+    "code_revision": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c",
+    "evidence": [
+      "review.md: 2026-11-03 review-only acquired-data refresh",
+      "evidence/review-acquired-data-before.json",
+      "evidence/review-acquired-data-after.json",
+      "evidence/review-acquired-data-checks.json",
+      "Reused with impact justification: evidence/review-initial-2-tests.txt and evidence/review-initial-2-reproductions.txt"
+    ],
+    "snapshot_fresh": true,
+    "nonblocking_limitations": [
+      "RF-005 requires lead disposition and relevant human acceptance"
+    ]
+  },
+  "qa": {
+    "status": "passed",
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+    },
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+    },
+    "code_revision": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c",
+    "evidence": [
+      "verification.md: Independent QA initial round 2 matrix, reused with impact reasoning; project-data refresh section",
+      "evidence/qa-initial-2-before.json",
+      "evidence/qa-initial-2-after.json",
+      "evidence/qa-acquired-data-before.json",
+      "evidence/qa-acquired-data-after.json",
+      "evidence/qa-acquired-data-impact.json",
+      "Read-only check: 16 active annual files and manifest hashes valid",
+      "Live B3 comparison: 2011 and 2026 project bytes exactly match source"
+    ],
+    "browser": "not_applicable_cli_only",
+    "nonblocking_limitations": [
+      "RF-005 incomplete observed first-round TDD evidence remains open for lead disposition and relevant human acceptance"
+    ]
+  },
+  "acceptance_results": [
+    {
+      "criterion_id": "AC-001",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+      },
+      "code_revision": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c",
+      "expected_actual": "Explicit CLI runs acquisition; import/help do not start a run.",
+      "evidence": [
+        "verification.md: Independent QA matrix"
+      ]
+    },
+    {
+      "criterion_id": "AC-002",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+      },
+      "code_revision": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c",
+      "expected_actual": "Project now contains 16 original annual files; every file validates and matches its manifest SHA-256; 2011 and 2026 match current B3 bytes directly.",
+      "evidence": [
+        "verification.md: Independent QA matrix"
+      ]
+    },
+    {
+      "criterion_id": "AC-003",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+      },
+      "code_revision": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c",
+      "expected_actual": "Live complete run succeeds; tests confirm partial and invalid conditions are reported incomplete.",
+      "evidence": [
+        "verification.md: Independent QA matrix"
+      ]
+    },
+    {
+      "criterion_id": "AC-004",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+      },
+      "code_revision": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c",
+      "expected_actual": "Live rerun retains mtimes/no backups; failure, backup and offline restore scenarios preserve bytes.",
+      "evidence": [
+        "verification.md: Independent QA matrix"
+      ]
+    },
+    {
+      "criterion_id": "AC-005",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+      },
+      "code_revision": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c",
+      "expected_actual": "Boundaries are separated; held lock rejects command before source request or mutation.",
+      "evidence": [
+        "verification.md: Independent QA matrix"
+      ]
+    },
+    {
+      "criterion_id": "AC-006",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+      },
+      "code_revision": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c",
+      "expected_actual": "22 tests pass; syntax/CLI/docs checks pass, with RF-005 process limitation explicitly retained.",
+      "evidence": [
+        "verification.md: Independent QA matrix"
+      ]
+    },
+    {
+      "criterion_id": "AC-007",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+      },
+      "code_revision": "f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c",
+      "expected_actual": "Direct source comparison passes for actual project files for 2011 and latest 2026; full project range 2011\u20132026 and 16 matching manifest records verified.",
+      "evidence": [
+        "verification.md: Independent QA matrix"
+      ]
+    }
+  ],
+  "open_findings": [
+    {
+      "id": "RF-001",
+      "source": "review-initial-round-1",
+      "severity": "P1",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-006"
+      ],
+      "location": "backend/src/acquisition/ifix.py:81-95",
+      "consequence": "Malformed/truncated annual CSV accepted as valid and eligible to replace active data.",
+      "reproduction_evidence": "Expected headers plus a two-column row 1;INVALID_TRUNCATED_ROW were returned as a successful download.",
+      "status": "resolved",
+      "resolution_evidence": [
+        "review.md: initial cycle round 2 independent recheck",
+        "evidence/review-initial-2-reproductions.txt",
+        "evidence/review-initial-2-tests.txt"
+      ]
+    },
+    {
+      "id": "RF-002",
+      "source": "review-initial-round-1",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-002",
+        "AC-004",
+        "AC-006"
+      ],
+      "location": "backend/src/acquisition/ifix.py:232-257",
+      "consequence": "Manifest interruption loses backup references after successful rerun.",
+      "reproduction_evidence": "Fail manifest write after active update, rerun unchanged: one backup on disk, zero previous_versions entries.",
+      "status": "resolved",
+      "resolution_evidence": [
+        "review.md: initial cycle round 2 independent recheck",
+        "evidence/review-initial-2-reproductions.txt",
+        "evidence/review-initial-2-tests.txt"
+      ]
+    },
+    {
+      "id": "RF-003",
+      "source": "review-initial-round-1",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-006"
+      ],
+      "location": "backend/src/acquisition/ifix.py:191-202,232-237",
+      "consequence": "Malformed nested manifest triggers failure only after changing active data.",
+      "reproduction_evidence": "Set files[2011] to null, save changed bytes: AttributeError and active changed.",
+      "status": "resolved",
+      "resolution_evidence": [
+        "review.md: initial cycle round 2 independent recheck",
+        "evidence/review-initial-2-reproductions.txt",
+        "evidence/review-initial-2-tests.txt"
+      ]
+    },
+    {
+      "id": "RF-004",
+      "source": "review-initial-round-1",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-004",
+        "AC-006"
+      ],
+      "location": "backend/src/acquisition/README.md:17",
+      "consequence": "Documented restore is unsafe and immediately undone by acquisition rerun.",
+      "reproduction_evidence": "Copy old backup over active then rerun against new source: complete=True, restored=False.",
+      "status": "resolved",
+      "resolution_evidence": [
+        "review.md: initial cycle round 2 independent recheck",
+        "evidence/review-initial-2-reproductions.txt",
+        "evidence/review-initial-2-tests.txt"
+      ]
+    },
+    {
+      "id": "RF-005",
+      "source": "review-initial-round-1",
+      "severity": "P2",
+      "blocking": false,
+      "criterion_ids": [
+        "AC-006"
+      ],
+      "location": "docs/tasks/002-ifix-daily-evolution-acquisition/verification.md",
+      "consequence": "Observed test-first evidence is incomplete relative to the approved workflow.",
+      "reproduction_evidence": "Developer records only three observed behavioral red/green cases; preserve limitation and obtain lead disposition/relevant human acceptance.",
+      "status": "open",
+      "resolution_evidence": [],
+      "disposition": "Nonblocking process-evidence limitation: cannot reconstruct unobserved red runs. Confirmed defects received observed failing regressions and passing fixes; independent review, QA, live-source checks and 22 tests passed. Preserve the limitation and request explicit human acceptance with final approval."
+    }
+  ],
+  "attempts_without_progress": 0,
+  "approvals": {
+    "specification": {
+      "decision": "approved",
+      "user_response": "approved",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7d7e85bfbf90acd32ce5f39bbf4818a9ec9ea4b11f24082697283c0622429247"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "74021c3e5bd4863ec3b67def549d1798858e000a28601073c2f4049e53a1e7ca"
+      },
+      "timestamp": "2026-11-03 (America/Sao_Paulo; exact time not recorded)",
+      "reference": "User response in feature-workflow chat"
+    },
+    "correction_plan": null,
+    "final": null
+  },
+  "next_action": "Request explicit final human approval of spec s001, plan p001 and the current snapshot, including acceptance of RF-005 process-evidence limitation."
+}
