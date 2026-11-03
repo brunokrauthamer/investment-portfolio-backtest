@@ -970,3 +970,47 @@ The plan calls for inspecting B3’s actual IFIX download flow and applicable ac
 Do you approve **specification s001 and plan p001** for implementation?
 
 The [feature-workflow skill](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md) explicitly requires us to “wait for explicit human approval of both revisions before implementation.”
+
+## 2026-11-03
+
+### User
+
+# Files pasted by the user:
+
+## "# IFIX daily-evolution acquisition — plan p001 Status: proposed on 2026-11-03 a…": [redacted]
+
+## My request:
+traduza 
+
+### Assistant — progress
+
+Vou ler o texto anexado e traduzi-lo para português, preservando a estrutura e os termos técnicos.
+
+### Assistant — final
+
+:::writing{variant="document" id="75428"}
+# Aquisição da evolução diária do IFIX — plano p001
+
+Status: proposto em 03/11/2026 com base na especificação s001; aguardando aprovação humana explícita de ambas as revisões. A implementação ainda não começou.
+
+## Arquitetura e limites
+
+- `backend/src/acquisition/`: um adaptador de fonte específico para o IFIX identifica os períodos disponíveis e obtém os arquivos originais da B3 pelo fluxo documentado do site. Use um adaptador de automação de navegador (Python Playwright) se a página exigir; use um endpoint direto de download somente se a inspeção confirmar que ele fornece o mesmo arquivo original. Os seletores, o mapeamento dos períodos e as regras de validação concretos devem ser fundamentados na inspeção da fonte, não inventados. Limites de tempo, controle do ritmo das requisições, classificação de erros e verificação TLS ficam sob responsabilidade desse componente.
+- `backend/src/application/`: a operação de aquisição solicita os períodos disponíveis, coordena cada download e seu armazenamento e retorna um resumo completo ou parcial e um código de saída. Os períodos são identificadores distintos da fonte, não necessariamente anos. A falha no processamento de um período não pode destruir os arquivos dos demais.
+- `backend/src/storage/`: um adaptador local específico mapeia os períodos para nomes de arquivo seguros e estáveis, compara bytes ou hashes, cria e verifica backups externos antes de substituições de arquivos alterados, prepara arquivos temporários no mesmo diretório, faz a substituição atômica, controla o bloqueio exclusivo e mantém um manifesto de forma atômica. Nunca use um nome de arquivo remoto como caminho sem validação. O manifesto contém metadados, não uma nova série de dados de mercado. A recuperação após uma interrupção não pode marcar uma execução incompleta como bem-sucedida.
+- Um pequeno ponto de entrada explícito para o comando reúne as dependências. Execução proposta a partir da raiz do projeto: `python -m backend.src.acquisition.ifix`, após a instalação das dependências documentadas; valide o comando real em testes de integração. Não faça chamadas durante a importação ou inicialização. Use módulos padrão do Python quando forem suficientes; a dependência de navegador se justifica por uma possível interação dinâmica com o site e depende da inspeção da fonte.
+- Separe fonte, orquestração e armazenamento porque suas responsabilidades e modos de falha são diferentes; não acrescente frameworks genéricos de provedores ou plugins. Os mecanismos ainda não esclarecidos da página ficam isolados no adaptador do IFIX.
+
+## Implementação e evidências, em ordem
+
+1. **Etapa obrigatória de descoberta da fonte:** inspecione a página real e o fluxo de download usando as ferramentas permitidas disponíveis; registre os períodos selecionados, o nome e o formato do arquivo baixado, exemplos dos períodos mais antigo e mais recente disponíveis, a validação das respostas, as restrições de acesso e quaisquer limitações. Verifique os termos aplicáveis da B3 sem presumir que avisos de outras páginas se aplicam a esta. Resolva conflitos relevantes com esta especificação por meio de registros revisados e aprovados por uma pessoa antes da implementação. Não contorne restrições de acesso. Se o acesso não estiver disponível, registre o impedimento e não alegue ter obtido evidências da fonte real.
+2. **Uma rodada inicial de implementação com TDD:** a pessoa desenvolvedora escreve testes que falham e, em seguida, implementa a descoberta dos períodos da fonte, a orquestração, a interface de linha de comando, o armazenamento dos bytes exatos e a procedência. Os testes usam respostas controladas e bytes fictícios que não representam dados de mercado. Cubra de 2011 até o período mais recente oferecido pela fonte, inclusive uma mudança nesse período mais recente; erro da fonte, descoberta ausente ou ambígua, resposta inválida e limite de tempo excedido; e períodos distintos com nomes de arquivo de origem duplicados.
+3. **Atualizações seguras:** usando testes primeiro, implemente gravações atômicas dos arquivos ativos, nenhuma alteração quando os bytes forem iguais, backups recuperáveis e verificados, tratamento de falhas de backup ou substituição, recuperação segura após interrupções e tratamento de comandos executados simultaneamente. Documente os comportamentos de sistema de arquivos e bloqueio compatíveis. Teste a restauração dos backups e verifique que a data de modificação dos arquivos inalterados permaneça a mesma.
+4. **Documentação e integração:** documente a instalação (incluindo o ambiente de execução do navegador, se necessário), o comando, a estrutura de arquivos, a origem da fonte, os termos efetivamente observados e o contexto de uso pessoal, a saída da execução, as limitações e os passos de restauração na documentação pertinente do projeto para backend e dados. Não inclua arquivos baixados da B3 em commits, a menos que isso seja solicitado explicitamente. Execute o comando documentado e todas as verificações automatizadas. Qualquer falha com a fonte real deve ser informada explicitamente.
+5. **Revisão independente e garantia de qualidade (QA):** uma pessoa revisora independente verifica a especificação aprovada, a arquitetura, o código, os testes, a documentação e o estado exato da versão integrada; uma pessoa responsável por QA independente executa cada critério e caso adverso, incluindo uma verificação de ponta a ponta com a fonte real quando permitido e disponível. Este é um recurso de linha de comando sem interface web para o usuário; portanto, não se aplica QA de uma interface do projeto no navegador. Pode, porém, ser necessário interagir com a B3 pelo navegador para verificar o comportamento da fonte. Registre as saídas, o ambiente, a cobertura, as limitações e a identificação do estado examinado antes e depois de cada avaliação. Registre as evidências das etapas de falha, sucesso e refatoração do TDD em `verification.md` e as conclusões em `review.md`.
+6. **Auditoria final:** a pessoa responsável pela liderança verifica se a revisão independente e o QA estão atualizados, se não há impedimentos pendentes e se a revisão, o hash, as evidências do estado examinado, a documentação e as verificações estão corretos. Em seguida, solicita aprovação final explícita; essa aprovação não autoriza commit, publicação ou implantação.
+
+## Riscos e alternativas
+
+A B3 pode alterar controles, formatos de arquivo, disponibilidade ou condições de uso. Um seletor ou endpoint escolhido sem inspeção seria especulativo; por isso, a inspeção da fonte é uma condição para a implementação. A automação de navegador tem custos de execução e manutenção; use-a apenas quando o comportamento real da fonte a justificar. Um teste baseado apenas em simulações não pode comprovar a cobertura real. Execuções parciais devem informar falha e preservar os períodos concluídos com segurança; limitações de rede ou das ferramentas de navegador impedem a obtenção de evidências da fonte real e não devem ser tratadas como verificações aprovadas.
+:::
