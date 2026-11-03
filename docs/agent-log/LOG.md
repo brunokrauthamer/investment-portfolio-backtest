@@ -1997,3 +1997,23 @@ Do you approve the completed **s001/p001 implementation and reviewed snapshot**,
 
 The [feature-workflow skill]([redacted]) requires explicit final approval of the specification and snapshot before the task can be marked complete.
 ````
+
+## 2026-11-03 America/Sao_Paulo
+
+### User
+
+```text
+yes, i approve
+```
+
+### Assistant progress
+
+```text
+I’ll record your final approval and close the feature workflow.
+```
+
+### Assistant
+
+```text
+Your final approval is recorded, including the test-first evidence limitation, and the IBOVESPA feature workflow is marked complete. The implementation still matches the independently reviewed and QA-tested snapshot.
+```
