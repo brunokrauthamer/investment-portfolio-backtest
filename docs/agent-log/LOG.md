@@ -1078,3 +1078,16 @@ One process limitation remains: the first development round did not record a fai
 Do you approve the final result for **specification s001 and plan p001**, and accept that recorded test-evidence limitation? The evaluated snapshot is `f0e6c7622a274e0ed439dfd6d523e7591abb0b08:sha256:fe8395f944e4b0e1d7c652138b00d1fb5045ebeb18c60f0d922eba67603c2c4c`.
 
 The [feature-workflow skill](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md) requires explicit final approval of the specification and snapshot before marking the task complete.
+
+## 2026-11-03
+
+User:
+Are you using virtual environment for python? there are requirements.txt?
+
+Assistant:
+I’ll check the project’s Python setup and dependency files.
+
+Assistant:
+No. The Python currently available in this workspace is not running in a virtual environment, and I found no `requirements.txt` or other Python dependency manifest in the project.
+
+The existing IFIX downloader uses only Python’s standard library, so it does not currently need packages installed from a requirements file. FastAPI is planned but has not yet been set up. A previous setup installed PyYAML in the user-level Python environment for skill validation, not as a project dependency.
