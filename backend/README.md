@@ -4,4 +4,4 @@ The Python/FastAPI modular monolith is planned here. Data acquisition is availab
 
 ## Download IFIX source files
 
-Set up the project virtual environment as described in [acquisition](src/acquisition/README.md), then run `.venv\Scripts\python -m backend.src.acquisition.ifix` from the repository root on Windows. This downloads B3's annual IFIX daily-evolution CSV files from 2011 through the current year into `data/ifix/source/`. Use `--data-dir PATH` to choose another destination. The acquisition guide also covers the file layout, rerun behavior, and restore steps.
+Set up the project virtual environment as described in [acquisition](src/internet_data_getter/README.md), then run `.venv\Scripts\python -m backend.src.internet_data_getter` from the repository root on Windows. This downloads B3's annual IFIX daily-evolution CSV files from 2011 through the current year into `data/ifix/source/`. Use `--data-dir PATH` to choose another destination. The acquisition guide also covers the file layout, rerun behavior, and restore steps.

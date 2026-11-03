@@ -1430,3 +1430,239 @@ Validation temporarily reads the bytes as Windows-1252 text and checks the expec
 Active files go under `data/ifix/source/`, and `data/ifix/manifest.json` records information including the source, retrieval time, fingerprint and previous versions. A fingerprint helps detect whether bytes match; it does not independently establish that the source data is financially correct. Storage uses atomic replacement and a pending-update record to help recover an interrupted update. The README describes the separate `restore` command, which uses a verified backup without contacting B3.
 
 In short, the arguments flow as **command → client and store → coordinator → year and CSV bytes → storage → result → printed report**. The command only contacts B3 when explicitly run; nothing in this flow starts a request merely because the application starts or a module is imported.
+
+## 2026-11-03
+
+### User
+
+About the task 002-ifix-daily-evolution-acquisition
+
+I saw how you implemented it. Although it is working, I want some architectural changes.
+
+First, the acquisition of data from internet should be one module.
+
+Imagine that all the code used to access the internet, downlaod the file, save the file is part of the same module. All of these is one service responsible for getting ifix data. So in the root of backend should be this module, and all the logic to get it inside of the module (instead of having diferent directories such as application, acquisition, storage) all in the root of backend.
+
+Just to make everything clear, api directory in the root of backend makes sense (i know its still empty) because api will be another module in this backend monolith. What I mean is that in future they could be separate microsservices (api, internet_data_getter)
+
+How do you think would be good way to organize those files based in what I said? Do not change anything yet, lets discuss ideas before doing it.
+
+### Assistant progress
+
+I’ll review the current IFIX acquisition structure and project decisions, then suggest a module boundary for us to discuss. I won’t change the implementation.
+
+### Assistant
+
+I agree with organizing the backend by responsibility at the top level. Today, one IFIX acquisition operation is spread across `acquisition`, `application`, and `storage`. Those are useful distinctions inside the operation, but they do not need to be separate top-level backend modules.
+
+I would keep the existing `backend/src` source root and organize it like this:
+
+```text
+backend/
+  src/
+    api/                      # Future HTTP interface
+    internet_data_getter/     # Owns acquiring and preserving source data
+      __init__.py
+      __main__.py             # Explicit download and restore commands
+      service.py              # Coordinates an acquisition run and its report
+      ifix_source.py          # B3 requests and IFIX CSV validation
+      storage.py              # Safe file writes, backups, manifest and restore
+      README.md
+  tests/
+    test_ifix_acquisition.py
+```
+
+The important boundary is `internet_data_getter`: it owns the complete process from contacting B3 through safely saving the original files. The files inside it simply keep the individual jobs readable; they are not separate backend services. `api` remains a sibling module. For now, the acquisition module could expose a small Python entry point for other modules to call, while retaining the explicit command. Importing it or starting the API would still never download data automatically.
+
+I would preserve the existing data locations, backup and recovery behavior, validation, and tests during a move. The command and imports would need updating, as would the documentation; we could decide whether to keep the old command as a compatibility alias. A separate deployment later would require an explicit communication and data-access contract, but there is no need to build that infrastructure now.
+
+One naming question: do you expect this module eventually to acquire other assets as well? If so, `internet_data_getter` is a reasonable broad name, and IFIX-specific files can be grouped inside it when a second source arrives. If its responsibility is intended to remain IFIX only, `ifix_data_getter` would make the boundary clearer. Which name fits your intention?
+
+## 2026-11-03
+
+### User
+
+For now, the acquisition module could expose a small Python entry point for other modules to call, while retaining the explicit command. Importing it or starting the API would still never download data automatically.
+
+I agree with that, we should do it.
+
+
+Which name fits your intention? `internet_data_getter` &#x20;
+
+Because we are going to get data from other indexes and etfs. So, how would you organize the files inside this new directory?
+
+### Assistant progress
+
+I’ll outline how the IFIX files could fit inside `internet_data_getter`, with room for other sources as we add them.
+
+### Assistant
+
+Since the module will eventually acquire several assets, I’d group the current implementation under an `ifix` directory, with a small public entry point at the module boundary:
+
+```text
+backend/src/
+  api/
+  internet_data_getter/
+    __init__.py          # Public Python entry point
+    __main__.py          # Explicit command-line entry point
+    ifix/
+      __init__.py
+      service.py         # Coordinates downloads, saving and the run report
+      b3_source.py       # Requests and validates B3's IFIX CSV files
+      storage.py         # Saves files, manages backups, recovery and restore
+    README.md
+```
+
+A call such as `acquire_ifix()` would be available from `internet_data_getter`. It would assemble the IFIX source and storage components and run the acquisition only when explicitly called. The command would use the same entry point; the offline restore command would remain available. Importing the module or starting the API would not trigger a download.
+
+When we add another asset, we can give it its own directory or group it with a related source, depending on how its acquisition actually works. We can move code into a shared file once there is a real common need—for example, if another asset uses the same safe storage process. Until then, IFIX-specific validation and storage stay together rather than assuming every provider has the same format or rules.
+
+I’d keep the existing `data/ifix` layout and its safety behavior. This is a proposed organization for discussion; I haven’t changed the implementation. Does this structure match what you have in mind?
+
+## 2026-11-03
+
+### User
+
+I agree, so later we could have dir ibovespa at the same level as ifix, right?
+
+### Assistant
+
+Yes. When we add Ibovespa acquisition, it could sit alongside IFIX:
+
+```text
+internet_data_getter/
+  ifix/
+  ibovespa/
+```
+
+Each directory could contain the source, coordination and storage logic it needs. If both use the same B3 download format or storage mechanisms, we can share the parts that are actually common. The module could then expose an explicit entry point for each, such as `acquire_ifix()` and `acquire_ibovespa()`.
+
+## 2026-11-03
+
+### User
+
+Ok, so just before organizing the module like we discussed now, its important to write instructions this for future agents know how is this architecture works, so it could be implemented as we expect since the first try. I thought inn some AGENTS.md inside backend just to inform that data getter happens inside `internet_data_getter`  and another AGENTS.md inside `internet_data_getter`  explaining how files and folders should be organized inside the module.
+
+What do you think? If you have other ideas you think are better, let me know
+
+### Assistant progress
+
+I’ll check the existing backend guidance so the proposed instructions fit the current project conventions.
+
+### Assistant
+
+I think two scoped `AGENTS.md` files are a good fit. They would give future agents the relevant instructions where they work:
+
+- `backend/AGENTS.md`: describe the backend’s top-level module boundaries. Data acquisition, including downloading and preserving source files, belongs in `backend/src/internet_data_getter/`; the API is a separate sibling module.
+- `backend/src/internet_data_getter/AGENTS.md`: describe the module’s internal organization. Keep each asset’s acquisition logic together, expose explicit entry points for other modules and commands, and share code when there is a demonstrated common need. Imports and API startup must not trigger downloads.
+
+I’d keep those instructions focused on durable boundaries, rather than requiring every future asset to have exactly the same files as IFIX. Providers may need different validation or storage logic. The existing data safety and provenance requirements should continue to apply.
+
+I’d also update `docs/project-context.md` to reflect the agreed architecture, because it currently describes the backend in terms of application services and storage adapters. That keeps the project’s architecture description consistent with the agent instructions. We can write the guidance before moving the implementation, and make it clear that `internet_data_getter` is the intended destination during the transition.
+
+I haven’t changed the architecture or guidance yet.
+
+## 2026-11-03
+
+### User
+
+So make all those changes we just agreed
+
+### Assistant progress
+
+I’ll add the agreed architecture guidance and reorganize the IFIX acquisition code, preserving its current data and recovery behavior. I’ll use the project’s feature workflow to verify the change.
+
+The agreed boundary fits the existing backend: the IFIX coordinator, B3 client, and safe storage can move together. I’m applying the maintain-agent-guidance skill to document that boundary before the move.
+
+The project’s virtual environment is present but its Python executable is missing. I’m repairing the environment first so the verification uses the project’s required Python setup.
+
+The files and guidance are in their new locations. The first test run caught a Python 3.9 compatibility issue in the new entry point, which I’m correcting before checking the full acquisition suite.
+
+### Assistant
+
+The backend now has an `internet_data_getter` module with the IFIX acquisition code grouped under `ifix/`. It exposes `acquire_ifix()` for explicit Python calls, and the command-line download and offline restore use the new module path. Imports and API startup do not initiate downloads.
+
+I added the agreed backend and module-level agent guidance, updated the project architecture and usage documentation, and retained the existing source-data locations, backup, manifest and recovery logic. The new command is:
+
+```powershell
+.venv\Scripts\python -m backend.src.internet_data_getter
+```
+
+The previous command path has been replaced; restore instructions are in the acquisition guide. All 24 backend tests pass, including the public entry point, safe storage and offline restore tests. No live download was run.
+
+## 2026-11-03
+
+### User
+
+I noticed **init**.py and **main**.py still referes directly about IFIX. They should be an entrypoint to get data from all the data_getters, including future ones.
+So another modules could call for getting all the data if they wanted (or only the data from an specific data_getter must also be a possibiity)
+
+Make this information clear through the AGENTS.md so future implementations will respect that
+
+### Assistant progress
+
+I’ll make the shared entry points support both all getters and a selected getter, then document that contract in the module’s agent guidance. I’ll keep IFIX restore available and verify the current behavior.
+
+The guidance now states that shared entry points must run every registered getter or a selected one. I’m moving IFIX-specific command behavior into its own package so the shared command can coordinate getters without owning IFIX’s restore logic.
+
+### Assistant
+
+The shared entry points now support both choices:
+
+- Python: `acquire_all()` runs all registered getters and returns their reports by name; `acquire("ifix")` runs just IFIX. Both accept an optional data directory.
+- Command line: `python -m backend.src.internet_data_getter` runs all registered getters; add `--getter ifix` to select IFIX.
+
+IFIX-specific reporting and restore handling now live inside the IFIX package. The shared registry connects each getter to both entry points, and the module’s `AGENTS.md` instructs future agents to register new getters there. Imports still do not start downloads. The existing `acquire_ifix()` call and offline restore command remain available.
+
+All 28 backend tests pass, including checks for selecting one getter, running multiple getters and continuing the command-line run after a getter fails. The Python `acquire_all()` call propagates an exception and stops if a getter raises one; incomplete reports are returned normally. No live download was run.
+
+## 2026-11-03
+
+### User
+
+I noticed the tests of this module are outside the module. put them together and 
+
+Make this information clear through the AGENTS.md so future implementations will respect that
+
+### Assistant progress
+
+I’ll move the data getter’s tests into the module, update the test instructions and agent guidance, and run them from their new location.
+
+I’ll use the maintain-agent-guidance skill to record the test location as a lasting module rule. Both the shared entry-point tests and IFIX tests can live together under `internet_data_getter/tests/`.
+
+### Assistant
+
+Moved the data getter tests into `backend/src/internet_data_getter/tests/` and updated the module’s `AGENTS.md` to require future getter tests there. The module README now includes the command for running them.
+
+All 28 tests pass from the new location. No live download was run.
+
+## 2026-11-03
+
+### User
+
+explain me how do I run ifix getter and where i should see the downloaded files?
+
+### Assistant progress
+
+I’ll check the current command and output paths so the instructions match the implementation.
+
+### Assistant
+
+Open PowerShell and run these commands from the project folder:
+
+```powershell
+cd "C:\Users\bruno\Documents\ChatGPT\investment_portfolio_backtest"
+.\.venv\Scripts\python.exe -m backend.src.internet_data_getter --getter ifix
+```
+
+The getter downloads one original B3 CSV per year, from 2011 through the current year. You’ll find them in:
+
+```text
+C:\Users\bruno\Documents\ChatGPT\investment_portfolio_backtest\data\ifix\source\
+```
+
+For example, the 2025 file is named `IFIX_2025_Evolucao_Diaria.csv`. The current year’s file may be incomplete because the year is still in progress.
+
+The command prints which years were saved, updated or unchanged, plus any errors. It also keeps a `data/ifix/manifest.json` file with source and retrieval details. If a previously downloaded file changes, its earlier version is backed up under `data/backups/ifix/<year>/`.
+
+You can safely run the command again to check for updates; unchanged files are left in place. The files retain B3’s original format rather than being converted into a daily series.
