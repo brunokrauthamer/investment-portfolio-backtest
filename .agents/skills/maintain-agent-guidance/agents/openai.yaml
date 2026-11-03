@@ -1,0 +1,4 @@
+interface:
+  display_name: "Maintain Agent Guidance"
+  short_description: "Maintain durable agent instructions at the right scope"
+  default_prompt: "Use $maintain-agent-guidance for the current project task."

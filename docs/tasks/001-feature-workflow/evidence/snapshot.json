@@ -1,0 +1,115 @@
+{
+  "head": "5d830a27c0738bb71162a196a088af56ef7d8878",
+  "code_revision": "5d830a27c0738bb71162a196a088af56ef7d8878:sha256:623109e3bc411e0d8b8db2f5bb15eec4b9bcb923fd1d6015baf774338394be75",
+  "excluded_records": [
+    "docs/tasks/",
+    "docs/agent-log/"
+  ],
+  "record_exceptions": [
+    "AGENTS.md"
+  ],
+  "files": [
+    {
+      "path": ".agents/skills/feature-tdd/SKILL.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "9d7e2fa2fbfd9b4b454be6c0e590c946663df5c6b5b4d10f9c939ff20b4a548b"
+    },
+    {
+      "path": ".agents/skills/feature-tdd/agents/openai.yaml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "20f4ddc69514dfe739a002640a66b695754424849a49c4baa05f48d4bc271363"
+    },
+    {
+      "path": ".agents/skills/feature-workflow/SKILL.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "a8be5fe3a70b759a98890f7e8fda9c0c87b2d82630dff889e634ef32741bb631"
+    },
+    {
+      "path": ".agents/skills/feature-workflow/agents/openai.yaml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "ed91f7629507176b5730919ec3450c3d8416b57b8118f2953bc39a3aab8eafd6"
+    },
+    {
+      "path": ".agents/skills/feature-workflow/references/task-records.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "f0ac51e41cc9104be1ff4109fbfd6127797c565f2846d7831f820483ac1569f0"
+    },
+    {
+      "path": ".agents/skills/feature-workflow/scripts/snapshot.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "dcb83c485954c143b660c531657089ad49b6026dc2e4dd512f768d0b12f377f5"
+    },
+    {
+      "path": ".agents/skills/maintain-agent-guidance/SKILL.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "1474d5e7c388eb9a0351c705d00318153d27bd3b30160ee764579e907c9d0ee9"
+    },
+    {
+      "path": ".agents/skills/maintain-agent-guidance/agents/openai.yaml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "f1c8aae5e0edb0dbb0cd4a1fef9dbaa1bb393392414eb04fe94ce19d53166cfa"
+    },
+    {
+      "path": ".codex/agents/developer-correction.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "1976312e5ab08675df761b4c7f1b0bb6070d59a7eb176fe003cc14b8eb19a99c"
+    },
+    {
+      "path": ".codex/agents/developer.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "8c087f8d3ca3611eadcb53fa4457041ed5180f4e3579450e56627581fd594c6b"
+    },
+    {
+      "path": ".codex/agents/qa.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "06e1035029ed1c2b14229d995cd3df1c3fc65cb77bdb7e9bc445b3d8bd4b6af9"
+    },
+    {
+      "path": ".codex/agents/reviewer.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "386685935402e8040a297b3efe9e963b34f36f178924b55c54475e48d691536f"
+    },
+    {
+      "path": ".codex/agents/tech-lead-correction.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "6cb5330ce7e6ac2da97d9b77752aae98670dcc446a86b605a755058460670233"
+    },
+    {
+      "path": ".codex/agents/tech-lead.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "d49c53979602bc7cfc988b9a757147d6250a9f78445cb2a8b0bed21cf534c9d1"
+    },
+    {
+      "path": ".codex/hooks.json",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "7baaa618c42959ff04936dc10ee8a562d9335593157f6b5af9c79606d9509da6"
+    },
+    {
+      "path": "AGENTS.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "849892e175e0bb7bb1ce4ec6006ae7884c99a1b33fcf6c1a63ae16bbdda69f05"
+    },
+    {
+      "path": "docs/tasks/AGENTS.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "4be5fbf3991de6dbd2b1a54cef59db005005152804d62fab71ddecd444f0a05d"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feature TDD"
+  short_description: "Implement approved behavior with observed TDD evidence"
+  default_prompt: "Use $feature-tdd for the current project task."

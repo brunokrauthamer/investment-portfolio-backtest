@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "state_version": 2,
+  "record_kind": "workflow_setup_bootstrap",
+  "workflow_execution": false,
+  "task_id": "001",
+  "task_slug": "feature-workflow",
+  "stage": "awaiting_final_approval",
+  "spec_revision": "s002",
+  "plan_revision": "p002",
+  "code_revision": "5d830a27c0738bb71162a196a088af56ef7d8878:sha256:623109e3bc411e0d8b8db2f5bb15eec4b9bcb923fd1d6015baf774338394be75",
+  "baseline_revision": "affa60d15268d1074bebe58b9327ee155bbe7aaa",
+  "document_hashes": {
+    "spec.md": "1226699df9c0eeb51e7fc5f549d472d5f10f6312b4b834737867753222c8be6c",
+    "plan.md": "4616e8a41c728dbe009970d912debf50734a18c84e57c9a0c89cc75859ef5111"
+  },
+  "model_policy": "initial",
+  "correction_cycle": 0,
+  "model_switch_reason": null,
+  "review_rounds": {
+    "initial": 0,
+    "correction": 0
+  },
+  "limits": {
+    "rounds_per_cycle": 3,
+    "correction_cycles": 1
+  },
+  "state_writer": "main-chat",
+  "active_assignments": [],
+  "implementation": {
+    "status": "done",
+    "evidence": [
+      "spec.md",
+      "plan.md",
+      "evidence/snapshot.json"
+    ]
+  },
+  "review": {
+    "status": "passed_on_prior_snapshot",
+    "spec_revision": "s001",
+    "plan_revision": "p001",
+    "code_revision": "affa60d15268d1074bebe58b9327ee155bbe7aaa:sha256:3d595ecc67ac98314960fe0846bc49a9001efb0c1d71ef697cd8685ff23fa5a4",
+    "evidence": [
+      "review.md"
+    ],
+    "agent": "workflow_scenario_review",
+    "model": "gpt-6.1-sol",
+    "effort": "high"
+  },
+  "qa": {
+    "status": "not_applicable",
+    "reason": "Setup artifacts received static and independent scenario verification. No product feature or full workflow execution is claimed.",
+    "evidence": [
+      "verification.md"
+    ],
+    "browser": "not_applicable"
+  },
+  "acceptance_results": [
+    {
+      "criterion_id": "AC-001",
+      "status": "passed",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "affa60d15268d1074bebe58b9327ee155bbe7aaa:sha256:3d595ecc67ac98314960fe0846bc49a9001efb0c1d71ef697cd8685ff23fa5a4",
+      "evidence": [
+        "verification.md",
+        "review.md"
+      ]
+    },
+    {
+      "criterion_id": "AC-002",
+      "status": "passed",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "affa60d15268d1074bebe58b9327ee155bbe7aaa:sha256:3d595ecc67ac98314960fe0846bc49a9001efb0c1d71ef697cd8685ff23fa5a4",
+      "evidence": [
+        "verification.md",
+        "review.md"
+      ]
+    },
+    {
+      "criterion_id": "AC-003",
+      "status": "passed",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "affa60d15268d1074bebe58b9327ee155bbe7aaa:sha256:3d595ecc67ac98314960fe0846bc49a9001efb0c1d71ef697cd8685ff23fa5a4",
+      "evidence": [
+        "verification.md",
+        "review.md"
+      ]
+    },
+    {
+      "criterion_id": "AC-004",
+      "status": "passed",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "affa60d15268d1074bebe58b9327ee155bbe7aaa:sha256:3d595ecc67ac98314960fe0846bc49a9001efb0c1d71ef697cd8685ff23fa5a4",
+      "evidence": [
+        "verification.md",
+        "review.md"
+      ]
+    },
+    {
+      "criterion_id": "AC-005",
+      "status": "passed",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "affa60d15268d1074bebe58b9327ee155bbe7aaa:sha256:3d595ecc67ac98314960fe0846bc49a9001efb0c1d71ef697cd8685ff23fa5a4",
+      "evidence": [
+        "verification.md",
+        "review.md"
+      ]
+    },
+    {
+      "criterion_id": "AC-006",
+      "status": "passed",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "affa60d15268d1074bebe58b9327ee155bbe7aaa:sha256:3d595ecc67ac98314960fe0846bc49a9001efb0c1d71ef697cd8685ff23fa5a4",
+      "evidence": [
+        "verification.md",
+        "review.md"
+      ]
+    },
+    {
+      "criterion_id": "AC-007",
+      "status": "passed",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "affa60d15268d1074bebe58b9327ee155bbe7aaa:sha256:3d595ecc67ac98314960fe0846bc49a9001efb0c1d71ef697cd8685ff23fa5a4",
+      "evidence": [
+        "verification.md",
+        "review.md"
+      ]
+    }
+  ],
+  "open_findings": [],
+  "attempts_without_progress": 0,
+  "approvals": {
+    "specification": null,
+    "correction_plan": null,
+    "final": null
+  },
+  "setup_decisions": {
+    "scope": "project",
+    "agents": 6,
+    "rounds_per_cycle": 3,
+    "correction_cycles": 1,
+    "correction_lead": "gpt-6.1-sol/high",
+    "source": "User answers to the three setup questions; these are not a product feature spec/plan approval.",
+    "feature_workflow_invocation": "explicit_only",
+    "invocation_source": "User request in this thread: \u201cI want to use the feature workflow only when I invokes that\u201d."
+  },
+  "next_action": "Human review and acceptance of the explicit-only invocation setting and project-only workflow setup.",
+  "updated_at": "2026-11-02T23:50:04-03:00"
+}
