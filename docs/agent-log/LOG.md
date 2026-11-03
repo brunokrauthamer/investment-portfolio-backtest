@@ -397,3 +397,20 @@ The workflow setup is committed on the new branch. I’m recording the required 
 ```text
 Created branch `codex/add-feature-workflow` and committed the workflow setup as `48c2b25` (`feat: add project feature workflow`). The commit groups the three project skills, six agent profiles and setup records (23 files, 776 insertions). No tests were run, since this was a Git-organization task.
 ```
+
+## 2026-11-03 — Regression tests for workflow findings (America/Sao_Paulo)
+
+### User
+
+One thing about the feature-workflow. If some problem is found, the developer with tdd must write specific test to cover the issue found.
+If it's not clear yet in the workflow, make it clear
+
+### Assistant
+
+I’ll check the feature workflow and its TDD instructions, then clarify the requirement wherever the current wording leaves room for doubt.
+
+The TDD skill already calls for a failing regression test for existing defects, but the workflow doesn’t explicitly carry that requirement through review and QA findings. I’ll use the skill-creator guidance to make those handoffs clear.
+
+Updated the feature workflow and TDD instructions. For each confirmed implementation defect found during implementation, review, or QA, the active developer must write a specific test that reproduces the issue, observe it fail before the fix, and record the passing result. This also applies to correction work and late repairs.
+
+I reviewed the changes. The skill validator could not run because the available Python environment lacks PyYAML; the changes are limited to instructions.
