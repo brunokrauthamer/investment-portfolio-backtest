@@ -1,0 +1,110 @@
+{
+  "task": "003-ibovespa-daily-evolution-acquisition",
+  "spec_revision": "s001",
+  "plan_revision": "p001",
+  "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+  "environment": "Windows PowerShell; backend/.venv Python; 2026-11-03 client date; CLI-only feature",
+  "checks": [
+    {
+      "criterion": "AC-001",
+      "status": "pass",
+      "expected": "registered ibovespa entry point selects 2011 through current year; imports do not acquire; shared CLI honors selection",
+      "actual": "independent live CLI selected all years 2011-2026 (16); full 56-test suite passed including registry, import, CLI-selection and IFIX compatibility cases",
+      "evidence": "56-test getter suite; temporary full CLI run"
+    },
+    {
+      "criterion": "AC-002",
+      "status": "pass",
+      "expected": "original annual CSV bytes and provenance are preserved in stable asset paths",
+      "actual": "temporary live run produced 16 files and matching manifest records with source filename Evolucao_Diaria.csv, source URL, retrieval time and SHA-256; independent B3 refetches for 2011 and 2026 matched stored bytes exactly",
+      "evidence": "live byte comparisons: 2011 3052 bytes sha256 c232d0921337496042d9241f7ac0a78db625b6c9de0eb0ca31e69aa4da41df9f; 2026 2875 bytes sha256 74f1046d61fc6011cbf0ff62873a9475435778a1247ecc3e8b1e0aeedb9450b9"
+    },
+    {
+      "criterion": "AC-003",
+      "status": "pass",
+      "expected": "validated B3 annual responses and complete/partial failure handling",
+      "actual": "live run complete 2011-2026, exit 0; test suite passed invalid Base64/HTTP denial, wrong year/index, truncation, empty observations, malformed quote and blank summary label rejection; service partial failure and empty year range tests pass",
+      "evidence": "56-test getter suite; live CLI output"
+    },
+    {
+      "criterion": "AC-004",
+      "status": "pass",
+      "expected": "safe no-op rerun and recoverable changed-file behavior",
+      "actual": "independent rerun completed with all 16 years unchanged; every active modification time was identical; no backup files were created. Suite covers changed backups, restore, interrupted manifest writes, both first-pending failures, invalid manifests and write failures; reviewer independently injected update/restore manifest failures on both assets with recovery passing.",
+      "evidence": "56-test getter suite; reviewer review.md round 2; temp rerun"
+    },
+    {
+      "criterion": "AC-005",
+      "status": "pass",
+      "expected": "registered source/service/storage boundaries, exclusive lock, timeout and pacing",
+      "actual": "56-test suite and source inspection passed registry/isolation/lock/overlap/timeout/pacing cases; urllib default TLS verification retained; IFIX dataset untouched by independent run to an external temporary directory",
+      "evidence": "56-test getter suite; temp full CLI run"
+    },
+    {
+      "criterion": "AC-006",
+      "status": "pass",
+      "expected": "automated behavior tests, IFIX regressions and usage/recovery docs",
+      "actual": "56 getter tests passed, including IFIX tests. Reviewed backend getter documentation for install/run, source provenance, validation, paths, partial failures and offline restore. Round 1 test-first evidence remains incomplete (RF-003) as documented; this does not change the passing executable acceptance checks.",
+      "evidence": "unittest discover output; backend/src/internet_data_getter/README.md; review.md RF-003"
+    },
+    {
+      "criterion": "AC-007",
+      "status": "pass",
+      "expected": "independent source-backed run, earliest/latest exact comparison",
+      "actual": "independent documented CLI ran against live B3 for 2011-2026 into a temporary directory, exit 0; all 16 manifest SHA-256 entries validated; live 2011 and 2026 refetches matched local bytes exactly",
+      "evidence": "full CLI run; independent byte comparisons above"
+    }
+  ],
+  "live_run": {
+    "command": "python -m backend.src.internet_data_getter --getter ibovespa --data-dir <temporary-directory>",
+    "exit_code": 0,
+    "periods_saved": [
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "periods_unchanged": [],
+    "periods_updated": [],
+    "manifest_files": 16,
+    "project_data_modified": false
+  },
+  "safe_rerun": {
+    "exit_code": 0,
+    "periods_unchanged": [
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "all_active_mtimes_unchanged": true,
+    "new_backups": 0
+  },
+  "browser": "not_applicable_cli_only",
+  "snapshot_before": "evidence/qa-initial-round-2-before.json",
+  "snapshot_after": "evidence/qa-initial-round-2-after.json"
+}
