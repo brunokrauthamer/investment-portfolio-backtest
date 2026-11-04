@@ -1695,7 +1695,7 @@ Follow repository instructions and conventions. Invocation to organize and commi
 3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
 4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
 5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
-6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+6. Report the resulting branch, each commit’s short hash and message, and any changes left uncommitted with the reason.
 </skill>
 ```
 
@@ -1808,7 +1808,7 @@ Follow repository instructions and conventions. Invocation to organize and commi
 3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
 4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
 5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
-6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+6. Report the resulting branch, each commit’s short hash and message, and any changes left uncommitted with the reason.
 </skill>
 ```
 
@@ -2404,7 +2404,7 @@ Follow repository instructions and conventions. Invocation to organize and commi
 3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
 4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
 5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
-6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+6. Report the resulting branch, each commit’s short hash and message, and any changes left uncommitted with the reason.
 
 </skill>
 ````
@@ -2712,3 +2712,50 @@ Final approval is recorded. Task 004 is complete.
 - Independent live QA compared all 40 BCB pages and matched **3,977 observations**, the date range **2011-01-03 through 2026-11-03**, representative values, and the CSV manifest hash.
 
 See [source.py]([redacted]/backend/src/internet_data_getter/selic/source.py), [verification.md]([redacted]/docs/tasks/004-selic-selenium-refactor/verification.md), and [review.md]([redacted]/docs/tasks/004-selic-selenium-refactor/review.md). The evaluated code snapshot remains `72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc`; the later HEAD change contains only the interaction log. The repository hook created a log-only commit (`d9b4897a`); application changes remain uncommitted.
+
+## 2026-11-04 01:13 -03:00 — Organize Selic Selenium changes
+
+**User:**
+
+[$organize-git-commits]([redacted]\\.codex\skills\organize-git-commits\SKILL.md) 
+
+**Assistant progress:**
+
+I’ll use the organize-git-commits skill you invoked. I’ll inspect branch and repository state first, then group the Selic implementation and its task records separately from the interaction log.
+
+**User:**
+
+<skill>
+<name>organize-git-commits</name>
+<path>[redacted]\.codex\skills\organize-git-commits\SKILL.md</path>
+---
+name: organize-git-commits
+description: Organize existing Git changes into a suitable branch and focused local commits when asked to commit or organize the work.
+---
+
+# Organize Git commits
+
+Follow repository instructions and conventions. Invocation to organize and commit authorizes creating local branches and commits. Do not push, create a pull request, amend commits, rewrite history, discard changes, or modify remote state without separate authorization.
+
+1. Before changing Git state, inspect the current branch and HEAD, staged and unstaged diffs, renames and deletions, and untracked files. Read relevant changes and surrounding context to understand their purpose and scope. Check for an ongoing merge, rebase, cherry-pick, or unresolved conflicts; stop before changing Git state if they prevent safe organization.
+2. On `master`, create a descriptive branch at the current HEAD while preserving local changes. Follow the repository's branch naming convention, or choose a concise name reflecting the work; resolve name collisions with a different name, never by overwriting a branch. On any other branch, continue there.
+3. Plan cohesive commits by purpose and dependency, in an order that makes the history easy to review. A commit may include several related files when they form one logical change. Distinct changes in the same file may belong in separate commits when they can be separated safely. Avoid combining unrelated changes in a large catch-all commit.
+4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
+5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
+6. Report the resulting branch, each commit’s short hash and message, and any changes left uncommitted with the reason.
+</skill>
+
+**Assistant progress:**
+
+The worktree is detached at `67f2f1f`, with no staged changes or in-progress merge/rebase. The Selic code, docs, and task records form one feature change; the interaction log is already in a separate commit. I’ll create a descriptive branch before committing the feature.
+
+The staged feature set contains the Selenium adapter, its tests and docs, plus task 004 records and evidence. It includes no project data or unrelated code. I’m committing this cohesive change separately from the interaction log.
+
+**Assistant:**
+
+Organized on branch `codex/selic-selenium-refactor`.
+
+- `7eb03a3` — `feat: refactor Selic acquisition to Selenium`: commits the Selenium source, tests, docs, and task 004 review/QA records.
+- The configured Stop hook will commit this turn’s interaction-log entry separately as `docs: update agent interaction log`.
+
+The only pending worktree change is this turn’s `docs/agent-log/LOG.md` entry; the configured Stop hook will commit it after the reply. No project data or other changes remain.
