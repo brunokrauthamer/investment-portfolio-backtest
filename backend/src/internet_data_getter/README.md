@@ -1,6 +1,6 @@
 # Data acquisition
 
-Acquisition runs only when explicitly invoked by a caller or operator. Python callers can use `acquire_all(data_dir)` to run all registered getters and receive a dictionary of their reports, or `acquire("ifix", data_dir)`, `acquire("ibovespa", data_dir)` or `acquire("selic", data_dir)` to run one getter. `data_dir` is optional in all calls. `acquire_ifix(data_dir)`, `acquire_ibovespa(data_dir)` and `acquire_selic(data_dir)` remain available as convenience functions. `acquire_all` propagates an exception immediately and stops; incomplete reports are returned normally. Reports include saved, updated, unchanged and failed items where applicable. Importing modules or starting the application must not make network requests.
+Acquisition runs only when explicitly invoked by a caller or operator. Python callers can use `acquire_all(data_dir)` to run all registered getters and receive a dictionary of their reports, or `acquire("ifix", data_dir)`, `acquire("ibovespa", data_dir)`, `acquire("selic", data_dir)` or `acquire("sp500", data_dir)` to run one getter. `data_dir` is optional in all calls. `acquire_ifix(data_dir)`, `acquire_ibovespa(data_dir)` and `acquire_selic(data_dir)` remain available as convenience functions; `acquire_sp500(data_dir=None, start_date=None, end_date=None)` accepts optional inclusive `YYYY-MM-DD` bounds. The S&P 500 CLI also provides `fetch-sp500 --start-date YYYY-MM-DD --end-date YYYY-MM-DD`. `acquire_all` propagates an exception immediately and stops; incomplete reports are returned normally. Reports include saved, updated, unchanged and failed items where applicable. Importing modules or starting the application must not make network requests.
 
 ## B3 annual daily evolution
 
@@ -11,19 +11,19 @@ python -m venv backend/.venv
 .\backend\.venv\Scripts\python.exe -m pip install -r backend/requirements.txt
 ```
 
-Run all registered getters (IFIX, IBOVESPA and Selic):
+Run all registered getters (IFIX, IBOVESPA, Selic and S&P 500):
 
 ```powershell
 .\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter
 ```
 
-To run one getter, select it before any subcommand with `--getter ifix`, `--getter ibovespa` or `--getter selic`. The default all-getters command reports failures and continues to the next getter; it exits with status 1 if any getter fails or reports an incomplete run.
+To run one getter, select it before any subcommand with `--getter ifix`, `--getter ibovespa`, `--getter selic` or `--getter sp500`. The default all-getters command reports failures and continues to the next getter; it exits with status 1 if any getter fails or reports an incomplete run. Use the dedicated `fetch-sp500` command when supplying S&P 500 date bounds.
 
 ```powershell
 .\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter --getter ibovespa
 ```
 
-Use `--getter ifix` to run only IFIX.
+Use `--getter ifix` to run only IFIX. Use `--getter sp500` to run S&P 500 with its default date range, or `fetch-sp500 --start-date 2011-01-03 --end-date 2026-11-04` to choose inclusive dates explicitly.
 
 The IFIX getter fetches one B3 CSV for each year from 2011 through the current year using the annual download endpoint used by the [B3 IFIX daily-evolution page](https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IFIX?language=pt-br). The page's semester selector changes the displayed half-year; the download itself contains the full year. Files are saved as `data/ifix/source/IFIX_<year>_Evolucao_Diaria.csv`. The page returns Base64 text and the command decodes it to the original CSV bytes, including its original character encoding; it does not parse or rewrite the observations. Validation checks the year header, all 12 month columns, the 31 day rows, summary rows, and at least one observation. Blank future months in the current-year file are accepted.
 
@@ -58,6 +58,43 @@ Only restore a manifest-listed path from `data/ibovespa/manifest.json`. This ope
 Each getter uses its own exclusive lock, so running one asset does not change the other's files. If a process is interrupted, `.acquisition.lock` may remain under that asset directory. Confirm that no acquisition process is still running before deleting that stale lock and retrying. Commands never remove a lock automatically.
 
 The acquisition makes one paced HTTPS request per requested year with certificate verification enabled. It preserves files already saved if a later year fails. The page offers years dynamically through the current year; the current year may be partial. The stored file remains B3's monthly-by-day matrix and is not converted into a normalized daily series. B3 data is retained for the user's stated personal use; data-use and access terms belong to B3 and may change.
+
+## Yahoo Finance S&P 500 adjusted-close history
+
+The `sp500` getter retrieves daily history for Yahoo's S&P 500 symbol `^GSPC`. Yahoo's history page identifies a Date column and a separate Adj Close column; the getter preserves only these two fields in ascending order. Yahoo describes Adj Close as adjusted for splits and dividend or capital-gain distributions. This source value does not establish a portfolio return or turn the S&P 500 price index into a total-return series.
+
+Yahoo's [terms of service](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html) say automated data collection requires express prior permission. The user stated: “I have Yahoo’s express prior permission for automated collection.” Treat that as the user's statement; the getter must not bypass access controls. The permission statement does not grant data redistribution rights. Review current Yahoo terms and the scope of the permission before changing the access or use.
+
+Run the full default range, starting on 2011-01-03 and ending on the current local calendar date:
+
+```powershell
+.\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter --getter sp500
+```
+
+Choose inclusive dates in `YYYY-MM-DD` form with the dedicated subcommand:
+
+```powershell
+.\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter --data-dir data fetch-sp500 --start-date 2011-01-03 --end-date 2026-11-04
+```
+
+The dates become Unix seconds for midnight UTC at the selected start and midnight UTC after the selected end, so the requested end date is included. Reversed or invalid dates fail before a source request. The Yahoo page is requested with daily interval and adjusted-close data; the parser checks the symbol, table columns, response structure, dates, adjusted prices, duplicates, range boundaries and visible pagination. It rejects unrecognized empty pages or detectable partial results. Trading days absent from the source are not synthesized. Yahoo's HTML or access conditions can change, and even a structurally valid response cannot prove that the source published every market observation.
+
+The active file is `data/sp500/source/sp500_yahoo.csv`, with header `date,adjusted_close`, ISO dates and UTF-8 encoding. Thousands separators are removed; displayed decimal precision is preserved without rounding or scaling. `data/sp500/manifest.json` records the source symbol and URL, requested date windows and bounds, retrieval time, observed coverage/count, CSV SHA-256 and backup references.
+
+### Incremental updates and recovery
+
+On the first run, the selected range is downloaded. On later runs, the getter fetches an earlier prefix when the chosen start predates the saved file and a later suffix when the chosen end exceeds the saved latest observation. The suffix starts with the latest saved date, so that one value can be refreshed; a different value for an older observation stops the update. A narrower request never deletes stored rows. A subset that is already covered and ends before the latest saved date needs no source request. Older provider corrections and gaps inside the saved date span are not discovered automatically.
+
+Changed data is committed with paired, hash-verified CSV/manifest backups under `data/backups/sp500/`, outside the active source directory. The asset uses an exclusive `.acquisition.lock`, atomic file replacement and `.pending-update.json` write-ahead recovery. Interrupted operations are recovered only when the active CSV and manifest match recorded transaction hashes; an unknown state is preserved for inspection. Identical data leaves the CSV bytes and modification time unchanged and makes no backup. Backups must never be loaded as active data.
+
+Restore only a paired version listed in `data/sp500/manifest.json` and do so without contacting Yahoo:
+
+```powershell
+.\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter --data-dir data restore-sp500 --backup backups/sp500/PASTE_LISTED_BACKUP_FILENAME.csv
+```
+
+Replace the example with the exact manifest-listed CSV backup path. Restore verifies both backup hashes and the CSV/manifest pair, preserves the current active version, and records the restore time. If `.acquisition.lock` remains after interruption, confirm no acquisition or restore is running before deleting the stale lock.
+
 
 ## Tests
 

@@ -8,6 +8,8 @@ from .ibovespa import acquire_ibovespa
 from .ibovespa import cli as ibovespa_cli
 from .selic import acquire_selic
 from .selic import cli as selic_cli
+from .sp500 import acquire_sp500
+from .sp500 import cli as sp500_cli
 
 
 class _Getter(NamedTuple):
@@ -19,6 +21,7 @@ _GETTERS = {
     "ifix": _Getter(acquire_ifix, ifix_cli),
     "ibovespa": _Getter(acquire_ibovespa, ibovespa_cli),
     "selic": _Getter(acquire_selic, selic_cli),
+    "sp500": _Getter(acquire_sp500, sp500_cli),
 }
 
 
