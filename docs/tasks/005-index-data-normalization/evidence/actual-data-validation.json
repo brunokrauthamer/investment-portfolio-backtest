@@ -1,0 +1,26 @@
+{
+  "output": "C:/Users/bruno/.codex/worktrees/f80e/investment_portfolio_backtest/data/normalized/gathered_data.csv",
+  "rows": 4086,
+  "date_min": "2011-01-03",
+  "date_max": "2026-11-04",
+  "columns": [
+    "date",
+    "ibovespa",
+    "ifix",
+    "selic",
+    "sp500"
+  ],
+  "source_file_counts": {
+    "ibovespa": 16,
+    "ifix": 16,
+    "selic": 1,
+    "sp500": 1
+  },
+  "blank_cells": {
+    "ibovespa": 158,
+    "ifix": 158,
+    "selic": 109,
+    "sp500": 102
+  },
+  "all_values_match_source_observations": true
+}
