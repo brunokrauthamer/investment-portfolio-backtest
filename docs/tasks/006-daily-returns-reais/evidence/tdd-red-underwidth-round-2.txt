@@ -1,0 +1,16 @@
+Command:
+.\backend\.venv\Scripts\python.exe -m unittest backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests.test_underwidth_gathered_row_raises_contextual_error_and_preserves_output backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests.test_underwidth_currency_row_raises_contextual_error_and_preserves_output
+
+Observed against the implementation before the REV-001 fix:
+Ran 2 tests
+FAILED (errors=2)
+
+Gathered CSV underwidth row raised:
+AttributeError: 'NoneType' object has no attribute 'strip'
+at `_parse_number` for the missing `sp500` field on row 3.
+
+Currency CSV underwidth row raised:
+AttributeError: 'NoneType' object has no attribute 'replace'
+at `_read_currency` for the missing `price` field on row 3.
+
+Both regression cases began with a valid published sentinel and confirmed it remained unchanged after the failure. Their explicit blank-field control is covered by the existing sparse-series test; blank strings still map to zero returns.
