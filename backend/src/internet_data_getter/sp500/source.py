@@ -190,21 +190,6 @@ def _validate_identity(soup) -> None:
         raise SourceError("Yahoo page has conflicting Yahoo ticker identity fields")
 
 
-def _check_pagination(soup) -> None:
-    for control in soup.find_all(["a", "button", "link"]):
-        label = " ".join(control.stripped_strings)
-        aria = str(control.get("aria-label", "")).strip()
-        rel = control.get("rel", [])
-        if isinstance(rel, str):
-            rel = rel.split()
-        if (
-            any(str(value).casefold() == "next" for value in rel)
-            or _PAGING_TEXT.fullmatch(label)
-            or _PAGING_TEXT.fullmatch(aria)
-        ):
-            raise SourceError("Yahoo page indicates more historical rows are available")
-
-
 def parse_history_page(
     html: str,
     start_date: date | str,
@@ -223,7 +208,6 @@ def parse_history_page(
         raise SourceError("Yahoo HTML response appears truncated")
 
     soup = BeautifulSoup(html, "html.parser")
-    _check_pagination(soup)
     _validate_identity(soup)
 
     candidate_tables = []
