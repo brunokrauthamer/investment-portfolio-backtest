@@ -1,0 +1,40 @@
+{
+  "method": "Read-only strict UTF-8 decoding, CSV field comparison in original order, SHA-256 and manifest inspection",
+  "input_has_bom": true,
+  "output_has_bom": false,
+  "selic_is_strict_utf8_without_bom": true,
+  "source_headers": [
+    "Data",
+    "Último",
+    "Abertura",
+    "Máxima",
+    "Mínima",
+    "Vol.",
+    "Var%"
+  ],
+  "output_headers": [
+    "Data",
+    "price"
+  ],
+  "records_compared": 4132,
+  "record_mismatches": 0,
+  "first_output_record": [
+    "03.11.2026",
+    "5,4900"
+  ],
+  "last_output_record": [
+    "03.01.2011",
+    "1,6465"
+  ],
+  "input_sha256": "0fa13625511a444b282e7626eef081c8408896213191687580428dbd33ccf3a7",
+  "output_sha256": "b43e448cdd88c22cf4690c1803cf3c96c4778e03d0ae3dd8c2c43dd2e7f68169",
+  "input_hash_matches_manifest": true,
+  "output_hash_matches_manifest": true,
+  "row_count_matches_manifest": true,
+  "row_order_endpoints_match_manifest": true,
+  "journal_present": false,
+  "staging_present": false,
+  "input_byte_prefix": "EFBBBF",
+  "output_byte_prefix": "446174",
+  "selic_byte_prefix": "646174"
+}
