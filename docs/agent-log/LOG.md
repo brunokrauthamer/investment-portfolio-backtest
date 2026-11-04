@@ -3911,3 +3911,94 @@ The plan includes test-first implementation, documentation, generating the reque
 ```
 
 **Redaction:** The local user account name in the specification and plan link targets is replaced with `[redacted]`.
+
+## 2026-11-04 — Approval and correction planning for index data normalization
+
+### User message
+
+```text
+approved
+```
+
+### Assistant progress
+
+```text
+Thanks, approval is recorded for s001 and p001. I’m handing the approved revisions back to the feature lead so implementation can proceed within the agreed scope, followed by independent review and QA.
+```
+
+```text
+The approved baseline is captured, and the developer is working test-first on the pandas readers, date/value validation, union join, and atomic output. The agent-log hook also committed the prior turn’s log update; it did not change the application snapshot.
+```
+
+```text
+The first pandas-based cases are passing. The developer is filling in checks for duplicate dates, invalid inputs, decimal precision, blank gaps, and safe replacement before running the normalizer on the existing source data.
+```
+
+```text
+The normalizer now generated 4,086 ordered rows spanning 2011-01-03 to 2026-11-04. The focused normalizer suite passes. The broader getter regression suite is currently blocked by missing `beautifulsoup4` in the local environment, and the developer is checking dependency installation before handoff.
+```
+
+```text
+Implementation is complete on the approved scope: the function and documentation are in place, and the generated CSV has 4,086 rows. The developer’s seven focused tests pass; an independent reviewer is now checking the integrated change before QA. The broader getter suite remains unavailable because its declared dependencies could not be installed without network access.
+```
+
+```text
+The independent review found two input-handling defects: malformed B3 rows may produce unclear errors, and a directory whose name ends in `.csv` may be treated as a file. The reviewer is sending both findings back for regression tests and a fix before QA.
+```
+
+```text
+Those findings are within the initial review cycle, so the lead is scheduling a second implementation pass with test-first regressions, followed by another independent review. The generated output and existing successful checks will need to be refreshed on the repaired snapshot.
+```
+
+```text
+The developer has reproduced all three review cases as failing regression tests, including the short and overwide malformed input rows. The fixes are now underway, and the repaired snapshot will go through independent review again before QA begins.
+```
+
+```text
+The repaired version now passes all ten focused tests, with three new regressions covering the review findings. The output was regenerated and checked again against source data; the independent reviewer is rechecking that snapshot now.
+```
+
+```text
+The re-review confirmed the prior fixes but found two additional malformed-input cases: an observation placed in a B3 summary row can be skipped, and a NUL character can cause pandas to truncate an input value. The lead is documenting these as new regression cases; one initial implementation round remains for the fix and re-review.
+```
+
+```text
+Both new regression tests now pass, bringing the focused suite to 12 tests. The output still matches the 34 source files across 4,086 dates; the final initial-cycle snapshot is with the independent reviewer now.
+```
+
+```text
+The third review confirmed the previous fixes but found one remaining error-message defect: a Selic row with a date and no value raises an unclear raw exception. The initial implementation rounds are exhausted, so the workflow requires independent QA of the current snapshot before the lead proposes a correction plan for your approval. No further code changes will happen until that revised plan is approved.
+```
+
+```text
+The final review documented the Selic case as a blocking finding, with the other four findings resolved. Independent QA is now assessing the current implementation and output; after that, the correction lead will present a focused repair plan for approval. The workflow requires your approval of that plan before the final repair pass.
+```
+
+```text
+QA has reproduced the Selic missing-value error, confirmed the prior output remains intact, and independently matched all 4,086 output rows to the 34 inputs. QA is finishing its recorded assessment; the correction plan will address the malformed row’s validation and error context.
+```
+
+```text
+QA passed AC-001–005 and AC-007 and failed AC-006 only on the reproduced Selic error. The correction cycle is now recorded, and the correction lead is preparing a narrowly scoped revised plan. The workflow requires your approval of that plan before the final repair pass.
+```
+
+```text
+The proposed correction is narrow: detect rows with omitted fields in the shared Selic/S&P 500 reader, report the file and row in a `NormalizationError`, and verify a failed rerun preserves the previous output. I’m checking the recorded p002 hash before asking you to approve the correction plan.
+```
+
+### Assistant response
+
+```text
+Please review correction plan p002 for task 005:
+
+- [Correction plan p002]([redacted]/investment_portfolio_backtest/docs/tasks/005-index-data-normalization/plan.md), SHA-256 `ce41ab962a673d3809b97904438ea55b0f1fce7dee823042f930805a1ee2a6eb`
+- Approved specification s001 remains unchanged (SHA-256 `b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8`); initial plan p001 is preserved in history (SHA-256 `df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb`).
+
+The correction addresses REV-005: pandas pads a date-only row with `None`, then decimal validation raises an `AttributeError` without source context. p002 adds a missing-field check in the shared daily reader before date/value validation, returning `NormalizationError` with the source path, row, and expected two fields. The planned regressions cover date-only rows in both Selic and S&P 500 files and verify an existing output remains unchanged when normalization fails. The plan also includes focused tests, validation against repository data, and fresh independent review and QA.
+
+The generated table matches all 34 input files across 4,086 dates; the remaining blocker is the malformed-row diagnostic. The separate getter-suite check remains blocked because `beautifulsoup4` is missing and package-index access is denied.
+
+The `feature-workflow` correction gate requires explicit approval of p002 before code changes. Please reply “Approve p002” to authorize this correction plan, or tell me what to revise. No correction code has been written.
+```
+
+**Redaction:** The local user account name in the correction plan link target is replaced with `[redacted]`.
