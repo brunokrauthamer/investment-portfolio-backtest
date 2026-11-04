@@ -63,6 +63,19 @@ export const exampleChartOptions: ApexOptions = {
     strokeColors: "#16816f",
     strokeWidth: 3,
   },
+  responsive: [{
+    breakpoint: 480,
+    options: {
+      xaxis: {
+        labels: {
+          formatter: (value: string) => new Date(Number(value)).toLocaleDateString("en-US", {
+            month: "short",
+            timeZone: "UTC",
+          }),
+        },
+      },
+    },
+  }],
   stroke: { curve: "smooth", width: 3 },
   tooltip: {
     intersect: true,
