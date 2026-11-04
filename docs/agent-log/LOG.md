@@ -4615,3 +4615,17 @@ the only problem is at 320 px?
 ```text
 Yes. The only remaining failed check is at 320 px when the six-row disclosure is open: QA measured 15 px of horizontal page overflow in both development and production preview. At 320 px with the disclosure closed, it fits; the 1280 px checks and the other five acceptance criteria passed. The chart and labels themselves fit at 320 px—the overflow is caused by the page width when the disclosure opens.
 ```
+
+### User message
+
+```text
+So its good enough. The dashboard is not meant to be used in such small screen
+```
+
+### Assistant response
+
+```text
+Your acceptance is recorded. The task now has a narrow spec and plan amendment that removes the 320 px requirement while keeping the 1280 px layout, accessibility, and open-disclosure checks. The original 320 px QA failure remains in the history; no code changed.
+
+Please approve [spec s002](C:/Users/bruno/.codex/worktrees/3ffe/investment_portfolio_backtest/docs/tasks/005-react-typescript-chart/spec.md) and [plan p003](C:/Users/bruno/.codex/worktrees/3ffe/investment_portfolio_backtest/docs/tasks/005-react-typescript-chart/plan.md) as written so I can close out the task against the updated scope.
+```
