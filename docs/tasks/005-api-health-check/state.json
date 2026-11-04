@@ -1,0 +1,335 @@
+{
+  "schema_version": 1,
+  "state_version": 11,
+  "task_id": "005",
+  "task_slug": "api-health-check",
+  "stage": "completed",
+  "spec_revision": {
+    "id": "s001",
+    "sha256": "47dd98788580a2da42a207a4653ea5515032f650dd1ccfe0a3844e645c7226e7"
+  },
+  "plan_revision": {
+    "id": "p001",
+    "sha256": "3500e6bf54b60baa5e4a884727f21f8a2b83835769dd2dce1910f890d0a638c1"
+  },
+  "code_revision": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9",
+  "baseline_revision": {
+    "head": "949822800bd8d6063391cb1583fe895ce03277f0",
+    "code_revision": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:50a22036c79cd3590784c12aa76388d0da5512cb9b6212103552a38414af86de",
+    "evidence": "evidence/baseline-snapshot.json",
+    "worktree_status": [
+      "?? docs/tasks/005-api-health-check/"
+    ],
+    "note": "Discovery HEAD b69fee73108494a2cd183f00ee2d5447131b88d8 preceded the interaction-log-only commit; baseline was captured after approval and before implementation."
+  },
+  "model_policy": "initial",
+  "correction_cycle": 0,
+  "model_switch_reason": null,
+  "review_rounds": {
+    "initial": 1,
+    "correction": 0
+  },
+  "limits": {
+    "correction_cycles": 1,
+    "rounds_per_cycle": 3
+  },
+  "state_writer": "tech-lead",
+  "active_assignments": [
+    {
+      "id": "initial-round-1",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004"
+      ],
+      "slice": "API structure, FastAPI app and health route, dependencies, focused test-first coverage, documentation",
+      "allowed_files": [
+        "backend/src/api/",
+        "backend/requirements.txt",
+        "backend/README.md",
+        "docs/tasks/005-api-health-check/verification.md",
+        "docs/tasks/005-api-health-check/state.json",
+        "docs/tasks/005-api-health-check/evidence/"
+      ],
+      "input_revisions": {
+        "plan": {
+          "id": "p001",
+          "sha256": "3500e6bf54b60baa5e4a884727f21f8a2b83835769dd2dce1910f890d0a638c1"
+        },
+        "baseline": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:50a22036c79cd3590784c12aa76388d0da5512cb9b6212103552a38414af86de",
+        "spec": {
+          "id": "s001",
+          "sha256": "47dd98788580a2da42a207a4653ea5515032f650dd1ccfe0a3844e645c7226e7"
+        }
+      },
+      "writer_ownership": "sole writer of implementation files, verification.md, assigned implementation fields in state.json and developer evidence",
+      "deliverables": [
+        "TDD red/green/refactor evidence",
+        "integrated implementation and documentation",
+        "implementation snapshot",
+        "handoff"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "review-initial-round-1",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004"
+      ],
+      "slice": "Independent integrated review of approved API structure, route, boundaries, tests, dependencies and documentation",
+      "allowed_files": [
+        "docs/tasks/005-api-health-check/review.md",
+        "docs/tasks/005-api-health-check/state.json",
+        "docs/tasks/005-api-health-check/evidence/"
+      ],
+      "input_revisions": {
+        "code": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9",
+        "plan": {
+          "id": "p001",
+          "sha256": "3500e6bf54b60baa5e4a884727f21f8a2b83835769dd2dce1910f890d0a638c1"
+        },
+        "spec": {
+          "id": "s001",
+          "sha256": "47dd98788580a2da42a207a4653ea5515032f650dd1ccfe0a3844e645c7226e7"
+        }
+      },
+      "writer_ownership": "sole writer of review.md, review/findings fields in state.json and reviewer evidence",
+      "deliverables": [
+        "dated review and actionable findings",
+        "before and after snapshots",
+        "evidence and handoff"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "qa-initial-round-1",
+      "role": "qa",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004"
+      ],
+      "slice": "Independent integrated offline QA of all approved criteria, including documented server startup and HTTP response",
+      "allowed_files": [
+        "docs/tasks/005-api-health-check/verification.md",
+        "docs/tasks/005-api-health-check/state.json",
+        "docs/tasks/005-api-health-check/evidence/"
+      ],
+      "input_revisions": {
+        "code": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9",
+        "spec": {
+          "id": "s001",
+          "sha256": "47dd98788580a2da42a207a4653ea5515032f650dd1ccfe0a3844e645c7226e7"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "3500e6bf54b60baa5e4a884727f21f8a2b83835769dd2dce1910f890d0a638c1"
+        }
+      },
+      "writer_ownership": "sole writer of verification.md, acceptance/QA fields in state.json and QA evidence",
+      "deliverables": [
+        "criterion matrix with actual evidence",
+        "before and after snapshots",
+        "environment and limitations",
+        "handoff"
+      ],
+      "status": "completed"
+    }
+  ],
+  "implementation": {
+    "status": "complete",
+    "evidence": [
+      "verification.md: implementation round 1 TDD and final checks",
+      "evidence/tdd-red-import-setup.txt",
+      "evidence/tdd-red-scaffold.txt",
+      "evidence/tdd-green-focused.txt",
+      "evidence/compileall-api.txt",
+      "evidence/dependency-versions.txt",
+      "evidence/implementation-round-1-snapshot.json"
+    ],
+    "snapshot": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9"
+  },
+  "review": {
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "47dd98788580a2da42a207a4653ea5515032f650dd1ccfe0a3844e645c7226e7"
+    },
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "3500e6bf54b60baa5e4a884727f21f8a2b83835769dd2dce1910f890d0a638c1"
+    },
+    "status": "passed",
+    "code_revision": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9",
+    "evidence": [
+      "review.md: initial round 1",
+      "evidence/review-round-1-before.json",
+      "evidence/review-round-1-after.json",
+      "evidence/review-round-1-focused.txt",
+      "evidence/review-round-1-pip-check.txt",
+      "evidence/review-round-1-guarded-asgi.txt",
+      "evidence/review-round-1-guarded-asgi-retry.txt"
+    ]
+  },
+  "qa": {
+    "code_revision": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9",
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "3500e6bf54b60baa5e4a884727f21f8a2b83835769dd2dce1910f890d0a638c1"
+    },
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "47dd98788580a2da42a207a4653ea5515032f650dd1ccfe0a3844e645c7226e7"
+    },
+    "evidence": [
+      "verification.md: Independent QA — round 1",
+      "evidence/qa-round-1-before.json",
+      "evidence/qa-round-1-after.json",
+      "evidence/qa-round-1-focused-tests.txt",
+      "evidence/qa-round-1-live-server.txt",
+      "evidence/qa-round-1-import-guard.txt",
+      "evidence/qa-round-1-pip-check.txt",
+      "evidence/qa-import-guard-setup-error.txt"
+    ],
+    "status": "passed",
+    "browser": "not_applicable_api_endpoint"
+  },
+  "acceptance_results": [
+    {
+      "id": "AC-001",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "47dd98788580a2da42a207a4653ea5515032f650dd1ccfe0a3844e645c7226e7"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "3500e6bf54b60baa5e4a884727f21f8a2b83835769dd2dce1910f890d0a638c1"
+      },
+      "code_revision": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9",
+      "expected": "Health controller exists; service/model contain only empty Git placeholders.",
+      "actual": "health.py provides the controller route; service/model each contain only a zero-byte .gitkeep.",
+      "evidence": [
+        "verification.md: Independent QA — round 1",
+        "evidence/qa-round-1-before.json"
+      ]
+    },
+    {
+      "id": "AC-002",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "47dd98788580a2da42a207a4653ea5515032f650dd1ccfe0a3844e645c7226e7"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "3500e6bf54b60baa5e4a884727f21f8a2b83835769dd2dce1910f890d0a638c1"
+      },
+      "code_revision": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9",
+      "expected": "GET /health returns HTTP 200 with JSON {\"status\":\"ok\"}; unsupported methods and unknown paths use framework defaults.",
+      "actual": "Live Uvicorn GET returned 200 application/json with exact body; POST returned 405; unknown path returned 404. Both focused tests passed.",
+      "evidence": [
+        "evidence/qa-round-1-live-server.txt",
+        "evidence/qa-round-1-focused-tests.txt"
+      ]
+    },
+    {
+      "id": "AC-003",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "47dd98788580a2da42a207a4653ea5515032f650dd1ccfe0a3844e645c7226e7"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "3500e6bf54b60baa5e4a884727f21f8a2b83835769dd2dce1910f890d0a638c1"
+      },
+      "code_revision": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9",
+      "expected": "FastAPI app registers controller; runtime and test client dependencies declared; setup/startup documented.",
+      "actual": "Documented Uvicorn entry point started and served the route; pip check found no broken requirements; backend/API docs include setup and startup.",
+      "evidence": [
+        "evidence/qa-round-1-live-server.txt",
+        "evidence/qa-round-1-pip-check.txt",
+        "verification.md: Independent QA — round 1"
+      ]
+    },
+    {
+      "id": "AC-004",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "47dd98788580a2da42a207a4653ea5515032f650dd1ccfe0a3844e645c7226e7"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "3500e6bf54b60baa5e4a884727f21f8a2b83835769dd2dce1910f890d0a638c1"
+      },
+      "code_revision": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9",
+      "expected": "Import/startup/request does not call external networks, market data files, or getter code.",
+      "actual": "Guarded import and ASGI request completed with no external DNS/connect attempts, no opens under data/, and no getter module loaded; only loopback used for the live HTTP QA.",
+      "evidence": [
+        "evidence/qa-round-1-import-guard.txt",
+        "evidence/qa-round-1-live-server.txt",
+        "evidence/qa-round-1-after.json"
+      ]
+    }
+  ],
+  "open_findings": [],
+  "attempts_without_progress": 0,
+  "approvals": {
+    "specification": {
+      "decision": "approved",
+      "user_message": "approved",
+      "timestamp": "2026-11-04 16:49:53 America/Sao_Paulo",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "47dd98788580a2da42a207a4653ea5515032f650dd1ccfe0a3844e645c7226e7"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "3500e6bf54b60baa5e4a884727f21f8a2b83835769dd2dce1910f890d0a638c1"
+      },
+      "reference": "User approval relayed verbatim by main chat."
+    },
+    "final": {
+      "decision": "approved",
+      "user_message": "Approve final snapshot",
+      "timestamp": "2026-11-04 17:08:14 America/Sao_Paulo",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "47dd98788580a2da42a207a4653ea5515032f650dd1ccfe0a3844e645c7226e7"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "3500e6bf54b60baa5e4a884727f21f8a2b83835769dd2dce1910f890d0a638c1"
+      },
+      "code_revision": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9",
+      "current_snapshot": "284a99ce0de454a193ea3c199c49625f6f17aa99:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9",
+      "snapshot_equivalence": "Evaluated content digest unchanged; intervening HEAD commit changes only excluded docs/agent-log/LOG.md.",
+      "evidence": "evidence/final-approval-snapshot.json",
+      "reference": "User final approval relayed verbatim by main chat."
+    },
+    "correction_plan": null
+  },
+  "next_action": "None; feature completed with final human approval.",
+  "verification_strategy": "Focused test-first HTTP coverage and independent integrated review and QA; no external data-provider access.",
+  "final_audit": {
+    "date": "2026-11-04 America/Sao_Paulo",
+    "snapshot": "949822800bd8d6063391cb1583fe895ce03277f0:sha256:b2e788aa8c0b9ace98e7ea32e3c4b522876ed7e19980daadc31ce549c07603c9",
+    "evidence": "evidence/final-audit-snapshot.json",
+    "verification": "verification.md: Lead final audit",
+    "checks": "All four criteria passed; review and QA passed on current snapshot; no active assignments or blocking findings; git diff --check passed with a line-ending notice."
+  }
+}

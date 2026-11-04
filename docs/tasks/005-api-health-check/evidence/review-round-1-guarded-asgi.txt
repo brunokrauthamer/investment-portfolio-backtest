@@ -1,0 +1,49 @@
+Traceback (most recent call last):
+  File "<stdin>", line 11, in <module>
+  File "[redacted]\backend\.venv\lib\site-packages\starlette\testclient.py", line 677, in __enter__
+    self.portal = portal = stack.enter_context(anyio.from_thread.start_blocking_portal(**self.async_backend))
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\contextlib.py", line 429, in enter_context
+    result = _cm_type.__enter__(cm)
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\contextlib.py", line 117, in __enter__
+    return next(self.gen)
+  File "[redacted]\backend\.venv\lib\site-packages\anyio\from_thread.py", line 544, in start_blocking_portal
+    portal = future.result()
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\concurrent\futures\_base.py", line 445, in result
+    return self.__get_result()
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\concurrent\futures\_base.py", line 390, in __get_result
+    raise self._exception
+  File "[redacted]\backend\.venv\lib\site-packages\anyio\from_thread.py", line 532, in run_blocking_portal
+    run_eventloop(
+  File "[redacted]\backend\.venv\lib\site-packages\anyio\_core\_eventloop.py", line 77, in run
+    return async_backend.run(func, args, {}, backend_options)
+  File "[redacted]\backend\.venv\lib\site-packages\anyio\_backends\_asyncio.py", line 2341, in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+  File "[redacted]\backend\.venv\lib\site-packages\anyio\_backends\_asyncio.py", line 151, in __enter__
+    self._lazy_init()
+  File "[redacted]\backend\.venv\lib\site-packages\anyio\_backends\_asyncio.py", line 240, in _lazy_init
+    self._loop = events.new_event_loop()
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\asyncio\events.py", line 761, in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\asyncio\events.py", line 659, in new_event_loop
+    return self._loop_factory()
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\asyncio\windows_events.py", line 310, in __init__
+    super().__init__(proactor)
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\asyncio\proactor_events.py", line 629, in __init__
+    self._make_self_pipe()
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\asyncio\proactor_events.py", line 760, in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\socket.py", line 639, in socketpair
+    csock.connect((addr, port))
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\unittest\mock.py", line 1093, in __call__
+    return self._mock_call(*args, **kwargs)
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\unittest\mock.py", line 1097, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\unittest\mock.py", line 1152, in _execute_mock_call
+    raise effect
+AssertionError: unexpected network connect
+Exception ignored in: <function BaseEventLoop.__del__ at 0x000001A4BDDF4310>
+Traceback (most recent call last):
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\asyncio\base_events.py", line 683, in __del__
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\asyncio\proactor_events.py", line 684, in close
+  File "C:\Users\[redacted]\AppData\Local\Programs\Python\Python39\lib\asyncio\proactor_events.py", line 752, in _close_self_pipe
+AttributeError: 'ProactorEventLoop' object has no attribute '_ssock'
