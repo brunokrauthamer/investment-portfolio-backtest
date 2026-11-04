@@ -1,0 +1,609 @@
+{
+  "schema_version": 1,
+  "state_version": 17,
+  "task_id": "005",
+  "task_slug": "index-data-normalization",
+  "stage": "awaiting_correction_approval",
+  "spec_revision": {
+    "id": "s001",
+    "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+  },
+  "plan_revision": {
+    "id": "p002",
+    "sha256": "ce41ab962a673d3809b97904438ea55b0f1fce7dee823042f930805a1ee2a6eb"
+  },
+  "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+  "baseline_revision": "b69fee73108494a2cd183f00ee2d5447131b88d8:sha256:50a22036c79cd3590784c12aa76388d0da5512cb9b6212103552a38414af86de",
+  "model_policy": "correction",
+  "correction_cycle": 1,
+  "model_switch_reason": "Initial review exhausted three implementation rounds with blocking REV-005; independent QA reproduced the AC-006 implementation defect on the unchanged round-3 snapshot.",
+  "review_rounds": {
+    "initial": 3,
+    "correction": 0
+  },
+  "limits": {
+    "rounds_per_cycle": 3,
+    "correction_cycles": 1
+  },
+  "state_writer": "tech-lead-correction",
+  "active_assignments": [],
+  "implementation": {
+    "status": "complete",
+    "evidence": [
+      {
+        "kind": "snapshot",
+        "path": "docs/tasks/005-index-data-normalization/evidence/implementation-snapshot.json",
+        "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:1e0c874389bca2c1a70377fc50654933fb8ac1c4b47f126abcafa3242acf6c77"
+      },
+      {
+        "kind": "tdd",
+        "path": "docs/tasks/005-index-data-normalization/verification.md",
+        "result": "Initial callable test observed missing behavior; actual B3 ragged-header regression reproduced and resolved; focused normalizer suite passed 7 tests."
+      },
+      {
+        "kind": "actual-data",
+        "path": "docs/tasks/005-index-data-normalization/evidence/actual-data-validation.json",
+        "result": "4,086 ordered unique dates; all output values matched 16 IBOVESPA, 16 IFIX, one Selic and one S&P 500 source CSV."
+      },
+      {
+        "kind": "regression-limitation",
+        "path": "docs/tasks/005-index-data-normalization/verification.md",
+        "result": "Internet getter suite could not pass because bs4 was unavailable; requirements installation was blocked by denied network access."
+      },
+      {
+        "kind": "diff-check",
+        "result": "git diff --check completed without errors."
+      },
+      {
+        "kind": "review-repair-tdd",
+        "findings": [
+          "REV-001",
+          "REV-002"
+        ],
+        "path": "docs/tasks/005-index-data-normalization/verification.md",
+        "result": "Observed all three regression cases fail before repair; focused suite passed 10 tests after repair."
+      },
+      {
+        "kind": "snapshot",
+        "path": "docs/tasks/005-index-data-normalization/evidence/implementation-snapshot-round-2.json",
+        "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:91395221e1776003d33adcbcf6aa4de6ac6dfc903d1dfb23b185490daf7b2054"
+      },
+      {
+        "kind": "review-repair-tdd",
+        "findings": [
+          "REV-003",
+          "REV-004"
+        ],
+        "path": "docs/tasks/005-index-data-normalization/verification.md",
+        "result": "Observed numeric footer and NUL corruption tests fail before repair; focused suite passed 12 tests after repair."
+      },
+      {
+        "kind": "snapshot",
+        "path": "docs/tasks/005-index-data-normalization/evidence/implementation-snapshot-round-3.json",
+        "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316"
+      }
+    ]
+  },
+  "review": {
+    "status": "changes_required",
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+    },
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+    },
+    "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+    "evidence": [
+      "docs/tasks/005-index-data-normalization/review.md#2026-11-04--independent-review-initial-round-3",
+      "docs/tasks/005-index-data-normalization/evidence/review-initial-3-before.json",
+      "docs/tasks/005-index-data-normalization/evidence/review-initial-3-after.json"
+    ]
+  },
+  "qa": {
+    "status": "failed",
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+    },
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+    },
+    "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+    "evidence": [
+      "docs/tasks/005-index-data-normalization/evidence/qa-initial-3-results.json",
+      "docs/tasks/005-index-data-normalization/evidence/qa-initial-3-before.json",
+      "docs/tasks/005-index-data-normalization/evidence/qa-initial-3-after.json",
+      "docs/tasks/005-index-data-normalization/verification.md"
+    ],
+    "browser": "not_applicable"
+  },
+  "acceptance_results": [
+    {
+      "criterion_id": "AC-001",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+      "expected": "Process direct source files, no nested directories or side effects; preserve sources.",
+      "actual": "Pandas reconstruction covered 16 IBOVESPA, 16 IFIX and one each Selic/S&P 500 source; focused tests covered directories and import isolation.",
+      "evidence": "docs/tasks/005-index-data-normalization/evidence/qa-initial-3-results.json"
+    },
+    {
+      "criterion_id": "AC-002",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+      "expected": "Parse B3 matrix dates and values; reject impossible dates and malformed rows/footer.",
+      "actual": "All actual B3 entries matched pandas reconstruction; focused cases covered leap day, invalid populated day and prior malformed cases.",
+      "evidence": "docs/tasks/005-index-data-normalization/evidence/qa-initial-3-results.json"
+    },
+    {
+      "criterion_id": "AC-003",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+      "expected": "Preserve source Selic rate and S&P adjusted-close precision and units.",
+      "actual": "All observed daily source values matched gathered output text.",
+      "evidence": "docs/tasks/005-index-data-normalization/evidence/qa-initial-3-results.json"
+    },
+    {
+      "criterion_id": "AC-004",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+      "expected": "Exact columns, ordered union of dates, blanks for absent source dates.",
+      "actual": "Output has exact five columns, 4,086 unique ordered dates, all cells and blanks match independently reconstructed sources.",
+      "evidence": "docs/tasks/005-index-data-normalization/evidence/qa-initial-3-results.json"
+    },
+    {
+      "criterion_id": "AC-005",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+      "expected": "Public callable, pandas dependency, no import-time CSV I/O.",
+      "actual": "Callable produced requested output; dependency exists; focused import isolation case passed.",
+      "evidence": "docs/tasks/005-index-data-normalization/evidence/qa-initial-3-results.json"
+    },
+    {
+      "criterion_id": "AC-006",
+      "status": "fail",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+      "expected": "Malformed/missing values fail with contextual error before publication and preserve previous output.",
+      "actual": "Date-only Selic row raised raw AttributeError instead of contextual NormalizationError; prior output remained unchanged.",
+      "evidence": "docs/tasks/005-index-data-normalization/evidence/qa-initial-3-results.json"
+    },
+    {
+      "criterion_id": "AC-007",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "code_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+      "expected": "Exercise function on repo data, produce output, independent review and QA assess snapshot.",
+      "actual": "Output was generated and checked; independent review and QA assessment occurred; focused checks pass. AC-006 defect is recorded separately.",
+      "evidence": "docs/tasks/005-index-data-normalization/evidence/qa-initial-3-results.json"
+    }
+  ],
+  "open_findings": [
+    {
+      "id": "REV-001",
+      "source": "reviewer-initial-1",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-006"
+      ],
+      "location": "backend/src/market_data_normalizer/indexes/readers.py:55,65,102",
+      "consequence": "Malformed row widths raise raw exceptions without identifying the input or schema reason.",
+      "reproduction": "Write a short day row in a 35-row B3 matrix and a row wider than the header in a Selic CSV via pandas. The public function raises AttributeError and TypeError respectively.",
+      "evidence": "docs\\tasks\\005-index-data-normalization\\review.md",
+      "status": "resolved",
+      "resolution_evidence": "docs/tasks/005-index-data-normalization/review.md#2026-11-04--independent-review-initial-round-2"
+    },
+    {
+      "id": "REV-002",
+      "source": "reviewer-initial-1",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-001"
+      ],
+      "location": "backend/src/market_data_normalizer/indexes/service.py:24",
+      "consequence": "A directory with a CSV suffix is passed to pandas and stops a valid source gather.",
+      "reproduction": "Add an empty sp500/source/a-directory.csv/ beside valid CSVs. The public function tries to read the directory and raises NormalizationError.",
+      "evidence": "docs\\tasks\\005-index-data-normalization\\review.md",
+      "status": "resolved",
+      "resolution_evidence": "docs/tasks/005-index-data-normalization/review.md#2026-11-04--independent-review-initial-round-2"
+    },
+    {
+      "id": "REV-003",
+      "source": "reviewer-initial-2",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-006"
+      ],
+      "location": "backend/src/market_data_normalizer/indexes/readers.py:48-64",
+      "consequence": "A numeric row in the B3 footer can hide a conflicting duplicate observation.",
+      "reproduction": "A pandas-written IBOV 2024 fixture has 1.234,00 on January 2. Change the first footer row to day 2 with 9.999,00 in January. The public call succeeds and publishes 1234.00 for 2024-01-02.",
+      "evidence": "docs/tasks/005-index-data-normalization/review.md#2026-11-04--independent-review-initial-round-2",
+      "status": "resolved",
+      "resolution_evidence": "docs/tasks/005-index-data-normalization/review.md#2026-11-04--independent-review-initial-round-3"
+    },
+    {
+      "id": "REV-004",
+      "source": "reviewer-initial-2",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-006"
+      ],
+      "location": "backend/src/market_data_normalizer/indexes/readers.py:31-35,86-88",
+      "consequence": "The daily reader silently truncates a malformed value at a NUL before validating it.",
+      "reproduction": "Write a Selic observation with value 0.040239 followed by U+0000 and the literal corrupted using pandas to_csv. The public call succeeds and publishes 0.040239.",
+      "evidence": "docs/tasks/005-index-data-normalization/review.md#2026-11-04--independent-review-initial-round-2",
+      "status": "resolved",
+      "resolution_evidence": "docs/tasks/005-index-data-normalization/review.md#2026-11-04--independent-review-initial-round-3"
+    },
+    {
+      "id": "REV-005",
+      "source": "reviewer-initial-3",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-006"
+      ],
+      "location": "backend/src/market_data_normalizer/indexes/readers.py:23,99-119",
+      "consequence": "A short daily CSV row raises a raw AttributeError without identifying the source file or malformed schema. Previous output stays intact.",
+      "reproduction": "In a valid temporary four-asset tree, publish once, append a date-only row to the Selic CSV with pandas to_csv, then call gather_index_data again. The Python parser pads the rate with None and the public function raises an AttributeError.",
+      "evidence": "docs/tasks/005-index-data-normalization/review.md#2026-11-04--independent-review-initial-round-3",
+      "status": "open",
+      "resolution_evidence": null
+    }
+  ],
+  "attempts_without_progress": 0,
+  "approvals": {
+    "specification": {
+      "decision": "approved",
+      "human_message": "approved",
+      "date": "2026-11-04",
+      "timezone": "America/Sao_Paulo",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "conversation_reference": "User message relayed by main chat on 2026-11-04"
+    },
+    "correction_plan": null,
+    "final": null
+  },
+  "next_action": "Obtain explicit human approval of correction plan p002 against approved s001 before dispatching developer-correction. No correction code is authorized yet.",
+  "assignment_history": [
+    {
+      "id": "developer-initial-1",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Implement and integrate approved feature, tests, documentation and generated artifact",
+      "allowed_files": [
+        "backend/src/market_data_normalizer/**",
+        "backend/requirements.txt",
+        "backend/README.md",
+        "data/README.md",
+        "docs/project-context.md",
+        "docs/architecture/**",
+        "data/normalized/gathered_data.csv",
+        "docs/tasks/005-index-data-normalization/verification.md",
+        "docs/tasks/005-index-data-normalization/state.json",
+        "docs/tasks/005-index-data-normalization/evidence/**"
+      ],
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "input_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:50a22036c79cd3590784c12aa76388d0da5512cb9b6212103552a38414af86de",
+      "writer": "developer-initial-1",
+      "deliverables": [
+        "integrated implementation",
+        "test-first evidence",
+        "documentation",
+        "generated output",
+        "snapshot",
+        "handoff"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "reviewer-initial-1",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Independent review of integrated round 1 snapshot",
+      "allowed_files": [
+        "docs/tasks/005-index-data-normalization/review.md",
+        "docs/tasks/005-index-data-normalization/state.json",
+        "docs/tasks/005-index-data-normalization/evidence/**"
+      ],
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "input_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:1e0c874389bca2c1a70377fc50654933fb8ac1c4b47f126abcafa3242acf6c77",
+      "writer": "reviewer-initial-1",
+      "deliverables": [
+        "review findings with evidence and verdict",
+        "before/after snapshot",
+        "handoff"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "developer-initial-2",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-006"
+      ],
+      "slice": "Regression-first fix of REV-001 and REV-002",
+      "allowed_files": [
+        "backend/src/market_data_normalizer/**",
+        "backend/README.md",
+        "data/README.md",
+        "docs/project-context.md",
+        "docs/architecture/**",
+        "data/normalized/gathered_data.csv",
+        "docs/tasks/005-index-data-normalization/verification.md",
+        "docs/tasks/005-index-data-normalization/state.json",
+        "docs/tasks/005-index-data-normalization/evidence/**"
+      ],
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "input_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:1e0c874389bca2c1a70377fc50654933fb8ac1c4b47f126abcafa3242acf6c77",
+      "writer": "developer-initial-2",
+      "deliverables": [
+        "observed regression reds and green fixes",
+        "updated focused checks and snapshot",
+        "handoff"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "reviewer-initial-2",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Independent review of integrated round 2 and previous findings",
+      "allowed_files": [
+        "docs/tasks/005-index-data-normalization/review.md",
+        "docs/tasks/005-index-data-normalization/state.json",
+        "docs/tasks/005-index-data-normalization/evidence/**"
+      ],
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "input_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:91395221e1776003d33adcbcf6aa4de6ac6dfc903d1dfb23b185490daf7b2054",
+      "writer": "reviewer-initial-2",
+      "deliverables": [
+        "independent findings and verdict",
+        "finding dispositions",
+        "before/after snapshots",
+        "handoff"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "developer-initial-3",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-006"
+      ],
+      "slice": "Regression-first fix of REV-003 and REV-004",
+      "allowed_files": [
+        "backend/src/market_data_normalizer/**",
+        "backend/README.md",
+        "data/README.md",
+        "docs/project-context.md",
+        "docs/architecture/**",
+        "data/normalized/gathered_data.csv",
+        "docs/tasks/005-index-data-normalization/verification.md",
+        "docs/tasks/005-index-data-normalization/state.json",
+        "docs/tasks/005-index-data-normalization/evidence/**"
+      ],
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "input_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:91395221e1776003d33adcbcf6aa4de6ac6dfc903d1dfb23b185490daf7b2054",
+      "writer": "developer-initial-3",
+      "deliverables": [
+        "observed failing regression tests and fixes",
+        "focused checks and snapshot",
+        "handoff"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "reviewer-initial-3",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Independent review of complete round 3 snapshot and previous findings",
+      "allowed_files": [
+        "docs/tasks/005-index-data-normalization/review.md",
+        "docs/tasks/005-index-data-normalization/state.json",
+        "docs/tasks/005-index-data-normalization/evidence/**"
+      ],
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "input_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+      "writer": "reviewer-initial-3",
+      "deliverables": [
+        "independent findings and verdict",
+        "finding dispositions",
+        "before/after snapshots",
+        "handoff"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "qa-initial-3",
+      "role": "qa",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Independent available QA assessment after exhausted initial review",
+      "allowed_files": [
+        "docs/tasks/005-index-data-normalization/verification.md",
+        "docs/tasks/005-index-data-normalization/state.json",
+        "docs/tasks/005-index-data-normalization/evidence/**"
+      ],
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb"
+      },
+      "input_revision": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+      "writer": "qa-initial-3",
+      "deliverables": [
+        "criterion matrix and adverse case results",
+        "before/after snapshots",
+        "handoff"
+      ],
+      "status": "completed"
+    }
+  ]
+}

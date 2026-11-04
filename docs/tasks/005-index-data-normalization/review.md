@@ -1,0 +1,43 @@
+# Review
+
+No implementation review has been performed. The specification and plan are proposed and awaiting the user's decision.
+
+## 2026-11-04 — Independent review, initial round 1
+
+**Verdict: changes required.** Reviewed approved s001 (`b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8`) and p001 (`df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb`) on `916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:1e0c874389bca2c1a70377fc50654933fb8ac1c4b47f126abcafa3242acf6c77`. [Before](evidence/review-initial-1-before.json) and [after](evidence/review-initial-1-after.json) snapshots matched.
+
+| Finding | Severity | Criterion | Location and consequence | Reproduction and evidence |
+| --- | --- | --- | --- | --- |
+| REV-001 | P2, blocking | AC-006 | `indexes/readers.py:55`, `:65`, `:102`. Pandas pads short B3 rows with `None` and can infer an index when a daily row has more fields than its header. The readers raise raw exceptions without identifying the file or explaining the invalid schema. | In a valid four-asset temporary tree, use pandas `to_csv` with `mode="a"` to write one B3 observation row with two instead of 13 fields, leaving the other 34 rows intact. The public call raised `AttributeError: 'NoneType' object has no attribute 'strip'`. Write `date,rate_percent_per_day` as a header and `unexpected,2024-01-02,1.000` as its only row using two pandas writes. The public call raised `TypeError: can only concatenate str (not "int") to str`. Both need contextual input errors before publication. |
+| REV-002 | P2, blocking | AC-001 | `indexes/service.py:24`. Path globbing includes directories with a `.csv` suffix. An unrelated subdirectory can stop an otherwise valid normalization run. | With one valid CSV for each asset, create `sp500/source/a-directory.csv/` as an empty directory. The public call raised `NormalizationError` when pandas attempted to read that directory. A folder is outside the approved set of direct CSV files. |
+
+I reviewed the tracked and untracked changes, the package boundary, dependency, generated artifact, focused tests and documentation. `git diff --check` reported no whitespace errors. The focused unittest command `./backend/.venv/Scripts/python.exe -m unittest discover -s backend/src/market_data_normalizer/indexes/tests -v` passed all seven tests on Python 3.9.4 and pandas 1.3.5. Those tests do not cover the malformed row widths or the `.csv` directory cases above.
+
+I independently reconstructed a date-to-value mapping with pandas from all 34 source files, then compared every value and blank with the generated CSV. The five expected columns and all 4,086 rows matched, ordered from `2011-01-03` to `2026-11-04`. Missing observations numbered 158 for IBOVESPA, 158 for IFIX, 109 for Selic and 102 for S&P 500. No source or generated files were modified during review. The developer's existing getter regression limitation concerns the missing `beautifulsoup4` environment dependency, which is outside the independent focused checks performed here.
+
+Return to implementation for test-first fixes for REV-001 and REV-002, followed by independent review of the next integrated snapshot.
+
+## 2026-11-04 — Independent review, initial round 2
+
+**Verdict: changes required.** Reviewed approved s001 (`b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8`) and p001 (`df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb`) on `916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:91395221e1776003d33adcbcf6aa4de6ac6dfc903d1dfb23b185490daf7b2054`. The [before](evidence/review-initial-2-before.json) and [after](evidence/review-initial-2-after.json) snapshots matched.
+
+REV-001 and REV-002 are resolved. Independent pandas fixtures passed through the public callable confirmed that a truncated B3 row raises `NormalizationError` identifying the input, row and expected field count. An overwide Selic row raises `NormalizationError` with the file and expected width. A `*.csv` directory alongside valid source files is skipped and the expected output is produced. The focused unittest discovery command in [verification.md](verification.md) passed all 10 tests on Python 3.9.4 and pandas 1.3.5. `git diff --check` passed.
+
+| Finding | Severity | Criterion | Location and consequence | Reproduction and evidence |
+| --- | --- | --- | --- | --- |
+| REV-003 | P2, blocking | AC-006 | `indexes/readers.py:48–64`. The reader assumes the final two rows are summary rows and discards them by position. A conflicting observation for a date already present can be silently discarded when it occupies one of those rows. | In a valid four-asset temporary tree, use pandas `to_csv` to write an IBOV 2024 matrix with `1.234,00` in the regular January 2 cell. Replace the first summary row with the 13 fields `2`, `9.999,00`, and eleven blanks. The public call succeeded and published `1234.00` for `2024-01-02` instead of rejecting the malformed footer. The acquisition validator also treats a numeric label as invalid summary structure. |
+| REV-004 | P2, blocking | AC-006 | `indexes/readers.py:31–35`, `:86–88`. The daily reader uses pandas' default C parser, which silently truncates a field at a NUL before the numeric validator sees it. The output can publish a plausible value from a malformed observation. | In a valid four-asset temporary tree, write one Selic row with pandas `to_csv` using date `2024-01-02` and a value of `0.040239` followed by U+0000 and the literal `corrupted`. The public call succeeded and published `0.040239` instead of rejecting the malformed numeric field. |
+
+Independent pandas comparison used the 31 observation rows and calendar date construction for each B3 file, plus the two daily CSV schemas. All 34 inputs agreed with every value and blank in the generated output. It contains 4,086 unique dates in ascending order from `2011-01-03` to `2026-11-04` and exactly the five required columns. The feature, tests, dependency and usage and architecture documentation were inspected. The existing getter-suite environment limitation remains separate from the focused checks. The two new findings require regression-first repair and independent review of the resulting snapshot.
+
+## 2026-11-04 — Independent review, initial round 3
+
+**Verdict: changes required.** Reviewed approved s001 (`b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8`) and p001 (`df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb`) on `916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316`. The [before](evidence/review-initial-3-before.json) and [after](evidence/review-initial-3-after.json) snapshots matched.
+
+REV-003 and REV-004 are resolved on Python 3.9.4 and pandas 1.3.5. Independent pandas fixtures passed through the public function raised `NormalizationError` with the path and summary-row reason for a numeric B3 footer label, and with the path and parser reason for a NUL followed by trailing text in a daily value. Independent reproductions confirmed the earlier REV-001 and REV-002 cases still pass. The focused unittest discovery command in [verification.md](verification.md) passed all 12 tests. `git diff --check` passed.
+
+| Finding | Severity | Criterion | Location and consequence | Reproduction and evidence |
+| --- | --- | --- | --- | --- |
+| REV-005 | P2, blocking | AC-006 | `backend/src/market_data_normalizer/indexes/readers.py:23,99–119`. Pandas pads an underwidth daily row with `None` while retaining the expected column names and `RangeIndex`. Numeric validation calls `.strip()` on the padded value and raises an exception that gives neither the source file nor the schema error. | Create a valid four-asset temporary tree, with a Selic header `date,rate_percent_per_day` and a valid `2024-01-02,1.000` row. Call `gather_index_data(root)` once to publish a baseline. Append a date-only row with `pd.DataFrame([["2024-01-03"]]).to_csv(selic_path, mode="a", index=False, header=False)` and call again. The public function raised `AttributeError: 'NoneType' object has no attribute 'strip'`. The previous output compared equal with pandas. |
+
+The complete integrated source, tests, dependency, documentation and generated artifact were reviewed. Independent pandas reconstruction from all 34 source CSVs matched every generated value and blank over 4,086 dates from `2011-01-03` to `2026-11-04` in the five specified columns. Missing counts were 158 for IBOVESPA, 158 for IFIX, 109 for Selic and 102 for S&P 500. The earlier getter regression remains an environment limitation. With REV-005 open after the third initial round, send the snapshot to independent QA for its available assessment before correction planning.

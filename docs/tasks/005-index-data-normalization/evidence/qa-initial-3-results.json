@@ -1,0 +1,33 @@
+{
+  "snapshot_expected": "916023ebac0fc2ce8e6c00e494598ad3bf05d339:sha256:dbfedb6c148b366991c74f8180eda14743d7adb5c17cf97015674dccbd9a8316",
+  "actual_data": {
+    "columns": [
+      "date",
+      "ibovespa",
+      "ifix",
+      "selic",
+      "sp500"
+    ],
+    "rows": 4086,
+    "first_date": "2011-01-03",
+    "last_date": "2026-11-04",
+    "unique_dates": 4086,
+    "source_observation_counts": {
+      "ibovespa": 3928,
+      "ifix": 3928,
+      "selic": 3977,
+      "sp500": 3984
+    },
+    "all_cells_match_pandas_reconstruction": true
+  },
+  "round3_focused_suite": "12 tests passed (separate command output)",
+  "reviewer_short_selic_reproduction": {
+    "short_selic_row": {
+      "expected": "NormalizationError with source path and row/schema context",
+      "actual": "AttributeError: 'NoneType' object has no attribute 'strip'",
+      "is_normalization_error": false
+    },
+    "previous_output_preserved": true
+  },
+  "qa_result": "AC-006 fails because a short daily row leaks raw AttributeError without source context; previous output remained unchanged."
+}
