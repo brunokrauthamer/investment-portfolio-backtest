@@ -2692,3 +2692,23 @@ The Selenium refactor is implemented and has passed independent review and QA on
 The complete acceptance matrix is in [verification.md]([redacted]/docs/tasks/004-selic-selenium-refactor/verification.md), and the independent findings and review verdict are in [review.md]([redacted]/docs/tasks/004-selic-selenium-refactor/review.md).
 
 The feature-workflow skill requires explicit final approval of the exact specification and evaluated snapshot, so task 004 is awaiting that decision. Please reply **“Approve spec s001 and snapshot 72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc; acknowledge BASELINE-001.”** This acknowledges the pre-existing IFIX assertion failure. No commit or push was made.
+
+## 2026-11-04 01:01 -03:00 — Selic Selenium refactor final approval
+
+**User:**
+
+approved
+
+**Assistant progress:**
+
+I’m treating “approved” as final approval of spec s001 and the evaluated snapshot, including acknowledgment of `BASELINE-001`. I’ll record the final decision; no commit or push is authorized by that approval.
+
+**Assistant:**
+
+Final approval is recorded. Task 004 is complete.
+
+- The Selic source now uses Selenium WebDriver and headless Chrome, with fixes for BCB’s language selection and masked date fields. The storage, CLI, other getters, and project data were preserved.
+- Independent review and QA passed. Focused checks passed **56/56**. Full discovery passed **77/78**; the remaining IFIX help assertion failure was confirmed at baseline and acknowledged as `BASELINE-001`.
+- Independent live QA compared all 40 BCB pages and matched **3,977 observations**, the date range **2011-01-03 through 2026-11-03**, representative values, and the CSV manifest hash.
+
+See [source.py]([redacted]/backend/src/internet_data_getter/selic/source.py), [verification.md]([redacted]/docs/tasks/004-selic-selenium-refactor/verification.md), and [review.md]([redacted]/docs/tasks/004-selic-selenium-refactor/review.md). The evaluated code snapshot remains `72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc`; the later HEAD change contains only the interaction log. The repository hook created a log-only commit (`d9b4897a`); application changes remain uncommitted.
