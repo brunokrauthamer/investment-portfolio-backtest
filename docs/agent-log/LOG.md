@@ -2596,3 +2596,554 @@ Use controlled HTML response fixtures and temporary directories; include inclusi
 #### Risks
 
 Yahoo’s terms require prior permission for automated collection, which the user stated they have; its HTML or access rules can change. The observed long-range page included both requested endpoints where observations were available, but does not prove every observation was present. Current-day values may change, and one-date overlap intentionally leaves earlier corrections undetected. Transactions involving both CSV and provenance require recovery evidence for every interruption point. Restores must retain the restored version’s provenance. The chosen local-calendar default and UTC query boundaries are explicit proposed conventions, not market-alignment rules.
+
+## 2026-11-04 00:25:54 America/Sao_Paulo
+
+### User
+
+~~~~text
+approved
+~~~~
+
+### Assistant progress
+
+~~~~text
+Approval is clear for both s001 and p001. I’m recording that decision against their exact hashes and moving the feature into its approved implementation, review, and QA stages.
+~~~~
+
+## 2026-11-04 00:28:23 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The approval is recorded against the exact s001/p001 hashes, and implementation round 1 is underway. The pass covers the Yahoo source, date controls, incremental CSV updates, safe recovery, and documentation; independent review and QA follow.
+~~~~
+
+## 2026-11-04 00:30:14 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The BeautifulSoup dependency installation succeeded through the approved environment path. The developer is now implementing the source parser, shared registry integration, and incremental storage behavior.
+~~~~
+
+## 2026-11-04 00:32:37 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The first source and CLI verification cases are in place. The developer is now matching the parser to the observed Yahoo table structure, and the lead has reported no design blocker so far.
+~~~~
+
+## 2026-11-04 00:35:32 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The live Yahoo table has the expected Date and Adj Close columns, so the requested HTML parsing approach still fits the source. The developer is recording red/green verification evidence alongside implementation.
+~~~~
+
+## 2026-11-04 00:38:20 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The source parser’s offline checks now pass, including the explicit no-data case. The remaining implementation work is the incremental merge and the paired CSV/provenance backup and recovery path.
+~~~~
+
+## 2026-11-04 00:41:33 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The developer is working through the storage transaction and restore behavior now. The lead reports no blocker; once that slice is integrated, it will go to independent review.
+~~~~
+
+## 2026-11-04 00:44:53 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The parser has now passed 10 offline checks. Incremental merging and paired CSV/manifest backup, recovery, and restore are still in progress; I’ve asked for the next handoff estimate.
+~~~~
+
+## 2026-11-04 00:45:05 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The parser, UTC date conversion, incremental merge, and transactional CSV/manifest store are implemented. Storage/service checks are underway; the developer still needs CLI registration, documentation, and the broader verification pass before independent review.
+~~~~
+
+## 2026-11-04 00:48:50 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The developer reports 23 focused source, service, and storage checks passing. A restore check exposed a defect that was fixed with a red/green regression case; registry/CLI work, docs, recovery/error cases, and the broader suite remain.
+~~~~
+
+## 2026-11-04 00:50:03 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The lead is keeping this in implementation round 1 while the registry, CLI, documentation, and recovery cases are completed. The next handoff will be an integrated snapshot for independent review, followed by QA if review passes.
+~~~~
+
+## 2026-11-04 00:51:17 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Implementation remains in round 1 while the developer finishes the remaining recovery/error cases, CLI registration, and documentation. No new blocker has been reported.
+~~~~
+
+## 2026-11-04 00:52:30 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+I’ve requested a refreshed handoff estimate from the lead. The last confirmed status is that the remaining CLI, documentation, recovery, and broader regression work is still underway.
+~~~~
+
+## 2026-11-04 00:53:42 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The developer pass is still active, and the lead is overseeing the remaining work. There is no implementation snapshot ready for independent review yet.
+~~~~
+
+## 2026-11-04 00:55:04 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The S&P 500 source, service, storage, and CLI files are now present, with registry and documentation changes underway. I can also see the requested CSV location has been created; the developer is still finishing verification before handoff.
+~~~~
+
+## 2026-11-04 00:55:15 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+CLI and documentation integration are in place. The developer reports 26 S&P 500 checks and 11 shared registry checks passing, including restore and interrupted-write recovery; the authorized live run saved 3,983 observations through 2026-11-03. The full getter suite and handoff review remain.
+~~~~
+
+## 2026-11-04 00:56:27 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The approved live retrieval and focused checks are complete. The developer is running the full getter regression suite now; review has not started because the implementation snapshot is not handed off yet.
+~~~~
+
+## 2026-11-04 00:57:38 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The full getter suite passed 103 checks, and the expanded S&P 500 suite now passes 28. Recovery, restore, unchanged reruns, and failure preservation are covered; the developer is recording evidence and completing a final implementation/doc review before handoff.
+~~~~
+
+## 2026-11-04 00:59:55 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Verification is passing, and the developer is finishing the implementation evidence and documentation audit. I’ve asked the lead to start independent review as soon as the code snapshot is handed off.
+~~~~
+
+## 2026-11-04 01:01:49 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The final getter suite passes all 105 checks, and the saved CSV matches its manifest hash. Yahoo’s response had no November 4 observation yet; the data currently ends on November 3. The developer is finalizing the snapshot for review.
+~~~~
+
+## 2026-11-04 01:03:04 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The lead is still waiting for the developer’s final snapshot and writer-token handoff. Review and QA are queued to start sequentially as soon as the snapshot is received.
+~~~~
+
+## 2026-11-04 01:04:41 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The implementation has been handed off for independent review on snapshot 134437f…:sha256:067a8f4b…. The lead is starting review now; QA follows if review passes.
+~~~~
+
+## 2026-11-04 01:05:22 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The reviewer is checking the integrated snapshot against the approved criteria, including the acquired dataset, incremental behavior, transaction recovery, and test evidence. QA remains queued behind the review gate.
+~~~~
+
+## 2026-11-04 01:05:56 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The independent review found a blocking storage issue: an unchanged CSV rerun can update the manifest without the required paired backup and recovery record. The reviewer is completing the findings; the lead will route a test-first fix and re-review.
+~~~~
+
+## 2026-11-04 01:06:56 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The reviewer reproduced two more gaps: partial Yahoo responses are not reliably detected, and stored provenance validation is incomplete. The live CSV and manifest do match; the review is checking recovery behavior before routing the confirmed findings for fixes.
+~~~~
+
+## 2026-11-04 01:08:31 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Independent review failed with seven blocking findings in provenance safety, partial-page and symbol validation, malformed-row handling, and interrupted-update recovery. The 105 existing checks passed but did not cover these defects. The lead is routing them to implementation round 2 with regression tests first.
+~~~~
+
+## 2026-11-04 01:09:08 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Implementation round 2 is active. The developer will add failing regression cases for the confirmed review defects before fixes, then rerun the getter suite and return the new snapshot for re-review.
+~~~~
+
+## 2026-11-04 01:11:25 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Round 2 remains within the approved specification. The developer is reproducing the review findings before changing behavior; I’ve asked for the specific red-case results and will report them at handoff.
+~~~~
+
+## 2026-11-04 01:11:44 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The review found seven blocking defects plus one low-severity documentation discrepancy. The developer is addressing all eight; regression cases are being written, and their intended failures have not yet been observed.
+~~~~
+
+## 2026-11-04 01:14:00 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Regression cases are written for redirected date bounds, pagination, ticker identity, and malformed date rows. Provenance and recovery cases are being added next; none of the new red runs have been reported yet.
+~~~~
+
+## 2026-11-04 01:16:04 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The new regression run produced 18 failures and one error across 37 focused tests. The implementation already rejects missing provenance fields, but a missing backup-manifest digest triggered an uncaught error; the developer is now fixing the reproduced cases.
+~~~~
+
+## 2026-11-04 01:18:22 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+All seven blocking findings now have confirmed failing regressions. The developer is implementing the fixes and running them back to green; the low-severity documentation discrepancy is tracked separately.
+~~~~
+
+## 2026-11-04 01:18:32 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+All 37 focused S&P 500 checks are now green, including the seven reproduced findings and corrupt-backup cases. The developer is fixing the documentation discrepancy and verifying the existing CSV/manifest pair before the full suite.
+~~~~
+
+## 2026-11-04 01:20:49 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The corrected implementation still passes all 37 focused S&P 500 checks. The full getter suite and validation of the saved CSV/manifest pair are still pending before the next snapshot handoff.
+~~~~
+
+## 2026-11-04 01:21:00 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The defect fixes are green in the focused suite; the documentation correction is the remaining change before the developer runs the full suite and validates the saved files. No new failure has been reported.
+~~~~
+
+## 2026-11-04 01:22:21 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The documentation mismatch is corrected: both acquisition guides now include S&P 500 in the registered getters and document its date arguments. The developer is running the full suite and saved-file validation next.
+~~~~
+
+## 2026-11-04 01:23:33 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The documentation correction is in place. The remaining check is the full getter suite and an integrity check of the saved CSV against its manifest; I’m waiting for those results.
+~~~~
+
+## 2026-11-04 01:24:27 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Round 2 is handed off: all 38 focused S&P 500 checks and 115 total getter checks pass. The existing 3,983-row CSV and manifest validate with the same hash; the fixes did not re-download or rewrite the dataset. Independent re-review is starting.
+~~~~
+
+## 2026-11-04 01:24:56 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The reviewer is checking each of the seven fixes, the documentation correction, and possible regressions on the new snapshot. QA remains queued until this re-review passes.
+~~~~
+
+## 2026-11-04 01:26:22 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Re-review confirms the original eight findings are fixed and all 115 checks pass, but it found four additional gaps in redirect validation, pagination, ticker-label conflicts, and interrupted-update recovery. The reviewer is recording reproductions for implementation round 3, the final initial-cycle fix pass.
+~~~~
+
+## 2026-11-04 01:27:55 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The reviewer resolved the original findings and recorded the four new issues as blocking findings SP500-R2-01 through R2-04. Implementation round 3 has started, with a failing regression required for each before its fix.
+~~~~
+
+## 2026-11-04 01:30:13 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Round 3 is underway. The developer is preparing behavioral regressions for the four new findings; the red results and fixes have not yet been reported.
+~~~~
+
+## 2026-11-04 01:30:37 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The round 3 regression run reproduced all four new findings before production edits: 43 focused checks produced 13 failures and one error, including two interrupted-recovery states. The developer is now fixing URL selection, pagination metadata, ticker identity, and pre-recovery validation.
+~~~~
+
+## 2026-11-04 01:31:42 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Round 3 also exposed a related rollback case: invalid pending metadata could replace a valid manifest before journal removal. The developer is fixing it under the same recovery finding with a separate regression case.
+~~~~
+
+## 2026-11-04 01:32:58 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The latest confirmed evidence is still the failing round 3 regression run, including the rollback case. The lead has requested a green status from the developer; no fix completion has been reported yet.
+~~~~
+
+## 2026-11-04 01:33:16 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The recovery and rollback fixes are complete, and all 44 focused S&P 500 checks pass. The expanded cases now cover the four new findings and preservation of a valid manifest during rollback. The full suite and handoff checks remain.
+~~~~
+
+## 2026-11-04 01:34:53 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Round 3 is handed off with 44 focused and 121 total getter checks passing. The original 3,983-row CSV still validates against the unchanged manifest hash; independent re-review is starting on the new snapshot.
+~~~~
+
+## 2026-11-04 01:35:17 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The reviewer is checking the round 3 snapshot, including both interrupted-recovery and rollback paths. QA follows this review; any remaining blocking defect would require a separately approved correction plan.
+~~~~
+
+## 2026-11-04 01:36:31 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Re-review found further blockers despite the 121 passing checks: a malformed row can put Volume into the Adjusted Close field, and a recovery path can lose its restore reference. The reviewer is finishing its findings; because round 3 is the last initial pass, QA will assess this snapshot before correction planning.
+~~~~
+
+## 2026-11-04 01:37:35 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Round 3 review is complete: earlier findings are resolved, but four new blocking findings remain, so the initial three implementation rounds are exhausted. The next required step is an independent QA assessment, then a concrete correction plan for your approval before further fixes.
+~~~~
+
+## 2026-11-04 01:38:10 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Independent QA is now checking the exact round 3 snapshot against all approved criteria and the four review findings. It will use temporary data and record any additional defects separately from environment blockers before correction planning.
+~~~~
+
+## 2026-11-04 01:39:26 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The independent QA agent is active on the approved round 3 snapshot. No new results have been recorded yet; the lead will use its assessment to prepare the correction plan.
+~~~~
+
+## 2026-11-04 01:40:24 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+QA independently reran the getter suite and all 121 checks passed. It is now exercising the four reported defects with temporary data; an initial QA script path error is being corrected and is not a getter failure.
+~~~~
+
+## 2026-11-04 01:41:06 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+QA reproduced all four round 3 defects with temporary data, including the wrong value in Adjusted Close and a lost restore reference. The saved dataset was untouched; the 121 existing checks still pass, so the cases were missing from coverage. The lead is preparing a correction plan for your approval before further code changes.
+~~~~
+
+## 2026-11-04 13:07:03 America/Sao_Paulo
+
+### User
+
+~~~~text
+did you finish your job?
+~~~~
+
+### Assistant progress
+
+~~~~text
+Not yet. The implementation is complete, but independent review and QA found four blocking defects. The workflow lead hit an account usage limit before preparing the required correction plan. I’m resuming from the saved task records; I won’t change code until you approve that plan.
+~~~~
+
+## 2026-11-04 13:08:03 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The QA defects were reported, but the task state still marks QA as in progress and its findings are not fully recorded. The prior lead stopped at the usage limit. I’m assigning a fresh correction lead to finish the QA record and prepare the required correction plan; no code changes will happen before you approve it.
+~~~~
+
+## 2026-11-04 13:08:40 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The fresh lead found temporary QA reproductions but no completed criterion matrix, after-snapshot, or verdict. It is preserving that evidence and arranging a fresh independent QA assessment before presenting the correction plan. No production files need to change to reach that approval gate.
+~~~~
+
+## 2026-11-04 13:10:02 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The resumed QA pass now has sole ownership of the QA records. It will rerun the four saved reproductions, all 121 getter tests, CLI/registry checks, and read-only validation of the active CSV/manifest pair; it will not contact Yahoo.
+~~~~
+
+## 2026-11-04 13:11:22 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The correction lead has drafted plan p002 around four boundaries: HTML column alignment, exact instrument identity, unique URL parameters, and preserving verified restore references during recovery. It is waiting for resumed QA to finish before publishing the exact revision and hash.
+~~~~
+
+## 2026-11-04 13:12:45 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+Resumed QA independently reproduced all four defects, reran the 121 getter checks successfully, and validated the saved 3,983-row CSV/manifest without modifying it. QA is recording its criterion matrix; the correction approval package comes next.
+~~~~
+
+## 2026-11-04 13:15:06 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+The QA report confirms all four blockers and is written; its state update and writer handoff are still pending. The correction lead will preserve approved s001, archive p001, and publish p002 for your approval without changing code.
+~~~~
+
+## 2026-11-04 13:15:58 America/Sao_Paulo
+
+### Assistant progress
+
+~~~~text
+QA is complete: all 13 acceptance criteria are recorded, with 8 failing and 5 passing. The 121 getter tests and 44 focused S&P 500 tests pass, but the saved reproduction script confirms all four blockers; the CSV remains unchanged at 3,983 rows through November 3.
+~~~~
+
+## 2026-11-04 13:17:58 America/Sao_Paulo
+
+### Assistant final response
+
+Not yet. Independent QA failed on the round 3 snapshot: 8 of 13 acceptance criteria fail, and four blocking defects remain despite 121 passing getter tests. The saved 3,983-row CSV and manifest are unchanged and validate through 2026-11-03.
+
+The correction lead prepared plan p002: [correction plan p002](/C:/Users/[redacted]/.codex/worktrees/42b7/investment_portfolio_backtest/docs/tasks/004-sp500-data-acquisition/plan.md). Its SHA-256 is 180ead1e0c3a9510666e886321a1f0b1d1d00bd4488a398f88c85c6ceeae5ad8. It keeps approved specification s001 unchanged at SHA-256 cccf81d1ca9ab50f7939f21ee40f88d0ccf5676203814385f670de4c40c00d67. QA evidence: [QA report](/C:/Users/[redacted]/.codex/worktrees/42b7/investment_portfolio_backtest/docs/tasks/004-sp500-data-acquisition/evidence/qa-resume-results.md).
+
+## S&P 500 acquisition correction plan — p002 (proposal)
+
+This plan follows approved specification s001. It supersedes p001 for correction work once approved. The archived p001 and its original approval remain part of the task record. Correction baseline: 134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0.
+
+### Why correction is required
+
+The third and final initial review found four new blocking defects on a snapshot that passed the 121-test getter suite. Prior rounds added checks for individual examples, but the trust boundaries still accepted structurally ambiguous data. The correction consolidates validation around the table schema, instrument identity, the set of URL selection parameters, and the relationship between a journal and both possible recovery manifests.
+
+| Finding | Reproduced result | Required behavior |
+| --- | --- | --- |
+| SP500-R3-01 (AC-003, AC-004, AC-005, AC-008) | Removing the Close cell lets the parser read Volume as Adj Close. | Reject misaligned price rows before reading or saving either value. |
+| SP500-R3-02 (AC-008, AC-009, AC-010) | Recovery verifies backup files but can consume the journal and install a manifest that omits the backup reference. | Check that recovery retains the exact verified pair in the restore inventory. Reject inconsistent records before mutating the active files or removing the journal. |
+| SP500-R3-03 (AC-002, AC-003, AC-004, AC-008, AC-009) | A duplicate blank period or interval is lost during query parsing. | Require exactly one nonblank expected value for each required parameter at both response and manifest validation. |
+| SP500-R3-04 (AC-003, AC-008) | An explicit AAPL title is accepted when the heading identifies ^GSPC. | Require exact ^GSPC identity and reject conflicts across authoritative identity fields, including ordinary ticker formats. |
+
+### Implementation sequence
+
+1. **Source validation.** In the S&P 500 source module, derive indexes and width from a single supported history header. Check observation cells against that header before extracting Date or Adj Close. Reject missing, extra, or spanning cells that make an observation's column position ambiguous. Check neighboring variants where the date is displaced, headers are reordered, or a malformed row appears alongside valid rows. In the identified history table, accept body rows only when they match the observation structure or an explicitly recognized source marker. Preserve handling of recognizable corporate actions and explicit empty results through separate structural checks. Parse explicit quote symbols from the Yahoo document title and primary heading using their quote-label structure. Require at least one exact ^GSPC identity and reject an explicit conflicting identity in either field, including symbols such as AAPL and ^DJI. Keep instrument-name prose separate from ticker extraction.
+2. **URL selection.** In the shared history-URL validator, retain blank query values before comparing multiplicity and values. Validate period1, period2, interval, filter, frequency, and includeAdjustedClose on both the final response URL and each stored request window. Reordered valid parameters and unrelated parameters remain accepted. Retain existing origin, path, date and selection checks.
+3. **Recovery validation.** In the S&P 500 storage module, verify the old backup pair and tie its full reference (CSV path, manifest path and both digests) to the new and rollback manifests before any manifest replacement or journal deletion. Use the verified old manifest as the reference for the existing restore inventory. Both recovery candidates must preserve that inventory and add the journal's verified pair unambiguously. Reject missing, conflicting, or duplicated references that make lookup ambiguous. Keep the existing per-asset lock and atomic writes. Evaluate valid and invalid metadata at each existing crash point: prior CSV and manifest, new CSV with old manifest, new pair awaiting journal cleanup, and a pair whose rollback manifest is already installed. Keep first-acquisition recovery with no prior pair covered. A corrupt or ambiguous journal must leave both active files, the journal and the verified backup pair available for investigation.
+4. **Boundaries.** Reuse the existing source, service and storage split. Keep changes within the S&P 500 source and storage modules and their acquisition tests, with narrowly scoped documentation changes only if usage or recovery guidance needs clarification. The approved interfaces, date defaults, incremental request strategy, CSV schema, dataset and other getters are outside the repair scope. Use temporary data for transactional exercises. Any authorized live source check needed for compatibility uses an isolated data directory.
+
+### Verification and handoff
+
+- The correction developer adds and runs a failing regression for each confirmed defect before fixing it. Record the observed red and green results in verification.md, with finding IDs, commands, environment and the new snapshot. Check positive equivalents as well as adversarial cases. In particular, verify normal Yahoo-style identity and layout, aligned reordered columns, recognized no-data and action rows, reordered query parameters, healthy recovery and offline restore of the exact displaced pair.
+- Run the focused S&P 500 tests and full getter suite from the repository root using backend/.venv. Verify the saved CSV and manifest together in read-only mode and record their coverage and hashes. Run git diff --check and capture the worktree snapshot, including untracked implementation files. Run any affected usage checks after documentation changes.
+- An independent reviewer checks all four findings, adjacent edge cases, and regressions on the integrated snapshot. Independent QA then evaluates every s001 criterion with the same snapshot, including parser refusal, provenance preservation, incremental updates and offline restore. The CLI and Python entry points do not have a product browser flow. Evidence records disclose the source completeness limit from s001.
+- Initial rounds stay at three. This is the single correction cycle, with up to three correction implementation/review rounds. After review and QA pass with fresh evidence, the lead audits the current snapshot and requests final approval.
+
+### Approval gate
+
+Approve p002 against the already approved s001 to start the correction developer's first pass. This proposal adds no financial convention or acceptance criterion and retains the original spec hash.
+
+Please reply **Approve p002 against s001** to authorize the correction pass. No code changes will begin before that approval.
