@@ -2527,3 +2527,168 @@ To authorize implementation, offline checks, and the planned live comparison in 
 ## 2026-11-04 00:00 -03:00 — Date context update
 
 Client date context advanced to 2026-11-04 in America/Sao_Paulo. Workspace and permission paths from that context are omitted as unrelated private information.
+
+## 2026-11-04 — Selic Selenium refactor approval (America/Sao_Paulo)
+
+**User:**
+
+approved
+
+**Assistant progress:**
+
+I’m treating “approved” as approval of spec s001 and plan p001 exactly as presented. I’ll record that decision and continue with the approved test-first implementation workflow.
+
+The tech lead recorded approval against the exact spec and plan hashes and captured the baseline. The developer has started round 1; `backend/.venv` is absent in this worktree, so setting it up is included in the approved implementation pass.
+
+**Assistant progress:**
+
+The approved implementation pass is still underway. I’m waiting for the developer’s test-first evidence and integrated snapshot before moving the task to independent review.
+
+**Assistant progress:**
+
+Round 1 has not reached handoff yet. I’ll wait for its evidence before starting independent review, keeping the existing storage and other asset getters outside the Selenium extraction change.
+
+**Assistant progress:**
+
+The tech lead has asked the developer for an early checkpoint with either the first observed failing test or any environment blocker. The pass remains active; no source or test result has been handed off yet.
+
+**Assistant progress:**
+
+The first Selenium interaction test failed against the existing Playwright client as expected, giving the test-first baseline. The missing Python 3.9 environment is now set up with Selenium 4.30.0, and the implementation is underway.
+
+**Assistant progress:**
+
+The expected red is documented; the developer is now replacing the browser adapter and checking the new interaction path. The integrated pass has not handed off yet.
+
+**Assistant progress:**
+
+The developer is still within the same implementation round, with the first Selenium test already observed failing. I’m waiting for the passing interaction and regression results before review.
+
+**Assistant progress:**
+
+Chrome is available locally. A matching ChromeDriver was not found on `PATH` or in Selenium’s cache, so the first launch may rely on Selenium Manager; the tech lead is checking whether that works in this environment.
+
+The Selenium client now passes its first multi-page fixture, including date filters, displayed precision and browser cleanup. The developer is adding adverse pagination cases and updating setup documentation before the integrated check.
+
+**Assistant progress:**
+
+The main paginated Selenium interaction is passing in the fixture. Adverse pagination and error cases, dependency cleanup, and documentation are still being finished; I haven’t started review on a partial snapshot.
+
+**Assistant progress:**
+
+Selenium’s pagination and error fixtures pass, and the dependency/setup docs now use Selenium. The full getter suite reports 75 passes and one IFIX help-text mismatch; the developer is checking ChromeDriver resolution, and the IFIX result will be compared with baseline to avoid scope creep.
+
+**Assistant progress:**
+
+Headless Chrome launched successfully after Selenium Manager resolved a matching driver. The tech lead also confirmed the IFIX help assertion was already stale at baseline; the approved Selenium work remains scoped to the Selic getter.
+
+**Assistant progress:**
+
+Implementation and adverse-case checks are complete, documentation is updated, and headless Chrome has launched through Selenium Manager. The developer is recording the observed results and final round-1 snapshot for handoff.
+
+**Assistant progress:**
+
+The implementation checks are complete, and the developer is finishing the verification record and snapshot. Independent review will start after the round-1 writer handoff is recorded.
+
+**Assistant progress:**
+
+Round 1 is handed off for independent review on snapshot `72e6197…`. The focused Selic/shared/IBOVESPA suite passed 54 tests; full discovery passed 75 of 76, with the remaining IFIX help assertion confirmed as a baseline failure. Live BCB comparison is still pending QA.
+
+**Assistant progress:**
+
+Independent review found a likely live-source localization mismatch: BCB is serving Portuguese labels, while the adapter expects English labels and `% p.d.`. The reviewer is reproducing it through the real Selenium client; if confirmed, the developer will address it with a failing regression before the fix.
+
+**Assistant progress:**
+
+The review confirmed a second live-source issue: BCB’s masked date field mangles Selenium’s typed input, preventing the requested 2011 start date from being submitted correctly. The reviewer is also checking pagination; confirmed defects will be fixed test-first in the next round.
+
+**Assistant progress:**
+
+The reviewer is continuing the live BCB reproduction to capture the affected pagination behavior and actionable evidence. I’m waiting for the review record before assigning the repair pass.
+
+**Assistant progress:**
+
+The reviewer reproduced the localization and masked-date blockers against BCB and confirmed a candidate fix on the first two pages. Round 2 has started with separate failing regression tests for both behaviors.
+
+**Assistant progress:**
+
+Round 2 is formally active, with separate failing regression tests required for the language and date-field findings. I’m waiting for those red results and the fixes before review runs again.
+
+**Assistant progress:**
+
+Both review findings now have observed failing regression tests. The browser-language fix passes its test; the developer is implementing and checking the mask-safe date entry fix.
+
+**Assistant progress:**
+
+The language regression now passes. The date-field regression is still being fixed; after it passes, the developer will run a live CLI smoke using temporary data before handing the snapshot back for review.
+
+**Assistant progress:**
+
+The mask-safe date entry now passes, including rejection of a truncated field before refresh. The 54 relevant getter tests pass again; the developer is starting the temporary-directory BCB smoke.
+
+**Assistant progress:**
+
+The temporary-directory live scrape is in progress after the regression fixes. I’m waiting for its range/count comparison and the updated snapshot before sending the code back through review.
+
+**Assistant progress:**
+
+The live Selenium CLI smoke succeeded in a temporary directory: 3,977 rows covering 2011-01-03 through 2026-11-03, matching BCB’s reported count. The active project dataset was untouched; the repaired snapshot is returning to independent review.
+
+**Assistant progress:**
+
+The temporary scrape matched BCB’s count and date range with no project-data write. I’m waiting for the developer’s recorded handoff so the reviewer can verify the repaired snapshot and QA can begin.
+
+**Assistant progress:**
+
+The Selenium smoke and regression checks are complete. The developer is recording their results and the repaired snapshot; re-review will start as soon as that handoff is returned.
+
+**Assistant progress:**
+
+Round 2 has handed off on the current snapshot, and a fresh reviewer is checking both fixes and the integrated change. QA will follow if the independent review passes.
+
+**Assistant progress:**
+
+The independent re-review confirms both repairs. On the current snapshot, 56 focused tests pass; full discovery runs 78 tests with only the previously confirmed IFIX help assertion failing. I’m waiting for the review verdict and QA handoff.
+
+**Assistant progress:**
+
+Round-2 review passed with both findings resolved and matching snapshots. Independent QA is now checking all approved criteria, including a fresh live BCB table comparison against output in a temporary directory.
+
+**Assistant progress:**
+
+QA confirmed the reviewed snapshot and reproduced the same baseline-only test failure. Its first live comparison was blocked by the network sandbox; the approved retry is now running with network access.
+
+**Assistant progress:**
+
+The independent live comparison retry is still in progress. QA is checking the temporary CSV against BCB’s reported count, coverage, and representative values before closing the acceptance record.
+
+**Assistant progress:**
+
+QA’s independent CLI run saved 3,977 observations in its temporary directory. It is now comparing the first, middle, and last values against a separate BCB browser session.
+
+**Assistant progress:**
+
+The independent BCB comparison passed. QA traversed all 40 pages in a separate Chrome session and matched the 3,977-row count, date range, first/middle/last values, and CSV manifest hash.
+
+**Assistant progress:**
+
+The independent live source comparison passed across all 40 pages. QA is recording the criterion-by-criterion evidence and final snapshot before the lead’s audit.
+
+**Assistant progress:**
+
+The live comparison evidence and QA after-snapshot are saved. QA is completing the acceptance matrix and state handoff; the tech lead will audit the records before asking for final approval.
+
+## 2026-11-04 00:58 -03:00 — Selic Selenium refactor final review
+
+**Assistant:**
+
+The Selenium refactor is implemented and has passed independent review and QA on evaluated snapshot `72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc`.
+
+- Replaced the Selic Playwright adapter with Selenium WebDriver and headless Chrome in [source.py]([redacted]/backend/src/internet_data_getter/selic/source.py). The adapter selects English BCB labels, enters dates through the masked fields and verifies them, checks refresh and pagination responses, waits for updated pages, validates all observations, and closes Chrome on success or failure.
+- Updated [backend requirements]([redacted]/backend/requirements.txt), [acquisition guidance]([redacted]/backend/src/internet_data_getter/README.md), [backend setup guidance]([redacted]/backend/README.md), and [getter architecture docs]([redacted]/docs/architecture/internet-data-getter.md). Storage, CSV/provenance, CLI, registry, other getters, and project data were preserved.
+- Focused shared, IBOVESPA, and Selic checks passed **56/56**. Full discovery ran **78 tests: 77 passed, 1 failed**. The remaining IFIX help assertion expects “Acquire historical data from registered sources,” while existing CLI output says “Acquire or restore historical data from registered sources.” Review confirmed this mismatch predates the refactor; it is recorded as nonblocking item BASELINE-001.
+- Independent live QA traversed all 40 BCB pages and matched the count of **3,977 observations**, range **2011-01-03 through 2026-11-03**, representative first/middle/last values, and the CSV manifest hash. The temporary data was removed and active project data was unchanged. Selenium Manager may require network access to resolve ChromeDriver on a first run.
+
+The complete acceptance matrix is in [verification.md]([redacted]/docs/tasks/004-selic-selenium-refactor/verification.md), and the independent findings and review verdict are in [review.md]([redacted]/docs/tasks/004-selic-selenium-refactor/review.md).
+
+The feature-workflow skill requires explicit final approval of the exact specification and evaluated snapshot, so task 004 is awaiting that decision. Please reply **“Approve spec s001 and snapshot 72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc; acknowledge BASELINE-001.”** This acknowledges the pre-existing IFIX assertion failure. No commit or push was made.
