@@ -2671,3 +2671,61 @@ Final approval received for the reviewed snapshot. I’ll record it against s002
 ```text
 Completed. Final approval is recorded for specification s002, plan p002, and the reviewed snapshot; the workflow state is completed in [state.json]([redacted]). The prepared CSV and provenance artifacts are available at [USD_BRL Dados Históricos (1).csv]([redacted]), [manifest.json]([redacted]), and [README.md]([redacted]). Scraper work remains the separate follow-up task.
 ```
+## 2026-11-04 (America/Sao_Paulo)
+
+### User request
+```text
+[$organize-git-commits]([redacted]) 
+```
+
+### Attached skill instructions
+```text
+<skill>
+<name>organize-git-commits</name>
+<path>[redacted]</path>
+---
+name: organize-git-commits
+description: Organize existing Git changes into a suitable branch and focused local commits when asked to commit or organize the work.
+---
+
+# Organize Git commits
+
+Follow repository instructions and conventions. Invocation to organize and commit authorizes creating local branches and commits. Do not push, create a pull request, amend commits, rewrite history, discard changes, or modify remote state without separate authorization.
+
+1. Before changing Git state, inspect the current branch and HEAD, staged and unstaged diffs, renames and deletions, and untracked files. Read relevant changes and surrounding context to understand their purpose and scope. Check for an ongoing merge, rebase, cherry-pick, or unresolved conflicts; stop before changing Git state if they prevent safe organization.
+2. On `master`, create a descriptive branch at the current HEAD while preserving local changes. Follow the repository's branch naming convention, or choose a concise name reflecting the work; resolve name collisions with a different name, never by overwriting a branch. On any other branch, continue there.
+3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
+4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
+5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
+6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+</skill>
+```
+
+### Assistant progress
+```text
+I’m applying the organize-git-commits workflow. I’ll inspect the branch, index, and all local changes first, then group the completed USD/BRL source artifacts and workflow records into focused local commits if the worktree is safe to organize.
+```
+
+```text
+The worktree is detached at `42d49b8`, with no staged or tracked edits and no active merge/rebase/cherry-pick. The only untracked files are the USD/BRL data and its approved task records. I’ll create a `codex/usd-brl-source-preparation` branch at this HEAD, then commit the data artifacts and workflow records separately.
+```
+
+```text
+Branch creation needs to write to the repository’s shared Git metadata under `[redacted]`, outside this workspace’s writable roots. I’m requesting the required Git metadata access to create the local branch; the worktree files remain untouched.
+```
+
+```text
+The staged data commit contains only the CSV, manifest, and recovery README; the staged review showed 4,132 CSV records, and the whitespace check was clean. I’m committing those as one data change, then I’ll stage and inspect the task records separately.
+```
+
+### Assistant response
+```text
+Created branch `codex/usd-brl-source-preparation` at `42d49b8`.
+
+Commits:
+
+- `d4615df` — `data: add USD/BRL source dataset`
+- `7bc76d1` — `docs: record USD/BRL source preparation`
+
+The only uncommitted change is [LOG.md]([redacted]), updated as required by AGENTS.md. The USD/BRL data and workflow records are committed. No changes were pushed.
+```
