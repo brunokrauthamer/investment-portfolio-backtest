@@ -3858,3 +3858,56 @@ Other options:
 
 I’d choose **Market Data Normalizer** for clarity, or **Market Data Harmonizer** if you want a more distinctive service name.
 ```
+
+## 2026-11-04 16:38 BRT — Index data normalization service
+
+### User message
+
+```text
+[$feature-workflow]([redacted])&#x20; 
+
+Create a simple service inside backend/src/market_data_normalizer/indexes
+
+This service must read the following csv inside data directory: ibovespa/source/*.csv (e.g. all csv files inside the mentioned folder), ifix/source/\*.csv, selic/source/\*.csv, sp500/source/\**.csv
+
+The goal of this service is to make a function available, so when its runned, a new csv is created and saved inside data/normalized/gathered_data.csv
+
+All interactions with csv done by this task must use lib Pandas.
+
+The gathered_data.csv must have the columsn named: date, ibovespa, ifix, selic and sp500
+
+The lines of the csv must be ordered by date.
+
+If some index doesnt have information about an specifi date, that cell must be blank
+```
+
+### Assistant progress
+
+```text
+I’ll read the feature workflow and project conventions, then inspect the existing market data layout and implement the normalizer to match them. I’ll use pandas for CSV reads and writes, and record the request plus my final substantive response in the agent log.
+```
+
+```text
+The repository workflow requires an approved specification before coding, so I’m keeping this in discovery for now. I’m checking the actual CSV headers and the current backend entry-point conventions to make the proposed behavior concrete.
+```
+
+```text
+The environment setup is now available: I confirmed pandas runs from `backend/.venv`, and the lead inspected the source CSVs with pandas. The main design question is how to interpret the B3 annual matrix files and handle overlapping dates or missing index observations; I’m waiting for the lead’s exact proposed rules before asking you to approve them.
+```
+
+### Assistant response
+
+```text
+Please review the proposed revisions for task 005:
+
+- [Specification s001]([redacted]/investment_portfolio_backtest/docs/tasks/005-index-data-normalization/spec.md), SHA-256 `b3b547784fd28f8ac76162b9913d1879c99f8ef51c4e4e5576505e5fcb13a3b8`
+- [Plan p001]([redacted]/investment_portfolio_backtest/docs/tasks/005-index-data-normalization/plan.md), SHA-256 `df8b2c1640e3c67b34eaae2877f4d57f976bacecabc06d7b6f3fbb40f245c8fb`
+
+The proposal adds `gather_index_data(data_dir=None)` under `backend/src/market_data_normalizer/indexes`. It reads the requested source CSVs with pandas, transforms B3's annual day-by-month matrices, and writes `date,ibovespa,ifix,selic,sp500` to `data/normalized/gathered_data.csv`, using the repository data folder by default.
+
+The proposed conventions are: include the union of observed dates and leave gaps blank; write ISO dates and decimal text with a period separator, preserving precision; retain each source's values and units (IBOVESPA/IFIX index levels, Selic daily percentage, S&P 500 adjusted close); read only direct CSV files in the requested source folders; reject duplicate dates, missing/empty datasets, and malformed inputs before publication; and publish atomically without changing source files. This does not add data acquisition or portfolio calculations.
+
+The plan includes test-first implementation, documentation, generating the requested output from repository data, and independent review and QA. The feature workflow requires explicit approval before coding. Please approve both exact revisions and these conventions by replying “Approve s001 and p001,” or tell me what to change. Nothing has been implemented; no tests or output have been created.
+```
+
+**Redaction:** The local user account name in the specification and plan link targets is replaced with `[redacted]`.
