@@ -4398,7 +4398,7 @@ what is not working?
 
 ```text
 I’ll distinguish the remaining normalizer defect from the separate environment-limited getter suite, and keep the correction approval gate pending.
-[$organize-git-commits](C:\Users\[redacted]\\.codex\skills\organize-git-commits\SKILL.md) 
+[$organize-git-commits](C:\Users\[redacted]\\.codex\skills\organize-git-commits\SKILL.md)
 ```
 
 ### User message
@@ -4648,4 +4648,63 @@ Implemented and generated [daily_returns_reais.csv]([redacted]/investment_portfo
 The focused daily-return suite (12 tests), index normalizer suite (12 tests), and API suite (2 tests) passed. Six broader getter tests also fail on the baseline and are unrelated to this change. The TDD evidence limitation was disclosed and accepted: the initial record does not contain a separate failing run for every behavior.
 
 Specification s001 and the audited implementation snapshot were approved and the task is marked complete. No commit, push, or deployment was performed.
+```
+
+## 2026-11-04 — Organize daily-returns commits
+
+### User message
+
+`````text
+[$organize-git-commits](C:\Users\[redacted]\\.codex\skills\organize-git-commits\SKILL.md)
+
+<skill>
+<name>organize-git-commits</name>
+<path>C:\Users\[redacted]\.codex\skills\organize-git-commits\SKILL.md</path>
+---
+name: organize-git-commits
+description: Organize existing Git changes into a suitable branch and focused local commits when asked to commit or organize the work.
+---
+
+# Organize Git commits
+
+Follow repository instructions and conventions. Invocation to organize and commit authorizes creating local branches and commits. Do not push, create a pull request, amend commits, rewrite history, discard changes, or modify remote state without separate authorization.
+
+1. Before changing Git state, inspect the current branch and HEAD, staged and unstaged diffs, renames and deletions, and untracked files. Read relevant changes and surrounding context to understand their purpose and scope. Check for an ongoing merge, rebase, cherry-pick, or unresolved conflicts; stop before changing Git state if they prevent safe organization.
+2. On `master`, create a descriptive branch at the current HEAD while preserving local changes. Follow the repository's branch naming convention, or choose a concise name reflecting the work; resolve name collisions with a different name, never by overwriting a branch. On any other branch, continue there.
+3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
+4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
+5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
+6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+</skill>
+`````
+
+### Assistant progress messages
+
+```text
+I’ll use the commit-organization workflow to inspect the branch, index, complete diff, untracked files, and any in-progress Git operation before making local commits.
+```
+
+```text
+The worktree has a detached HEAD, no staged changes, and no merge, rebase, or cherry-pick in progress. The visible changes appear to belong to the completed daily-returns feature; I’m checking the complete task records and data artifact now, including whether the required interaction log is tracked separately.
+```
+
+```text
+The feature changes are unambiguous and there are no staged selections to preserve. Two evidence files contain the machine-local workspace path, so I’ll redact those path strings before including the workflow records. The existing commits are on detached HEAD, so I’ll create a new `codex/daily-returns-reais` branch and keep the feature, workflow evidence, and interaction log in focused commits.
+```
+
+```text
+The feature and its workflow evidence are now split into two focused local commits. I’m checking the branch and final worktree state; the required interaction-log entry for this commit request will remain a separate, uncommitted log change.
+```
+
+### Assistant response
+
+```text
+Organized the daily-returns changes on `codex/daily-returns-reais` in two focused commits:
+
+- `2179dcf` — `feat(market-data): generate daily returns in reais`
+- `b789cce` — `docs: record daily returns feature workflow`
+
+The feature commit contains the service, tests, generated CSV, README, and architecture guidance. The documentation commit contains the approved task records and review/QA evidence. I also redacted the machine-local path from two evidence files.
+
+The only remaining worktree change is the required update to `docs/agent-log/LOG.md`; it is uncommitted so it can preserve this exact response. No other changes remain. No push or pull request was made.
 ```
