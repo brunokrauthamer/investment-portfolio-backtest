@@ -1785,7 +1785,7 @@ The dependency installation and all 28 backend tests passed using the new enviro
 ### User
 
 ```text
-[$organize-git-commits]([redacted]) 
+[$organize-git-commits]([redacted])
 ```
 
 ### User
@@ -4036,4 +4036,69 @@ Plan p002 keeps approved specification s001, the chart scope, and the MIT-pinned
 The approval gate in [feature-workflow]([redacted]/.agents/skills/feature-workflow/SKILL.md) requires explicit approval of p002 before implementation, so correction code has not started. Please approve `p002` as written or request changes.
 
 One dependency note: the first package install fetched `apexcharts@8.7.0` and `react-apexcharts@2.2.0`. ApexCharts’ current [license terms](https://apexcharts.com/license/) state that installing the package signifies agreement to the applicable terms. Eligibility was not checked, and the legal effect of that install is undetermined; this is recorded. The implementation now pins `apexcharts@4.7.0` and `react-apexcharts@1.7.0`, whose publisher-provided licenses are MIT ([ApexCharts](https://github.com/apexcharts/apexcharts.js/blob/v4.7.0/LICENSE), [React wrapper](https://github.com/apexcharts/react-apexcharts/blob/a62ddf57b5389869dce7e2de0dc4d9a82a025fd0/LICENSE)).
+```
+## 2026-11-04
+
+### User message
+
+```text
+[$organize-git-commits]([redacted]) 
+```
+
+### User message
+
+```text
+<skill>
+<name>organize-git-commits</name>
+<path>[redacted]</path>
+---
+name: organize-git-commits
+description: Organize existing Git changes into a suitable branch and focused local commits when asked to commit or organize the work.
+---
+
+# Organize Git commits
+
+Follow repository instructions and conventions. Invocation to organize and commit authorizes creating local branches and commits. Do not push, create a pull request, amend commits, rewrite history, discard changes, or modify remote state without separate authorization.
+
+1. Before changing Git state, inspect the current branch and HEAD, staged and unstaged diffs, renames and deletions, and untracked files. Read relevant changes and surrounding context to understand their purpose and scope. Check for an ongoing merge, rebase, cherry-pick, or unresolved conflicts; stop before changing Git state if they prevent safe organization.
+2. On `master`, create a descriptive branch at the current HEAD while preserving local changes. Follow the repository's branch naming convention, or choose a concise name reflecting the work; resolve name collisions with a different name, never by overwriting a branch. On any other branch, continue there.
+3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
+4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
+5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
+6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+
+</skill>
+```
+
+### Assistant response
+
+```text
+I’ll use the commit-organization skill to inspect the current branch, index, and complete worktree first, then organize only the existing changes into focused local commits.
+```
+
+```text
+I’m resuming the commit review. The worktree is detached, so I’ll create a descriptive `codex/` branch only after checking all staged, unstaged, and untracked content and confirming no Git operation is in progress.
+```
+
+```text
+There are no staged selections or unresolved index conflicts; the changes are unstaged. The only application files are under `frontend`, with a separate workflow record under `docs/tasks`. I’m reading the chart, package setup, and task status before deciding whether they belong in separate commits.
+```
+
+```text
+The frontend files form one coherent setup-and-page change, and the staged diff is whitespace-clean. I’ll commit that snapshot separately from the workflow evidence; the QA record will preserve that the current chart still needs the approved correction.
+```
+
+```text
+The branch name is available, but the worktree’s Git metadata sits outside the writable workspace, so creating the branch was denied by the sandbox. The commit skill authorizes this local Git change; I’m requesting the required sandbox escalation to preserve the work and continue.
+```
+
+```text
+Organized the changes into two local commits on `codex/frontend-apexcharts-chart`:
+
+- `308d708` — `feat(frontend): scaffold ApexCharts percentage chart`
+- `dd59d0e` — `docs: record frontend chart workflow and QA findings`
+
+No push was performed. The committed app snapshot currently fails browser QA with a blank page caused by the React wrapper import issue. Correction plan p002 is committed and awaiting your explicit approval before code changes.
+
+`docs/agent-log/LOG.md` is the only uncommitted tracked change, appended as required by AGENTS.md. The ignored root `.pnpm-store/` cache was left in place.
 ```
