@@ -4629,3 +4629,22 @@ Your acceptance is recorded. The task now has a narrow spec and plan amendment t
 
 Please approve [spec s002](C:/Users/bruno/.codex/worktrees/3ffe/investment_portfolio_backtest/docs/tasks/005-react-typescript-chart/spec.md) and [plan p003](C:/Users/bruno/.codex/worktrees/3ffe/investment_portfolio_backtest/docs/tasks/005-react-typescript-chart/plan.md) as written so I can close out the task against the updated scope.
 ```
+
+### User message
+
+```text
+[$organize-git-commits](C:\Users\bruno\\.codex\skills\organize-git-commits\SKILL.md)
+```
+
+The user also pasted the full `organize-git-commits` skill text, which matches the installed skill instructions; omitted here to avoid duplicating the reference text.
+
+### Assistant response
+
+```text
+Organized the chart work into two focused local commits:
+
+- `75c9e9f` — `fix(frontend): resolve ApexCharts wrapper interop`
+- `2ef7a02` — `docs: record chart correction review and scope`
+
+The work remains on detached HEAD; no branch was created because the skill only directs branch creation on `master`. No changes are uncommitted. The task records still show desktop QA in progress because you asked me to stop before that audit finished. No push or remote changes were made.
+```
