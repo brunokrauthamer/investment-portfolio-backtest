@@ -27,3 +27,19 @@ The service uses pandas for CSV reading and writing. Install it with the rest of
 ```powershell
 .\backend\.venv\Scripts\python.exe -m pip install -r backend/requirements.txt
 ```
+
+## Daily returns in reais
+
+After generating `normalized/gathered_data.csv`, run the daily return service from the repository root:
+
+```powershell
+.\backend\.venv\Scripts\python.exe -c "from backend.src.market_data_normalizer.daily_returns import generate_daily_returns_reais; print(generate_daily_returns_reais())"
+```
+
+The function returns the path to `normalized/daily_returns_reais.csv`. It accepts an optional data root with the same folders as the gather service. It reads the gathered data and the direct CSV files under `dolar/source/`; it does not acquire or modify source data. Imports have no file or network side effects.
+
+The output has columns `date,ibovespa,ifix,selic,sp500` and includes the gathered dates after the first row. Dates remain in ascending ISO format and returns are decimal values. IBOVESPA and IFIX returns divide the current level by the most recent prior available level and subtract one; missing index observations output zero and do not reset the baseline. Selic values are divided by 100, while missing observations output zero.
+
+For S&P 500, the service multiplies the S&P growth factor by the USD/BRL growth factor and subtracts one. It uses the latest earlier S&P observation for the index baseline and the currency price associated with that observation for the FX baseline. At each gathered date it uses that day's currency price or the latest earlier price. Missing S&P observations output zero and do not reset either baseline, so the next S&P return includes intervening currency movement. If either necessary S&P level or currency price is unavailable, the return is zero until a calculation is possible.
+
+Gathered data dates must be valid, unique and ascending. Currency dates must be valid and unique but may appear in any row order; the service matches them by date. It rejects missing or malformed files, incompatible headers, invalid or non-finite values, and nonpositive index or currency levels. It stages the output beside its destination and atomically replaces the prior output only after a successful calculation and write. Re-run the explicit command to recreate the derived file after updating gathered or currency source data.
