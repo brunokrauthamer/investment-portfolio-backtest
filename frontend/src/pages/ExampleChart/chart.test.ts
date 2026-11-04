@@ -35,6 +35,8 @@ describe("example percentage chart data", () => {
       expect(formatUtcDate(marchPoint.x)).toBe("2024-03-01");
       expect(formatUtcMonth(marchPoint.x)).toBe("Mar 2024");
       expect(axisFormatter?.(String(marchPoint.x), marchPoint.x)).toBe("Mar 2024");
+      const narrowFormatter = exampleChartOptions.responsive?.[0].options?.xaxis?.labels?.formatter;
+      expect(narrowFormatter?.(String(marchPoint.x), marchPoint.x)).toBe("Mar");
       expect(
         (tooltipFormatter as unknown as (
           value: string,

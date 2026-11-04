@@ -1,4 +1,4 @@
-import ReactApexChart from "react-apexcharts";
+import ChartImport from "react-apexcharts";
 import {
   exampleChartOptions,
   examplePercentageData,
@@ -6,6 +6,18 @@ import {
   formatPercentage,
 } from "./chart";
 import "./index.css";
+
+// Vite may expose the pinned CommonJS wrapper's exports object as its default.
+function resolveChartComponent(value: unknown): typeof ChartImport {
+  if (typeof value === "function") return value as typeof ChartImport;
+  if (value !== null && typeof value === "object" && "default" in value &&
+      typeof value.default === "function") {
+    return value.default as typeof ChartImport;
+  }
+  throw new Error("Unsupported react-apexcharts module shape: expected a component or callable default.");
+}
+
+const ReactApexChart = resolveChartComponent(ChartImport);
 
 export function ExampleChart() {
   return (

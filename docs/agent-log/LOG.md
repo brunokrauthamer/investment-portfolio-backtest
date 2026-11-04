@@ -4500,3 +4500,169 @@ The feature commit contains the FastAPI health route, app registration, service/
 
 Only the required interaction-log update remains uncommitted; AGENTS.md requires the exact user message and response to be appended before finishing. No remote changes were made.
 ```
+
+## 2026-11-04 (America/Sao_Paulo)
+
+### User message
+
+```text
+# Files pasted by the user:
+
+## "# React TypeScript example chart — correction plan p002 Proposed 2026-11-04 (Am…": [redacted]/Pasted text.txt
+
+## My request:
+implement the:
+```
+
+The attached correction plan is available in `docs/tasks/005-react-typescript-chart/plan.md`. The local user-specific attachment path was redacted. Earlier user-provided repository instructions are preserved in AGENTS.md; unrelated environment context was omitted.
+
+### Assistant progress messages
+
+```text
+I’ll read the attached correction plan and the project’s workflow instructions, then implement and verify the requested changes.
+```
+
+```text
+I’m using the feature-tdd workflow for this correction. Your request to implement p002 provides the approval for that plan; I’ll record it against the plan hash and preserve the independent review and QA gates it specifies.
+```
+
+```text
+The current checkout includes later backend work, so its repository snapshot differs from the original chart handoff. I’m preserving that work and having the correction lead reconcile the baseline before the implementation proceeds.
+```
+
+```text
+The frontend dependencies are available from the existing package store. Port 5173 is already occupied, so the browser checks will need to identify that server or use a controlled alternative without disturbing it.
+```
+
+```text
+The chart files match the failed handoff after accounting for Windows line endings, and the later repository changes are outside the chart. The approved attachment’s hash is now recorded separately from the historical proposal hash.
+```
+
+```text
+The developer reproduced the blank page and the failing React render with the real wrapper, then confirmed that the focused regression passes with the adapter. Browser checks of the production preview, hover values, and responsive layouts are underway.
+```
+
+```text
+The chart now renders in production preview, but the 320 px browser check exposed overlapping month labels. The developer is capturing that failure and applying a focused responsive fix before independent review.
+```
+
+```text
+The responsive-label repair is being verified against the actual chart in both development and preview; the independent review will follow once the implementation snapshot is stable.
+```
+
+```text
+Both development and production preview now show the chart; positive and negative tooltips match the disclosed data. The revised narrow layout also has separated labels and no horizontal overflow in the developer’s browser checks.
+```
+
+```text
+The implementation and its checks are complete: all nine tests, typecheck, build, and frozen install passed. A fresh reviewer is now examining the integrated snapshot before independent QA.
+```
+
+```text
+Independent review passed on an unchanged snapshot, including the dependency pins and frontend checks. Independent QA is now exercising all six acceptance criteria in Chrome.
+```
+
+```text
+QA has independently confirmed the development server renders the chart on direct load and reload at desktop width. It is checking hover values, the disclosure, mobile width, and the built preview next.
+```
+
+```text
+Independent browser QA is still in progress; the remaining checks include the production build and narrow layout.
+```
+
+```text
+QA has matched the February and March tooltip values to all six disclosed rows and confirmed the mobile chart fits without page-level overflow. Production-preview verification remains.
+```
+
+```text
+QA found a remaining mobile defect: the page is 15 px wider than the usable viewport when a vertical scrollbar is present. The chart itself fits. The approved correction plan requires human intervention if correction QA finds an implementation defect, so I’m preserving the finding and completing the QA record.
+```
+
+```text
+The likely cause is the global `body` minimum width, which does not account for the scrollbar. QA is documenting the exact conditions and finishing the remaining checks so the proposed repair can be reviewed against evidence.
+```
+
+```text
+QA reproduced the overflow on both development and production preview when the disclosure is open; it is absent when the disclosure is closed at the tested height. The frozen install, nine tests, typecheck, and build all pass.
+```
+
+```text
+The correction is ready for handoff with one confirmed acceptance failure. I’m waiting for QA to finish its evidence and return the task-record ownership before recording the intervention state.
+```
+
+### Assistant response
+
+```text
+The chart now renders in both development and production preview, including after reload. Independent QA confirmed that the positive and negative tooltips match the disclosed values. The frozen install, all nine tests, typecheck, build, and independent review passed.
+
+One acceptance criterion remains unresolved: at a 320 px viewport, opening the data disclosure produces 15 px of horizontal page overflow. QA reproduced this in both browser paths; the fixed `body` minimum width is the likely cause. The evidence and current status are recorded in [verification.md]([redacted]/investment_portfolio_backtest/docs/tasks/005-react-typescript-chart/verification.md).
+
+May I add a browser regression, remove the fixed body minimum width, and repeat independent review and QA?
+
+The approved [p002 plan]([redacted]/investment_portfolio_backtest/docs/tasks/005-react-typescript-chart/plan.md:23) requires the human-intervention gate when correction QA finds a defect. The [feature-workflow skill]([redacted]/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md:57) says to “set `needs_human_intervention`” and “wait for the human” in that case. The task is recorded in that state, so further repair needs your authorization.
+```
+
+**Redaction:** Local account and worktree paths in links and the attachment path were replaced with `[redacted]`.
+
+### User message
+
+```text
+the only problem is at 320 px?
+```
+
+### Assistant response
+
+```text
+Yes. The only remaining failed check is at 320 px when the six-row disclosure is open: QA measured 15 px of horizontal page overflow in both development and production preview. At 320 px with the disclosure closed, it fits; the 1280 px checks and the other five acceptance criteria passed. The chart and labels themselves fit at 320 px—the overflow is caused by the page width when the disclosure opens.
+```
+
+### User message
+
+```text
+So its good enough. The dashboard is not meant to be used in such small screen
+```
+
+### Assistant response
+
+```text
+Your acceptance is recorded. The task now has a narrow spec and plan amendment that removes the 320 px requirement while keeping the 1280 px layout, accessibility, and open-disclosure checks. The original 320 px QA failure remains in the history; no code changed.
+
+Please approve [spec s002](C:/Users/bruno/.codex/worktrees/3ffe/investment_portfolio_backtest/docs/tasks/005-react-typescript-chart/spec.md) and [plan p003](C:/Users/bruno/.codex/worktrees/3ffe/investment_portfolio_backtest/docs/tasks/005-react-typescript-chart/plan.md) as written so I can close out the task against the updated scope.
+```
+
+### User message
+
+```text
+[$organize-git-commits](C:\Users\bruno\\.codex\skills\organize-git-commits\SKILL.md)
+```
+
+The user also pasted the full `organize-git-commits` skill text, which matches the installed skill instructions; omitted here to avoid duplicating the reference text.
+
+### Assistant response
+
+```text
+Organized the chart work into two focused local commits:
+
+- `75c9e9f` — `fix(frontend): resolve ApexCharts wrapper interop`
+- `2ef7a02` — `docs: record chart correction review and scope`
+
+The work remains on detached HEAD; no branch was created because the skill only directs branch creation on `master`. No changes are uncommitted. The task records still show desktop QA in progress because you asked me to stop before that audit finished. No push or remote changes were made.
+```
+
+### User message
+
+``text
+git push for me
+``
+
+### User message
+
+```text
+git push for me
+```
+
+### Assistant response
+
+```text
+Pushed the committed chart work to `origin/codex/frontend-apexcharts-chart` (`9cb02f5` → `74b555d`). The worktree is clean. Desktop QA remains unfinished as requested earlier; no task completion claim is made.
+```
