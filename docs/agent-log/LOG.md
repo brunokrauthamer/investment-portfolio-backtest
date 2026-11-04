@@ -4603,3 +4603,15 @@ The approved [p002 plan]([redacted]/investment_portfolio_backtest/docs/tasks/005
 ```
 
 **Redaction:** Local account and worktree paths in links and the attachment path were replaced with `[redacted]`.
+
+### User message
+
+```text
+the only problem is at 320 px?
+```
+
+### Assistant response
+
+```text
+Yes. The only remaining failed check is at 320 px when the six-row disclosure is open: QA measured 15 px of horizontal page overflow in both development and production preview. At 320 px with the disclosure closed, it fits; the 1280 px checks and the other five acceptance criteria passed. The chart and labels themselves fit at 320 px—the overflow is caused by the page width when the disclosure opens.
+```
