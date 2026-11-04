@@ -1,0 +1,17 @@
+test_atomic_replace_failure_keeps_published_output_and_cleans_temporary_file (backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests) ... ok
+test_calculates_daily_returns_with_sparse_series_and_sp500_fx_gap_baseline (backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests) ... ok
+test_default_root_is_independent_of_working_directory (backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests) ... ok
+test_handles_user_example (backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests) ... ok
+test_import_has_no_csv_side_effects (backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests) ... ok
+test_missing_history_and_currency_produce_zero_until_next_return_is_calculable (backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests) ... ok
+test_reads_multiple_currency_files_and_rejects_duplicate_dates_across_them (backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests) ... ok
+test_rejects_duplicate_currency_dates_and_preserves_output (backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests) ... ok
+test_rejects_invalid_gathered_input_without_changing_existing_output (backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests) ... ok
+test_rejects_nonfinite_and_nonpositive_index_levels (backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests) ... ok
+test_underwidth_currency_row_raises_contextual_error_and_preserves_output (backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests) ... ok
+test_underwidth_gathered_row_raises_contextual_error_and_preserves_output (backend.src.market_data_normalizer.tests.test_daily_returns.DailyReturnsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.140s
+
+OK

@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "state_version": 14,
+  "task_id": "006",
+  "task_slug": "daily-returns-reais",
+  "stage": "completed",
+  "spec_revision": "s001",
+  "plan_revision": "p001",
+  "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:47883fbe00c2ccf93be3192f2af4cf7e44b4204fdd9135ba9127b3c245aacfc2",
+  "baseline_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:10deab40d50411e871720265cd8748b495f3bd5eb9b869591de04d51da9cf1ad",
+  "model_policy": "initial",
+  "correction_cycle": 0,
+  "model_switch_reason": null,
+  "review_rounds": {
+    "initial": 2,
+    "correction": 0
+  },
+  "limits": {
+    "rounds_per_cycle": 3,
+    "correction_cycles": 1
+  },
+  "state_writer": "tech-lead",
+  "active_assignments": [],
+  "implementation": {
+    "status": "complete",
+    "evidence": [
+      "verification.md",
+      "evidence/tdd-red-example.txt",
+      "evidence/integration-checks.txt",
+      "evidence/implementation-round-1-snapshot.json",
+      "evidence/tdd-red-underwidth-round-2.txt",
+      "evidence/implementation-round-2-snapshot.json",
+      "verification.md"
+    ]
+  },
+  "review": {
+    "status": "passed",
+    "spec_revision": "s001",
+    "plan_revision": "p001",
+    "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:47883fbe00c2ccf93be3192f2af4cf7e44b4204fdd9135ba9127b3c245aacfc2",
+    "evidence": [
+      "review.md",
+      "evidence/review-initial-1-before.json",
+      "evidence/review-initial-1-after.json",
+      "evidence/review-initial-1-csv-width.txt",
+      "evidence/review-initial-1-actual-data.txt",
+      "evidence/review-initial-1-getter-baseline.txt",
+      "evidence/review-initial-2-before.json",
+      "evidence/review-initial-2-after.json",
+      "evidence/review-initial-2-focused.txt",
+      "evidence/review-initial-2-csv-width.txt"
+    ]
+  },
+  "qa": {
+    "status": "passed",
+    "spec_revision": "s001",
+    "plan_revision": "p001",
+    "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:47883fbe00c2ccf93be3192f2af4cf7e44b4204fdd9135ba9127b3c245aacfc2",
+    "evidence": [
+      "verification.md",
+      "evidence/qa-before.json",
+      "evidence/qa-after.json",
+      "evidence/qa-independent-output.txt",
+      "evidence/qa-focused-tests.txt",
+      "evidence/qa-index-tests.txt",
+      "evidence/qa-api-tests.txt",
+      "evidence/qa-diff-check.txt"
+    ],
+    "browser": "not_applicable"
+  },
+  "acceptance_results": [
+    {
+      "criterion_id": "AC-001",
+      "status": "pass",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:47883fbe00c2ccf93be3192f2af4cf7e44b4204fdd9135ba9127b3c245aacfc2",
+      "expected": "Exactly five output columns and unique ascending gathered dates after the first row.",
+      "actual": "4,085 rows, exact columns and dates, no blanks; all 16,340 values matched independent Decimal calculations within 4.63e-16.",
+      "evidence": [
+        "verification.md",
+        "evidence/qa-independent-output.txt"
+      ]
+    },
+    {
+      "criterion_id": "AC-002",
+      "status": "pass",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:47883fbe00c2ccf93be3192f2af4cf7e44b4204fdd9135ba9127b3c245aacfc2",
+      "expected": "Missing IBOVESPA/IFIX values return zero without resetting prior value.",
+      "actual": "2011-03-07/08 zeros; 2011-03-09 values match 2011-03-04 as baseline; sparse isolated fixture passed.",
+      "evidence": [
+        "verification.md",
+        "evidence/qa-independent-output.txt"
+      ]
+    },
+    {
+      "criterion_id": "AC-003",
+      "status": "pass",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:47883fbe00c2ccf93be3192f2af4cf7e44b4204fdd9135ba9127b3c245aacfc2",
+      "expected": "Selic percent divided by 100, blanks zero.",
+      "actual": "2011-01-04 0.00040203000000000005; isolated value 5 -> .05 and blank -> 0.",
+      "evidence": [
+        "verification.md",
+        "evidence/qa-independent-output.txt"
+      ]
+    },
+    {
+      "criterion_id": "AC-004",
+      "status": "pass",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:47883fbe00c2ccf93be3192f2af4cf7e44b4204fdd9135ba9127b3c245aacfc2",
+      "expected": "Compound FX and S&P returns; zero S&P gaps, retain prior S&P FX baseline, use earlier currency when same-day missing.",
+      "actual": "2011-01-17 zero; 2011-01-18 resumes per independent calculation; isolated currency bridge and missing-current-FX cases pass; 2026-11-04 fallback matches.",
+      "evidence": [
+        "verification.md",
+        "evidence/qa-independent-output.txt"
+      ]
+    },
+    {
+      "criterion_id": "AC-005",
+      "status": "pass",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:47883fbe00c2ccf93be3192f2af4cf7e44b4204fdd9135ba9127b3c245aacfc2",
+      "expected": "Match the user's 2011-01-04 numeric example within tolerance.",
+      "actual": "IBOVESPA .005080877821089791; IFIX -.008540520022774833; Selic .00040203000000000005; S&P .00717869311278152.",
+      "evidence": [
+        "verification.md",
+        "evidence/qa-independent-output.txt"
+      ]
+    },
+    {
+      "criterion_id": "AC-006",
+      "status": "pass",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:47883fbe00c2ccf93be3192f2af4cf7e44b4204fdd9135ba9127b3c245aacfc2",
+      "expected": "Handle missing history and reject malformed, invalid, duplicate, unsorted and missing inputs without replacing old output; publish atomically.",
+      "actual": "Isolated edge fixtures pass; invalid and missing cases preserve sentinel; simulated atomic replace failure passes; source hashes unchanged.",
+      "evidence": [
+        "verification.md",
+        "evidence/qa-independent-output.txt",
+        "evidence/qa-focused-tests.txt"
+      ]
+    },
+    {
+      "criterion_id": "AC-007",
+      "status": "pass",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:47883fbe00c2ccf93be3192f2af4cf7e44b4204fdd9135ba9127b3c245aacfc2",
+      "expected": "Optional root, caller-independent default, no import IO/network, docs contain invocation/formulas/gap rules.",
+      "actual": "Default service invoked from temporary cwd with network connects blocked; import unchanged source/output; README and architecture docs inspected.",
+      "evidence": [
+        "verification.md",
+        "evidence/qa-independent-output.txt"
+      ]
+    }
+  ],
+  "open_findings": [
+    {
+      "id": "REV-001",
+      "source": "initial review round 1",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-006"
+      ],
+      "location": "backend/src/market_data_normalizer/daily_returns/service.py:38,59",
+      "consequence": "An underwidth CSV row reaches value parsing as None and raises AttributeError rather than the input NormalizationError. Output is preserved but the error gives no source or row context.",
+      "evidence": [
+        "review.md",
+        "evidence/review-initial-1-csv-width.txt"
+      ],
+      "status": "resolved",
+      "resolution_evidence": [
+        "review.md",
+        "evidence/tdd-red-underwidth-round-2.txt",
+        "evidence/review-initial-2-focused.txt",
+        "evidence/review-initial-2-csv-width.txt"
+      ]
+    },
+    {
+      "id": "REV-002",
+      "source": "initial review round 1",
+      "severity": "P3",
+      "blocking": false,
+      "criterion_ids": [
+        "AC-007"
+      ],
+      "location": "backend/src/market_data_normalizer/README.md:45",
+      "consequence": "The README implies the ascending requirement applies to both inputs. Currency CSVs can be in any order.",
+      "evidence": [
+        "review.md"
+      ],
+      "status": "resolved",
+      "resolution_evidence": [
+        "review.md",
+        "evidence/review-initial-2-focused.txt"
+      ]
+    }
+  ],
+  "attempts_without_progress": 0,
+  "approvals": {
+    "specification": {
+      "decision": "approved",
+      "spec_revision": "s001",
+      "spec_sha256": "3e18c0dc6d4ceb5669c00593debfe0d65269fb5795d4f66f174b59af62798efb",
+      "plan_revision": "p001",
+      "plan_sha256": "4127dce2086aaf7475f083ed1212a0e0d56fb14734a89acc515f54c7a46acd50",
+      "date": "2026-11-04",
+      "reference": "User replied Approve both revisions to main chat approval request."
+    },
+    "correction_plan": null,
+    "final": {
+      "decision": "approved",
+      "spec_revision": "s001",
+      "spec_sha256": "3e18c0dc6d4ceb5669c00593debfe0d65269fb5795d4f66f174b59af62798efb",
+      "plan_revision": "p001",
+      "plan_sha256": "4127dce2086aaf7475f083ed1212a0e0d56fb14734a89acc515f54c7a46acd50",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:47883fbe00c2ccf93be3192f2af4cf7e44b4204fdd9135ba9127b3c245aacfc2",
+      "date": "2026-11-04",
+      "reference": "User replied Approve final snapshot to approval request including TDD evidence limitation.",
+      "accepted_limitations": [
+        "Initial TDD evidence recorded behavioral red for the example but not separately for every initial behavior.",
+        "Six getter pagination failures reproduced at baseline."
+      ]
+    }
+  },
+  "next_action": "Completed; no commit, push or deployment authorized by this approval.",
+  "proposed_revision_hashes": {
+    "spec_sha256": "3e18c0dc6d4ceb5669c00593debfe0d65269fb5795d4f66f174b59af62798efb",
+    "plan_sha256": "4127dce2086aaf7475f083ed1212a0e0d56fb14734a89acc515f54c7a46acd50"
+  },
+  "final_audit": {
+    "snapshot": "evidence/final-audit-snapshot.json",
+    "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:47883fbe00c2ccf93be3192f2af4cf7e44b4204fdd9135ba9127b3c245aacfc2",
+    "tdd_evidence_limitation": "Initial red evidence covers the example only, not a separate observed behavioral red for every initial behavior.",
+    "baseline_getter_failures": "Six S&P pagination failures reproduced at baseline."
+  }
+}

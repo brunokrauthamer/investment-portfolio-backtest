@@ -1,0 +1,5 @@
+short AttributeError 'NoneType' object has no attribute 'strip' preserved True
+long-blank NormalizationError Expected 5 fields in line 3, saw 6 preserved True
+blank-date NormalizationError '' preserved True
+unquoted embedded quote NormalizationError '1"00' preserved True
+terminal quoted-empty PUBLISHED 2011-01-04,0.10000000000000009,0.0,0.0004,0.0
