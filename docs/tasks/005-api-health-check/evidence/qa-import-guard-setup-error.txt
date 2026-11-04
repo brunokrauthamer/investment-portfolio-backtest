@@ -1,0 +1,6 @@
+Initial QA harness attempt (setup error, not an application failure)
+
+Command: .\backend\.venv\Scripts\python.exe docs/tasks/005-api-health-check/evidence/qa_import_guard.py
+Observed: ModuleNotFoundError: No module named 'backend'
+Cause: invoking a script by file path set sys.path to its evidence directory, so the repository root was not on the import path.
+Correction: the QA script now adds its resolved repository root to sys.path before importing the application.
