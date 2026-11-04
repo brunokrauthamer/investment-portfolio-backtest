@@ -6,7 +6,7 @@ The application will help people understand how different hypothetical investmen
 
 Users will select assets and their weights; the weights must sum to exactly 100%. Assets will include indices or ETFs; Ibovespa, IFIX and IVVB11 are examples, not a finalized universe. Selic will be available as an asset, and there will be no separate cash allocation option. The meaning and representation of each asset, including Selic, remain to be established when its data and calculations are designed.
 
-Every date accepted by the system must have data for every asset. The method for aligning data and the handling of gaps are still open; do not assume that filling, dropping or rejecting observations is approved.
+Every date accepted by a backtest must have data for every asset. For the gathered historical data CSV, the approved convention is to include the union of observed dates and leave an asset cell blank when that source has no observation for the date. This does not decide how a backtest aligns calendars or handles gaps.
 
 ## Architecture and boundaries
 
@@ -30,7 +30,7 @@ The Yahoo S&P 500 getter uses the history page's `^GSPC` Date and Adj Close fiel
 - Asset universe, markets, currencies, date ranges, frequency, sources, source terms and CSV schema.
 - Asset-to-class mapping, fractional holdings and the precise interpretation of weights and Selic.
 - Rebalancing rules and execution timing; costs, taxes, dividends, inflation, currency conversion and adjusted prices.
-- The method and calendar for aligning datasets, missing observations and non-trading days, and the handling of invalid requests.
+- For backtests, the method and calendar for aligning datasets, missing observations and non-trading days, and the handling of invalid requests.
 - Precise definitions of total return and maximum drawdown, chart details and other metrics.
 
 The Selic acquisition preserves the source's daily percentage text. This does not establish how a Selic observation contributes to portfolio value or how datasets are aligned. Do not infer financial behavior from the acquired CSV; agree on those conventions before implementing calculations.
