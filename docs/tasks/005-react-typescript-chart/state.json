@@ -1,0 +1,387 @@
+{
+  "schema_version": 1,
+  "state_version": 15,
+  "task_id": "005",
+  "task_slug": "react-typescript-chart",
+  "stage": "awaiting_correction_approval",
+  "spec_revision": "s001",
+  "spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+  "plan_revision": "p002",
+  "plan_sha256": "dd1db8ef75dc13408ee19a3ae6d8e08a7b60636efec4dfe36c9c15eeec195c87",
+  "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+  "baseline_revision": "b69fee73108494a2cd183f00ee2d5447131b88d8:sha256:50a22036c79cd3590784c12aa76388d0da5512cb9b6212103552a38414af86de",
+  "baseline_snapshot": "evidence/baseline-snapshot.json",
+  "baseline_worktree_status": "clean before task record creation",
+  "model_policy": "correction",
+  "correction_cycle": 1,
+  "model_switch_reason": "Initial independent browser QA found a blocking implementation failure: React renders a blank root page with an invalid element type error in ExampleChart.",
+  "review_rounds": {
+    "initial": 2,
+    "correction": 0
+  },
+  "limits": {
+    "rounds_per_cycle": 3,
+    "correction_cycles": 1
+  },
+  "state_writer": "tech-lead-correction",
+  "active_assignments": [],
+  "implementation": {
+    "status": "complete",
+    "evidence": [
+      "TDD red and green observations, initial-version evidence, and pinned-version compatibility are recorded in verification.md.",
+      "verification.md: exact-pinned install, frozen-lockfile install, tests, typecheck, build, and development-server root smoke.",
+      "evidence/implementation-round-1.json",
+      "Round 2 snapshot `186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86`; regression red/green and integrated checks are recorded in verification.md."
+    ]
+  },
+  "review": {
+    "status": "passed",
+    "spec_revision": "s001",
+    "plan_revision": "p001",
+    "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+    "evidence": [
+      "review.md#initial-round-1--2026-11-04-americasao_paulo",
+      "evidence/review-initial-1-before.json",
+      "evidence/review-initial-1-after.json",
+      "review.md#initial-round-2--2026-11-04-americasao_paulo",
+      "evidence/review-initial-2-before.json",
+      "evidence/review-initial-2-after.json"
+    ]
+  },
+  "qa": {
+    "status": "failed",
+    "spec_revision": "s001",
+    "plan_revision": "p001",
+    "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+    "evidence": [
+      "verification.md#independent-qa--2026-11-04-americasao_paulo",
+      "evidence/qa-dispatch.json",
+      "evidence/qa-after.json",
+      "Chrome at http://127.0.0.1:5173/: blank page screenshot and React render error observed; no screenshot artifact retained"
+    ],
+    "browser": "failed"
+  },
+  "acceptance_results": [
+    {
+      "criterion_id": "AC-001",
+      "status": "fail",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+      "expected": "SPA renders at root URL",
+      "actual": "Root shell loaded but body was blank; React rendered an invalid element error. Reload reproduced.",
+      "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+    },
+    {
+      "criterion_id": "AC-002",
+      "status": "fail",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+      "expected": "ApexCharts line with date and percentage axes and working hover tooltip",
+      "actual": "No .apexcharts-canvas element rendered (count 0); tooltip not available.",
+      "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+    },
+    {
+      "criterion_id": "AC-003",
+      "status": "fail",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+      "expected": "Visible illustrative label and all six fixed UTC date/value pairs",
+      "actual": "Document body text empty; sample series was not presented.",
+      "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+    },
+    {
+      "criterion_id": "AC-004",
+      "status": "fail",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+      "expected": "Accessible readable content and chart at 320 px and 1280 px",
+      "actual": "Blank app at root; 320 px empty body had no overflow but was not readable content. 1280 px and disclosure were not verified.",
+      "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+    },
+    {
+      "criterion_id": "AC-005",
+      "status": "blocked",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+      "expected": "Frontend-only example data renders without backend or external data service",
+      "actual": "Render error prevented independent runtime verification; criterion unassessed.",
+      "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+    },
+    {
+      "criterion_id": "AC-006",
+      "status": "not_run",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+      "expected": "Documented install/run/build commands, prerequisites and source layout verified",
+      "actual": "Not independently run or checked during QA.",
+      "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+    }
+  ],
+  "open_findings": [
+    {
+      "id": "CHART-R1-01",
+      "source": "reviewer",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-001",
+        "AC-006"
+      ],
+      "location": "frontend/README.md:9; frontend/package.json:8; frontend/pnpm-lock.yaml:446-448",
+      "consequence": "A clean setup following the documented Node range can use a runtime outside the verification toolchain support.",
+      "reproduction": "Compare the advertised Node >=22.12 with the locked and installed jsdom 30.1.3 engines range ^22.22.2 || ^24.15.0 || >=26.0.0. Node 22.12 and 24.0 fall outside the latter.",
+      "evidence": "review.md, Initial round 1",
+      "status": "resolved",
+      "resolution_evidence": "Round 2 independent review reproduced the lockfile and manifest engine agreement, documented matching range, and passing compatibility regressions on the reviewed snapshot. See review.md, Initial round 2."
+    },
+    {
+      "id": "CHART-R1-02",
+      "source": "reviewer",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-004"
+      ],
+      "location": "frontend/src/pages/ExampleChart/chart.ts:47; frontend/src/pages/ExampleChart/index.css:100-105",
+      "consequence": "Low contrast makes the 11 px date and percentage labels and chart captions harder to read for people with reduced contrast sensitivity.",
+      "reproduction": "Compute foreground contrast on the white chart card: #748093 is 4.00:1 and #8893a2 is 3.11:1, both below the ordinary-text legibility benchmark of 4.5:1.",
+      "evidence": "review.md, Initial round 1",
+      "status": "resolved",
+      "resolution_evidence": "Round 2 independent review calculated 6.306:1 contrast for axis labels and captions and reproduced passing contrast regressions on the reviewed snapshot. See review.md, Initial round 2."
+    },
+    {
+      "id": "CHART-QA-01",
+      "source": "qa",
+      "severity": "P1",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004"
+      ],
+      "location": "frontend/src/pages/ExampleChart/index.tsx; root application render",
+      "consequence": "The SPA renders a blank page, so its chart and accessible example content are unavailable.",
+      "reproduction": "Start the Vite server and open or reload / in Chrome. The body is blank and the console reports that ExampleChart attempted to render an invalid element type: object.",
+      "evidence": "verification.md, Independent QA; evidence/qa-dispatch.json and evidence/qa-after.json",
+      "status": "open",
+      "resolution_evidence": null
+    }
+  ],
+  "attempts_without_progress": 0,
+  "approvals": {
+    "specification": {
+      "decision": "approved",
+      "exact_user_reply": "approved",
+      "spec_revision": "s001",
+      "spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+      "plan_revision": "p001",
+      "plan_sha256": "6e86712794b7b6ac6b86392cd635da4a540b827e3f462626f65c7e2b252fec43",
+      "recorded_at_utc": "2026-11-04T19:51:36Z",
+      "recorded_at_local": "2026-11-04T16:51:36-03:00",
+      "timezone": "America/Sao_Paulo",
+      "approval_message_time": null,
+      "reference": "User replied approved in the main chat to the explicit request for s001 and p001."
+    },
+    "correction_plan": null,
+    "final": null
+  },
+  "next_action": "Await explicit human approval of correction plan p002 against approved s001 before assigning correction implementation.",
+  "dependency_decision": {
+    "recorded_at_utc": "2026-11-04T20:12:21Z",
+    "initial_install": [
+      "apexcharts@8.7.0",
+      "react-apexcharts@2.2.0"
+    ],
+    "current_license_observation": "The initial dependency installation installed apexcharts@8.7.0 and react-apexcharts@2.2.0. Their bundled licenses describe the dual-license model, and the official vendor license page states that installation signifies agreement to applicable terms. Eligibility was not checked. The legal effect of the installation is undetermined.",
+    "chosen_exact_versions": [
+      "apexcharts@4.7.0",
+      "react-apexcharts@1.7.0"
+    ],
+    "license_evidence": [
+      "https://github.com/apexcharts/apexcharts.js/blob/v4.7.0/LICENSE",
+      "https://github.com/apexcharts/react-apexcharts/blob/a62ddf57b5389869dce7e2de0dc4d9a82a025fd0/LICENSE"
+    ],
+    "registry_peer_observation": "react-apexcharts 1.7.0 declares react >=0.13 and apexcharts >=4.0.0",
+    "status": "The app now pins the publisher's MIT-licensed apexcharts@4.7.0 and react-apexcharts@1.7.0. Independent browser QA of the initial implementation failed on a runtime import issue.",
+    "approval_impact": "No version fixed in approved s001/p001; same requested packages and criteria, so revisions remain unchanged.",
+    "evidence": "verification.md"
+  },
+  "assignment_history": [
+    {
+      "id": "initial-developer-round-1",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "slice": "Complete initial implementation, integration, TDD evidence, and frontend usage documentation",
+      "allowed_files": [
+        "frontend/ except AGENTS.md",
+        "/.gitignore",
+        "docs/tasks/005-react-typescript-chart/state.json",
+        "docs/tasks/005-react-typescript-chart/verification.md",
+        "docs/tasks/005-react-typescript-chart/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+      "input_plan": "p001",
+      "input_plan_sha256": "6e86712794b7b6ac6b86392cd635da4a540b827e3f462626f65c7e2b252fec43",
+      "input_snapshot": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:50a22036c79cd3590784c12aa76388d0da5512cb9b6212103552a38414af86de",
+      "writer": "developer: implementation/state fields and verification.md",
+      "deliverables": "Integrated frontend, documentation, observed red/green/refactor evidence, checks, final snapshot and handoff",
+      "status": "completed"
+    },
+    {
+      "id": "initial-review-round-1",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "slice": "Independent integrated review of the complete worktree snapshot",
+      "allowed_files": [
+        "docs/tasks/005-react-typescript-chart/review.md",
+        "docs/tasks/005-react-typescript-chart/state.json",
+        "docs/tasks/005-react-typescript-chart/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+      "input_plan": "p001",
+      "input_plan_sha256": "6e86712794b7b6ac6b86392cd635da4a540b827e3f462626f65c7e2b252fec43",
+      "input_snapshot": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:6be2bd67b108ad9a2b2290c50e25be244f9bf9a24398dba9d815f4b8bfe7644c",
+      "writer": "reviewer: review fields, findings and review.md",
+      "deliverables": "Independent verdict, specific actionable findings, before/after snapshots and review handoff",
+      "status": "completed"
+    },
+    {
+      "id": "initial-developer-round-2",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-004",
+        "AC-006"
+      ],
+      "findings": [
+        "CHART-R1-01",
+        "CHART-R1-02"
+      ],
+      "slice": "Regression-backed fixes for Node prerequisites and chart text contrast",
+      "allowed_files": [
+        "frontend/ except AGENTS.md",
+        "/.gitignore",
+        "docs/tasks/005-react-typescript-chart/state.json",
+        "docs/tasks/005-react-typescript-chart/verification.md",
+        "docs/tasks/005-react-typescript-chart/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+      "input_plan": "p001",
+      "input_plan_sha256": "6e86712794b7b6ac6b86392cd635da4a540b827e3f462626f65c7e2b252fec43",
+      "input_snapshot": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:6be2bd67b108ad9a2b2290c50e25be244f9bf9a24398dba9d815f4b8bfe7644c",
+      "writer": "developer: implementation/state fields and verification.md",
+      "deliverables": "Regression red/green evidence, fixes, checks, new snapshot and handoff",
+      "status": "completed"
+    },
+    {
+      "id": "initial-review-round-2",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "findings": [
+        "CHART-R1-01",
+        "CHART-R1-02"
+      ],
+      "slice": "Independent integrated re-review of round 2 snapshot and disposition of round 1 findings",
+      "allowed_files": [
+        "docs/tasks/005-react-typescript-chart/review.md",
+        "docs/tasks/005-react-typescript-chart/state.json",
+        "docs/tasks/005-react-typescript-chart/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+      "input_plan": "p001",
+      "input_plan_sha256": "6e86712794b7b6ac6b86392cd635da4a540b827e3f462626f65c7e2b252fec43",
+      "input_snapshot": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+      "writer": "reviewer: review fields, findings and review.md",
+      "deliverables": "Independent re-review verdict, finding dispositions, before/after snapshots and handoff",
+      "status": "completed"
+    },
+    {
+      "id": "initial-qa",
+      "role": "qa",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "slice": "Independent integrated QA of every criterion and browser scenarios",
+      "allowed_files": [
+        "docs/tasks/005-react-typescript-chart/verification.md",
+        "docs/tasks/005-react-typescript-chart/state.json",
+        "docs/tasks/005-react-typescript-chart/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+      "input_plan": "p001",
+      "input_plan_sha256": "6e86712794b7b6ac6b86392cd635da4a540b827e3f462626f65c7e2b252fec43",
+      "input_snapshot": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+      "writer": "qa: QA fields, acceptance results, verification.md and evidence",
+      "deliverables": "Independent criterion matrix, browser actions, expected/actual results, before/after snapshots and QA verdict",
+      "status": "completed_with_failed_verdict"
+    }
+  ],
+  "correction_baseline": {
+    "initial_spec_revision": "s001",
+    "initial_spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+    "initial_plan_revision": "p001",
+    "initial_plan_sha256": "6e86712794b7b6ac6b86392cd635da4a540b827e3f462626f65c7e2b252fec43",
+    "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+    "handoff_snapshot": "evidence/correction-handoff.json",
+    "review_evidence": "review.md",
+    "qa_evidence": "verification.md"
+  },
+  "correction_proposal": {
+    "spec_revision": "s001",
+    "spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+    "plan_revision": "p002",
+    "plan_sha256": "dd1db8ef75dc13408ee19a3ae6d8e08a7b60636efec4dfe36c9c15eeec195c87",
+    "baseline_code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+    "finding_id": "CHART-QA-01",
+    "archived_plan": "history/plan-p001.md",
+    "diagnosis": "The Vite client transform passes the pinned wrapper CommonJS exports object to React. The callable chart component is its default property."
+  }
+}
