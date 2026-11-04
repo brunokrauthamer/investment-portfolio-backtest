@@ -1,0 +1,4 @@
+{
+  "command": "backend/.venv/Scripts/python.exe -m unittest discover -s backend/src/internet_data_getter/tests -v",
+  "exit_code": 1
+}

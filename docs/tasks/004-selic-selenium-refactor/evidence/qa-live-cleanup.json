@@ -1,0 +1,8 @@
+{
+  "temporary_data_directory": "docs/tasks/004-selic-selenium-refactor/qa-live-data",
+  "resolved_directory_was_verified_inside_task_root": true,
+  "temporary_csv_and_manifest_removed_after_validation": true,
+  "directory_exists_after_cleanup": false,
+  "active_project_data_changed": false,
+  "selenium_manager_metadata_created_by_sandbox_probe_removed": true
+}

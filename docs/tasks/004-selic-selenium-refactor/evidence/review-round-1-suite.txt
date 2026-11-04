@@ -1,0 +1,16 @@
+a acquisition incomplete: offline
+Restored IFIX 2011 from backups/ifix/2011/20261104T000000.000000Z-4ee73d1ebb10545fa59dc6ecc007ae5ee5fad768b3d34ff3b091273a4b5bdfd8-53a236d3-2011.csv
+Displaced active file backed up to C:\Users\bruno\AppData\Local\Temp\tmph9juogzc\data\backups\ifix\2011\20261104T033102.805553Z-c7e94d93eefc97324318ca2105d16902dc51e808206008b178c33cf4334b857d-be26b9a4-2011.csv
+..................................F.........................................
+======================================================================
+FAIL: test_cli_help_exits_without_making_a_network_request (test_ifix_acquisition.AcquisitionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\bruno\.codex\worktrees\b70f\investment_portfolio_backtest\backend\src\internet_data_getter\tests\test_ifix_acquisition.py", line 309, in test_cli_help_exits_without_making_a_network_request
+    self.assertIn("Acquire historical data from registered sources", completed.stdout)
+AssertionError: 'Acquire historical data from registered sources' not found in 'usage: __main__.py [-h] [--data-dir DATA_DIR] [--getter {ifix,ibovespa,selic}]\n                   {restore,restore-ibovespa,restore-selic} ...\n\nAcquire or restore historical data from registered sources.\n\npositional arguments:\n  {restore,restore-ibovespa,restore-selic}\n    restore             restore a verified IFIX backup without contacting B3\n    restore-ibovespa    restore a verified IBOVESPA backup without contacting\n                        B3\n    restore-selic       restore a verified Selic backup without contacting BCB\n\noptional arguments:\n  -h, --help            show this help message and exit\n  --data-dir DATA_DIR   destination data directory (default: repository data/)\n  --getter {ifix,ibovespa,selic}\n                        run only the named getter (default: all)\n'
+
+----------------------------------------------------------------------
+Ran 76 tests in 1.439s
+
+FAILED (failures=1)

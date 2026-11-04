@@ -18,6 +18,7 @@ from backend.src.internet_data_getter.selic.source import (
     SourceResult,
     parse_observation_rows,
     parse_rate,
+    _set_date_filter,
     _verify_values_page,
     validate_observations,
 )
@@ -40,6 +41,50 @@ def sample_result(values=("0.123456", "0.123400")):
         date(2011, 1, 4),
         2,
     )
+
+
+def fake_selenium_values_page(metadata, rows, table_text):
+    class Cell:
+        def __init__(self, text):
+            self.text = text
+
+    class Row:
+        def __init__(self, cells):
+            self.cells = cells
+
+        def find_elements(self, by, selector):
+            if by != "css selector" or selector != "th, td":
+                raise AssertionError((by, selector))
+            return [Cell(text) for text in self.cells]
+
+    class Table:
+        id = "values-table"
+
+        def __init__(self):
+            self.text = table_text
+
+        def is_displayed(self):
+            return True
+
+        def find_elements(self, by, selector):
+            if by != "css selector" or selector != "tr":
+                raise AssertionError((by, selector))
+            return [Row(cells) for cells in rows]
+
+    class Page:
+        def find_element(self, by, selector):
+            if by == "id" and selector == "seriesSelecionadas":
+                return Cell(metadata)
+            if by == "id" and selector == "valoresSeries":
+                return Table()
+            raise AssertionError((by, selector))
+
+        def find_elements(self, by, selector):
+            if by == "css selector" and selector == "#valoresSeries tr":
+                return self.find_element("id", "valoresSeries").find_elements("css selector", "tr")
+            raise AssertionError((by, selector))
+
+    return Page()
 
 
 class SelicRegistryTests(unittest.TestCase):
@@ -330,381 +375,342 @@ class SelicRegistryTests(unittest.TestCase):
             manifest_size = store.manifest_path.stat().st_size
             self.assertLess(manifest_size, 20_000, f"current manifest grew to {manifest_size} bytes")
 
-    def test_browser_client_sets_source_range_refreshes_opens_values_and_pages(self):
-        class FormLocator:
-            def __init__(self, page):
-                self.page = page
+    def test_browser_client_uses_selenium_for_complete_source_pages(self):
+        import json
 
-            @property
-            def first(self):
-                return self
-
-            def wait_for(self, state, timeout):
-                if state != "attached" or timeout <= 0:
-                    raise AssertionError((state, timeout))
-                self.page.form_waited = True
-
-        class ResponseWaiter:
-            def __init__(self, page, predicate):
-                self.page, self.predicate = page, predicate
-
-            def __enter__(self):
-                return self
-
-            def __exit__(self, *_args):
-                method_name = "getPagina" if self.page.paging else "atualizarGraficoEstatico"
-                response = type("Response", (), {
-                    "request": type("Request", (), {"method": "POST"})(),
-                    "url": f"https://www3.bcb.gov.br/sgspub/consultarvalores.do?method={method_name}",
-                    "status": 200,
-                })()
-                if not self.predicate(response):
-                    raise AssertionError("expected BCB POST response was not observed")
-                self.page.refresh_response_seen = True
-                self.value = response
-
-        class NavigationWaiter:
-            def __init__(self, page):
-                self.page = page
-
-            def __enter__(self):
-                self.page.waiting_navigation = True
-                return self
-
-            def __exit__(self, *_args):
-                self.page.waiting_navigation = False
-                if not self.page.paging:
-                    raise AssertionError("BCB page transition was not observed")
-
-        class ImageLocator:
-            def __init__(self, page):
-                self.page = page
-
-            def wait_for(self, state, timeout):
-                if state != "visible" or timeout <= 0:
-                    raise AssertionError((state, timeout))
-                self.page.waited_for_refresh = True
-
-            def evaluate(self, expression):
-                if expression != "image => image.complete && image.naturalWidth > 0":
-                    raise AssertionError(expression)
-                return self.page.waited_for_refresh
-
-        class FrameLocator:
-            def __init__(self, page):
-                self.page = page
-
-            def locator(self, selector):
-                if selector == "form":
-                    return FormLocator(self.page)
-                if selector != "img":
-                    raise AssertionError(selector)
-                return ImageLocator(self.page)
-
-        class CellLocator:
-            def __init__(self, cells):
+        class FakeElement:
+            def __init__(self, driver, kind, text="", cells=()):
+                self.driver = driver
+                self.kind = kind
+                self.text = text
                 self.cells = cells
+                self.id = f"{kind}-{driver.page.index}"
 
-            def all_inner_texts(self):
-                return self.cells
+            def clear(self):
+                self.driver.page.fills[self.kind] = ""
 
-        class RowLocator:
-            def __init__(self, cells):
-                self.cells = cells
+            def send_keys(self, value):
+                if self.kind not in {"dataInicio", "dataFim"}:
+                    self.driver.page.fills[self.kind] = value
+                    return
+                page = self.driver.page
+                if "/" in value:
+                    page.fills[self.kind] = "01//0/1/20" if self.kind == "dataInicio" else "04//0/1/20"
+                    return
+                digits = "".join(character for character in value if character.isdigit())
+                formatted = f"{digits[:2]}/{digits[2:4]}/{digits[4:8]}"
+                if page.corrupt_date_fields:
+                    formatted = formatted[:-1]
+                page.fills[self.kind] = formatted
 
-            def locator(self, _selector):
-                return CellLocator(self.cells)
+            def get_attribute(self, name):
+                if name != "value" or self.kind not in {"dataInicio", "dataFim"}:
+                    raise AssertionError((self.kind, name))
+                return self.driver.page.fills.get(self.kind, "")
 
-        class NextLink:
-            def __init__(self, page):
-                self.page = page
-                self.first_match = False
-
-            def count(self):
-                return 2 * int(self.page.index < len(self.page.rows_by_page) - 1)
-
-            @property
-            def first(self):
-                self.first_match = True
-                return self
+            def is_displayed(self):
+                return True
 
             def click(self):
-                if not self.first_match:
-                    raise AssertionError("Next is ambiguous at the top and bottom of the table")
-                if not self.page.waiting_navigation:
-                    raise AssertionError("Next clicked without waiting for the page transition")
-                self.page.paging = True
-                self.page.index += 1
-
-        class Locator:
-            def __init__(self, page, selector):
-                self.page, self.selector = page, selector
-
-            def inner_text(self):
-                if self.selector == "#seriesSelecionadas":
-                    if self.page.values_open:
-                        return "11 - Interest rate - Selic % p.d.\nPeriod 01/01/2011 to 04/01/2011\nLinear"
-                    return (
-                        "Found series\nCode\n\t\nFull name\n\t\nUnit\n\t\nPer.\n\t\n"
-                        "Start\n\t\nLast value\n\t\nY Axis\n\n"
-                        "11\tInterest rate - Selic\t% p.d.\tD\t04/06/1986\t04/01/2011\t\n"
-                        "Primary\nSecondary"
-                    )
-                if self.selector == "#valoresSeries":
-                    return (
-                        f"Found registers by series: {self.page.reported_count} List of values (Number format: European) "
-                        "Date DD/MM/YYYY 11 % p.d."
-                    )
-                raise AssertionError(self.selector)
-
-            def fill(self, value):
-                self.page.fills[self.selector] = value
-
-            def click(self):
-                if self.selector == "input.botao[value='Refresh chart']":
-                    if not self.page.form_waited:
-                        raise AssertionError("refresh clicked before static chart iframe form attached")
-                    self.page.refreshed = True
-                elif self.selector == "input.botao[value='View values from chart']":
-                    if not self.page.refreshed:
-                        raise AssertionError("values opened before refresh")
-                    if not self.page.waited_for_refresh:
-                        raise AssertionError("values opened before the refreshed chart finished loading")
-                    if not self.page.refresh_response_seen:
-                        raise AssertionError("values opened before the refresh POST completed")
-                    self.page.values_open = True
+                page = self.driver.page
+                if self.kind == "refresh":
+                    if not page.form_waited:
+                        raise AssertionError("refresh clicked before the chart iframe form")
+                    expected_dates = {"dataInicio": "01/01/2011", "dataFim": "04/01/2011"}
+                    if page.fills != expected_dates:
+                        raise AssertionError("refresh clicked with malformed date fields")
+                    page.refreshed = True
+                    self.driver.add_post("atualizarGraficoEstatico")
+                elif self.kind == "values":
+                    if not page.refreshed or not page.refresh_response_seen:
+                        raise AssertionError("values opened before a successful chart refresh")
+                    page.values_open = True
+                elif self.kind == "next":
+                    if not page.values_open:
+                        raise AssertionError("pagination started before opening the values")
+                    page.index += 1
+                    self.driver.add_post("getPagina")
                 else:
-                    raise AssertionError(self.selector)
+                    raise AssertionError(self.kind)
 
-            def all(self):
-                if self.selector == "#valoresSeries tr":
-                    return [RowLocator(cells) for cells in self.page.rows_by_page[self.page.index]]
-                raise AssertionError(self.selector)
+            def find_elements(self, by, value):
+                if self.kind == "table" and by == "css selector" and value == "tr":
+                    return [FakeElement(self.driver, "row", cells=row) for row in self.driver.page.rows_by_page[self.driver.page.index]]
+                if self.kind == "row" and by == "css selector" and value == "th, td":
+                    return [FakeElement(self.driver, "cell", text=cell) for cell in self.cells]
+                raise AssertionError((self.kind, by, value))
 
         class FakePage:
             def __init__(self):
                 self.index = 0
                 self.fills = {}
-                self.refreshed = False
+                self.corrupt_date_fields = False
                 self.form_waited = False
+                self.refreshed = False
                 self.refresh_response_seen = False
-                self.waiting_navigation = False
-                self.paging = False
-                self.waited_for_refresh = False
                 self.values_open = False
                 self.reported_count = 2
                 self.rows_by_page = [
                     (("Date", "11 % p.d."), ("03/01/2011", "0,123456")),
                     (("04/01/2011", "0,123400"),),
                 ]
+                self.metadata = (
+                    "11 - Interest rate - Selic % p.d.\n"
+                    "Period 01/01/2011 to 04/01/2011\nLinear"
+                )
 
-            def set_default_timeout(self, _value):
-                pass
+        class SwitchTo:
+            def __init__(self, driver):
+                self.driver = driver
 
-            def goto(self, url, wait_until):
-                self.url, self.wait_until = url, wait_until
+            def frame(self, _element):
+                self.driver.in_frame = True
+                if not self.driver.page.form_waited:
+                    self.driver.page.form_waited = True
 
-            def locator(self, selector):
-                return Locator(self, selector)
+            def default_content(self):
+                self.driver.in_frame = False
 
-            def get_by_role(self, role, name, exact):
-                if role != "link" or name != "Next" or not exact:
-                    raise AssertionError((role, name, exact))
-                return NextLink(self)
-
-            def frame_locator(self, selector):
-                if selector != "#frmGraficoAlt":
-                    raise AssertionError(selector)
-                return FrameLocator(self)
-
-            def wait_for_load_state(self, state, timeout):
-                if state != "networkidle" or timeout <= 0:
-                    raise AssertionError((state, timeout))
-                self.waited_for_refresh = True
-
-            def expect_response(self, predicate, timeout):
-                if timeout <= 0:
-                    raise AssertionError(timeout)
-                return ResponseWaiter(self, predicate)
-
-            def expect_navigation(self, wait_until, timeout):
-                if wait_until != "domcontentloaded" or timeout <= 0:
-                    raise AssertionError((wait_until, timeout))
-                return NavigationWaiter(self)
-
-        class Browser:
+        class FakeDriver:
             def __init__(self):
                 self.page = FakePage()
+                self.switch_to = SwitchTo(self)
+                self.in_frame = False
+                self.logs = []
+                self.quit_called = False
+                self.url = None
+                self.cdp_commands = []
+                self.response_status = 200
 
-            def new_page(self):
-                return self.page
+            def set_page_load_timeout(self, timeout):
+                if timeout <= 0:
+                    raise AssertionError(timeout)
 
-            def close(self):
-                pass
+            def execute_cdp_cmd(self, command, params):
+                self.cdp_commands.append((command, params))
 
-        class Runtime:
+            def get(self, url):
+                self.url = url
+
+            def find_element(self, by, value):
+                page = self.page
+                if by == "id" and value == "seriesSelecionadas":
+                    return FakeElement(self, "metadata", text=page.metadata)
+                if by == "id" and value in {"dataInicio", "dataFim"}:
+                    return FakeElement(self, value)
+                if by == "id" and value == "frmGraficoAlt":
+                    return FakeElement(self, "frame")
+                if by == "id" and value == "valoresSeries":
+                    table_text = (
+                        f"Found registers by series: {page.reported_count} "
+                        "List of values Date DD/MM/YYYY 11 % p.d."
+                    )
+                    return FakeElement(self, "table", text=table_text)
+                if by == "css selector" and "Refresh chart" in value:
+                    return FakeElement(self, "refresh")
+                if by == "css selector" and "View values from chart" in value:
+                    return FakeElement(self, "values")
+                if self.in_frame and by == "tag name" and value == "form":
+                    return FakeElement(self, "form")
+                if self.in_frame and by == "tag name" and value == "img":
+                    return FakeElement(self, "chart-image")
+                raise AssertionError((by, value, self.in_frame))
+
+            def find_elements(self, by, value):
+                if by == "link text" and value == "Next":
+                    if self.page.index < len(self.page.rows_by_page) - 1:
+                        return [FakeElement(self, "next"), FakeElement(self, "next")]
+                    return []
+                if by == "css selector" and value == "#valoresSeries tr":
+                    return self.find_element("id", "valoresSeries").find_elements("css selector", "tr")
+                raise AssertionError((by, value))
+
+            def execute_script(self, script, *_args):
+                if script == "return arguments[0].complete && arguments[0].naturalWidth > 0":
+                    return self.in_frame
+                if script == "return document.readyState":
+                    return "complete"
+                raise AssertionError(script)
+
+            def add_post(self, method):
+                request_id = f"request-{method}"
+                url = f"https://www3.bcb.gov.br/sgspub/consultarvalores.do?method={method}"
+                request = {"message": {"method": "Network.requestWillBeSent", "params": {
+                    "requestId": request_id, "request": {"method": "POST", "url": url}
+                }}}
+                response = {"message": {"method": "Network.responseReceived", "params": {
+                    "requestId": request_id, "response": {"status": self.response_status}
+                }}}
+                self.logs.extend(({"message": json.dumps(request)}, {"message": json.dumps(response)}))
+                if method == "atualizarGraficoEstatico":
+                    self.page.refresh_response_seen = True
+
+            def get_log(self, name):
+                if name != "performance":
+                    raise AssertionError(name)
+                logs, self.logs = self.logs, []
+                return logs
+
+            def quit(self):
+                self.quit_called = True
+
+        class DriverFactory:
             def __init__(self):
-                self.chromium = self
-                self.browser = Browser()
+                self.driver = FakeDriver()
+                self.options = None
 
-            def launch(self, headless):
-                if not headless:
-                    raise AssertionError("expected headless browser")
-                return self.browser
+            def __call__(self, options):
+                self.options = options
+                return self.driver
 
-        class Context:
-            def __init__(self):
-                self.runtime = Runtime()
-
-            def __enter__(self):
-                return self.runtime
-
-            def __exit__(self, *_args):
-                pass
-
-        context = Context()
-        result = SgsSelicClient(playwright_factory=lambda: context, pacing_seconds=0).fetch()
-        page = context.runtime.browser.page
-        self.assertEqual(page.url.startswith("https://www3.bcb.gov.br/sgspub/"), True)
-        self.assertEqual(page.fills, {"#dataInicio": "01/01/2011", "#dataFim": "04/01/2011"})
-        self.assertTrue(page.refreshed)
-        self.assertTrue(page.values_open)
+        factory = DriverFactory()
+        result = SgsSelicClient(driver_factory=factory, pacing_seconds=0).fetch()
+        self.assertEqual(factory.driver.url.split("?")[0], "https://www3.bcb.gov.br/sgspub/consultarvalores/consultarValoresSeries.do")
+        self.assertEqual(factory.driver.page.fills, {"dataInicio": "01/01/2011", "dataFim": "04/01/2011"})
+        self.assertIn("--headless=new", factory.options.arguments)
+        self.assertEqual(
+            factory.options.experimental_options.get("prefs", {}).get("intl.accept_languages"),
+            "en-US,en",
+        )
+        self.assertEqual(factory.options.capabilities["goog:loggingPrefs"], {"performance": "ALL"})
+        self.assertIn(("Network.enable", {}), factory.driver.cdp_commands)
+        self.assertTrue(factory.driver.quit_called)
         self.assertEqual(result.reported_count, 2)
-        self.assertEqual(result.observations[0], Observation(date(2011, 1, 3), "0.123456"))
+        self.assertEqual(result.observations, (
+            Observation(date(2011, 1, 3), "0.123456"),
+            Observation(date(2011, 1, 4), "0.123400"),
+        ))
 
-        nonfinal_context = Context()
-        nonfinal_page = nonfinal_context.runtime.browser.page
-        nonfinal_page.reported_count = 1
-        nonfinal_page.rows_by_page = [
-            (("Date", "11 % p.d."), ("04/01/2011", "0,123400")),
-            (("05/01/2011", "0,654321"),),
-        ]
+        malformed_factory = DriverFactory()
+        malformed_factory.driver.page.corrupt_date_fields = True
+        with self.assertRaisesRegex(SourceError, "BCB date filter dataInicio"):
+            SgsSelicClient(driver_factory=malformed_factory, pacing_seconds=0).fetch()
+        self.assertFalse(malformed_factory.driver.page.refreshed)
+        self.assertTrue(malformed_factory.driver.quit_called)
+
+        failed_factory = DriverFactory()
+        failed_factory.driver.response_status = 500
+        with self.assertRaisesRegex(SourceError, "returned HTTP 500"):
+            SgsSelicClient(driver_factory=failed_factory, pacing_seconds=0).fetch()
+        self.assertTrue(failed_factory.driver.quit_called)
+
+        nonfinal_factory = DriverFactory()
+        nonfinal_factory.driver.page.reported_count = 1
         with self.assertRaisesRegex(SourceError, "pagination continues after reported count"):
-            SgsSelicClient(playwright_factory=lambda: nonfinal_context, pacing_seconds=0).fetch()
+            SgsSelicClient(driver_factory=nonfinal_factory, pacing_seconds=0).fetch()
 
-        repeated_context = Context()
-        repeated_page = repeated_context.runtime.browser.page
-        repeated_page.reported_count = 2
-        repeated_page.rows_by_page = [
+        repeated_factory = DriverFactory()
+        repeated_factory.driver.page.rows_by_page = [
             (("Date", "11 % p.d."), ("03/01/2011", "0,123456")),
             (("03/01/2011", "0,123456"),),
         ]
         with self.assertRaisesRegex(SourceError, "repeated a values page"):
-            SgsSelicClient(playwright_factory=lambda: repeated_context, pacing_seconds=0).fetch()
+            SgsSelicClient(driver_factory=repeated_factory, pacing_seconds=0).fetch()
 
-        missing_context = Context()
-        missing_page = missing_context.runtime.browser.page
-        missing_page.reported_count = 2
-        missing_page.rows_by_page = [
+        missing_factory = DriverFactory()
+        missing_factory.driver.page.rows_by_page = [
             (("Date", "11 % p.d."), ("03/01/2011", "0,123456")),
         ]
         with self.assertRaisesRegex(SourceError, "ended pagination before all observations"):
-            SgsSelicClient(playwright_factory=lambda: missing_context, pacing_seconds=0).fetch()
+            SgsSelicClient(driver_factory=missing_factory, pacing_seconds=0).fetch()
+    def test_fetch_forces_english_chrome_locale(self):
+        captured = {}
+
+        def stop_after_options(options):
+            captured["options"] = options
+            raise RuntimeError("stop after capturing Chrome options")
+
+        with self.assertRaisesRegex(SourceError, "stop after capturing Chrome options"):
+            SgsSelicClient(driver_factory=stop_after_options).fetch()
+
+        self.assertEqual(
+            captured["options"].experimental_options.get("prefs", {}).get("intl.accept_languages"),
+            "en-US,en",
+        )
+
+    def test_masked_date_filter_types_digits_and_rejects_wrong_dom_value(self):
+        class DateField:
+            def __init__(self, corrupt=False):
+                self.value = ""
+                self.keys = []
+                self.corrupt = corrupt
+
+            def clear(self):
+                self.value = ""
+
+            def send_keys(self, keys):
+                self.keys.append(keys)
+                if not keys.isdigit():
+                    self.value = "01//0/1/20"
+                    return
+                self.value = f"{keys[:2]}/{keys[2:4]}/{keys[4:8]}"
+                if self.corrupt:
+                    self.value = self.value[:-1]
+
+            def get_attribute(self, name):
+                if name != "value":
+                    raise AssertionError(name)
+                return self.value
+
+        class Driver:
+            def __init__(self, field):
+                self.field = field
+
+            def find_element(self, by, selector):
+                if by != "id" or selector != "dataInicio":
+                    raise AssertionError((by, selector))
+                return self.field
+
+        field = DateField()
+        _set_date_filter(Driver(field), "dataInicio", "01/01/2011")
+        self.assertEqual(field.keys, ["01012011"])
+        self.assertEqual(field.value, "01/01/2011")
+
+        malformed_field = DateField(corrupt=True)
+        with self.assertRaisesRegex(SourceError, "expected '01/01/2011'"):
+            _set_date_filter(Driver(malformed_field), "dataInicio", "01/01/2011")
+        self.assertEqual(malformed_field.keys, ["01012011"])
 
     def test_values_page_checks_exact_series_code_in_metadata_and_header(self):
-        class Cells:
-            def __init__(self, values):
-                self.values = values
-
-            def all_inner_texts(self):
-                return self.values
-
-        class Row:
-            def __init__(self, values):
-                self.values = values
-
-            def locator(self, _selector):
-                return Cells(self.values)
-
-        class Locator:
-            def __init__(self, text="", rows=()):
-                self.text, self.rows = text, rows
-
-            def inner_text(self):
-                return self.text
-
-            def all(self):
-                return [Row(row) for row in self.rows]
-
-        class Page:
-            def __init__(self, metadata, header_code):
-                self.metadata = metadata
-                self.header_code = header_code
-
-            def locator(self, selector):
-                if selector == "#seriesSelecionadas":
-                    return Locator(self.metadata)
-                if selector == "#valoresSeries":
-                    return Locator(
-                        f"Found registers by series: 1 Date DD/MM/YYYY {self.header_code} % p.d."
-                    )
-                if selector == "#valoresSeries tr":
-                    return Locator(rows=(("Date DD/MM/YYYY", f"{self.header_code} % p.d."),
-                                         ("04/01/2011", "0,123400")))
-                raise AssertionError(selector)
-
         cases = (
             ("111 - Interest rate - Selic % p.d.\nPeriod 01/01/2011 to 11/02/2011\nLinear", "111", "series 11 Selic"),
             ("11 - Interest rate - Selic % p.d.\nPeriod 01/01/2011 to 11/02/2011\nLinear", "111", "column header"),
         )
         for metadata, header_code, message in cases:
+            page = fake_selenium_values_page(
+                metadata,
+                (("Date DD/MM/YYYY", f"{header_code} % p.d."), ("04/01/2011", "0,123400")),
+                "Found registers by series: 1; List of values % p.d.",
+            )
             with self.subTest(metadata=metadata.splitlines()[0], header_code=header_code):
                 with self.assertRaisesRegex(SourceError, message):
-                    _verify_values_page(Page(metadata, header_code), "11/02/2011")
+                    _verify_values_page(page, "11/02/2011")
 
         exact_metadata = (
             "Search parameters\nSelected series\n\n11 - Interest rate - Selic\n\n"
             "Period\n\n01/01/2011 to 11/02/2011\tLinear"
         )
-        observations, count = _verify_values_page(Page(exact_metadata, "11"), "11/02/2011")
+        page = fake_selenium_values_page(
+            exact_metadata,
+            (("Date DD/MM/YYYY", "11 % p.d."), ("04/01/2011", "0,123400")),
+            "Found registers by series: 1; List of values % p.d.",
+        )
+        observations, count = _verify_values_page(page, "11/02/2011")
         self.assertEqual(count, 1)
         self.assertEqual(observations[0].rate, "0.123400")
 
     def test_values_page_rejects_changed_period_or_non_linear_function(self):
-        class CellLocator:
-            def __init__(self, cells):
-                self.cells = cells
-
-            def all_inner_texts(self):
-                return self.cells
-
-        class RowLocator:
-            def __init__(self, cells):
-                self.cells = cells
-
-            def locator(self, _selector):
-                return CellLocator(self.cells)
-
-        class Locator:
-            def __init__(self, text="", rows=()):
-                self.text, self.rows = text, rows
-
-            def inner_text(self):
-                return self.text
-
-            def all(self):
-                return [RowLocator(row) for row in self.rows]
-
-        class Page:
-            def __init__(self, metadata):
-                self.metadata = metadata
-
-            def locator(self, selector):
-                if selector == "#seriesSelecionadas":
-                    return Locator(self.metadata)
-                if selector == "#valoresSeries":
-                    return Locator("Found registers by series: 1; % p.d.")
-                if selector == "#valoresSeries tr":
-                    return Locator(rows=(("Date", "11 % p.d."), ("03/01/2011", "0,123456")))
-                return Locator("")
-
         for metadata, expected in (
             ("11 - Interest rate - Selic % p.d.\nPeriod 01/01/2011 to 05/01/2011\nLinear", "period differs"),
             ("11 - Interest rate - Selic % p.d.\nPeriod 01/01/2011 to 04/01/2011\nLogarithmic", "Linear"),
         ):
+            page = fake_selenium_values_page(
+                metadata,
+                (("Date", "11 % p.d."), ("03/01/2011", "0,123456")),
+                "Found registers by series: 1; List of values % p.d.",
+            )
             with self.subTest(expected=expected), self.assertRaisesRegex(SourceError, expected):
-                _verify_values_page(Page(metadata), "04/01/2011")
-
+                _verify_values_page(page, "04/01/2011")
     def test_service_returns_incomplete_report_on_source_denial(self):
         class DeniedClient:
             def fetch(self):
