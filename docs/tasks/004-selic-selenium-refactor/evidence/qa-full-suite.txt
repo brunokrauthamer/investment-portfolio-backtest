@@ -1,0 +1,94 @@
+test_all_getters_run_and_return_keyed_results (test_getter_public.GenericGetterTests) ... ok
+test_cli_continues_after_one_getter_fails (test_getter_public.GenericGetterTests) ... ok
+test_cli_runs_all_or_only_selected_getter (test_getter_public.GenericGetterTests) ... ok
+test_default_shared_cli_runs_all_registered_getters (test_getter_public.GenericGetterTests) ... ok
+test_registered_ibovespa_can_be_selected_from_shared_cli (test_getter_public.GenericGetterTests) ... ok
+test_selecting_a_getter_runs_only_that_getter (test_getter_public.GenericGetterTests) ... ok
+test_ibovespa_is_registered_and_has_a_public_entry_point (test_getter_public.GetterPublicTests) ... ok
+test_ibovespa_public_entry_point_uses_the_requested_data_directory (test_getter_public.GetterPublicTests) ... ok
+test_public_entry_point_is_available_without_network_on_import (test_getter_public.GetterPublicTests) ... ok
+test_public_entry_point_uses_requested_data_directory (test_getter_public.GetterPublicTests) ... ok
+test_cli_has_distinct_offline_restore_command (test_ibovespa_acquisition.IbovespaServiceTests) ... ok
+test_ibovespa_run_does_not_change_existing_ifix_files (test_ibovespa_acquisition.IbovespaServiceTests) ... ok
+test_no_year_range_is_reported_incomplete_without_network (test_ibovespa_acquisition.IbovespaServiceTests) ... ok
+test_overlapping_service_run_fails_before_requesting_source_years (test_ibovespa_acquisition.IbovespaServiceTests) ... ok
+test_partial_source_error_is_reported_and_other_years_are_saved (test_ibovespa_acquisition.IbovespaServiceTests) ... ok
+test_client_decodes_the_b3_base64_csv_bytes_unchanged (test_ibovespa_acquisition.IbovespaSourceTests) ... ok
+test_client_rejects_non_base64_and_http_denials_and_paces_requests (test_ibovespa_acquisition.IbovespaSourceTests) ... ok
+test_validation_accepts_observed_current_year_shape (test_ibovespa_acquisition.IbovespaSourceTests) ... ok
+test_validation_allows_duplicate_nonempty_summary_labels_seen_from_b3 (test_ibovespa_acquisition.IbovespaSourceTests) ... ok
+test_validation_rejects_blank_summary_label (test_ibovespa_acquisition.IbovespaSourceTests) ... ok
+test_validation_rejects_unterminated_quoted_field_at_eof (test_ibovespa_acquisition.IbovespaSourceTests) ... ok
+test_validation_rejects_wrong_year_index_truncation_and_empty_days (test_ibovespa_acquisition.IbovespaSourceTests) ... ok
+test_years_cover_2011_through_the_current_year (test_ibovespa_acquisition.IbovespaSourceTests) ... ok
+test_backup_and_active_replace_failures_preserve_old_bytes (test_ibovespa_acquisition.IbovespaStorageTests) ... ok
+test_changed_bytes_are_backed_up_and_verified_before_replace (test_ibovespa_acquisition.IbovespaStorageTests) ... ok
+test_corrupt_backup_is_rejected_without_changing_active (test_ibovespa_acquisition.IbovespaStorageTests) ... ok
+test_first_pending_manifest_failure_does_not_orphan_restore_backup (test_ibovespa_acquisition.IbovespaStorageTests) ... ok
+test_first_pending_manifest_failure_does_not_orphan_update_backup (test_ibovespa_acquisition.IbovespaStorageTests) ... ok
+test_interrupted_manifest_commit_recovers_backup_reference_on_rerun (test_ibovespa_acquisition.IbovespaStorageTests) ... ok
+test_invalid_manifest_prevents_active_file_changes (test_ibovespa_acquisition.IbovespaStorageTests) ... ok
+test_lock_rejects_overlapping_operation (test_ibovespa_acquisition.IbovespaStorageTests) ... ok
+test_offline_restore_verifies_backup_and_preserves_displaced_active (test_ibovespa_acquisition.IbovespaStorageTests) ... ok
+test_saves_original_bytes_and_provenance_manifest (test_ibovespa_acquisition.IbovespaStorageTests) ... ok
+test_unchanged_bytes_keep_active_mtime_and_do_not_create_backup (test_ibovespa_acquisition.IbovespaStorageTests) ... ok
+test_cli_help_exits_without_making_a_network_request (test_ifix_acquisition.AcquisitionTests) ... FAIL
+test_cli_reports_destination_errors_without_a_traceback (test_ifix_acquisition.AcquisitionTests) ... ok
+test_no_available_years_is_incomplete (test_ifix_acquisition.AcquisitionTests) ... ok
+test_offline_restore_command_is_available_without_downloading (test_ifix_acquisition.AcquisitionTests) ... ok
+test_partial_source_error_is_reported_and_successes_are_saved (test_ifix_acquisition.AcquisitionTests) ... ok
+test_restore_cli_reports_invalid_year_as_a_command_error (test_ifix_acquisition.AcquisitionTests) ... ok
+test_backup_failure_preserves_active_file (test_ifix_acquisition.FileStoreTests) ... ok
+test_changed_bytes_are_backed_up_before_atomic_replace (test_ifix_acquisition.FileStoreTests) ... ok
+test_invalid_manifest_prevents_active_file_changes (test_ifix_acquisition.FileStoreTests) ... ok
+test_lock_rejects_an_overlapping_run (test_ifix_acquisition.FileStoreTests) ... ok
+test_manifest_with_wrong_json_shape_fails_safely (test_ifix_acquisition.FileStoreTests) ... ok
+test_manifest_write_interruption_keeps_backup_reference_for_rerun (test_ifix_acquisition.FileStoreTests) ... ok
+test_nested_manifest_record_is_rejected_before_active_replacement (test_ifix_acquisition.FileStoreTests) ... ok
+test_replace_failure_preserves_active_file_and_verified_backup (test_ifix_acquisition.FileStoreTests) ... ok
+test_saves_original_bytes_and_manifest (test_ifix_acquisition.FileStoreTests) ... ok
+test_unchanged_bytes_keep_mtime_and_create_no_backup (test_ifix_acquisition.FileStoreTests) ... ok
+test_client_accepts_partial_current_year_with_blank_future_months (test_ifix_acquisition.IfixSourceTests) ... ok
+test_client_decodes_the_original_annual_csv_bytes (test_ifix_acquisition.IfixSourceTests) ... ok
+test_client_observes_pacing_and_reports_http_errors (test_ifix_acquisition.IfixSourceTests) ... ok
+test_client_rejects_invalid_base64_and_wrong_year (test_ifix_acquisition.IfixSourceTests) ... ok
+test_client_rejects_truncated_annual_matrix (test_ifix_acquisition.IfixSourceTests) ... ok
+test_years_cover_2011_through_current_year (test_ifix_acquisition.IfixSourceTests) ... ok
+test_browser_client_uses_selenium_for_complete_source_pages (test_selic_acquisition.SelicRegistryTests) ... ok
+test_changed_csv_is_backed_up_and_manifested (test_selic_acquisition.SelicRegistryTests) ... ok
+test_failed_atomic_active_write_leaves_previous_csv_and_pending_recovery (test_selic_acquisition.SelicRegistryTests) ... ok
+test_fetch_forces_english_chrome_locale (test_selic_acquisition.SelicRegistryTests) ... ok
+test_masked_date_filter_types_digits_and_rejects_wrong_dom_value (test_selic_acquisition.SelicRegistryTests) ... ok
+test_parser_preserves_display_precision_and_ignores_headers (test_selic_acquisition.SelicRegistryTests) ... ok
+test_parser_rejects_a_malformed_date_with_numeric_rate (test_selic_acquisition.SelicRegistryTests) ... ok
+test_parser_rejects_invalid_percentages_and_rows (test_selic_acquisition.SelicRegistryTests) ... ok
+test_recovery_preserves_unknown_manifest_and_pending_record (test_selic_acquisition.SelicRegistryTests) ... ok
+test_recovery_recognizes_an_already_written_rollback_manifest (test_selic_acquisition.SelicRegistryTests) ... ok
+test_repeated_updates_keep_current_manifest_history_flat (test_selic_acquisition.SelicRegistryTests) ... ok
+test_restore_preserves_source_retrieval_time_and_records_local_restore_time (test_selic_acquisition.SelicRegistryTests) ... ok
+test_restore_uses_only_a_hash_verified_manifest_backup (test_selic_acquisition.SelicRegistryTests) ... ok
+test_selic_is_registered_as_an_explicit_getter (test_selic_acquisition.SelicRegistryTests) ... ok
+test_service_returns_incomplete_report_on_source_denial (test_selic_acquisition.SelicRegistryTests) ... ok
+test_store_lock_rejects_overlapping_operation (test_selic_acquisition.SelicRegistryTests) ... ok
+test_store_saves_exact_csv_and_unchanged_rerun_creates_no_backup (test_selic_acquisition.SelicRegistryTests) ... ok
+test_unchanged_save_rejects_corrupt_provenance_and_preserves_files (test_selic_acquisition.SelicRegistryTests) ... ok
+test_unchanged_save_rejects_counts_that_disagree_with_the_csv (test_selic_acquisition.SelicRegistryTests) ... ok
+test_validation_rejects_wrong_count_order_and_latest_date (test_selic_acquisition.SelicRegistryTests) ... ok
+test_values_page_checks_exact_series_code_in_metadata_and_header (test_selic_acquisition.SelicRegistryTests) ... ok
+test_values_page_rejects_changed_period_or_non_linear_function (test_selic_acquisition.SelicRegistryTests) ... ok
+
+======================================================================
+FAIL: test_cli_help_exits_without_making_a_network_request (test_ifix_acquisition.AcquisitionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\bruno\.codex\worktrees\b70f\investment_portfolio_backtest\backend\src\internet_data_getter\tests\test_ifix_acquisition.py", line 309, in test_cli_help_exits_without_making_a_network_request
+    self.assertIn("Acquire historical data from registered sources", completed.stdout)
+AssertionError: 'Acquire historical data from registered sources' not found in 'usage: __main__.py [-h] [--data-dir DATA_DIR] [--getter {ifix,ibovespa,selic}]\n                   {restore,restore-ibovespa,restore-selic} ...\n\nAcquire or restore historical data from registered sources.\n\npositional arguments:\n  {restore,restore-ibovespa,restore-selic}\n    restore             restore a verified IFIX backup without contacting B3\n    restore-ibovespa    restore a verified IBOVESPA backup without contacting\n                        B3\n    restore-selic       restore a verified Selic backup without contacting BCB\n\noptional arguments:\n  -h, --help            show this help message and exit\n  --data-dir DATA_DIR   destination data directory (default: repository data/)\n  --getter {ifix,ibovespa,selic}\n                        run only the named getter (default: all)\n'
+
+----------------------------------------------------------------------
+Ran 78 tests in 1.541s
+
+FAILED (failures=1)
+a acquisition incomplete: offline
+Restored IFIX 2011 from backups/ifix/2011/20261104T000000.000000Z-4ee73d1ebb10545fa59dc6ecc007ae5ee5fad768b3d34ff3b091273a4b5bdfd8-3c391a34-2011.csv
+Displaced active file backed up to C:\Users\bruno\AppData\Local\Temp\tmpcwo1e89h\data\backups\ifix\2011\20261104T035428.553605Z-c7e94d93eefc97324318ca2105d16902dc51e808206008b178c33cf4334b857d-73302a9c-2011.csv

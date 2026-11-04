@@ -1,0 +1,41 @@
+{
+  "observation_date": "2026-11-04 America/Sao_Paulo",
+  "method": "Separate Selenium 4.30.0 headless Chrome 156.0.8078.80 session; opened the BCB SGS 11 chart, read source metadata, entered masked date filters, verified refresh POST, opened the values view, and followed all Next links while reading actual table rows.",
+  "requested_range": [
+    "01/01/2011",
+    "03/11/2026"
+  ],
+  "source_page_reported_latest": "03/11/2026",
+  "source_values_period": "01/01/2011 to 03/11/2026 Linear",
+  "unit": "% p.d.",
+  "reported_count": 3977,
+  "rows_read": 3977,
+  "source_date_range": [
+    "2011-01-03",
+    "2026-11-03"
+  ],
+  "page_count": 40,
+  "rows_per_page": [
+    100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+    100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+    100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+    100, 100, 100, 100, 100, 100, 100, 100, 100, 77
+  ],
+  "refresh_post_status": 200,
+  "pagination_post_status": 200,
+  "source_samples": {
+    "first": {
+      "date": "2011-01-03",
+      "rate_percent_per_day": "0.040239"
+    },
+    "middle_index": 1988,
+    "middle": {
+      "date": "2018-12-03",
+      "rate_percent_per_day": "0.024620"
+    },
+    "last": {
+      "date": "2026-11-03",
+      "rate_percent_per_day": "0.050788"
+    }
+  }
+}

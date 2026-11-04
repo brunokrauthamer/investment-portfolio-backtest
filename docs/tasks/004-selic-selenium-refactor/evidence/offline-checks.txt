@@ -1,0 +1,8 @@
+compileall exit code: 0
+getter CLI help exit code: 0
+git diff --check:
+warning: in the working copy of 'backend/src/internet_data_getter/selic/source.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/src/internet_data_getter/tests/test_selic_acquisition.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/agent-log/LOG.md', LF will be replaced by CRLF the next time Git touches it
+backend Playwright/greenlet reference scan:
+no matches

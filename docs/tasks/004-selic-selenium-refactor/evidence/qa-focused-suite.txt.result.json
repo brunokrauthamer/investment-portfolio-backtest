@@ -1,0 +1,4 @@
+{
+  "command": "backend/.venv/Scripts/python.exe -m unittest backend.src.internet_data_getter.tests.test_getter_public backend.src.internet_data_getter.tests.test_ibovespa_acquisition backend.src.internet_data_getter.tests.test_selic_acquisition",
+  "exit_code": 0
+}

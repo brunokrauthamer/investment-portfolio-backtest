@@ -1,0 +1,47 @@
+{
+  "live_source_evidence": "evidence/qa-bcb-source-comparison.json",
+  "cli_manifest": "qa-live-data/selic/manifest.json",
+  "csv_sha256": "b9f3d96ac8504f77bcc08fdbe3024eb2e760c9e8190a8fba726a20ad79414688",
+  "csv_observation_count": 3977,
+  "csv_date_range": [
+    "2011-01-03",
+    "2026-11-03"
+  ],
+  "source_samples": {
+    "first": {
+      "date": "2011-01-03",
+      "rate_percent_per_day": "0.040239"
+    },
+    "middle": {
+      "date": "2018-12-03",
+      "rate_percent_per_day": "0.024620"
+    },
+    "last": {
+      "date": "2026-11-03",
+      "rate_percent_per_day": "0.050788"
+    }
+  },
+  "cli_samples": {
+    "first": {
+      "date": "2011-01-03",
+      "rate_percent_per_day": "0.040239"
+    },
+    "middle": {
+      "date": "2018-12-03",
+      "rate_percent_per_day": "0.024620"
+    },
+    "last": {
+      "date": "2026-11-03",
+      "rate_percent_per_day": "0.050788"
+    }
+  },
+  "checks": {
+    "cli_csv_row_count_matches_live_source": true,
+    "manifest_count_matches_csv_and_source": true,
+    "manifest_reported_count_matches_source": true,
+    "cli_range_matches_live_source": true,
+    "manifest_sha256_matches_cli_csv": true,
+    "first_middle_last_values_match_live_source": true
+  },
+  "passed": true
+}
