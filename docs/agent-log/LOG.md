@@ -2549,3 +2549,77 @@ The input can change while another process has it open. Read a consistent byte s
 
 The feature-workflow skill at `.agents/skills/feature-workflow/SKILL.md` requires explicit approval of both exact revisions before implementation. Do you approve **specification s001 and plan p001** as written? Reply `approve s001/p001`, or tell me what to change.
 ```
+## 2026-11-04 (America/Sao_Paulo)
+
+### User
+```text
+do the plan consider this part?
+
+After that, we will start a new scraper using Beautiful Soup
+
+The goal of this scraper is just to update the csv file with new information. So, it can just access:
+
+[https://br.investing.com/currencies/usd-brl-historical-data](https://br.investing.com/currencies/usd-brl-historical-data)
+
+find the dates csv doesnt have, and save additional information (date or "Data" and price "Ultimo")
+```
+
+### Assistant progress
+```text
+The draft records a future Beautiful Soup updater as deferred, but it doesn’t capture the specific URL, missing-date check, and `Data`/`price` fields you described. I’ll add those as explicit context for the follow-up task while keeping scraper implementation outside this CSV-preparation plan.
+```
+
+### Assistant response
+```text
+Yes. The updated draft explicitly records that, after CSV preparation, the follow-up is a new Beautiful Soup scraper for the Investing.com USD/BRL historical-data page. Its stated goal is to find dates missing from the CSV and add only the date (`Data`) and source `Último` value as `price`. Scraper implementation and detailed update behavior remain outside this CSV-preparation task.
+
+I updated the proposed [specification s002](/C:/Users/bruno/.codex/worktrees/6e03/investment_portfolio_backtest/docs/tasks/004-usd-brl-source-preparation/spec.md) (SHA-256 `94143757148b27d7ecd713acb40d066f917716d6f8c891ff53d401fe3e52362c`) and [plan p002](/C:/Users/bruno/.codex/worktrees/6e03/investment_portfolio_backtest/docs/tasks/004-usd-brl-source-preparation/plan.md) (SHA-256 `17076c56b8ae90d5b890e2f2797b7072d86dcb32de3e891bd5aa446c1b9e1877`). The previous draft revisions are archived. No CSV or application code has been changed. The feature-workflow skill requires explicit approval of the current spec and plan before implementation. Their complete contents follow.
+
+## Specification s002 — USD/BRL source preparation
+
+### Goal and scope
+
+Prepare the user-supplied Investing.com CSV as `data/dolar/source/USD_BRL Dados Históricos (1).csv`. Keep only `Data` and `Último`, renaming the latter `price`. This is a one-time preparation of the supplied file.
+
+The supplied input inspected during discovery is UTF-8 with a BOM, has headers `Data,Último,Abertura,Máxima,Mínima,Vol.,Var%`, and contains 4,132 records. Its SHA-256 is `0fa13625511a444b282e7626eef081c8408896213191687580428dbd33ccf3a7`. Dates use `DD.MM.YYYY`; prices use a decimal comma. The observed records run from 03.11.2026 to 03.01.2011 in their original order. Treat these observations as a snapshot, not a promise about any later input.
+
+### Acceptance criteria
+
+- **AC-001 — Exact projection:** Read the supplied CSV as CSV, including quoted values and the accented `Último` header. Produce exactly two columns in order, `Data` and `price`, with one output record for every input record. Preserve each selected field's text and input order, including decimal precision; do not sort, deduplicate, convert dates or prices, or synthesize data. Quote fields as required for a valid comma-delimited CSV.
+- **AC-002 — Destination and encoding:** Save the CSV at the path stated above, using UTF-8 without BOM, consistent with the project's generated Selic CSV. The B3 original CSVs use a different encoding; they are preserved source downloads. Leave the supplied download unchanged.
+- **AC-003 — Safety and provenance:** Treat an existing destination or provenance file as a conflict and stop without overwriting it. Stage output before publishing it. Keep a write-ahead recovery record until both the active CSV and a matching `data/dolar/manifest.json` have been committed, using atomic file replacement for each. Record the supplied file name and hash, the output hash and record count, the Investing.com page URL, the local transformation and schema, and the fact that the original retrieval time and usage terms are unverified; do not invent them. Document recovery from an interrupted initial import. Do not include backups as active inputs.
+- **AC-004 — Boundaries:** No network request, scraper, return calculation, financial transformation, dependency or backend command is introduced. An unavailable, changed, malformed or unexpectedly structured input must stop without publishing partial or misleading data.
+
+### Decisions and limits
+
+The source snapshot was supplied by the user; the specified URL identifies its stated origin and is not evidence of its retrieval time or a grant of redistribution rights. This task does not settle market-data alignment, financial interpretation, or future update behavior. A changed input after discovery requires a fresh read and a recorded decision before publication.
+
+### Follow-up context: scraper
+
+After preparing the CSV, the user intends to start a new Beautiful Soup scraper. Its stated goal is to access `https://br.investing.com/currencies/usd-brl-historical-data`, find dates absent from the CSV, and add only the date (`Data`) and price (the source's `Último`, stored as `price`). This is context for subsequent work, not an approved design or acceptance criterion for this preparation task. Scraper implementation and its detailed behavior remain outside the present scope.
+
+## Plan p002 — USD/BRL source preparation
+
+Proposed against specification s002; neither revision is approved yet.
+
+### Design and boundaries
+
+Perform a one-time local CSV projection; no reusable scraper, service, abstraction or application dependency is needed. Read the supplied file with a CSV parser that supports quoted commas and UTF-8 BOM. Preserve the selected field text exactly, and serialize valid comma-delimited UTF-8 without BOM. Name the output as the user-supplied file to avoid inventing a new naming convention.
+
+Use a source directory containing only the active CSV. Put provenance in `data/dolar/manifest.json`, and a temporary recovery record outside the source directory. Never overwrite a pre-existing CSV or manifest. Retain the original supplied file unchanged. Since this is an initial creation, no prior active dataset exists to back up; future updates require the project's backup, recovery, provenance and offline-restore conventions to be designed in their own task. Document the initial import and recovery procedure in `data/dolar/README.md`.
+
+### Ordered work
+
+1. After explicit approval of s002 and p002, record the Git baseline and worktree snapshot. Reopen the input with shared read access, compare its SHA-256 to the discovery snapshot, and validate its CSV structure and required headers. Stop on conflict or changed input.
+2. Under a single developer assignment, create the CSV and provenance as staged files, prepare a write-ahead record describing their expected hashes and safe recovery, and publish each file atomically without overwriting existing files. Remove the recovery record only after both files are in place. Document origin, format, limitations and interruption recovery.
+3. Obtain independent review and QA of the artifacts against the approved criteria, without adding or running tests unless the user requests testing or verification. Record any limitations, exact snapshot identity and findings. Browser scenarios do not apply to this local file preparation.
+4. The lead audits the outcome and records the final approval request, as required by the workflow. The supplied download remains available for recovery; no network access is necessary.
+
+The user's later scraper request provides context for this file's two-column layout: a new Beautiful Soup scraper should access the stated Investing.com USD/BRL historical-data page, find dates missing from the CSV, and add only `Data` and `price` values derived from the source date and `Último`. Planning and implementing that scraper, including its update and safety behavior, belongs to subsequent work.
+
+### Risks
+
+The input can change while another process has it open. Read a consistent byte snapshot, check its hash and stop if it differs from discovery. Decimal commas require correct CSV quoting; parsing and preserving strings avoids numeric conversion. Two files cannot be committed as one atomic operation, so a retained recovery record must make interrupted publication detectable and recoverable without clobbering unknown data. The source's terms and original retrieval time are not established.
+
+Do you approve specification s002 and plan p002 as written? Reply `approve s002/p002`, or tell me what to change.
+```
