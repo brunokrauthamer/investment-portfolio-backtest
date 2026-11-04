@@ -3920,3 +3920,120 @@ It defines a Vite React + TypeScript single-page app, one ApexCharts line chart,
 
 The approval gate in [feature-workflow]([redacted]/.agents/skills/feature-workflow/SKILL.md) requires explicit approval of both exact revisions before implementation, so I have not started the frontend app. Please approve `s001` and `p001` as written, or tell me what to change. Node and pnpm are available; registry access is still unverified.
 ```
+## 2026-11-04
+
+### User message
+
+```text
+approved
+```
+
+### Assistant response
+
+```text
+Your approval is clear. I’m recording it against the exact `s001` and `p001` revisions, then the workflow lead will hand the approved implementation to the developer and carry it through independent review and browser QA.
+```
+
+```text
+The proposal’s stored hashes match the approved revisions. The lead is updating the approval checkpoint now; implementation remains constrained to the frontend chart and its documented setup.
+```
+
+```text
+The approval checkpoint is recorded with both revision hashes, and round 1 is assigned for the frontend setup and chart implementation. The lead is waiting for the developer’s test and build evidence before assigning independent review.
+```
+
+```text
+The implementation hit a network sandbox restriction while checking npm registry packages, and the local package cache is empty. The team is checking the approved dependency-install route; if access remains unavailable, I’ll report that as a concrete blocker rather than claim a working app.
+```
+
+```text
+The bounded dependency-install request was allowed, and package installation has started. Once it completes, the developer will run the planned tests and production build, then the lead will request an independent review.
+```
+
+```text
+Dependencies installed successfully and the pnpm lockfile is in place. The developer is now implementing the chart test first, followed by the page and layout.
+```
+
+```text
+The first test run did not reach the tests because pnpm found a lockfile/setup mismatch. The developer is correcting the install state; this is being tracked as setup work, not as a test failure.
+```
+
+```text
+The first implementation passes its four focused tests, including the chart data and formatting checks. The developer is finishing the production build and frontend usage instructions before handing the snapshot to the independent reviewer.
+```
+
+```text
+The production build surfaced TypeScript issues in the chart and timezone test setup. The developer is fixing them before the review handoff; the reviewer will verify the resulting integrated snapshot independently.
+```
+
+```text
+The four focused tests, TypeScript check, and production build pass with the pinned packages. The plan also requires browser QA of the live chart and responsive layout; I’m preparing the computer-use workflow for that independent check.
+```
+
+```text
+The current ApexCharts license says installing the package signals agreement, and Community use has eligibility conditions. I’m checking whether a pinned MIT-licensed ApexCharts release can satisfy your chart request without assuming license eligibility. [ApexCharts license terms](https://apexcharts.com/license/)
+```
+
+```text
+The installed versions are confirmed as `apexcharts` 8.7.0 and `react-apexcharts` 2.2.0, which use ApexCharts’ dual-license terms. The lead verified publisher-identified MIT versions that support this chart and is pinning those before resuming checks. The first install of the dual-license packages is recorded as an incident; I can’t determine the legal effect of that installation.
+```
+
+```text
+The implementation now uses the exact MIT-licensed package versions, with the lockfile refreshed. The developer is rerunning tests and the production build against those versions before the independent review begins.
+```
+
+```text
+The build and TypeScript checks pass with the MIT-pinned dependencies; Vite reports a large chart bundle warning, which is captured for review. The lead is finishing the evidence and snapshot record before assigning the reviewer.
+```
+
+```text
+The independent reviewer found two fixes before QA: the documented Node range is too broad for the locked test dependencies, and the chart’s axis text needs stronger contrast. Both are being routed through regression tests and a fresh review.
+```
+
+```text
+The developer is adding checks that reproduce both review findings before changing the Node requirement and chart colors, as the workflow requires. The revised snapshot will be reviewed again before browser QA.
+```
+
+```text
+Both review findings reproduced in failing checks. The fixes are in place; the developer is verifying the locked package versions and rerunning the actual tests and build before the fresh review.
+```
+
+```text
+The revised code passes eight tests, type checking, frozen install, and production build. A fresh reviewer is now checking both fixes and the full feature on the updated snapshot.
+```
+
+```text
+The fresh review passed with both fixes confirmed and no new findings. Independent QA is now testing the live page, including date/value hover behavior and the narrow viewport.
+```
+
+```text
+Browser QA found a runtime failure: the page loads in Chrome but the chart area is blank because `ExampleChart` receives an invalid component type. The workflow requires a reviewed correction plan before that repair, so QA is recording the failure and I’ll present the plan for approval before changing the code.
+```
+
+```text
+QA has reproduced the blank page and is finishing the acceptance record for the current snapshot. The correction lead will then prepare the bounded repair plan for your approval.
+```
+
+```text
+The QA browser session stalled after the blank-page capture. The lead interrupted it and is trying to preserve the observed failure while marking the remaining browser checks not run, then will continue with correction planning.
+```
+
+```text
+The correction lead traced the blank page to the React wrapper’s CommonJS export shape: Vite passes the wrapper object where React expects the component. The proposed correction adds a small import adapter, a regression test, and browser checks for both dev and production preview.
+```
+
+```text
+Plan p002 is ready, with a focused regression for the wrapper import and browser verification in development and production preview. I’m also correcting the dependency record to state the initial install and its unresolved legal effect accurately before I ask you to approve the plan.
+```
+
+```text
+## Correction plan approval required
+
+Browser QA confirmed the root page and reload render blank because Vite passes the React wrapper’s CommonJS module object to React instead of the component. The failure and criterion matrix are in [verification.md]([redacted]/docs/tasks/005-react-typescript-chart/verification.md), and the proposed repair is in [correction plan p002]([redacted]/docs/tasks/005-react-typescript-chart/plan.md). Plan SHA-256: `dd1db8ef75dc13408ee19a3ae6d8e08a7b60636efec4dfe36c9c15eeec195c87`.
+
+Plan p002 keeps approved specification s001, the chart scope, and the MIT-pinned dependencies. It adds a page-local adapter for the callable default export, a regression test for the actual module shape, and Chrome verification against both Vite development and production preview. The workflow requires fresh independent review and QA after the fix.
+
+The approval gate in [feature-workflow]([redacted]/.agents/skills/feature-workflow/SKILL.md) requires explicit approval of p002 before implementation, so correction code has not started. Please approve `p002` as written or request changes.
+
+One dependency note: the first package install fetched `apexcharts@8.7.0` and `react-apexcharts@2.2.0`. ApexCharts’ current [license terms](https://apexcharts.com/license/) state that installing the package signifies agreement to the applicable terms. Eligibility was not checked, and the legal effect of that install is undetermined; this is recorded. The implementation now pins `apexcharts@4.7.0` and `react-apexcharts@1.7.0`, whose publisher-provided licenses are MIT ([ApexCharts](https://github.com/apexcharts/apexcharts.js/blob/v4.7.0/LICENSE), [React wrapper](https://github.com/apexcharts/react-apexcharts/blob/a62ddf57b5389869dce7e2de0dc4d9a82a025fd0/LICENSE)).
+```
