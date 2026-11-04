@@ -1,0 +1,5 @@
+injected first manifest write failure
+after failure: old_bytes_intact= True backup_count= 1 pending= {} registered_backups= 0
+after retry: backup_count= 2 registered_backups= 1 original_backup_registered= False
+accepted blank summary label
+accepted unterminated quoted field

@@ -4,6 +4,8 @@ from __future__ import annotations
 from typing import NamedTuple, Callable, Any
 from .ifix import acquire_ifix
 from .ifix import cli as ifix_cli
+from .ibovespa import acquire_ibovespa
+from .ibovespa import cli as ibovespa_cli
 from .selic import acquire_selic
 from .selic import cli as selic_cli
 
@@ -15,6 +17,7 @@ class _Getter(NamedTuple):
 # Register each supported getter here so acquire_all includes it.
 _GETTERS = {
     "ifix": _Getter(acquire_ifix, ifix_cli),
+    "ibovespa": _Getter(acquire_ibovespa, ibovespa_cli),
     "selic": _Getter(acquire_selic, selic_cli),
 }
 

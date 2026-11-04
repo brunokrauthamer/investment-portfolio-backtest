@@ -1,0 +1,529 @@
+{
+  "schema_version": 1,
+  "state_version": 13,
+  "task_id": "003",
+  "task_slug": "ibovespa-daily-evolution-acquisition",
+  "stage": "completed",
+  "spec_revision": {
+    "id": "s001",
+    "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+  },
+  "plan_revision": {
+    "id": "p001",
+    "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+  },
+  "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+  "baseline_revision": {
+    "head": "a655c6a97e502666d859ba19c310b5f83d1fa238",
+    "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:8132c6263084284076e12e8e34fe63655becbc56d6b07d8463b6623af3d9a523",
+    "worktree_status": [
+      "?? docs/tasks/003-ibovespa-daily-evolution-acquisition/"
+    ],
+    "evidence": "evidence/baseline-snapshot.json"
+  },
+  "model_policy": "initial",
+  "correction_cycle": 0,
+  "model_switch_reason": null,
+  "review_rounds": {
+    "correction": 0,
+    "initial": 2
+  },
+  "limits": {
+    "correction_cycles": 1,
+    "rounds_per_cycle": 3
+  },
+  "state_writer": "tech-lead",
+  "active_assignments": [
+    {
+      "id": "initial-round-1",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Source inspection, full IBOVESPA getter and integration",
+      "allowed_files": [
+        "backend/",
+        "data/README.md",
+        "README.md",
+        "docs/architecture/",
+        "docs/decisions/",
+        "docs/project-context.md",
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/verification.md",
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/state.json",
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/evidence/"
+      ],
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+        },
+        "baseline": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:8132c6263084284076e12e8e34fe63655becbc56d6b07d8463b6623af3d9a523"
+      },
+      "writer_ownership": "sole writer of verification.md and state.json implementation fields",
+      "deliverables": [
+        "source evidence",
+        "TDD red/green/refactor",
+        "integrated implementation and docs",
+        "snapshot and checks"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "review-initial-round-1",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Independent full integrated review",
+      "allowed_files": [
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/review.md",
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/state.json",
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/evidence/"
+      ],
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+        },
+        "code": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:829613d9f305abc09177399fbc0ae74dab4ef1271167214a373338224c56461b",
+        "baseline": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:8132c6263084284076e12e8e34fe63655becbc56d6b07d8463b6623af3d9a523"
+      },
+      "writer_ownership": "sole writer of review.md and state review/findings",
+      "deliverables": [
+        "snapshot freshness",
+        "independent verdict",
+        "actionable findings and evidence"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "initial-round-2",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-003",
+        "AC-004",
+        "AC-006"
+      ],
+      "slice": "Repair RF-001 and RF-002 using observed failing regression tests, preserve IFIX compatibility",
+      "allowed_files": [
+        "backend/",
+        "data/README.md",
+        "README.md",
+        "docs/architecture/",
+        "docs/decisions/",
+        "docs/project-context.md",
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/verification.md",
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/state.json",
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/evidence/"
+      ],
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+        },
+        "code": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:829613d9f305abc09177399fbc0ae74dab4ef1271167214a373338224c56461b"
+      },
+      "writer_ownership": "sole writer of verification.md and state implementation fields",
+      "deliverables": [
+        "observed failing regressions for each defect then green",
+        "integrated regression checks and snapshot"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "review-initial-round-2",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Full independent integrated rereview and RF-001/RF-002 retest",
+      "allowed_files": [
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/review.md",
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/state.json",
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/evidence/"
+      ],
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+        },
+        "code": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe"
+      },
+      "writer_ownership": "sole writer of review.md and state review/findings",
+      "deliverables": [
+        "snapshot freshness",
+        "independent verdict",
+        "finding dispositions and evidence"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "qa-initial-round-2",
+      "role": "qa",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Independent complete integrated QA and source-backed annual run",
+      "allowed_files": [
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/verification.md",
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/state.json",
+        "docs/tasks/003-ibovespa-daily-evolution-acquisition/evidence/"
+      ],
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+        },
+        "code": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe"
+      },
+      "writer_ownership": "sole writer of verification.md and QA/acceptance state",
+      "deliverables": [
+        "criterion matrix and reproductions",
+        "full live CLI to temporary destination and direct B3 comparison",
+        "snapshot freshness"
+      ],
+      "status": "completed"
+    }
+  ],
+  "implementation": {
+    "status": "complete",
+    "snapshot": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+    "evidence": [
+      "verification.md: round 1 and round 2 observed TDD evidence; RF-003 process limitation preserved",
+      "evidence/source-inspection.json: B3 source behavior, original filename and live CSV hashes",
+      "evidence/implementation-round-1-snapshot.json",
+      "evidence/implementation-round-2-snapshot.json",
+      "56 tests passed: .\\backend\\.venv\\Scripts\\python.exe -m unittest discover -s backend/src/internet_data_getter/tests -v",
+      "Live B3 client validation for 2011 and 2026 passed",
+      "compileall and git diff --check passed"
+    ]
+  },
+  "review": {
+    "status": "passed",
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+    },
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+    },
+    "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+    "snapshot_fresh": true,
+    "evidence": [
+      "review.md: initial cycle round 2",
+      "evidence/review-initial-round-2-before.json",
+      "evidence/review-initial-round-2-after.json",
+      "evidence/review-initial-round-2-tests.txt",
+      "evidence/review-initial-round-2-reproductions.txt"
+    ],
+    "nonblocking_limitations": [
+      "RF-003: round 1 behavioral red evidence remains incomplete"
+    ]
+  },
+  "qa": {
+    "status": "passed",
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+    },
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+    },
+    "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+    "evidence": [
+      "verification.md: independent QA round 2",
+      "evidence/qa-initial-round-2-results.json",
+      "evidence/qa-initial-round-2-before.json",
+      "evidence/qa-initial-round-2-after.json"
+    ],
+    "browser": "not_applicable_cli_only",
+    "snapshot_fresh": true
+  },
+  "acceptance_results": [
+    {
+      "criterion_id": "AC-001",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+      },
+      "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+      "expected_actual": "Live CLI selected and acquired each annual period from 2011 through current year 2026; shared entry points and import/no-network regressions passed.",
+      "evidence": [
+        "evidence/qa-initial-round-2-results.json",
+        "verification.md: Independent QA initial cycle round 2"
+      ]
+    },
+    {
+      "criterion_id": "AC-002",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+      },
+      "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+      "expected_actual": "16 live annual files were stored in temporary asset paths with manifest provenance and valid hashes; 2011 and 2026 files matched live B3 bytes exactly.",
+      "evidence": [
+        "evidence/qa-initial-round-2-results.json",
+        "verification.md: Independent QA initial cycle round 2"
+      ]
+    },
+    {
+      "criterion_id": "AC-003",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+      },
+      "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+      "expected_actual": "Live annual run completed; malformed/denied/truncated/empty response, partial-run and empty-period adverse tests passed.",
+      "evidence": [
+        "evidence/qa-initial-round-2-results.json",
+        "verification.md: Independent QA initial cycle round 2"
+      ]
+    },
+    {
+      "criterion_id": "AC-004",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+      },
+      "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+      "expected_actual": "Identical live rerun left all 16 mtimes unchanged and created no backups; review/test evidence covers changed-file, recovery, restore and injected failures.",
+      "evidence": [
+        "evidence/qa-initial-round-2-results.json",
+        "verification.md: Independent QA initial cycle round 2"
+      ]
+    },
+    {
+      "criterion_id": "AC-005",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+      },
+      "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+      "expected_actual": "Shared registry, service/storage boundaries, overlap locking, request timeout/pacing and IFIX isolation/regressions passed.",
+      "evidence": [
+        "evidence/qa-initial-round-2-results.json",
+        "verification.md: Independent QA initial cycle round 2"
+      ]
+    },
+    {
+      "criterion_id": "AC-006",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+      },
+      "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+      "expected_actual": "56 getter tests passed; run, source, provenance, validation and restore documentation verified. RF-003 remains a nonblocking TDD-evidence limitation.",
+      "evidence": [
+        "evidence/qa-initial-round-2-results.json",
+        "verification.md: Independent QA initial cycle round 2"
+      ]
+    },
+    {
+      "criterion_id": "AC-007",
+      "status": "pass",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+      },
+      "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+      "expected_actual": "Independent live acquisition completed for years 2011-2026; earliest and current-year local bytes exactly matched B3.",
+      "evidence": [
+        "evidence/qa-initial-round-2-results.json",
+        "verification.md: Independent QA initial cycle round 2"
+      ]
+    }
+  ],
+  "open_findings": [
+    {
+      "id": "RF-001",
+      "source": "review-initial-round-1",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-004",
+        "AC-006"
+      ],
+      "location": "backend/src/internet_data_getter/b3_storage.py:229,268,320,345,380",
+      "consequence": "An initial write-ahead manifest write failure after backup creation leaves the backup unlisted and unavailable to documented restore; retry leaves the first copy orphaned.",
+      "reproduction_evidence": [
+        "evidence/review-initial-round-1-reproductions.txt",
+        "review.md: RF-001"
+      ],
+      "status": "resolved",
+      "resolution_evidence": [
+        "review.md: initial cycle round 2",
+        "evidence/review-initial-round-2-reproductions.txt",
+        "evidence/review-initial-round-2-tests.txt"
+      ]
+    },
+    {
+      "id": "RF-002",
+      "source": "review-initial-round-1",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-003",
+        "AC-006"
+      ],
+      "location": "backend/src/internet_data_getter/ibovespa/b3_source.py:47-70",
+      "consequence": "Malformed CSV with an unterminated quoted field or blank summary label passes validation and can be stored.",
+      "reproduction_evidence": [
+        "evidence/review-initial-round-1-reproductions.txt",
+        "review.md: RF-002"
+      ],
+      "status": "resolved",
+      "resolution_evidence": [
+        "review.md: initial cycle round 2",
+        "evidence/review-initial-round-2-reproductions.txt",
+        "evidence/review-initial-round-2-tests.txt"
+      ]
+    },
+    {
+      "id": "RF-003",
+      "source": "review-initial-round-1",
+      "severity": "P3",
+      "blocking": false,
+      "criterion_ids": [
+        "AC-006"
+      ],
+      "location": "verification.md:21-25",
+      "consequence": "The source/entry-point red only demonstrates missing imports; storage and service lack an observed pre-implementation red. This is a process evidence limitation.",
+      "reproduction_evidence": [
+        "verification.md: initial round 1 Test-first evidence",
+        "review.md: RF-003"
+      ],
+      "status": "accepted",
+      "resolution_evidence": [],
+      "disposition": "Nonblocking process-evidence limitation: missing initial behavioral red runs cannot be reconstructed. Both reviewed defects received observed failing regression tests before repair, independent review and QA passed, and live source checks and 56 tests passed. Preserve and request explicit human acceptance with final approval. User explicitly accepted this limitation with final approval."
+    }
+  ],
+  "attempts_without_progress": 0,
+  "approvals": {
+    "correction_plan": null,
+    "specification": {
+      "decision": "approved",
+      "user_response": "approved",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+      },
+      "timestamp": "2026-11-03 (America/Sao_Paulo; exact time not recorded)",
+      "reference": "User response in feature-workflow chat"
+    },
+    "final": {
+      "decision": "approved",
+      "user_response": "yes, i approve",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "200cc807b4caf05b77e93db405fef6ac4d20dc0f84f2c222f4283774faddb1cc"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "70ac5abe315854f4405cd3e59381442972de250614b1b9e230d244991a06cbf4"
+      },
+      "code_revision": "a655c6a97e502666d859ba19c310b5f83d1fa238:sha256:ebb39f82809ad920818ce0a8806b4c0963be28981e1ebb51a0ca2dfb2da0a1fe",
+      "current_head": "c5e85558134be940aee925c8295426cdee4b68c3",
+      "snapshot_note": "Working-tree digest is unchanged from reviewed snapshot. The intervening HEAD change only modifies excluded docs/agent-log/LOG.md.",
+      "accepted_nonblocking_findings": [
+        "RF-003"
+      ],
+      "timestamp": "2026-11-03 (America/Sao_Paulo; exact time not recorded)",
+      "reference": "User response in feature-workflow chat"
+    }
+  },
+  "next_action": "Feature complete; further work requires a new user request."
+}

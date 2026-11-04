@@ -1,0 +1,66 @@
+{
+  "observed_at": "2026-11-03",
+  "page_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/daily-evolution/IBOV?language=pt-br",
+  "page_observations": {
+    "selector_years": [2011, 2026],
+    "2011_table_heading": "IBovespa - 2011",
+    "table_shape": "31 day rows; 12 Portuguese month columns; two summary rows",
+    "visible_download_anchor": "/indexStatisticsPage/daily-evolution/IBOV/daily-evolution/IBOVESPA",
+    "anchor_direct_get": {
+      "status": 200,
+      "content_type": "text/html",
+      "bytes": 2508,
+      "note": "HTML page route when requested without page selection context; not a CSV endpoint"
+    }
+  },
+  "client_implementation": {
+    "asset_urls": [
+      "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/main-es2015.204ca04ae07d2c137636.js",
+      "https://sistemaswebb3-listados.b3.com.br/indexStatisticsPage/main-es5.204ca04ae07d2c137636.js"
+    ],
+    "asset_status_and_size_bytes": [
+      {"status": 200, "bytes": 543553},
+      {"status": 200, "bytes": 625297}
+    ],
+    "observed_behavior": "downloadFile(filterService) uses GetDownloadPortfolioDay/ plus Base64 JSON and saves the response as Evolucao_Diaria.csv",
+    "original_filename": "Evolucao_Diaria.csv"
+  },
+  "proxy_url": "https://sistemaswebb3-listados.b3.com.br/indexStatisticsProxy/IndexCall/GetDownloadPortfolioDay/",
+  "request_payload": {"index": "IBOV", "language": "pt-br", "year": "<year>"},
+  "responses": [
+    {
+      "year": 2011,
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "base64_response_bytes": 4072,
+      "decoded_csv_bytes": 3052,
+      "decoded_csv_sha256": "c232d0921337496042d9241f7ac0a78db625b6c9de0eb0ca31e69aa4da41df9f",
+      "csv_encoding": "cp1252"
+    },
+    {
+      "year": 2026,
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "base64_response_bytes": 3836,
+      "decoded_csv_bytes": 2875,
+      "decoded_csv_sha256": "74f1046d61fc6011cbf0ff62873a9475435778a1247ecc3e8b1e0aeedb9450b9",
+      "csv_encoding": "cp1252"
+    }
+  ],
+  "csv_structure": {
+    "nonempty_rows": 35,
+    "header": "IBOV - <year>",
+    "columns": ["Dia", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+    "day_rows": 31,
+    "day_row_width": 13,
+    "summary_rows": 2,
+    "summary_row_width": 13,
+    "observed_summary_labels": ["M\u00cdNIMO", "M\u00cdNIMO"],
+    "observation_present_in_both": true
+  },
+  "limitations": [
+    "Proxy response has no Content-Disposition filename; public page JavaScript confirms the browser saveAs name.",
+    "Direct urllib access initially failed with WinError 10013; subsequent authorized direct HTTPS inspection succeeded.",
+    "Browser policy denied chrome://downloads and prohibited alternate browser/CDP workarounds; none were used."
+  ]
+}
