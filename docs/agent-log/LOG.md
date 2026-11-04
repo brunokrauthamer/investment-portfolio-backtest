@@ -4003,6 +4003,28 @@ The `feature-workflow` correction gate requires explicit approval of p002 before
 
 **Redaction:** The local user account name in the correction plan link target is replaced with `[redacted]`.
 
+## 2026-11-04 17:29 BRT — Clarify valid daily observations
+
+### User message
+
+```text
+So if there is allways a value for everydate in selic or sp500, there is no problem?
+```
+
+### Assistant progress
+
+```text
+I’ll separate the malformed-row case from calendar dates that simply have no observation in an index.
+```
+
+### Assistant response
+
+```text
+Yes, for that specific error-handling bug. If every daily row contains a date and a value, then it will not arise. The current repository data normalized successfully and matched. Missing dates are still allowed; the output uses the union of observed dates and leaves blanks where a source has no observation.
+
+The remaining finding concerns only a malformed row that has a date but omits its value. AC-006 requires a contextual error for that case; correction plan p002 would add it and is still awaiting explicit approval.
+```
+
 ## 2026-11-04 17:27 BRT — Clarify the remaining blocker
 
 ### User message
