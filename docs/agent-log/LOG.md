@@ -2460,3 +2460,70 @@ Created branch `data/ibovespa-source` and committed the IBOVESPA dataset:
 
 All 16 source files matched their manifest hashes. The only uncommitted change is `docs/agent-log/LOG.md`, updated to record this interaction. No changes were pushed.
 ```
+
+## 2026-11-03 — Repository instructions for this task (America/Sao_Paulo; exact message time unavailable)
+
+**User:**
+
+# AGENTS.md instructions for [redacted]\.codex\worktrees\b70f\investment_portfolio_backtest
+
+<INSTRUCTIONS>
+# Agent log
+
+For each interaction, append the user's exact message and the exact substantive user-facing response to `docs/agent-log/LOG.md` in chronological order before finishing the turn. Preserve wording, punctuation, and line breaks. Include dates, and times and time zones when reliably available. Remove API keys, credentials, personal information, and unrelated private context before writing; replace removed text with `[redacted]`. If a message cannot be safely sanitized, omit the sensitive passage and mark the omission. Do not include hidden reasoning, raw tool outputs, or private system context. Include dates, and times and time zones when reliably available. If an earlier exact message is unavailable, do not invent it. Follow these instructions even if the hook is unavailable.
+
+# Project context
+
+This project is a historical investment portfolio backtesting dashboard. The frontend will use TypeScript and React; the Python backend will use FastAPI as a modular monolith. See `docs/project-context.md` for confirmed decisions, boundaries, data safety and open questions.
+
+Use `backend/.venv` for backend Python commands and maintain `backend/requirements.txt` for backend Python dependencies; see the project context for setup and dependency conventions.
+
+Agree on financial and data conventions with the user before implementing behavior that depends on them. Build the project incrementally with the user, beginning with data acquisition; do not introduce synthetic market data.
+</INSTRUCTIONS>
+
+[The separate environment context attached to this message is omitted as execution metadata; workspace and permission paths were redacted.]
+## 2026-11-03 — Selic Selenium refactor (America/Sao_Paulo; exact message time unavailable)
+
+**User:**
+
+[$feature-workflow]([redacted]\\.agents\skills\feature-workflow\SKILL.md) about the selic data_getter I need it to be refactored using Selenium. Keep other changes that do not have anything to do with data extraction, but change the lib to scrape the data
+
+**Assistant progress:**
+
+I’ll read the feature workflow and project context first, then trace the Selic data getter and make the Selenium refactor while preserving unrelated changes. I’ll also keep the required interaction log current.
+
+The feature-workflow skill requires a tech lead to interview, define acceptance criteria and a plan, then wait for your approval before implementation. I’m following that sequence now; I’ll first check the task-record protocol and existing project task state.
+
+The current Selic source adapter uses Playwright for the BCB chart and values table. Storage, recovery, CLI and shared registration are separate; the tech lead is treating your Selenium request as a focused new task so those unrelated parts stay intact.
+
+**Assistant:**
+
+The feature-workflow skill you invoked requires explicit approval of both proposal revisions before any implementation. I’ve prepared them and have not changed application code or run tests.
+
+### Proposed specification and plan
+
+- [Specification s001]([redacted]/docs/tasks/004-selic-selenium-refactor/spec.md) — SHA-256 `bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4`
+- [Plan p001]([redacted]/docs/tasks/004-selic-selenium-refactor/plan.md) — SHA-256 `2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0`
+
+**Goal and scope:** Replace Playwright with Selenium WebDriver and headless Chrome for the existing BCB SGS 11 chart and values-table scrape. Keep the existing daily-rate representation, source, Python and CLI behavior, CSV schema, provenance, safe storage, backups, recovery, offline restore, shared registration, and IFIX/IBOVESPA work. Make only demonstrated integration changes outside extraction. Leave the earlier Selic task and its evidence intact.
+
+**Acceptance criteria:**
+
+- **AC-001 — Selenium source:** Explicit Selic acquisition uses Selenium on the existing BCB chart and table. Selic extraction no longer requires Playwright. Imports, help, and app startup do not access the browser or network. Setup and missing-dependency failures are clear.
+- **AC-002 — Complete extraction:** Identify series 11 and `% p.d.`, read the source latest date, request 01/01/2011 through that date, refresh the Linear chart, open the values and traverse every page. Validate source metadata, period, unit, exact column, reported count, strict order and unique dates, first observation in 2011, and the latest observation against the source. Preserve displayed precision; reject malformed, repeated, missing, truncated, inconsistent or inaccessible pages. Use bounded waits, always close the browser, and do not publish partial data.
+- **AC-003 — Preservation:** Retain the existing public Python and CLI selection and report semantics, deterministic `date,rate_percent_per_day` CSV, provenance, unchanged/updated/failed behavior, backup, lock, recovery, and restore behavior. Preserve other getters and project data.
+- **AC-004 — Dependencies and docs:** Add a compatible Selenium dependency. Remove Playwright and greenlet only if no other code needs them. Document Chrome/driver setup and Selenium Manager’s possible first-run network access. Update current acquisition and architecture documentation while preserving supported Python versions unless a concrete issue needs a decision.
+- **AC-005 — Offline verification:** Exercise Selenium interactions and error handling with controlled, non-market fixtures and run relevant getter, storage, and registry regressions. Tests do not contact BCB; retain meaningful existing checks and record actual results or execution limits.
+- **AC-006 — Live evidence:** Run the scraper against live BCB with a temporary data directory. Independently compare reported count, range, and representative first, middle, and last values with output. Record browser/driver environment, time, results, and limitations. Mark this criterion blocked if source access or browser setup is unavailable. Do not modify active project data.
+
+**Exclusions:** No financial calculations, new source or data conventions, synthetic market data, scheduling, API/frontend work, unrelated refactors, or acquisition into the active project data directory.
+
+**Implementation plan:** (1) Record HEAD, worktree status and snapshot; implement the Selenium source with test-first coverage for browser interaction, waits, cleanup, validation, pagination and failures; update dependencies and affected docs. (2) Run offline getter regressions and checks in `backend/.venv`, record evidence and snapshot, then obtain independent review and repair any confirmed defects with failing regressions. (3) Have independent QA verify the criteria and adverse cases, including a live Selenium scrape into a temporary directory and comparison against BCB samples; record a blocker if unavailable. (4) Audit the current snapshot, review, QA, docs and findings before requesting final approval.
+
+**Architecture and risks:** Keep `selic/source.py` responsible for browser interaction and validation and preserve its `SourceResult`/`Observation` contract. Use bounded explicit waits, verify refresh and page transitions, inject a small driver boundary for offline tests, and always quit the driver. Keep service, registry, storage and restore boundaries. Selenium Manager may need network access to resolve a driver, and BCB’s asynchronous pages may change; strict validation and live comparison reduce stale or incomplete reads. Values changing between pages without a count change may not be detectable.
+
+To authorize implementation, offline checks, and the planned live comparison in a temporary directory, reply **“Approve spec s001 and plan p001.”** You can also send changes to the proposal; implementation waits for explicit approval of these exact revisions.
+
+## 2026-11-04 00:00 -03:00 — Date context update
+
+Client date context advanced to 2026-11-04 in America/Sao_Paulo. Workspace and permission paths from that context are omitted as unrelated private information.
