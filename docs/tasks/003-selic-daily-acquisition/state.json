@@ -1,0 +1,867 @@
+{
+  "schema_version": 1,
+  "state_version": 24,
+  "task_id": "003",
+  "task_slug": "selic-daily-acquisition",
+  "stage": "awaiting_final_approval",
+  "spec_revision": {
+    "id": "s001",
+    "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+  },
+  "plan_revision": {
+    "id": "p001",
+    "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+  },
+  "code_revision": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1",
+  "baseline_revision": {
+    "worktree_status": [
+      "?? docs/tasks/003-selic-daily-acquisition/"
+    ],
+    "evidence": "evidence/baseline-snapshot.json",
+    "head": "f218c35e050e196a47e724ee348def9035671601",
+    "code_revision": "f218c35e050e196a47e724ee348def9035671601:sha256:8132c6263084284076e12e8e34fe63655becbc56d6b07d8463b6623af3d9a523"
+  },
+  "model_policy": "initial",
+  "correction_cycle": 0,
+  "model_switch_reason": null,
+  "review_rounds": {
+    "correction": 0,
+    "initial": 3
+  },
+  "limits": {
+    "correction_cycles": 1,
+    "rounds_per_cycle": 3
+  },
+  "state_writer": "tech-lead",
+  "active_assignments": [
+    {
+      "role": "developer",
+      "id": "initial-round-1",
+      "model": "gpt-6-luna",
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+        },
+        "baseline": "f218c35e050e196a47e724ee348def9035671601:sha256:8132c6263084284076e12e8e34fe63655becbc56d6b07d8463b6623af3d9a523"
+      },
+      "writer_ownership": "sole writer of verification.md, assigned implementation fields in state.json, and implementation evidence",
+      "allowed_files": [
+        "backend/",
+        "data/README.md",
+        "README.md",
+        "docs/project-context.md",
+        "docs/architecture/",
+        "docs/decisions/",
+        "docs/tasks/003-selic-daily-acquisition/verification.md",
+        "docs/tasks/003-selic-daily-acquisition/state.json",
+        "docs/tasks/003-selic-daily-acquisition/evidence/"
+      ],
+      "status": "completed",
+      "effort": "max",
+      "slice": "Implement and integrate approved feature and documentation",
+      "deliverables": [
+        "TDD evidence",
+        "integrated implementation and docs",
+        "snapshot and checks",
+        "handoff"
+      ],
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ]
+    },
+    {
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+        },
+        "baseline": "f218c35e050e196a47e724ee348def9035671601:sha256:8132c6263084284076e12e8e34fe63655becbc56d6b07d8463b6623af3d9a523",
+        "plan": {
+          "id": "p001",
+          "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+        },
+        "code": "f218c35e050e196a47e724ee348def9035671601:sha256:244a06b5942c43b9b2c961ed2cfd4dc6021b9da3d091b6154bb23c82435c5703"
+      },
+      "role": "reviewer",
+      "deliverables": [
+        "dated integrated review and findings",
+        "source discrepancy diagnosis where possible",
+        "snapshot freshness"
+      ],
+      "id": "review-initial-round-1",
+      "allowed_files": [
+        "docs/tasks/003-selic-daily-acquisition/review.md",
+        "docs/tasks/003-selic-daily-acquisition/state.json",
+        "docs/tasks/003-selic-daily-acquisition/evidence/"
+      ],
+      "slice": "Independent integrated review, including live range discrepancy and safe storage",
+      "status": "completed",
+      "writer_ownership": "sole writer of review.md, review/findings fields of state.json and reviewer evidence",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+        },
+        "code": "f218c35e050e196a47e724ee348def9035671601:sha256:244a06b5942c43b9b2c961ed2cfd4dc6021b9da3d091b6154bb23c82435c5703"
+      },
+      "role": "developer",
+      "writer_ownership": "sole writer of verification.md, implementation fields in state.json and implementation evidence",
+      "model": "gpt-6-luna",
+      "status": "completed",
+      "slice": "Repair RF-001 through RF-007 with observed failing regressions",
+      "id": "initial-round-2",
+      "deliverables": [
+        "observed regression reds and green repairs",
+        "integrated tests docs and live check",
+        "snapshot and handoff"
+      ],
+      "effort": "max",
+      "allowed_files": [
+        "backend/",
+        "data/README.md",
+        "README.md",
+        "docs/project-context.md",
+        "docs/architecture/",
+        "docs/decisions/",
+        "docs/tasks/003-selic-daily-acquisition/verification.md",
+        "docs/tasks/003-selic-daily-acquisition/state.json",
+        "docs/tasks/003-selic-daily-acquisition/evidence/"
+      ],
+      "criterion_ids": [
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ]
+    },
+    {
+      "role": "reviewer",
+      "slice": "Independent full re-review including RF-001 through RF-007",
+      "model": "gpt-6.1-sol",
+      "allowed_files": [
+        "docs/tasks/003-selic-daily-acquisition/review.md",
+        "docs/tasks/003-selic-daily-acquisition/state.json",
+        "docs/tasks/003-selic-daily-acquisition/evidence/"
+      ],
+      "writer_ownership": "sole writer of review.md, review/findings fields of state.json and reviewer evidence",
+      "id": "review-initial-round-2",
+      "deliverables": [
+        "independent integrated verdict and finding dispositions",
+        "snapshot freshness"
+      ],
+      "input_revisions": {
+        "code": "f218c35e050e196a47e724ee348def9035671601:sha256:10bd2d156a6c160251c2b8a31292be39a5bdd12c25e68e4379389624f3a0a474",
+        "plan": {
+          "id": "p001",
+          "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+        },
+        "spec": {
+          "id": "s001",
+          "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+        }
+      },
+      "status": "completed",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ]
+    },
+    {
+      "effort": "max",
+      "writer_ownership": "sole writer of verification.md, implementation fields in state.json and implementation evidence",
+      "slice": "Repair RF-009 and RF-010 with observed failing regressions",
+      "input_revisions": {
+        "plan": {
+          "id": "p001",
+          "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+        },
+        "spec": {
+          "id": "s001",
+          "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+        },
+        "code": "f218c35e050e196a47e724ee348def9035671601:sha256:10bd2d156a6c160251c2b8a31292be39a5bdd12c25e68e4379389624f3a0a474"
+      },
+      "deliverables": [
+        "observed regression reds and green repairs",
+        "integrated checks and snapshot",
+        "handoff"
+      ],
+      "model": "gpt-6-luna",
+      "id": "initial-round-3",
+      "criterion_ids": [
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "allowed_files": [
+        "backend/",
+        "data/README.md",
+        "README.md",
+        "docs/project-context.md",
+        "docs/architecture/",
+        "docs/decisions/",
+        "docs/tasks/003-selic-daily-acquisition/verification.md",
+        "docs/tasks/003-selic-daily-acquisition/state.json",
+        "docs/tasks/003-selic-daily-acquisition/evidence/"
+      ],
+      "status": "completed",
+      "role": "developer"
+    },
+    {
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+        },
+        "code": "f218c35e050e196a47e724ee348def9035671601:sha256:fc8f20234e69450785184f5d7af3a56769108c320d56aa7fd7cb875ade042192",
+        "plan": {
+          "id": "p001",
+          "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+        }
+      },
+      "allowed_files": [
+        "docs/tasks/003-selic-daily-acquisition/review.md",
+        "docs/tasks/003-selic-daily-acquisition/state.json",
+        "docs/tasks/003-selic-daily-acquisition/evidence/"
+      ],
+      "effort": "high",
+      "model": "gpt-6.1-sol",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "deliverables": [
+        "independent integrated verdict and finding dispositions",
+        "snapshot freshness"
+      ],
+      "id": "review-initial-round-3",
+      "writer_ownership": "sole writer of review.md, review/findings fields of state.json and reviewer evidence",
+      "role": "reviewer",
+      "slice": "Independent integrated review, especially RF-009 and RF-010",
+      "status": "completed"
+    },
+    {
+      "deliverables": [
+        "criterion matrix with expected and actual",
+        "independent live BCB browser and command verification or blocker",
+        "snapshot freshness"
+      ],
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "role": "qa",
+      "id": "qa-initial-round-3",
+      "input_revisions": {
+        "code": "f218c35e050e196a47e724ee348def9035671601:sha256:fc8f20234e69450785184f5d7af3a56769108c320d56aa7fd7cb875ade042192",
+        "plan": {
+          "id": "p001",
+          "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+        },
+        "spec": {
+          "id": "s001",
+          "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+        }
+      },
+      "allowed_files": [
+        "docs/tasks/003-selic-daily-acquisition/verification.md",
+        "docs/tasks/003-selic-daily-acquisition/state.json",
+        "docs/tasks/003-selic-daily-acquisition/evidence/"
+      ],
+      "slice": "Independent integrated QA including source browser comparison and live command",
+      "status": "completed",
+      "effort": "max",
+      "model": "gpt-6-luna",
+      "writer_ownership": "sole writer of verification.md, acceptance/QA fields of state.json and QA evidence"
+    },
+    {
+      "id": "acquire-project-data",
+      "role": "developer",
+      "slice": "Execute planned acquisition into project data and document evidence",
+      "status": "completed",
+      "allowed_files": [
+        "data/selic/",
+        "data/backups/selic/",
+        "docs/tasks/003-selic-daily-acquisition/verification.md",
+        "docs/tasks/003-selic-daily-acquisition/state.json",
+        "docs/tasks/003-selic-daily-acquisition/evidence/"
+      ],
+      "deliverables": [
+        "project CSV and manifest",
+        "hash/count/range evidence",
+        "snapshot and handoff"
+      ],
+      "model": "gpt-6-luna",
+      "criterion_ids": [
+        "AC-004",
+        "AC-007"
+      ],
+      "writer_ownership": "sole writer of verification.md, implementation fields in state.json and acquisition evidence",
+      "input_revisions": {
+        "spec": {
+          "id": "s001",
+          "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+        },
+        "code": "f218c35e050e196a47e724ee348def9035671601:sha256:fc8f20234e69450785184f5d7af3a56769108c320d56aa7fd7cb875ade042192"
+      },
+      "effort": "max"
+    },
+    {
+      "id": "review-project-data",
+      "criterion_ids": [
+        "AC-004",
+        "AC-005",
+        "AC-007"
+      ],
+      "role": "reviewer",
+      "effort": "high",
+      "slice": "Independent review refresh for acquired data on current snapshot",
+      "model": "gpt-6.1-sol",
+      "writer_ownership": "sole writer of review.md, review/findings fields of state.json and reviewer evidence",
+      "status": "completed",
+      "allowed_files": [
+        "docs/tasks/003-selic-daily-acquisition/review.md",
+        "docs/tasks/003-selic-daily-acquisition/state.json",
+        "docs/tasks/003-selic-daily-acquisition/evidence/"
+      ],
+      "deliverables": [
+        "current snapshot verdict and impact reasoning",
+        "data/provenance checks and snapshot freshness"
+      ],
+      "input_revisions": {
+        "plan": {
+          "id": "p001",
+          "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+        },
+        "spec": {
+          "id": "s001",
+          "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+        },
+        "code": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1"
+      }
+    },
+    {
+      "allowed_files": [
+        "docs/tasks/003-selic-daily-acquisition/verification.md",
+        "docs/tasks/003-selic-daily-acquisition/state.json",
+        "docs/tasks/003-selic-daily-acquisition/evidence/"
+      ],
+      "writer_ownership": "sole writer of verification.md, acceptance/QA fields of state.json and QA evidence",
+      "deliverables": [
+        "current criterion matrix and data validation",
+        "impact reasoning and snapshot freshness"
+      ],
+      "model": "gpt-6-luna",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "slice": "Independent QA refresh after project data acquisition",
+      "role": "qa",
+      "input_revisions": {
+        "plan": {
+          "id": "p001",
+          "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+        },
+        "spec": {
+          "id": "s001",
+          "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+        },
+        "code": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1"
+      },
+      "effort": "max",
+      "status": "completed",
+      "id": "qa-project-data"
+    }
+  ],
+  "implementation": {
+    "evidence": [
+      "verification.md: initial round 1 observed TDD, checks and unresolved live-source period mismatch",
+      "evidence/implementation-round-1-snapshot.json",
+      "backend/.venv: Playwright 1.60.0 and Chromium installed",
+      "backend/.venv python -m unittest discover -s backend/src/internet_data_getter/tests -v: 40 tests passed",
+      "backend/.venv python -m backend.src.internet_data_getter --help: passed; no network request",
+      "backend/.venv python -m compileall -q backend: passed",
+      "Live smoke: exact filters submitted, but isolated Playwright result returned 03/11/2016–03/11/2026 and 2508 records; rejected as incomplete",
+      "Interactive Chrome observed 01/01/2011–30/10/2026, 3976 records across 40 pages; discrepancy with isolated Playwright remains unresolved",
+      "No project Selic CSV acquired",
+      "verification.md: initial round 2 observed reds/greens, checks, and live temporary smoke",
+      "evidence/implementation-round-2-snapshot.json",
+      "evidence/implementation-round-2-live-smoke.py: 3976 observations, 2011-01-03 through 2026-10-30, temp output only",
+      "evidence/implementation-round-2-source-probe.py: actual BCB metadata, refresh POST and getPagina navigation evidence",
+      "backend/.venv: unittest discovery passed all 45 getter tests",
+      "backend/.venv: CLI help and compileall passed; git diff --check passed with line-ending warnings only",
+      "No project data/selic/source/selic_sgs_11.csv acquired",
+      "verification.md: initial round 3 observed reds/greens and offline checks",
+      "evidence/implementation-round-3-snapshot.json",
+      "backend/.venv python -m unittest discover -s backend/src/internet_data_getter/tests -v: 48 tests passed",
+      "git diff --check: passed with line-ending normalization warnings only",
+      "No live acquisition or project data/selic CSV performed in initial round 3",
+      "evidence/project-data-acquisition-before.json: pre-acquisition snapshot on approved integrated code revision",
+      "evidence/project-data-acquisition-validation.json: project CSV/manifest verification, 3,977 rows, 2011-01-03 through 2026-11-03, hash b9f3d96ac8504f77bcc08fdbe3024eb2e760c9e8190a8fba726a20ad79414688; all checks passed",
+      "evidence/project-data-acquisition-after.json: post-acquisition snapshot including project CSV and manifest",
+      "Documented --data-dir data --getter selic acquisition saved the complete BCB SGS 11 series to project data at 2026-11-03T21:42:42Z; default sandbox denied network, approved elevated network run passed"
+    ],
+    "status": "complete",
+    "snapshot": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1"
+  },
+  "review": {
+    "status": "passed",
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+    },
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+    },
+    "code_revision": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1",
+    "evidence": [
+      "review.md project-data review refresh",
+      "evidence/review-project-data-before.json",
+      "evidence/review-project-data-after.json",
+      "evidence/review-project-data-validation.json",
+      "review.md initial round 3: unchanged code, tests, configuration and documentation retain applicability of prior integrated review and 48-test result."
+    ]
+  },
+  "qa": {
+    "status": "passed",
+    "evidence": [
+      "verification.md: Independent QA refresh after project-data acquisition; data-only impact comparison",
+      "evidence/qa-acquired-data-before.json",
+      "evidence/qa-acquired-data-after.json",
+      "evidence/qa-acquired-data-impact.json",
+      "evidence/qa-acquired-data-validation.py and .json",
+      "evidence/qa-initial-3-live-cli.txt: independent BCB browser samples and CLI capture on same data hash"
+    ],
+    "code_revision": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1",
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+    },
+    "browser": "passed_source_workflow",
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+    }
+  },
+  "acceptance_results": [
+    {
+      "status": "pass",
+      "evidence": [
+        "verification.md: Independent QA refresh after project-data acquisition",
+        "evidence/qa-acquired-data-validation.json",
+        "evidence/qa-acquired-data-impact.json"
+      ],
+      "criterion_id": "AC-001",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+      },
+      "code_revision": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1",
+      "expected_actual": "Prior live and offline QA remains applicable: code snapshot unchanged; explicit getter/help and no-network import tests passed.",
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+      }
+    },
+    {
+      "status": "pass",
+      "evidence": [
+        "verification.md: Independent QA refresh after project-data acquisition",
+        "evidence/qa-acquired-data-validation.json",
+        "evidence/qa-acquired-data-impact.json"
+      ],
+      "criterion_id": "AC-002",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+      },
+      "code_revision": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1",
+      "expected_actual": "Prior direct browser QA on unchanged source code confirms exact series/unit/period; project CSV stores source-reported latest period.",
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+      }
+    },
+    {
+      "status": "pass",
+      "evidence": [
+        "verification.md: Independent QA refresh after project-data acquisition",
+        "evidence/qa-acquired-data-validation.json",
+        "evidence/qa-acquired-data-impact.json"
+      ],
+      "criterion_id": "AC-003",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+      },
+      "code_revision": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1",
+      "expected_actual": "Project CSV has 3,977 rows from 2011-01-03 through 2026-11-03; unique increasing dates; count matches BCB and manifest.",
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+      }
+    },
+    {
+      "status": "pass",
+      "evidence": [
+        "verification.md: Independent QA refresh after project-data acquisition",
+        "evidence/qa-acquired-data-validation.json",
+        "evidence/qa-acquired-data-impact.json"
+      ],
+      "criterion_id": "AC-004",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+      },
+      "code_revision": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1",
+      "expected_actual": "Project CSV hash, header, UTF-8, rate format, count, coverage and manifest provenance validated independently.",
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+      }
+    },
+    {
+      "status": "pass",
+      "evidence": [
+        "verification.md: Independent QA refresh after project-data acquisition",
+        "evidence/qa-acquired-data-validation.json",
+        "evidence/qa-acquired-data-impact.json"
+      ],
+      "criterion_id": "AC-005",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+      },
+      "code_revision": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1",
+      "expected_actual": "No pending lock/transaction or backup input; prior safe rerun/recovery/restore tests remain applicable to unchanged code.",
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+      }
+    },
+    {
+      "status": "pass",
+      "evidence": [
+        "verification.md: Independent QA refresh after project-data acquisition",
+        "evidence/qa-acquired-data-validation.json",
+        "evidence/qa-acquired-data-impact.json"
+      ],
+      "criterion_id": "AC-006",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+      },
+      "code_revision": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1",
+      "expected_actual": "48 tests, CLI help, compileall and diff check previously passed on unchanged code; RF-008 remains a nonblocking process limitation.",
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+      }
+    },
+    {
+      "status": "pass",
+      "evidence": [
+        "verification.md: Independent QA refresh after project-data acquisition",
+        "evidence/qa-acquired-data-validation.json",
+        "evidence/qa-acquired-data-impact.json"
+      ],
+      "criterion_id": "AC-007",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+      },
+      "code_revision": "f218c35e050e196a47e724ee348def9035671601:sha256:0979d83d473acf782bdebe9332592698aa65e0b2509d1a0e66ba00b8a5adbdf1",
+      "expected_actual": "Project data acquisition completed and independently validated; first/middle/last CSV rates match direct BCB page samples.",
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+      }
+    }
+  ],
+  "open_findings": [
+    {
+      "resolution_evidence": [
+        "review.md initial round 2",
+        "Integrated live temporary smoke fetched the full range and 3,976 observations."
+      ],
+      "evidence": [
+        "review.md",
+        "evidence/review_live_sgs.py: stale 2508 rows versus 3976 after awaited refresh POST"
+      ],
+      "id": "RF-001",
+      "criterion_ids": [
+        "AC-002",
+        "AC-003",
+        "AC-007"
+      ],
+      "source": "review-initial-round-1",
+      "location": "backend/src/internet_data_getter/selic/source.py:167-190",
+      "blocking": true,
+      "consequence": "Refresh click can occur before the chart form exists, returning a stale default date range and preventing acquisition.",
+      "severity": "P1",
+      "status": "resolved"
+    },
+    {
+      "resolution_evidence": [
+        "review.md initial round 2",
+        "Independent probe preserved unrecognized manifest and pending record byte for byte."
+      ],
+      "evidence": [
+        "review.md",
+        "evidence/review_offline_reproductions.py: UNKNOWN_MANIFEST_PRESERVED False; RECOVERY_RECORD_PRESERVED False"
+      ],
+      "id": "RF-002",
+      "criterion_ids": [
+        "AC-004",
+        "AC-005"
+      ],
+      "source": "review-initial-round-1",
+      "location": "backend/src/internet_data_getter/selic/storage.py:182-212",
+      "blocking": true,
+      "consequence": "Recovery overwrites unrecognized active provenance and removes the pending record.",
+      "severity": "P1",
+      "status": "resolved"
+    },
+    {
+      "resolution_evidence": [
+        "review.md initial round 2",
+        "Independent ten-version probe showed flat references and 5,115-byte manifest."
+      ],
+      "evidence": [
+        "review.md",
+        "evidence/review_offline_reproductions.py: 836 to 715714 bytes in ten versions"
+      ],
+      "id": "RF-003",
+      "criterion_ids": [
+        "AC-004",
+        "AC-005"
+      ],
+      "source": "review-initial-round-1",
+      "location": "backend/src/internet_data_getter/selic/storage.py:232-241,288-327",
+      "blocking": true,
+      "consequence": "Recursive history makes metadata grow exponentially during repeated updates.",
+      "severity": "P2",
+      "status": "resolved"
+    },
+    {
+      "resolution_evidence": [
+        "review.md initial round 2",
+        "Independent offline restore preserved original retrieval time and separate restore time."
+      ],
+      "evidence": [
+        "review.md",
+        "evidence/review_offline_reproductions.py: 2026-02-01 source retrieval became 2026-02-11"
+      ],
+      "id": "RF-004",
+      "criterion_ids": [
+        "AC-004",
+        "AC-005"
+      ],
+      "source": "review-initial-round-1",
+      "location": "backend/src/internet_data_getter/selic/storage.py:302-327",
+      "blocking": true,
+      "consequence": "Offline restore claims a new source retrieval, losing the restored record original retrieval provenance.",
+      "severity": "P2",
+      "status": "resolved"
+    },
+    {
+      "resolution_evidence": [
+        "review.md initial round 2",
+        "Full suite rejects series 111 in metadata or header and live SGS 11 passes."
+      ],
+      "evidence": [
+        "review.md",
+        "evidence/review_offline_reproductions.py: WRONG_SERIES_REJECTED False"
+      ],
+      "id": "RF-005",
+      "criterion_ids": [
+        "AC-002",
+        "AC-003"
+      ],
+      "source": "review-initial-round-1",
+      "location": "backend/src/internet_data_getter/selic/source.py:115-132,168-174",
+      "blocking": true,
+      "consequence": "A date token can satisfy series ID validation, allowing another series to be accepted.",
+      "severity": "P2",
+      "status": "resolved"
+    },
+    {
+      "resolution_evidence": [
+        "review.md initial round 2",
+        "Full suite rejects premature, repeated and contradictory pagination; live scrape completes."
+      ],
+      "evidence": [
+        "review.md",
+        "source inspection: count break precedes Next lookup"
+      ],
+      "id": "RF-006",
+      "criterion_ids": [
+        "AC-003"
+      ],
+      "source": "review-initial-round-1",
+      "location": "backend/src/internet_data_getter/selic/source.py:194-214",
+      "blocking": true,
+      "consequence": "A nonfinal page can be accepted when the row count is reached, ignoring contradictory pagination.",
+      "severity": "P2",
+      "status": "resolved"
+    },
+    {
+      "resolution_evidence": [
+        "review.md initial round 2",
+        "Inspected controlled replacement fixtures and reran all offline tests."
+      ],
+      "evidence": [
+        "review.md",
+        "verification.md: live chart first two date/value pairs match fixtures"
+      ],
+      "id": "RF-007",
+      "criterion_ids": [
+        "AC-006"
+      ],
+      "source": "review-initial-round-1",
+      "location": "backend/src/internet_data_getter/tests/test_selic_acquisition.py:33-52,73-76,268-271",
+      "blocking": true,
+      "consequence": "Offline fixtures copy observed live BCB values instead of controlled non-market observations.",
+      "severity": "P3",
+      "status": "resolved"
+    },
+    {
+      "resolution_evidence": [],
+      "evidence": [
+        "review.md",
+        "verification.md initial round 1 TDD evidence"
+      ],
+      "id": "RF-008",
+      "criterion_ids": [
+        "AC-006"
+      ],
+      "source": "review-initial-round-1",
+      "location": "docs/tasks/003-selic-daily-acquisition/verification.md",
+      "blocking": false,
+      "consequence": "Some initial pre-implementation TDD reds were not observed.",
+      "severity": "process_limitation",
+      "status": "open",
+      "disposition": "Nonblocking process evidence limitation; unobserved initial red runs cannot be reconstructed. Confirmed behavior defects received observed failing regressions; independent review and QA passed on current snapshot, as did 48 tests and live source comparisons. Request explicit human acceptance with final approval."
+    },
+    {
+      "id": "RF-009",
+      "source": "review-initial-round-2",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-004",
+        "AC-005"
+      ],
+      "location": "backend/src/internet_data_getter/selic/storage.py:124-145,345-358",
+      "consequence": "An unchanged acquisition can report completion while retaining missing or contradictory provenance.",
+      "evidence": [
+        "review.md initial round 2",
+        "evidence/review-initial-2-probes.py: CORRUPT_PROVENANCE_RERUN_STATUS unchanged"
+      ],
+      "status": "resolved",
+      "resolution_evidence": [
+        "review.md initial round 3",
+        "Original offline probe now rejects corrupt provenance; suite checks count agreement and file preservation."
+      ]
+    },
+    {
+      "id": "RF-010",
+      "source": "review-initial-round-2",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-003",
+        "AC-006"
+      ],
+      "location": "backend/src/internet_data_getter/selic/source.py:68-78",
+      "consequence": "Malformed observation dates are discarded as structural rows, allowing an incomplete table to pass.",
+      "evidence": [
+        "review.md initial round 2",
+        "evidence/review-initial-2-probes.py: MALFORMED_DATE_ROW_STATUS accepted 2 rows"
+      ],
+      "status": "resolved",
+      "resolution_evidence": [
+        "review.md initial round 3",
+        "Original malformed-date probe now rejects the table; current live smoke accepts the actual paginated table."
+      ]
+    }
+  ],
+  "attempts_without_progress": 0,
+  "approvals": {
+    "correction_plan": null,
+    "specification": {
+      "user_response": "approved",
+      "timestamp": "2026-11-03 (America/Sao_Paulo; exact time not recorded)",
+      "decision": "approved",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "7c8cb5d3b7ab546e954d2e53396c37e4161730b1012dc02819746df2f17bd794"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "6b7c698bfac8d8099812fa19ed8c6fba54a3cb0d15655fe8b33261f15c9c001f"
+      },
+      "reference": "User response in feature-workflow chat, relayed verbatim by main agent"
+    },
+    "final": null
+  },
+  "next_action": "Request explicit final approval of spec s001, plan p001 and current snapshot, including acceptance of RF-008 process-evidence limitation."
+}

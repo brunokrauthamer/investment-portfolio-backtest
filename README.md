@@ -4,7 +4,7 @@ This project will help people explore how hypothetical investment portfolios wou
 
 - `backend/`: backend modules, local Python environment and dependency manifest.
 - `frontend/`: planned dashboard.
-- `data/`: reserved for acquired historical datasets.
+- `data/`: acquired historical datasets.
 - `docs/project-context.md`: confirmed decisions, data safety requirements and open questions.
 
-The backend provides an explicit IFIX daily-evolution downloader. Set up the backend virtual environment as described in the [download and recovery instructions](backend/src/internet_data_getter/README.md), then run `.\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter` from the repository root on Windows; it preserves B3's annual source files for 2011 through the current year under `data/ifix/source/`. No application startup or module import initiates a network request. Other data sources and financial conventions remain to be agreed before implementation. No synthetic market data is included.
+The backend provides explicit IFIX and Selic acquisition commands. Set up the backend virtual environment as described in the [acquisition and recovery instructions](backend/src/internet_data_getter/README.md), then run `.\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter --getter selic` from the repository root on Windows to scrape BCB SGS 11 into `data/selic/source/selic_sgs_11.csv`. No application startup or module import initiates a network request. Financial calculations and data alignment conventions remain separate from acquisition. No synthetic market data is included.

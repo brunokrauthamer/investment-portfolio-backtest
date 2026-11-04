@@ -34,4 +34,3 @@ def restore(args):
     if result.backup:
         print(f"Displaced active file backed up to {result.backup}")
     return 0
-

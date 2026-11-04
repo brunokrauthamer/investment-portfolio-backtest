@@ -45,4 +45,3 @@ class IbovespaAcquisition:
                 except Exception as exc:
                     report.errors[year] = str(exc)
         return report
-

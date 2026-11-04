@@ -93,7 +93,7 @@ class GenericGetterTests(unittest.TestCase):
         self.assertEqual(acquire.call_args.args[0], "ibovespa")
         self.assertEqual(str(acquire.call_args.args[1]), "chosen-data")
 
-    def test_default_shared_cli_runs_ifix_and_ibovespa_registrations(self):
+    def test_default_shared_cli_runs_all_registered_getters(self):
         from backend.src.internet_data_getter import __main__ as cli, available_getters
         from unittest.mock import Mock
         report = Mock(complete=True, saved=[], updated=[], unchanged=[], errors={})
@@ -101,5 +101,5 @@ class GenericGetterTests(unittest.TestCase):
             self.assertEqual(cli.main(["--data-dir", "chosen-data"]), 0)
         names = tuple(item.args[0] for item in acquire.call_args_list)
         self.assertEqual(names, available_getters())
-        self.assertEqual(names, ("ifix", "ibovespa"))
+        self.assertEqual(names, ("ifix", "ibovespa", "selic"))
         self.assertTrue(all(str(item.args[1]) == "chosen-data" for item in acquire.call_args_list))

@@ -1,0 +1,18 @@
+{
+  "added_since_review": [
+    "data/selic/manifest.json",
+    "data/selic/source/selic_sgs_11.csv"
+  ],
+  "csv_size": 79566,
+  "csv_sha256": "b9f3d96ac8504f77bcc08fdbe3024eb2e760c9e8190a8fba726a20ad79414688",
+  "observations": 3977,
+  "first_date": "2011-01-03",
+  "last_date": "2026-11-03",
+  "retrieved_at": "2026-11-03T21:42:42Z",
+  "source_samples": {
+    "2011-01-03": "0.040239",
+    "2018-09-28": "0.024620",
+    "2026-11-03": "0.050788"
+  },
+  "backup_lock_pending_absent": true
+}

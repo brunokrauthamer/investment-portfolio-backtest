@@ -1,0 +1,17 @@
+Independent QA — s001 / p001 / code snapshot
+Environment: Windows; backend/.venv; Python 3.9; Playwright 1.60.0; matching Chromium; BCB SGS 11.
+
+Documented command, isolated temporary output, first run:
+  .\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter --data-dir C:\Users\bruno\AppData\Local\Temp\selic-qa-98b22b4fff2241b39fdb4624eb158787 --getter selic
+The first attempt in the default sandbox exited 1 with `net::ERR_NETWORK_ACCESS_DENIED` at the requested BCB chart URL and created no complete result. Re-running the same command with approved elevated network access completed:
+  Selic acquisition complete
+  Status: saved
+  Observations: 3977
+  Coverage: 2011-01-03 through 2026-11-03
+  SHA-256: b9f3d96ac8504f77bcc08fdbe3024eb2e760c9e8190a8fba726a20ad79414688
+
+Direct BCB Chrome QA actions on the specified chart, 2026-11-03 (system displayed BCB 18:34–18:35): set `dataInicio` to 01/01/2011 and `dataFim` to the chart's current latest date 03/11/2026; click Refresh chart; click View values from chart. The chart showed the Linear Selic series; the resulting table confirmed `01/01/2011 to 03/11/2026`, series 11, `% p.d.`, 3,977 observations and 40 pages. The source's page 1 showed 03/01/2011 = 0,040239. Page 20 showed 28/09/2018 = 0,024620. Page 40 showed 03/11/2026 = 0,050788.
+
+The CLI-generated UTF-8 CSV and manifest in the temporary directory contained 3,977 rows, first date 2011-01-03, last date 2026-11-03, requested start 2011-01-01, requested end 2026-11-03, reported/acquired counts 3977/3977, unit `% p.d.`, ODbL license statement and the same SHA-256. CSV samples matched the independently viewed source pages exactly: `2011-01-03,0.040239`; `2018-09-28,0.024620`; `2026-11-03,0.050788`.
+
+An independent second invocation against the same temporary data directory returned `Status: unchanged`, 3,977 observations and the same hash. No `backups/selic` entry was created for the unchanged run. The project `data/selic/` CSV and manifest were absent before and after the QA run. The temporary test files remain outside the repository at the path above.

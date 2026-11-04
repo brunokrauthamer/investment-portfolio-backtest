@@ -1,0 +1,65 @@
+{
+  "snapshot_context": {
+    "head": "f218c35e050e196a47e724ee348def9035671601",
+    "code_revision": "f218c35e050e196a47e724ee348def9035671601:sha256:fc8f20234e69450785184f5d7af3a56769108c320d56aa7fd7cb875ade042192",
+    "acquisition_command": ".\\backend\\.venv\\Scripts\\python.exe -m backend.src.internet_data_getter --data-dir data --getter selic",
+    "run_result": "saved; exit 0; 3977 observations",
+    "retrieved_at": "2026-11-03T21:42:42Z"
+  },
+  "artifacts": {
+    "csv": "data/selic/source/selic_sgs_11.csv",
+    "csv_bytes": 79566,
+    "csv_sha256": "b9f3d96ac8504f77bcc08fdbe3024eb2e760c9e8190a8fba726a20ad79414688",
+    "manifest": "data/selic/manifest.json",
+    "source_url": "https://www3.bcb.gov.br/sgspub/consultarvalores/consultarValoresSeries.do?method=consultarGraficoPorId&hdOidSeriesSelecionadas=11",
+    "dataset_url": "https://dadosabertos.bcb.gov.br/dataset/11-taxa-de-juros---selic",
+    "series_id": 11,
+    "unit": "% p.d.",
+    "license_listed_by_bcb": "Open Data Commons Open Database License (ODbL)",
+    "requested_start": "2011-01-01",
+    "requested_end": "2026-11-03",
+    "first_observation": "2011-01-03",
+    "last_observation": "2026-11-03",
+    "reported_count": 3977,
+    "observation_count": 3977,
+    "previous_versions": []
+  },
+  "representative_live_bcb_comparisons": {
+    "independent_qa_evidence": "evidence/qa-initial-3-live-cli.txt",
+    "note": "The independently browsed first/middle/last BCB observations recorded by QA were compared against these active CSV entries.",
+    "samples": [
+      {
+        "date": "2011-01-03",
+        "csv_rate": "0.040239",
+        "bcb_displayed_rate": "0,040239"
+      },
+      {
+        "date": "2018-09-28",
+        "csv_rate": "0.024620",
+        "bcb_displayed_rate": "0,024620"
+      },
+      {
+        "date": "2026-11-03",
+        "csv_rate": "0.050788",
+        "bcb_displayed_rate": "0,050788"
+      }
+    ]
+  },
+  "checks": {
+    "csv_exists": true,
+    "manifest_exists": true,
+    "utf8_no_bom": true,
+    "headers_exact": true,
+    "rates_are_decimal_text": true,
+    "dates_strictly_increasing_unique": true,
+    "sha256_matches_manifest": true,
+    "count_matches_manifest": true,
+    "coverage_matches_manifest": true,
+    "requested_range_matches": true,
+    "source_identity_matches": true,
+    "license_recorded": true,
+    "retrieval_timestamp_utc": true,
+    "no_backup_created_for_first_save": true,
+    "no_pending_transaction_or_lock": true
+  }
+}

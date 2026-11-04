@@ -108,4 +108,3 @@ class B3IbovespaClient:
             raise DownloadError(f"year {year}: B3 response is not valid Base64") from exc
         validate_csv(content, year)
         return content
-
