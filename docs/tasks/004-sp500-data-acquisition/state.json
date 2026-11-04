@@ -1,0 +1,939 @@
+{
+  "schema_version": 1,
+  "state_version": 19,
+  "task_id": "004",
+  "task_slug": "sp500-data-acquisition",
+  "stage": "awaiting_correction_approval",
+  "spec_revision": {
+    "id": "s001",
+    "sha256": "cccf81d1ca9ab50f7939f21ee40f88d0ccf5676203814385f670de4c40c00d67"
+  },
+  "plan_revision": {
+    "id": "p002",
+    "sha256": "180ead1e0c3a9510666e886321a1f0b1d1d00bd4488a398f88c85c6ceeae5ad8"
+  },
+  "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0",
+  "baseline_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0",
+  "baseline_worktree_status": "At the implementation baseline, the interaction log was modified and the task-record directory was untracked; both are excluded from the code snapshot. A subsequent commit since discovery changed only the interaction log.",
+  "model_policy": "correction",
+  "correction_cycle": 1,
+  "model_switch_reason": "Three initial implementation/review rounds exhausted. Independent round 3 review and resumed QA reproduced the four open implementation defects SP500-R3-01 through SP500-R3-04 on the same snapshot.",
+  "review_rounds": {
+    "initial": 3,
+    "correction": 0
+  },
+  "limits": {
+    "rounds_per_cycle": 3,
+    "correction_cycles": 1
+  },
+  "state_writer": "tech-lead-correction",
+  "active_assignments": [],
+  "implementation": {
+    "status": "completed",
+    "evidence": [
+      {
+        "kind": "tdd",
+        "path": "verification.md",
+        "summary": "Meaningful red/green checkpoints, setup-failure distinction, and focused/full final green results recorded."
+      },
+      {
+        "kind": "focused_tests",
+        "command": ".\\backend\\.venv\\Scripts\\python.exe -m unittest discover -s backend/src/internet_data_getter/tests -p test_sp500_acquisition.py",
+        "result": "28 tests passed"
+      },
+      {
+        "kind": "full_tests",
+        "command": ".\\backend\\.venv\\Scripts\\python.exe -m unittest discover -s backend/src/internet_data_getter/tests",
+        "result": "105 tests passed"
+      },
+      {
+        "kind": "live_acquisition_metadata",
+        "path": "data/sp500/manifest.json",
+        "summary": "3,983 observations, 2011-01-03 through 2026-11-03; requested through 2026-11-04; CSV SHA-256 16a20e865a738b45fd7bdfc7214a650a1d79921d44b01b7d6d71c67d04587a55"
+      },
+      {
+        "kind": "snapshot",
+        "path": "evidence/final-snapshot.json",
+        "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:067a8f4b05b21f6f765a50ddf3b406e6d812f92b58e33b2b327dba18098e76a2"
+      },
+      {
+        "kind": "diff_check",
+        "command": "git diff --check",
+        "result": "No whitespace errors; only line-ending conversion warning for docs/agent-log/LOG.md"
+      },
+      {
+        "kind": "round_2_tdd",
+        "path": "verification.md",
+        "summary": "Observed 18 behavioral failures and one uncaught KeyError in the 37-test pre-fix focused run; final 38-test focused suite passed. Per-finding red/green and R1-08 documentation-only evidence recorded."
+      },
+      {
+        "kind": "round_2_focused_tests",
+        "command": ".\\backend\\.venv\\Scripts\\python.exe -m unittest discover -s backend/src/internet_data_getter/tests -p test_sp500_acquisition.py",
+        "result": "38 tests passed"
+      },
+      {
+        "kind": "round_2_full_tests",
+        "command": ".\\backend\\.venv\\Scripts\\python.exe -m unittest discover -s backend/src/internet_data_getter/tests",
+        "result": "115 tests passed"
+      },
+      {
+        "kind": "active_pair_validation",
+        "path": "data/sp500/manifest.json",
+        "result": "Sp500FileStore.load validated 3,983 rows from 2011-01-03 through 2026-11-03; 75,697 CSV bytes; SHA-256 16a20e865a738b45fd7bdfc7214a650a1d79921d44b01b7d6d71c67d04587a55."
+      },
+      {
+        "kind": "documentation_check",
+        "command": ".\\backend\\.venv\\Scripts\\python.exe -m backend.src.internet_data_getter fetch-sp500 --help",
+        "result": "Exit 0; inclusive --start-date and --end-date flags listed. Updated README guidance for default all-getters inclusion and Python/CLI date entry points."
+      },
+      {
+        "kind": "round_2_snapshot",
+        "path": "evidence/developer-round-2-snapshot.json",
+        "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:58c626d3743bed813024e026fb0bb1b6e63cb24ef89a7792ddcd7c404ed489a3"
+      },
+      {
+        "kind": "round_2_diff_check",
+        "command": "git diff --check",
+        "result": "No whitespace errors; existing LOG.md line-ending conversion warning only."
+      },
+      {
+        "kind": "round_3_tdd",
+        "path": "verification.md",
+        "summary": "Observed 13 behavioral failures and one error across selection URLs, link pagination, conflicting identities, candidate-pair recovery and rollback-pair recovery before production edits; all regressions pass in the final focused suite."
+      },
+      {
+        "kind": "round_3_focused_tests",
+        "command": ".\\backend\\.venv\\Scripts\\python.exe -m unittest discover -s backend/src/internet_data_getter/tests -p test_sp500_acquisition.py",
+        "result": "44 tests passed"
+      },
+      {
+        "kind": "round_3_full_tests",
+        "command": ".\\backend\\.venv\\Scripts\\python.exe -m unittest discover -s backend/src/internet_data_getter/tests",
+        "result": "121 tests passed"
+      },
+      {
+        "kind": "round_3_active_pair_validation",
+        "path": "data/sp500/manifest.json",
+        "result": "Sp500FileStore.load validated 3,983 rows from 2011-01-03 through 2026-11-03; 75,697 CSV bytes; SHA-256 16a20e865a738b45fd7bdfc7214a650a1d79921d44b01b7d6d71c67d04587a55. No data rewrite."
+      },
+      {
+        "kind": "round_3_snapshot",
+        "path": "evidence/developer-round-3-snapshot.json",
+        "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+      },
+      {
+        "kind": "round_3_diff_check",
+        "command": "git diff --check",
+        "result": "No whitespace errors; existing docs/agent-log/LOG.md line-ending warning only."
+      }
+    ]
+  },
+  "review": {
+    "status": "failed",
+    "spec_revision": "s001",
+    "plan_revision": "p001",
+    "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0",
+    "evidence": [
+      "review.md",
+      "evidence/review-initial-3-before.json",
+      "evidence/review-initial-3-after.json"
+    ]
+  },
+  "qa": {
+    "status": "failed",
+    "spec_revision": "s001",
+    "plan_revision": "p001",
+    "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0",
+    "evidence": [
+      "docs/tasks/004-sp500-data-acquisition/evidence/qa-resume-results.md",
+      "docs/tasks/004-sp500-data-acquisition/evidence/qa-resume-before.json",
+      "docs/tasks/004-sp500-data-acquisition/evidence/qa-resume-after.json",
+      "docs/tasks/004-sp500-data-acquisition/evidence/qa-round-3-reproductions.py",
+      "docs/tasks/004-sp500-data-acquisition/evidence/qa-round-3-active-pair.py"
+    ],
+    "browser": "not_applicable",
+    "verdict": "Failed because eight acceptance criteria failed on four independently reproduced implementation defects and uncovered adverse cases."
+  },
+  "acceptance_results": [
+    {
+      "criterion_id": "AC-001",
+      "status": "pass",
+      "expected": "sp500 is registered, callable and available through shared Python and CLI entry points without import-time requests",
+      "actual": "121-test suite, 44 focused tests and 11 shared entrypoint tests passed; CLI help and available_getters() include sp500.",
+      "evidence": [
+        "verification.md",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    },
+    {
+      "criterion_id": "AC-002",
+      "status": "fail",
+      "expected": "date bounds and final request URL unambiguously identify the selected inclusive interval",
+      "actual": "The client accepted a final response URL with duplicate blank period1, leaving the requested range ambiguous.",
+      "evidence": [
+        "review.md#SP500-R3-03",
+        "evidence/qa-round-3-reproductions.py",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    },
+    {
+      "criterion_id": "AC-003",
+      "status": "fail",
+      "expected": "source page explicitly identifies ^GSPC",
+      "actual": "The parser accepted an AAPL title alongside a ^GSPC heading.",
+      "evidence": [
+        "review.md#SP500-R3-04",
+        "evidence/qa-round-3-reproductions.py",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    },
+    {
+      "criterion_id": "AC-004",
+      "status": "fail",
+      "expected": "malformed observation rows are rejected before data is saved",
+      "actual": "A row missing Close was accepted with its Volume shifted into the adjusted-close field.",
+      "evidence": [
+        "review.md#SP500-R3-01",
+        "evidence/qa-round-3-reproductions.py",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    },
+    {
+      "criterion_id": "AC-005",
+      "status": "fail",
+      "expected": "CSV contains the source adjusted close only",
+      "actual": "The malformed row produced adjusted_close 4286670000, the Volume field.",
+      "evidence": [
+        "review.md#SP500-R3-01",
+        "evidence/qa-round-3-reproductions.py",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    },
+    {
+      "criterion_id": "AC-006",
+      "status": "pass",
+      "expected": "incremental runs request only missing extensions and overlap latest observation",
+      "actual": "Focused suite passed extension, overlap, earlier backfill, dual-window and narrow-range preservation cases.",
+      "evidence": [
+        "backend/src/internet_data_getter/tests/test_sp500_acquisition.py",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    },
+    {
+      "criterion_id": "AC-007",
+      "status": "pass",
+      "expected": "unchanged reruns preserve file bytes and create no backup",
+      "actual": "The no-op test passed with unchanged CSV and manifest and no backup.",
+      "evidence": [
+        "backend/src/internet_data_getter/tests/test_sp500_acquisition.py",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    },
+    {
+      "criterion_id": "AC-008",
+      "status": "fail",
+      "expected": "invalid source rows and ambiguous recovery states do not commit",
+      "actual": "Malformed input was accepted and recovery consumed its journal despite dropping the prior restore reference.",
+      "evidence": [
+        "review.md#SP500-R3-01",
+        "review.md#SP500-R3-02",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    },
+    {
+      "criterion_id": "AC-009",
+      "status": "fail",
+      "expected": "manifest provenance keeps verified backups reachable and request bounds valid",
+      "actual": "Recovery committed a manifest without the exact backup reference, and blank request bounds were accepted.",
+      "evidence": [
+        "review.md#SP500-R3-02",
+        "review.md#SP500-R3-03",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    },
+    {
+      "criterion_id": "AC-010",
+      "status": "fail",
+      "expected": "manifest-listed verified backup can be restored offline after recovery",
+      "actual": "The reproduced recovery removed the prior reference, so restore rejected the verified backup as unlisted.",
+      "evidence": [
+        "review.md#SP500-R3-02",
+        "evidence/qa-round-3-reproductions.py",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    },
+    {
+      "criterion_id": "AC-011",
+      "status": "pass",
+      "expected": "CLI exposes date controls and docs describe usage",
+      "actual": "CLI help, 11 shared entrypoint tests and documentation inspection passed.",
+      "evidence": [
+        "backend/src/internet_data_getter/README.md",
+        "backend/README.md",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    },
+    {
+      "criterion_id": "AC-012",
+      "status": "fail",
+      "expected": "offline fixtures and independent QA cover the approved adverse cases",
+      "actual": "121 tests passed, but QA reproduced four source and recovery defects absent from current suite coverage.",
+      "evidence": [
+        "review.md",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    },
+    {
+      "criterion_id": "AC-013",
+      "status": "pass",
+      "expected": "Yahoo permission statement and source restrictions are recorded",
+      "actual": "Task and acquisition docs record the permission statement and source restriction. Permission remains user-reported.",
+      "evidence": [
+        "state.json",
+        "backend/src/internet_data_getter/README.md",
+        "evidence/qa-resume-results.md"
+      ],
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+    }
+  ],
+  "open_findings": [
+    {
+      "id": "SP500-R1-01",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-007",
+        "AC-009"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/storage.py:448",
+      "consequence": "An unchanged acquisition overwrites the provenance manifest with new last-checked fields, without the verified backup and write-ahead transaction required before replacing a changed manifest. The requirement that an unchanged run creates no backup is satisfied by leaving the pair unchanged.",
+      "reproduction": "Save a fixture at 2026-11-04 UTC, then save identical observations at 2026-11-05 UTC. Status is unchanged, but the manifest bytes change with zero backups and no journal.",
+      "status": "resolved",
+      "source": "reviewer",
+      "resolution_evidence": "Independent initial round 2 checks in review.md and matching evidence/review-initial-2-*.json."
+    },
+    {
+      "id": "SP500-R1-02",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-002",
+        "AC-004",
+        "AC-008",
+        "AC-009"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/source.py:259",
+      "consequence": "The final response URL can identify a narrower Yahoo interval while the result keeps the caller's bounds. A partial subset of the desired history can then be committed under misleading provenance.",
+      "reproduction": "For a request for Jan 3–4, make the mocked Yahoo response's final URL encode Jan 4 only, with one Jan 4 row. `Sp500Acquisition.run` reports `saved`, one observation, and no error.",
+      "status": "resolved",
+      "source": "reviewer",
+      "resolution_evidence": "Independent initial round 2 checks in review.md and matching evidence/review-initial-2-*.json."
+    },
+    {
+      "id": "SP500-R1-03",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-004",
+        "AC-008"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/source.py:143",
+      "consequence": "Explicit pagination can be silently accepted. Detection recognizes only Show/Load More text or aria-label and is skipped entirely when a table is absent and a no-data message matches.",
+      "reproduction": "Append `<a rel=\"next\" href=\"?page=2\">Next</a>` to a valid history fixture. The parser accepts both rows. An otherwise valid no-data page with `<button>Show More</button>` is also accepted as an empty result.",
+      "status": "resolved",
+      "source": "reviewer",
+      "resolution_evidence": "Independent initial round 2 checks in review.md and matching evidence/review-initial-2-*.json."
+    },
+    {
+      "id": "SP500-R1-04",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-003",
+        "AC-008"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/source.py:169",
+      "consequence": "Substring matching accepts a different symbol as `^GSPC`; those observations can be recorded as the requested S&P 500 data.",
+      "reproduction": "Replace `^GSPC` in both the title and heading of the normal fixture with `^GSPCX`. The parser returns two observations without an error.",
+      "status": "resolved",
+      "source": "reviewer",
+      "resolution_evidence": "Independent initial round 2 checks in review.md and matching evidence/review-initial-2-*.json."
+    },
+    {
+      "id": "SP500-R1-05",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-004",
+        "AC-008"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/source.py:186",
+      "consequence": "A date-like incomplete row containing the word Dividend is silently discarded before structural validation, even without a recognizable corporate-action row. Date-like rows using header cells are also ignored when no td is present.",
+      "reproduction": "Add `<tr><td>2011-01-03</td><td>Dividend</td></tr>` inside the normal table body. The malformed row is silently discarded and the remaining two observations are accepted.",
+      "status": "resolved",
+      "source": "reviewer",
+      "resolution_evidence": "Independent initial round 2 checks in review.md and matching evidence/review-initial-2-*.json."
+    },
+    {
+      "id": "SP500-R1-06",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-008",
+        "AC-009"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/storage.py:170",
+      "consequence": "The active pair is treated as valid even when required request provenance is missing or contradicts itself. Hash validation protects CSV bytes only, and currently cannot detect a false date-window URL, a missing window list, or a non-timestamp value.",
+      "reproduction": "After saving a valid fixture, change only one manifest field at a time: set `requested_windows` to `[]`; set `retrieved_at` to `2026-11-04Z`; change a window's URL to use another day's Unix bounds; or set `requested_start`/`requested_end` to disagree with the windows. Each invalid variant was accepted by `load()`.",
+      "status": "resolved",
+      "source": "reviewer",
+      "resolution_evidence": "Independent initial round 2 checks in review.md and matching evidence/review-initial-2-*.json."
+    },
+    {
+      "id": "SP500-R1-07",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-008",
+        "AC-009",
+        "AC-010"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/storage.py:375",
+      "consequence": "Recovery can complete and delete an invalid write-ahead record for an update even though its required prior version is no longer recoverable. The backup is checked only if the optional-looking `backup` member exists, regardless of the non-null old pair hashes.",
+      "reproduction": "On a temporary store, simulate a manifest write interruption after the CSV is replaced. Remove the `backup` member of the pending record and remove the paired backup files. `load()` commits the new manifest, returns two rows, and deletes the pending record. It should stop and preserve the ambiguous state.",
+      "status": "resolved",
+      "source": "reviewer",
+      "resolution_evidence": "Independent initial round 2 checks in review.md and matching evidence/review-initial-2-*.json."
+    },
+    {
+      "id": "SP500-R1-08",
+      "severity": "low",
+      "blocking": false,
+      "criterion_ids": [
+        "AC-001",
+        "AC-011"
+      ],
+      "location": "backend/src/internet_data_getter/README.md:3",
+      "consequence": "Shared usage still names only IFIX, IBOVESPA and Selic as registered getters, omits the dedicated Python getter and its dates, and backend/README.md says `sp500` runs only when selected even though the all-getters command includes it.",
+      "reproduction": "Compare the opening shared instructions and backend README with `available_getters()`, `acquire_sp500` and shared `main()`.",
+      "status": "resolved",
+      "source": "reviewer",
+      "resolution_evidence": "Independent initial round 2 checks in review.md and matching evidence/review-initial-2-*.json."
+    },
+    {
+      "id": "SP500-R2-01",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-003",
+        "AC-004",
+        "AC-008",
+        "AC-009"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/source.py:102",
+      "consequence": "URL validation confirms the endpoint and dates but ignores explicit changes to the requested daily history options. A redirect selecting a coarser interval can pass page validation and label sparse observations as daily data. The shared manifest validation also accepts that changed URL.",
+      "reproduction": "Build the normal Yahoo URL and replace only `interval=1d` with `interval=1mo`. Return the changed URL and otherwise valid in-range history HTML from the mocked opener. `YahooFinanceClient.fetch` returns observations instead of rejecting the changed interval. Retain compatibility for harmless query reordering or unrelated redirect parameters.",
+      "status": "resolved",
+      "source": "reviewer",
+      "resolution_evidence": "Independent initial round 3 checks in review.md and matching evidence/review-initial-3-*.json."
+    },
+    {
+      "id": "SP500-R2-02",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-004",
+        "AC-008"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/source.py:171",
+      "consequence": "Pagination detection now handles anchor and button controls but ignores a standard document link explicitly declaring the next page. An otherwise structurally valid partial table can be committed.",
+      "reproduction": "Add `<link rel=\"next\" href=\"?page=2\">` before `</head>` in the valid fixture. The parser still accepts both rows. The original anchor and button pagination probes are now rejected.",
+      "status": "resolved",
+      "source": "reviewer",
+      "resolution_evidence": "Independent initial round 3 checks in review.md and matching evidence/review-initial-3-*.json."
+    },
+    {
+      "id": "SP500-R2-03",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-003",
+        "AC-008"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/source.py:161",
+      "consequence": "The parser joins title and heading and accepts a single matching ticker anywhere in the result. An explicit conflicting ticker in one identity field is ignored if the other field mentions `^GSPC`, so the page does not unambiguously identify the requested instrument.",
+      "reproduction": "In the valid fixture, replace only its `<title>` with `<title>Dow Jones (^DJI) Historical Data</title>`, leaving its `^GSPC` heading and table unchanged. The parser accepts the rows. The original ticker prefix/suffix probes are now rejected.",
+      "status": "resolved",
+      "source": "reviewer",
+      "resolution_evidence": "Independent initial round 3 checks in review.md and matching evidence/review-initial-3-*.json."
+    },
+    {
+      "id": "SP500-R2-04",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-008",
+        "AC-009",
+        "AC-010"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/storage.py:442",
+      "consequence": "Recovery chooses a branch using file digests and a structurally valid manifest, before checking the proposed CSV and manifest as a pair. A self-consistent journal with invalid pair metadata overwrites the active manifest and deletes recovery evidence, then `_read_current` discovers the pair cannot be loaded. Validate the applicable pair before replacing metadata or removing the journal.",
+      "reproduction": "With a temporary store, simulate interruption immediately after replacing the CSV during an update. Increase the pending `new_manifest.current.observation_count` by one and update `new_manifest_sha256` to the digest of those serialized bytes, leaving CSV and backup hashes intact. `load()` raises a count mismatch only after overwriting the manifest and removing the pending journal. The original missing or damaged backup cases now reject with all files preserved.",
+      "status": "resolved",
+      "source": "reviewer",
+      "resolution_evidence": "Independent initial round 3 checks in review.md and matching evidence/review-initial-3-*.json."
+    },
+    {
+      "id": "SP500-R3-01",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-008"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/source.py:239",
+      "consequence": "The parser checks whether the Date and Adj Close indexes exist but does not require observation cells to align with the headers. An omitted cell before Adj Close shifts Volume into the adjusted price slot. Volume is a valid-looking numeric string, so the bad row can be persisted as a price.",
+      "reproduction": "In the ordinary seven-column fixture, remove only the Jan 3 Close cell (`<td>1,271.87</td>`). The parser returns Jan 3 adjusted close `4286670000`, the row's volume, instead of rejecting the six-cell row. An observation row with the required columns should match the header structure before a numeric value is interpreted.",
+      "status": "open",
+      "source": "reviewer"
+    },
+    {
+      "id": "SP500-R3-02",
+      "severity": "high",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-008",
+        "AC-009",
+        "AC-010"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/storage.py:441",
+      "consequence": "Recovery verifies the displaced backup's files and digests but does not require the manifest it installs to contain that exact backup reference. It can consume the journal and orphan the previous version from the documented offline restore path even though the prior pair was verified.",
+      "reproduction": "Interrupt an update after replacing the CSV but before replacing the manifest. Remove `new_manifest.current.previous_versions` entries from the pending record and recompute `new_manifest_sha256`, leaving the valid recorded `backup` and its files in place. `load()` commits the new manifest with no backup references, deletes the journal, and a subsequent `restore()` of that exact verified prior CSV fails because the reference is unlisted. The same reference relationship needs to hold for candidate and rollback manifests.",
+      "status": "open",
+      "source": "reviewer"
+    },
+    {
+      "id": "SP500-R3-03",
+      "severity": "medium",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-008",
+        "AC-009"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/source.py:109",
+      "consequence": "Query parsing drops blank values before checking that every required parameter appears once. A final URL and stored provenance can therefore carry ambiguous date or frequency selection even though the validation promises a unique value.",
+      "reproduction": "Append `&period1=` or `&interval=` to the generated URL and use the result as the mocked response's final URL. `YahooFinanceClient.fetch` accepts both variants. A strict duplicate check must count blank values while still allowing unrelated parameters and reordered valid queries.",
+      "status": "open",
+      "source": "reviewer"
+    },
+    {
+      "id": "SP500-R3-04",
+      "severity": "medium",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-003",
+        "AC-008"
+      ],
+      "location": "backend/src/internet_data_getter/sp500/source.py:180",
+      "consequence": "The conflict check only parses caret-prefixed tickers. It accepts explicit incompatible quote identity from a normal non-caret instrument symbol while another identity field contains `^GSPC`.",
+      "reproduction": "Replace only the title with `<title>Apple Inc. (AAPL) Historical Data</title>` and retain the valid `^GSPC` heading and table. The parser accepts the rows. The prior `^DJI` conflict now rejects in both title and heading.",
+      "status": "open",
+      "source": "reviewer"
+    }
+  ],
+  "attempts_without_progress": 0,
+  "approvals": {
+    "specification": {
+      "decision": "approved",
+      "spec_revision": "s001",
+      "spec_sha256": "cccf81d1ca9ab50f7939f21ee40f88d0ccf5676203814385f670de4c40c00d67",
+      "plan_revision": "p001",
+      "plan_sha256": "d8b93812b11fcd5866dbb628bbb5524dd4b8bbe426a439b7850c19a5ce2d9720",
+      "date": "2026-11-04",
+      "timezone": "America/Sao_Paulo",
+      "reference": "User reply in the main chat to the explicit spec and plan approval request."
+    },
+    "correction_plan": null,
+    "final": null
+  },
+  "source_access_decision": {
+    "statement": "I have Yahoo’s express prior permission for automated collection.",
+    "source_terms": "https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html",
+    "verification": "User statement; permission not independently verified."
+  },
+  "next_action": "Await explicit user approval of p002 and its recorded hash against approved s001. No correction pass has been dispatched.",
+  "baseline_snapshot": {
+    "path": "evidence/baseline-snapshot.json",
+    "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:2a0247f9dd796239993c2300e6b78eafc5b1fca1d8f703fba9d960075c9e3f23"
+  },
+  "assignment_history": [
+    {
+      "id": "initial-developer-round-1",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criteria": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007",
+        "AC-008",
+        "AC-009",
+        "AC-010",
+        "AC-011",
+        "AC-012",
+        "AC-013"
+      ],
+      "slice": "Initial implementation, integration, documentation, and approved offline verification",
+      "allowed_files": [
+        "backend/src/internet_data_getter/",
+        "backend/requirements.txt",
+        "README.md",
+        "backend/README.md",
+        "data/README.md",
+        "docs/project-context.md",
+        "docs/architecture/",
+        "docs/tasks/004-sp500-data-acquisition/state.json",
+        "docs/tasks/004-sp500-data-acquisition/verification.md",
+        "docs/tasks/004-sp500-data-acquisition/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_plan": "p001",
+      "input_snapshot": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:2a0247f9dd796239993c2300e6b78eafc5b1fca1d8f703fba9d960075c9e3f23",
+      "writer": "developer",
+      "deliverables": "Integrated implementation, documentation, red-green evidence, snapshot, and handoff",
+      "status": "completed"
+    },
+    {
+      "id": "initial-review-round-1",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criteria": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007",
+        "AC-008",
+        "AC-009",
+        "AC-010",
+        "AC-011",
+        "AC-012",
+        "AC-013"
+      ],
+      "slice": "Independent integrated review of full worktree snapshot",
+      "allowed_files": [
+        "docs/tasks/004-sp500-data-acquisition/review.md",
+        "docs/tasks/004-sp500-data-acquisition/state.json",
+        "docs/tasks/004-sp500-data-acquisition/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_plan": "p001",
+      "input_snapshot": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:067a8f4b05b21f6f765a50ddf3b406e6d812f92b58e33b2b327dba18098e76a2",
+      "writer": "reviewer",
+      "deliverables": "Independent review findings, evidence, before/after snapshots and verdict",
+      "status": "completed"
+    },
+    {
+      "id": "initial-developer-round-2",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criteria": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-007",
+        "AC-008",
+        "AC-009",
+        "AC-010",
+        "AC-011",
+        "AC-012"
+      ],
+      "findings": [
+        "SP500-R1-01",
+        "SP500-R1-02",
+        "SP500-R1-03",
+        "SP500-R1-04",
+        "SP500-R1-05",
+        "SP500-R1-06",
+        "SP500-R1-07",
+        "SP500-R1-08"
+      ],
+      "slice": "Targeted fixes and regression evidence for independent review findings",
+      "allowed_files": [
+        "backend/src/internet_data_getter/",
+        "backend/requirements.txt",
+        "README.md",
+        "backend/README.md",
+        "data/README.md",
+        "docs/project-context.md",
+        "docs/architecture/",
+        "docs/tasks/004-sp500-data-acquisition/state.json",
+        "docs/tasks/004-sp500-data-acquisition/verification.md",
+        "docs/tasks/004-sp500-data-acquisition/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_plan": "p001",
+      "input_snapshot": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:067a8f4b05b21f6f765a50ddf3b406e6d812f92b58e33b2b327dba18098e76a2",
+      "writer": "developer",
+      "deliverables": "Regression reds and greens, fixes, final snapshot, and handoff",
+      "status": "completed"
+    },
+    {
+      "id": "initial-review-round-2",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criteria": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007",
+        "AC-008",
+        "AC-009",
+        "AC-010",
+        "AC-011",
+        "AC-012",
+        "AC-013"
+      ],
+      "findings": [
+        "SP500-R1-01",
+        "SP500-R1-02",
+        "SP500-R1-03",
+        "SP500-R1-04",
+        "SP500-R1-05",
+        "SP500-R1-06",
+        "SP500-R1-07",
+        "SP500-R1-08"
+      ],
+      "slice": "Independent re-review of round 2 complete integrated snapshot",
+      "allowed_files": [
+        "docs/tasks/004-sp500-data-acquisition/review.md",
+        "docs/tasks/004-sp500-data-acquisition/state.json",
+        "docs/tasks/004-sp500-data-acquisition/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_plan": "p001",
+      "input_snapshot": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:58c626d3743bed813024e026fb0bb1b6e63cb24ef89a7792ddcd7c404ed489a3",
+      "writer": "reviewer",
+      "deliverables": "Independent finding dispositions, new findings, before/after snapshots and verdict",
+      "status": "completed"
+    },
+    {
+      "id": "initial-developer-round-3",
+      "role": "developer",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criteria": [
+        "AC-003",
+        "AC-004",
+        "AC-008",
+        "AC-009",
+        "AC-010",
+        "AC-012"
+      ],
+      "findings": [
+        "SP500-R2-01",
+        "SP500-R2-02",
+        "SP500-R2-03",
+        "SP500-R2-04"
+      ],
+      "slice": "Fix independent review round-2 blockers with behavioral regression evidence",
+      "allowed_files": [
+        "backend/src/internet_data_getter/",
+        "backend/requirements.txt",
+        "README.md",
+        "backend/README.md",
+        "data/README.md",
+        "docs/project-context.md",
+        "docs/architecture/",
+        "docs/tasks/004-sp500-data-acquisition/state.json",
+        "docs/tasks/004-sp500-data-acquisition/verification.md",
+        "docs/tasks/004-sp500-data-acquisition/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_plan": "p001",
+      "input_snapshot": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:58c626d3743bed813024e026fb0bb1b6e63cb24ef89a7792ddcd7c404ed489a3",
+      "writer": "developer",
+      "deliverables": "Red/green evidence, focused fixes, integrated snapshot and handoff",
+      "status": "completed"
+    },
+    {
+      "id": "initial-review-round-3",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criteria": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007",
+        "AC-008",
+        "AC-009",
+        "AC-010",
+        "AC-011",
+        "AC-012",
+        "AC-013"
+      ],
+      "findings": [
+        "SP500-R2-01",
+        "SP500-R2-02",
+        "SP500-R2-03",
+        "SP500-R2-04"
+      ],
+      "slice": "Independent re-review of round 3 complete integrated snapshot",
+      "allowed_files": [
+        "docs/tasks/004-sp500-data-acquisition/review.md",
+        "docs/tasks/004-sp500-data-acquisition/state.json",
+        "docs/tasks/004-sp500-data-acquisition/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_plan": "p001",
+      "input_snapshot": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0",
+      "writer": "reviewer",
+      "deliverables": "Independent finding dispositions, new findings, before/after snapshots and verdict",
+      "status": "completed"
+    }
+  ],
+  "interrupted_qa_assignment": {
+    "id": "initial-qa-after-review-exhaustion",
+    "role": "qa",
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "criteria": [
+      "AC-001",
+      "AC-002",
+      "AC-003",
+      "AC-004",
+      "AC-005",
+      "AC-006",
+      "AC-007",
+      "AC-008",
+      "AC-009",
+      "AC-010",
+      "AC-011",
+      "AC-012",
+      "AC-013"
+    ],
+    "slice": "Available independent QA assessment after review-round exhaustion",
+    "allowed_files": [
+      "docs/tasks/004-sp500-data-acquisition/verification.md",
+      "docs/tasks/004-sp500-data-acquisition/state.json",
+      "docs/tasks/004-sp500-data-acquisition/evidence/"
+    ],
+    "input_spec": "s001",
+    "input_plan": "p001",
+    "input_snapshot": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0",
+    "writer": "qa",
+    "deliverables": "Criterion matrix, independent reproductions, before/after snapshots, blockers and QA verdict",
+    "status": "interrupted_before_formal_handoff",
+    "interruption_evidence": [
+      "evidence/qa-round-3-before.json",
+      "evidence/qa-round-3-reproductions.py",
+      "evidence/qa-round-3-active-pair.py"
+    ]
+  },
+  "completed_qa_resume_assignment": {
+    "id": "initial-qa-resume-after-coordinator-interruption",
+    "role": "qa",
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "criteria": [
+      "AC-001",
+      "AC-002",
+      "AC-003",
+      "AC-004",
+      "AC-005",
+      "AC-006",
+      "AC-007",
+      "AC-008",
+      "AC-009",
+      "AC-010",
+      "AC-011",
+      "AC-012",
+      "AC-013"
+    ],
+    "slice": "Available independent QA assessment after review-round exhaustion",
+    "allowed_files": [
+      "docs/tasks/004-sp500-data-acquisition/verification.md",
+      "docs/tasks/004-sp500-data-acquisition/state.json",
+      "docs/tasks/004-sp500-data-acquisition/evidence/"
+    ],
+    "input_spec": "s001",
+    "input_plan": "p001",
+    "input_snapshot": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0",
+    "writer": "qa_resume",
+    "deliverables": "Criterion matrix, independent reproductions, before/after snapshots, blockers and QA verdict",
+    "status": "completed_with_failed_verdict",
+    "handoff_evidence": [
+      "verification.md",
+      "evidence/qa-resume-results.md",
+      "evidence/qa-resume-before.json",
+      "evidence/qa-resume-after.json"
+    ]
+  },
+  "correction_baseline": {
+    "initial_plan_sha256": "d8b93812b11fcd5866dbb628bbb5524dd4b8bbe426a439b7850c19a5ce2d9720",
+    "initial_plan_revision": "p001",
+    "review_evidence": "review.md",
+    "qa_evidence": "evidence/qa-resume-results.md",
+    "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0"
+  }
+}

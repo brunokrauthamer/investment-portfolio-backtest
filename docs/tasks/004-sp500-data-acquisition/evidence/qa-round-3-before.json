@@ -1,0 +1,637 @@
+{
+  "head": "134437fadf082e61161d60f8ad06dc2456a1d0d0",
+  "code_revision": "134437fadf082e61161d60f8ad06dc2456a1d0d0:sha256:1ef41338f1050201f21109c961f8b9e1e37f50c0a23d5fcfa253e2331fb485b0",
+  "excluded_records": [
+    "docs/tasks/",
+    "docs/agent-log/"
+  ],
+  "record_exceptions": [
+    "AGENTS.md"
+  ],
+  "files": [
+    {
+      "path": ".agents/skills/feature-tdd/SKILL.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "6bb861fc98cea9d3fb5af7e369f5b52e7748838807e9da69a04356d60411bb4f"
+    },
+    {
+      "path": ".agents/skills/feature-tdd/agents/openai.yaml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "46dda1e507b234f93f94e235c76549f65779e9da44551ab8cfdfa41fc7f4bb15"
+    },
+    {
+      "path": ".agents/skills/feature-workflow/SKILL.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "197ce57a283c9bb0c70bb885509e0a3653976fd269fcb7013ed1c3f50d690dd6"
+    },
+    {
+      "path": ".agents/skills/feature-workflow/agents/openai.yaml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "c21b05202b08fd7cf5317a64c155f736ee6a80696328f9095eebb8e4c306d649"
+    },
+    {
+      "path": ".agents/skills/feature-workflow/references/task-records.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "6d45c7f96132e202c550ed6368d7fd3017f9fb4358e0ca3d7dbfdaabd47253f2"
+    },
+    {
+      "path": ".agents/skills/feature-workflow/scripts/snapshot.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "2d73f9e944dab8c6fdf60c52fe4855be76e3af382ae5446becf77bccefd6cadd"
+    },
+    {
+      "path": ".agents/skills/maintain-agent-guidance/SKILL.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "843bc9a892534513872f38c707f6e2acb571e0dd43ccebef591ec021b1d2f5a4"
+    },
+    {
+      "path": ".agents/skills/maintain-agent-guidance/agents/openai.yaml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "0b2db14e4dec630d7a4244ef024d4482e7e035e723c110b56eaa4410cada1618"
+    },
+    {
+      "path": ".codex/agents/developer-correction.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "c66e2760e3f060d0e220d337e6ed238667e3e2e7697d79f6915b57065daccd44"
+    },
+    {
+      "path": ".codex/agents/developer.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "72568a41b2303639ff13a89f595a82a0e04c5230f0c2b545faf09afffd6bafdd"
+    },
+    {
+      "path": ".codex/agents/qa.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "afa2ecfca505d4749761967983c6423742adbb7403017d4e9a4c21cf00dc49f4"
+    },
+    {
+      "path": ".codex/agents/reviewer.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "f0b4987fe879ee7b815f6cf83f81700352ab6845d900f17b9c8347c36fc85b36"
+    },
+    {
+      "path": ".codex/agents/tech-lead-correction.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "de69875887f002a0aa4f0db731bae3d748033987c892019279f66f6e7fb430bd"
+    },
+    {
+      "path": ".codex/agents/tech-lead.toml",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "50fc2bbce3e60007346dd0d97003642a2750af00ac248d0da11ee7f92085d1f1"
+    },
+    {
+      "path": ".codex/hooks.json",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "7baaa618c42959ff04936dc10ee8a562d9335593157f6b5af9c79606d9509da6"
+    },
+    {
+      "path": ".gitignore",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "bda76c01b972e45674d95b8955c4634a77b17e7fca2c80680df738b1e03d80af"
+    },
+    {
+      "path": "AGENTS.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "05ad9aef93dd5c409cb5dcdb1689bb559dcefcc7a72cacd1127682a80cca35f3"
+    },
+    {
+      "path": "README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "744436c750057316aafdb9366eac4eeb07aea7834c879980f0e658435699bca0"
+    },
+    {
+      "path": "backend/AGENTS.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "d7720b1936feda707bc03ab07291f9a237d9a426d1f9f8e454f3298f618a4a92"
+    },
+    {
+      "path": "backend/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "07860d289c0e23e4a275fa17e95101e11b95e66e9c3e6da5a94d365e0853d6cb"
+    },
+    {
+      "path": "backend/requirements.txt",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "97dc4eea11d2dd2eb368720cfcde392dd4dd85e19f912298c8700acb99f96006"
+    },
+    {
+      "path": "backend/src/api/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "c273cfa2f06844ffa86e9b0a363935ba0dc8a87b8517ea04a115db3d7588a358"
+    },
+    {
+      "path": "backend/src/domain/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "13406b348a29e13edabf7accbe6bbca0f369413068d3ddd2f0fe55685a87a1a1"
+    },
+    {
+      "path": "backend/src/internet_data_getter/AGENTS.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "eadaf4dfa7b938edded354fb1c7e3629d19cc08f221270c84209da8a3a81a9c5"
+    },
+    {
+      "path": "backend/src/internet_data_getter/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "f89379aaf5bdf8a10d3d7f71a1ccaf2c5a6267f105ad80037dfd3382fe9d01e2"
+    },
+    {
+      "path": "backend/src/internet_data_getter/__init__.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "7a572eed05319d5ae1da6e7e9cf590933610dcd4661d112d4cb9976837ff2e76"
+    },
+    {
+      "path": "backend/src/internet_data_getter/__main__.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "23ee655e568d7726b6c9937b8f6f6847beb800c69dc8f115dc5231227b48107b"
+    },
+    {
+      "path": "backend/src/internet_data_getter/b3_storage.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "dc3855a72a204724540b6969f22ff2956be7003facbc551e7974eb40aeb98b0b"
+    },
+    {
+      "path": "backend/src/internet_data_getter/ibovespa/__init__.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "6cfcc90e132c722e41ec450cd136a644b8baade4ce41f7a24b83efed1ebd2a3b"
+    },
+    {
+      "path": "backend/src/internet_data_getter/ibovespa/b3_source.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "da1b14b94f6057ae2bd068bb9ffc35bcf143ebccfae5ef4c0e6ee1e7f1f96fb0"
+    },
+    {
+      "path": "backend/src/internet_data_getter/ibovespa/cli.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "785946141551538b282f54d01a55bb59ab847ccde705b5d95d5075336bd7ffce"
+    },
+    {
+      "path": "backend/src/internet_data_getter/ibovespa/service.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "216e6160a129e8e0a263a66552fb2ebee0257b920fbbd6a582d964fba632fbb2"
+    },
+    {
+      "path": "backend/src/internet_data_getter/ibovespa/storage.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "8c0700e470e763bd148c83ed3e431aa2c63097f31093eaa4acb99abb35053c0b"
+    },
+    {
+      "path": "backend/src/internet_data_getter/ifix/__init__.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "0f02282e0aa3e1f1547f01fa94c6f051915de434c7b139707fba5509a59ebced"
+    },
+    {
+      "path": "backend/src/internet_data_getter/ifix/b3_source.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "75e129259a2a8a117a78d411db1ea43940d19ce429d805133f9988ed409aa91d"
+    },
+    {
+      "path": "backend/src/internet_data_getter/ifix/cli.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "cca390a773064e9f54a41cee1084eb8f3c4de966b2fae59a5315eaecac6fe026"
+    },
+    {
+      "path": "backend/src/internet_data_getter/ifix/service.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "b2d2a5b73ccd4271fb6458e8ab7b10cf6fbb155a734be8db403e5a623278f5cf"
+    },
+    {
+      "path": "backend/src/internet_data_getter/ifix/storage.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "daffbd349aea9f1f25fb47bde4bd470ef9ff3de6c1903193a72e61a83a306289"
+    },
+    {
+      "path": "backend/src/internet_data_getter/selic/__init__.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "0011311d3aa1ecabde5aef195d2221ad1c8c15e89cacde4e7b852a3c2cd4add1"
+    },
+    {
+      "path": "backend/src/internet_data_getter/selic/cli.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "b766f3c5e1624d1096955c4e23e8563fdbfad3d9cb440363a9b8ca32e69b750f"
+    },
+    {
+      "path": "backend/src/internet_data_getter/selic/service.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "54784ba800a51c9290e7bd5900b692b69316a860b1221545bf224619da979c2e"
+    },
+    {
+      "path": "backend/src/internet_data_getter/selic/source.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "74f34e553a15ef41e692510e342196b5ef442d62818c5c5a363f8f372994a28b"
+    },
+    {
+      "path": "backend/src/internet_data_getter/selic/storage.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "60320bd9c836e989d3428057bb305e16bd8f5bc94e07a2e656ca785980dcd009"
+    },
+    {
+      "path": "backend/src/internet_data_getter/sp500/__init__.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "ae01ce500890d9952256cae820077001bef39b4eabf14d9e4897753e2e4541f6"
+    },
+    {
+      "path": "backend/src/internet_data_getter/sp500/cli.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "89917cf84c83661ee4f82cab5c196c41181c6c301cf5a7d0ffc54cc678636031"
+    },
+    {
+      "path": "backend/src/internet_data_getter/sp500/service.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "80c19551e0cd315f93d1a690b0b8770a961c96c3e6846bad2276e2b830fb394b"
+    },
+    {
+      "path": "backend/src/internet_data_getter/sp500/source.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "51affb498489de6fb76fea33ce70db480dec8dbf88be5576ce6f435572b0e48b"
+    },
+    {
+      "path": "backend/src/internet_data_getter/sp500/storage.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "8dfd3bc2dbf6010379cd8d47612ef1ff5e08b73227598258314ba91123f1b531"
+    },
+    {
+      "path": "backend/src/internet_data_getter/tests/__init__.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "34b0c20d51041d143bfcbeac202ef9c04f4f9a06a00fbf0573cfb728b45904ba"
+    },
+    {
+      "path": "backend/src/internet_data_getter/tests/test_getter_public.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "e7f6d261d9d902ad617f855b69103def931825de2ea1ee255bbb9d41dfbbf344"
+    },
+    {
+      "path": "backend/src/internet_data_getter/tests/test_ibovespa_acquisition.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "cd09690c99c7a50e08f7bbf9e8e33e2aba55aed4371b5a12c030b80e0c9045ec"
+    },
+    {
+      "path": "backend/src/internet_data_getter/tests/test_ifix_acquisition.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "c3ccbb473aa43e8b7777f778b9e7cb3f9abd95425caac3163479b6936f67c713"
+    },
+    {
+      "path": "backend/src/internet_data_getter/tests/test_selic_acquisition.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "4fe1b6fa0c3193beb492f7494b6ac4e3494a2d88d3ea7bd0681e349114b8d744"
+    },
+    {
+      "path": "backend/src/internet_data_getter/tests/test_sp500_acquisition.py",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "8ecd14e4b1c9cec59a9e01cd67c76ecbe136dcd69a346b889f4579e3f7a1c639"
+    },
+    {
+      "path": "data/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "b50dfd4bd9d82906b213371bc710b40b456204286a89466dfd4d802f1633f50b"
+    },
+    {
+      "path": "data/ibovespa/manifest.json",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "9c151e479570e4a546358106d48497b8f2759e8bafc5f730e7f511e7d5c34787"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2011_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "c232d0921337496042d9241f7ac0a78db625b6c9de0eb0ca31e69aa4da41df9f"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2012_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "060faed25b069d7a6d9cba17a5d7cf7f86d933ebb015125a9663205a4f763e6f"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2013_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "a0d1412106d3772a73c5a8194eeacdd3ffe7e5dd2517f1ed5dfc3839dfae10e9"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2014_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "63c4ca427cd478df2b58a97c0cb65aa3a82926ddd65c3d3f415520f8a04d7b07"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2015_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "62da8b746762feb27f15eef3d1e9c7c1fec609af1aa89365fdc43714f094b1f2"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2016_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "89f43fb08f83eb3e36865a3adae1affff5591197d452dac70721b0760ff4493e"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2017_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "e4e921e24676fdcc45b0d2fa0fcaefe79a458199ed0c3d30c066005b3aba44b7"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2018_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "979d195b1054668239e30717035d0deb6c6c5175e435641d6823e8afccbfcf6d"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2019_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "d60dd669465b8bdb894122a885f2e6a6a6a4cf8d2265b9a3e8db08bc61990796"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2020_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "96f4e9bdfba52cd374d4a368a7064f84543beff5eed415c4507f7e4b999a5e23"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2021_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "415dee91c99b8acd30b1d7704a6dc80ff77ba5f4d3fdfa401f9d4dc080c7b7d1"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2022_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "6382dc0974cd319b9a566807f2517c5b328d0ce0cf36e498a1019e59b656f878"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2023_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "8477a1c881ed4d2aee1dcadd48c075815dfa0ec314df881c220ac30d5dfccc4f"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2024_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "50262a0003987d58ff0650faa2580241e0fe84dcf38b243cda29dbcaf9fe3420"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2025_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "4a1388484f66b2418b4a4e6d2b9a5c1812eb25ae47624651dc2dd3e8357ff270"
+    },
+    {
+      "path": "data/ibovespa/source/IBOVESPA_2026_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "74f1046d61fc6011cbf0ff62873a9475435778a1247ecc3e8b1e0aeedb9450b9"
+    },
+    {
+      "path": "data/ifix/manifest.json",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "88872e6c0362e5bbdf79a3328f424e6305f21d78bed5451e3df352f12dce2c69"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2011_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "8b338666afc34865d00af732898ea2cd58cdc1bc8b1fe535983fffe2bf4a8d20"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2012_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "70e0e299197ac2dc99af19fb2a4ebc0ad11bbddd9aa07c32fb7e04036f9fa7ef"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2013_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "1680b46191e169b9ae0795303ec89fbb35bd78facdba837127986650372ee9f5"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2014_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "fcf72a2e8b5a0304e331e29e64cafd4cce791df39e5f056efe816d176d53ab8d"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2015_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "32de20aa166ac50e53b5e62589dce4613eb2d72a041446f5db785d38119b67d5"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2016_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "8305869f43fd832b0cdc32bcb0d753c457ee9e6b090fcaee5d4ea68ed904e1e4"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2017_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "85a1a50a3008d33831fdf83551ec489635ba6e0f47a24c2a05c7aa92d8c35938"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2018_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "3bc5292ff0de82bc9347b11c697e63982028d3694c06388689b11209df40ce0a"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2019_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "baf5758fa2934b7dc68e37a255d7102a1a5d74275a6f19c69812e15217de6ed8"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2020_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "93748f6402c6f558a410515914cdec1a26394e79d0ef50e23e5ef12f6e3451e9"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2021_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "3251fd1c20f661051cbf64c1910957d6cd566ae986ac0fbeb21496b98cd6723d"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2022_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "8085aedf1ef36437315a02521cb6e1ce9e892c849bd0656e55cc10f00630175b"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2023_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "d0fdd4d23da721aea04cf901786af38b3beacb34fc93a8798c7b5e4e76e049c7"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2024_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "a5ee3f7f1fb5e119fb9967bb6f2c917ff15a0603fdd77a6098e7883af1e771d4"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2025_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "4b80aad9131e6c003e3b954edb27e85b204060825531c301ceb13fe1ada62255"
+    },
+    {
+      "path": "data/ifix/source/IFIX_2026_Evolucao_Diaria.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "48aed9dcc56b44d6b651a4bb20b937606919121ecddffbebb08835b6dcc1050f"
+    },
+    {
+      "path": "data/selic/manifest.json",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "81415aba9de16b1dd7947dbe0f771fc693cc34d9eab9016d08fb0e235e0b0f70"
+    },
+    {
+      "path": "data/selic/source/selic_sgs_11.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "37a7c16cbbf21bb6a8715d89186ae06ab920d4b3f0aec1bd66fdf7ad0d126d2f"
+    },
+    {
+      "path": "data/sp500/manifest.json",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "76fb6865a9903adc96eed5fe2c58222951a17888dd9cb1b80b7c9d5b66d3d13b"
+    },
+    {
+      "path": "data/sp500/source/sp500_yahoo.csv",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "16a20e865a738b45fd7bdfc7214a650a1d79921d44b01b7d6d71c67d04587a55"
+    },
+    {
+      "path": "docs/architecture/internet-data-getter.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "e0531a0879a6f122cc65b4f35fed6eda455ee778c658599fb1d094a2809d1bde"
+    },
+    {
+      "path": "docs/project-context.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "04906a6a88fd3a0595ba5375ac7f3d06560e073ff07e72617ad8a1d06bc817a9"
+    },
+    {
+      "path": "docs/tasks/AGENTS.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "55f019aa06b2052a149ceaa1c87e66980da80fed89cf755d52ec4ac7e87f9f6a"
+    },
+    {
+      "path": "frontend/AGENTS.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "487ee5a3ccedffaa423633ef660a3c58ec03ac9cc15b0e702cd224a5c72401fe"
+    },
+    {
+      "path": "frontend/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "feb4da8fc421635abb01f78b9e511d38f7cb5af0120b3458a149fcc1ff2cbe99"
+    },
+    {
+      "path": "frontend/src/assets/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "1976db744a32ed999cb1d7f496cd0485711e64b1e85a918692868067876e38bc"
+    },
+    {
+      "path": "frontend/src/components/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "dd53bf6d6acc7b3363debc0a5ec794923eb2082c2d196d85e74b37095ada9f74"
+    },
+    {
+      "path": "frontend/src/pages/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "8f986364d07efb598a0db52c56c0b787c89703a3a7e133ce20f81187912239bb"
+    },
+    {
+      "path": "frontend/src/services/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "13ce0b5fa52e2fa81f83a56c1d8e0406ca3217b1f521b94d3781be5825dabd26"
+    },
+    {
+      "path": "frontend/src/shared/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "7d65bf8d677249e12abbba433431221dc797f23ec623bacb2dd0e2dfe36080e4"
+    },
+    {
+      "path": "frontend/src/store/README.md",
+      "kind": "file",
+      "mode": 438,
+      "sha256": "60015105f02e0772624292085945b4216795d172b2a58b2ec2b859d5539890ec"
+    }
+  ]
+}

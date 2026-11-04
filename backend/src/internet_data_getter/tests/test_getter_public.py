@@ -4,9 +4,10 @@ from unittest.mock import patch
 class GetterPublicTests(unittest.TestCase):
     def test_public_entry_point_is_available_without_network_on_import(self):
         with patch("urllib.request.urlopen", side_effect=AssertionError("unexpected network")):
-            from backend.src.internet_data_getter import acquire_ifix, acquire_ibovespa
+            from backend.src.internet_data_getter import acquire_ifix, acquire_ibovespa, acquire_sp500
             self.assertTrue(callable(acquire_ifix))
             self.assertTrue(callable(acquire_ibovespa))
+            self.assertTrue(callable(acquire_sp500))
 
     def test_public_entry_point_uses_requested_data_directory(self):
         from backend.src.internet_data_getter import acquire_ifix
@@ -31,6 +32,23 @@ class GetterPublicTests(unittest.TestCase):
             result = acquire_ibovespa("chosen-data")
             store.assert_called_once_with("chosen-data")
             service.assert_called_once_with(client.return_value, store.return_value)
+            self.assertIs(result, service.return_value.run.return_value)
+
+    def test_sp500_is_registered_and_public_entry_point_passes_dates(self):
+        from datetime import date
+        from backend.src.internet_data_getter import acquire_sp500, available_getters
+        from unittest.mock import patch
+
+        self.assertIn("sp500", available_getters())
+        with patch("backend.src.internet_data_getter.sp500.YahooFinanceClient") as client, \
+             patch("backend.src.internet_data_getter.sp500.Sp500FileStore") as store, \
+             patch("backend.src.internet_data_getter.sp500.Sp500Acquisition") as service:
+            result = acquire_sp500("chosen-data", date(2011, 1, 3), date(2026, 11, 4))
+            store.assert_called_once_with("chosen-data")
+            service.assert_called_once_with(client.return_value, store.return_value)
+            service.return_value.run.assert_called_once_with(
+                start_date=date(2011, 1, 3), end_date=date(2026, 11, 4)
+            )
             self.assertIs(result, service.return_value.run.return_value)
 
 
@@ -85,7 +103,7 @@ class GenericGetterTests(unittest.TestCase):
     def test_registered_ibovespa_can_be_selected_from_shared_cli(self):
         from backend.src.internet_data_getter import __main__ as cli
         from unittest.mock import Mock
-        report = Mock(complete=True, saved=[], updated=[], unchanged=[], errors={})
+        report = Mock(complete=True, saved=[], updated=[], unchanged=[], errors={}, added=0, requested_windows=[])
         with patch.object(cli, "acquire", return_value=report) as acquire, \
              patch("builtins.print"):
             self.assertEqual(cli.main(["--data-dir", "chosen-data", "--getter", "ibovespa"]), 0)
@@ -96,10 +114,10 @@ class GenericGetterTests(unittest.TestCase):
     def test_default_shared_cli_runs_all_registered_getters(self):
         from backend.src.internet_data_getter import __main__ as cli, available_getters
         from unittest.mock import Mock
-        report = Mock(complete=True, saved=[], updated=[], unchanged=[], errors={})
+        report = Mock(complete=True, saved=[], updated=[], unchanged=[], errors={}, added=0, requested_windows=[])
         with patch.object(cli, "acquire", return_value=report) as acquire, patch("builtins.print"):
             self.assertEqual(cli.main(["--data-dir", "chosen-data"]), 0)
         names = tuple(item.args[0] for item in acquire.call_args_list)
         self.assertEqual(names, available_getters())
-        self.assertEqual(names, ("ifix", "ibovespa", "selic"))
+        self.assertEqual(names, ("ifix", "ibovespa", "selic", "sp500"))
         self.assertTrue(all(str(item.args[1]) == "chosen-data" for item in acquire.call_args_list))
