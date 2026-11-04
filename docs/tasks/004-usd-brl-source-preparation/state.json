@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "state_version": 10,
+  "task_id": "004",
+  "task_slug": "usd-brl-source-preparation",
+  "stage": "completed",
+  "spec_revision": {
+    "sha256": "94143757148b27d7ecd713acb40d066f917716d6f8c891ff53d401fe3e52362c",
+    "id": "s002"
+  },
+  "plan_revision": {
+    "sha256": "17076c56b8ae90d5b890e2f2797b7072d86dcb32de3e891bd5aa446c1b9e1877",
+    "id": "p002"
+  },
+  "code_revision": "e322d90ff4d70fc3561b0ddb7510ade64bbcc589:sha256:a3ec5e02675212570a1b3e5fc06c363389d5b7e461a3ad4046339d4c0bf318c5",
+  "baseline_revision": {
+    "head": "e322d90ff4d70fc3561b0ddb7510ade64bbcc589",
+    "worktree_status": [
+      "?? docs/tasks/004-usd-brl-source-preparation/"
+    ],
+    "code_revision": "e322d90ff4d70fc3561b0ddb7510ade64bbcc589:sha256:2a0247f9dd796239993c2300e6b78eafc5b1fca1d8f703fba9d960075c9e3f23",
+    "evidence": "evidence/baseline-snapshot.json"
+  },
+  "model_policy": "initial",
+  "correction_cycle": 0,
+  "model_switch_reason": null,
+  "review_rounds": {
+    "initial": 1,
+    "correction": 0
+  },
+  "limits": {
+    "correction_cycles": 1,
+    "rounds_per_cycle": 3
+  },
+  "state_writer": "tech-lead",
+  "active_assignments": [],
+  "implementation": {
+    "evidence": [
+      "data/dolar/source/USD_BRL Dados Históricos (1).csv",
+      "data/dolar/manifest.json",
+      "data/dolar/README.md",
+      "verification.md",
+      "evidence/implementation-snapshot.json",
+      "Output CSV SHA-256 b43e448cdd88c22cf4690c1803cf3c96c4778e03d0ae3dd8c2c43dd2e7f68169",
+      "Manifest SHA-256 4ded5cb557101b8042e513fbaf14e75aef3ee37a0e22e3a7308aef4c8fc67438",
+      "No tests added or run"
+    ],
+    "status": "completed"
+  },
+  "review": {
+    "status": "passed",
+    "spec_revision": {
+      "sha256": "94143757148b27d7ecd713acb40d066f917716d6f8c891ff53d401fe3e52362c",
+      "id": "s002"
+    },
+    "plan_revision": {
+      "sha256": "17076c56b8ae90d5b890e2f2797b7072d86dcb32de3e891bd5aa446c1b9e1877",
+      "id": "p002"
+    },
+    "code_revision": "e322d90ff4d70fc3561b0ddb7510ade64bbcc589:sha256:a3ec5e02675212570a1b3e5fc06c363389d5b7e461a3ad4046339d4c0bf318c5",
+    "evidence": [
+      "review.md",
+      "evidence/review-initial-1-before.json",
+      "evidence/review-initial-1-after.json",
+      "evidence/review-initial-1-artifacts.json"
+    ]
+  },
+  "qa": {
+    "evidence": [
+      "verification.md",
+      "evidence/qa-initial-1-before.json",
+      "evidence/qa-initial-1-after.json",
+      "evidence/qa-initial-1-artifacts.json"
+    ],
+    "browser": "not_assessed",
+    "code_revision": "e322d90ff4d70fc3561b0ddb7510ade64bbcc589:sha256:a3ec5e02675212570a1b3e5fc06c363389d5b7e461a3ad4046339d4c0bf318c5",
+    "plan_revision": {
+      "sha256": "17076c56b8ae90d5b890e2f2797b7072d86dcb32de3e891bd5aa446c1b9e1877",
+      "id": "p002"
+    },
+    "spec_revision": {
+      "sha256": "94143757148b27d7ecd713acb40d066f917716d6f8c891ff53d401fe3e52362c",
+      "id": "s002"
+    },
+    "status": "passed"
+  },
+  "acceptance_results": [
+    {
+      "status": "pass",
+      "plan_revision": {
+        "sha256": "17076c56b8ae90d5b890e2f2797b7072d86dcb32de3e891bd5aa446c1b9e1877",
+        "id": "p002"
+      },
+      "criterion_id": "AC-001",
+      "evidence": "evidence/qa-initial-1-artifacts.json",
+      "code_revision": "e322d90ff4d70fc3561b0ddb7510ade64bbcc589:sha256:a3ec5e02675212570a1b3e5fc06c363389d5b7e461a3ad4046339d4c0bf318c5",
+      "expected": "Two-column projection preserves every selected source value and its order.",
+      "spec_revision": {
+        "sha256": "94143757148b27d7ecd713acb40d066f917716d6f8c891ff53d401fe3e52362c",
+        "id": "s002"
+      },
+      "actual": "All 4,132 rows matched source fields in order; header Data,price; zero mismatches."
+    },
+    {
+      "status": "pass",
+      "plan_revision": {
+        "sha256": "17076c56b8ae90d5b890e2f2797b7072d86dcb32de3e891bd5aa446c1b9e1877",
+        "id": "p002"
+      },
+      "criterion_id": "AC-002",
+      "evidence": "evidence/qa-initial-1-artifacts.json",
+      "code_revision": "e322d90ff4d70fc3561b0ddb7510ade64bbcc589:sha256:a3ec5e02675212570a1b3e5fc06c363389d5b7e461a3ad4046339d4c0bf318c5",
+      "expected": "Approved destination and UTF-8 without BOM; original source remains unchanged.",
+      "spec_revision": {
+        "sha256": "94143757148b27d7ecd713acb40d066f917716d6f8c891ff53d401fe3e52362c",
+        "id": "s002"
+      },
+      "actual": "Output encoding, path, input hash and output hash matched approved expectations and manifest."
+    },
+    {
+      "status": "pass",
+      "plan_revision": {
+        "sha256": "17076c56b8ae90d5b890e2f2797b7072d86dcb32de3e891bd5aa446c1b9e1877",
+        "id": "p002"
+      },
+      "criterion_id": "AC-003",
+      "evidence": "data/dolar/manifest.json; data/dolar/README.md; verification.md",
+      "code_revision": "e322d90ff4d70fc3561b0ddb7510ade64bbcc589:sha256:a3ec5e02675212570a1b3e5fc06c363389d5b7e461a3ad4046339d4c0bf318c5",
+      "expected": "Matching provenance, documented safe initial-import recovery, no invented retrieval or terms.",
+      "spec_revision": {
+        "sha256": "94143757148b27d7ecd713acb40d066f917716d6f8c891ff53d401fe3e52362c",
+        "id": "s002"
+      },
+      "actual": "Artifact and recovery docs inspected; current files/hash/count and metadata agree. Transaction replay and interruption simulation not performed."
+    },
+    {
+      "status": "pass",
+      "plan_revision": {
+        "sha256": "17076c56b8ae90d5b890e2f2797b7072d86dcb32de3e891bd5aa446c1b9e1877",
+        "id": "p002"
+      },
+      "criterion_id": "AC-004",
+      "evidence": "evidence/qa-initial-1-before.json; evidence/qa-initial-1-after.json",
+      "code_revision": "e322d90ff4d70fc3561b0ddb7510ade64bbcc589:sha256:a3ec5e02675212570a1b3e5fc06c363389d5b7e461a3ad4046339d4c0bf318c5",
+      "expected": "No network, scraper, financial calculations, added dependency or backend command.",
+      "spec_revision": {
+        "sha256": "94143757148b27d7ecd713acb40d066f917716d6f8c891ff53d401fe3e52362c",
+        "id": "s002"
+      },
+      "actual": "Snapshot comparison shows only the CSV, manifest and README product artifacts were added."
+    }
+  ],
+  "open_findings": [],
+  "attempts_without_progress": 0,
+  "approvals": {
+    "correction_plan": null,
+    "specification": {
+      "plan": {
+        "sha256": "17076c56b8ae90d5b890e2f2797b7072d86dcb32de3e891bd5aa446c1b9e1877",
+        "id": "p002"
+      },
+      "exact_user_reply": "approved",
+      "exact_time": null,
+      "decision": "approved",
+      "date": "2026-11-04",
+      "specification": {
+        "sha256": "94143757148b27d7ecd713acb40d066f917716d6f8c891ff53d401fe3e52362c",
+        "id": "s002"
+      },
+      "timezone": "America/Sao_Paulo",
+      "reference": "User reply in current chat"
+    },
+    "final": {
+      "code_revision": "e322d90ff4d70fc3561b0ddb7510ade64bbcc589:sha256:a3ec5e02675212570a1b3e5fc06c363389d5b7e461a3ad4046339d4c0bf318c5",
+      "date": "2026-11-04",
+      "plan": {
+        "sha256": "17076c56b8ae90d5b890e2f2797b7072d86dcb32de3e891bd5aa446c1b9e1877",
+        "id": "p002"
+      },
+      "timezone": "America/Sao_Paulo",
+      "reference": "User reply in current chat",
+      "specification": {
+        "sha256": "94143757148b27d7ecd713acb40d066f917716d6f8c891ff53d401fe3e52362c",
+        "id": "s002"
+      },
+      "exact_time": null,
+      "decision": "approved",
+      "exact_user_reply": "approved"
+    }
+  },
+  "next_action": "None; final human approval recorded.",
+  "superseded_revisions": [
+    {
+      "reason": "Record the user-stated follow-up scraper requirements as context without adding scraper implementation to this task.",
+      "spec": {
+        "sha256": "345e6dff59985bc1e049521f42d726fd348d9fcfd9d4a35e9e97ec7b1e28b684",
+        "id": "s001"
+      },
+      "plan": {
+        "sha256": "c55ee6da26ab321c9ebdb1ebf326a4fc2570373324edcfaef4f639b55a441d80",
+        "id": "p001"
+      }
+    }
+  ],
+  "final_audit": {
+    "timezone": "America/Sao_Paulo",
+    "evidence": [
+      "verification.md",
+      "evidence/final-snapshot.json"
+    ],
+    "limitations": [
+      "The one-time write sequence and interruption recovery were not replayed.",
+      "No tests were added or run."
+    ],
+    "snapshot": "e322d90ff4d70fc3561b0ddb7510ade64bbcc589:sha256:a3ec5e02675212570a1b3e5fc06c363389d5b7e461a3ad4046339d4c0bf318c5",
+    "date": "2026-11-04"
+  }
+}
