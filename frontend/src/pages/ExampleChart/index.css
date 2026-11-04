@@ -1,0 +1,260 @@
+.chart-page {
+  align-items: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgb(226 239 246 / 72%), transparent 54%),
+    #f5f7fb;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 100vh;
+  padding: 72px 32px 24px;
+}
+
+.chart-card {
+  background: #ffffff;
+  border: 1px solid #e8edf3;
+  border-radius: 20px;
+  box-shadow: 0 22px 64px rgb(39 57 80 / 8%);
+  max-width: 1040px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.chart-header {
+  align-items: flex-end;
+  border-bottom: 1px solid #edf0f4;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  padding: 34px 40px 26px;
+}
+
+.chart-heading-group {
+  min-width: 0;
+}
+
+.chart-eyebrow {
+  color: #16816f;
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.11em;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.chart-header h1 {
+  color: #1b2738;
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 680;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.chart-description {
+  color: #69778a;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 11px 0 0;
+}
+
+.date-range {
+  align-items: flex-end;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 5px;
+  padding-bottom: 3px;
+}
+
+.date-range-label {
+  color: #8792a1;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.date-range-value {
+  color: #354357;
+  font-size: 14px;
+  font-weight: 620;
+}
+
+.chart-figure {
+  margin: 0;
+  padding: 18px 24px 12px;
+}
+
+.chart-container {
+  min-width: 0;
+  width: 100%;
+}
+
+.chart-container .apexcharts-canvas,
+.chart-container .apexcharts-svg {
+  max-width: 100%;
+}
+
+.chart-axis-caption {
+  color: #526176;
+  display: flex;
+  font-size: 11px;
+  justify-content: space-between;
+  padding: 0 12px 0 52px;
+}
+
+.chart-footer {
+  border-top: 1px solid #edf0f4;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px 40px 24px;
+}
+
+.data-notice {
+  align-items: flex-start;
+  color: #69778a;
+  display: flex;
+  font-size: 12px;
+  gap: 10px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.data-notice strong {
+  color: #354357;
+  font-weight: 680;
+}
+
+.notice-dot {
+  background: #e5a83d;
+  border-radius: 50%;
+  flex: 0 0 7px;
+  height: 7px;
+  margin-top: 5px;
+}
+
+.example-data {
+  border-top: 1px solid #edf0f4;
+  color: #354357;
+  font-size: 13px;
+  padding-top: 14px;
+}
+
+.example-data summary {
+  cursor: pointer;
+  font-weight: 620;
+  width: fit-content;
+}
+
+.example-data summary:focus-visible {
+  border-radius: 3px;
+  outline: 3px solid #8ecabd;
+  outline-offset: 4px;
+}
+
+.example-data-table-wrap {
+  margin-top: 14px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.example-data table {
+  border-collapse: collapse;
+  min-width: min(100%, 460px);
+  text-align: left;
+  width: 100%;
+}
+
+.example-data th,
+.example-data td {
+  border-bottom: 1px solid #edf0f4;
+  padding: 9px 12px;
+}
+
+.example-data th {
+  color: #69778a;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.example-data td:last-child,
+.example-data th:last-child {
+  text-align: right;
+}
+
+.page-footer {
+  color: #8a95a4;
+  font-size: 11px;
+  text-align: center;
+}
+
+.visually-hidden {
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@media (max-width: 620px) {
+  .chart-page {
+    gap: 14px;
+    padding: 24px 12px 20px;
+  }
+
+  .chart-card {
+    border-radius: 16px;
+  }
+
+  .chart-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px 20px 18px;
+  }
+
+  .chart-eyebrow {
+    margin-bottom: 9px;
+  }
+
+  .chart-description {
+    font-size: 13px;
+  }
+
+  .date-range {
+    align-items: flex-start;
+  }
+
+  .chart-figure {
+    padding: 8px 4px 8px;
+  }
+
+  .chart-axis-caption {
+    padding: 0 10px 0 46px;
+  }
+
+  .chart-footer {
+    gap: 14px;
+    padding: 15px 20px 20px;
+  }
+
+  .example-data th,
+  .example-data td {
+    padding: 8px 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-page *,
+  .chart-page *::before,
+  .chart-page *::after {
+    scroll-behavior: auto !important;
+  }
+}
