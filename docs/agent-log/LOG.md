@@ -3835,3 +3835,26 @@ Commits:
 
 The only uncommitted change is [LOG.md](/C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/docs/agent-log/LOG.md), updated as required by AGENTS.md. No tests were run, and nothing was pushed.
 ```
+
+## 2026-11-04
+
+### User message
+
+```text
+I want to create a new service to put all data in same format and shape. It will basically get all indexes and investments data and put in the same table, with the same format. For now, I just want you to help me finding a name for this service
+```
+
+### Assistant response
+
+```text
+My top pick is **Market Data Normalizer**: it clearly says the service takes index and investment data from different sources and puts it into a consistent structure.
+
+Other options:
+
+- **Market Data Standardizer** — emphasizes applying one shared format.
+- **Investment Data Harmonizer** — a broader, more product-like name.
+- **Market Data Consolidator** — emphasizes combining data into one table.
+- **Unified Market Data Service** — direct and easy to understand.
+
+I’d choose **Market Data Normalizer** for clarity, or **Market Data Harmonizer** if you want a more distinctive service name.
+```
