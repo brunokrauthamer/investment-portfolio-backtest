@@ -1,0 +1,24 @@
+test_health_route_rejects_unsupported_method (test_health.HealthRouteTests) ... FAIL
+test_health_route_reports_application_liveness (test_health.HealthRouteTests) ... FAIL
+
+======================================================================
+FAIL: test_health_route_rejects_unsupported_method (test_health.HealthRouteTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[redacted]\backend\src\api\tests\test_health.py", line 23, in test_health_route_rejects_unsupported_method
+    self.assertEqual(response.status_code, 405)
+AssertionError: 404 != 405
+
+======================================================================
+FAIL: test_health_route_reports_application_liveness (test_health.HealthRouteTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "[redacted]\backend\src\api\tests\test_health.py", line 17, in test_health_route_reports_application_liveness
+    self.assertEqual(response.status_code, 200)
+AssertionError: 404 != 200
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.015s
+
+FAILED (failures=2)
+EXIT_CODE=1

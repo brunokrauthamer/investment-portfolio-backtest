@@ -1,0 +1,13 @@
+{
+  "api_imported": "backend.src.api.main",
+  "asgi_startup_completed": true,
+  "guarded_get_health": {
+    "status": 200,
+    "json": {
+      "status": "ok"
+    }
+  },
+  "getter_modules_loaded": false,
+  "external_network_attempts": [],
+  "market_data_file_attempts": []
+}
