@@ -4002,3 +4002,31 @@ The `feature-workflow` correction gate requires explicit approval of p002 before
 ```
 
 **Redaction:** The local user account name in the correction plan link target is replaced with `[redacted]`.
+
+## 2026-11-04 17:27 BRT — Clarify the remaining blocker
+
+### User message
+
+```text
+what is not working?
+```
+
+### Assistant progress
+
+```text
+I’ll distinguish the remaining normalizer defect from the separate environment-limited getter suite, and keep the correction approval gate pending.
+```
+
+### Assistant response
+
+```text
+The main function works on the current valid source data: the generated table has 4,086 rows, matches all 34 source CSVs, and the focused suite passes 12 tests.
+
+The remaining defect is error handling for malformed daily input. If a Selic or S&P 500 CSV row has a date but no value, pandas fills the missing field with `None`; validation then leaks a raw `AttributeError` instead of a `NormalizationError` that names the file and row. The previous output file remains intact. This is the only acceptance criterion still failing (AC-006).
+
+The separate getter regression suite could not run because `beautifulsoup4` is missing and package-index access is blocked. That is an environment limitation, separate from the normalizer defect.
+
+The repair is described in [correction plan p002]([redacted]/investment_portfolio_backtest/docs/tasks/005-index-data-normalization/plan.md). I have not started that repair because the `feature-workflow` correction gate requires explicit approval of p002.
+```
+
+**Redaction:** The local user account name in the correction plan link target is replaced with `[redacted]`.
