@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date, datetime
+import json
 import re
 import time
 from typing import Callable, Iterable
@@ -122,17 +123,20 @@ def validate_observations(
     return values
 
 
-def _table_rows(page) -> tuple[tuple[str, ...], ...]:
+def _table_rows(driver) -> tuple[tuple[str, ...], ...]:
     rows = []
-    for tr in page.locator("#valoresSeries tr").all():
-        cells = tuple(cell.strip() for cell in tr.locator("th, td").all_inner_texts())
+    for tr in driver.find_elements("css selector", "#valoresSeries tr"):
+        cells = tuple(
+            cell.text.strip()
+            for cell in tr.find_elements("css selector", "th, td")
+        )
         if cells:
             rows.append(cells)
     return tuple(rows)
 
 
-def _table_text(page) -> str:
-    return page.locator("#valoresSeries").inner_text()
+def _table_text(driver) -> str:
+    return driver.find_element("id", "valoresSeries").text
 
 
 def _identifies_series_11(metadata: str) -> bool:
@@ -145,13 +149,13 @@ def _identifies_series_11(metadata: str) -> bool:
 
 
 def _verify_values_page(
-    page, expected_period: str, *, require_header: bool = True
+    driver, expected_period: str, *, require_header: bool = True
 ) -> tuple[tuple[Observation, ...], int]:
-    metadata = page.locator("#seriesSelecionadas").inner_text()
+    metadata = driver.find_element("id", "seriesSelecionadas").text
     if not _identifies_series_11(metadata):
         raise SourceError("the BCB result does not identify SGS series 11 Selic")
-    values_text = _table_text(page)
-    rows = _table_rows(page)
+    values_text = _table_text(driver)
+    rows = _table_rows(driver)
     header = next(
         (row for row in rows if len(row) == 2 and _DATE_HEADER.fullmatch(row[0])), None
     )
@@ -173,122 +177,215 @@ def _verify_values_page(
     return parse_observation_rows(rows), parse_reported_count(values_text)
 
 
+def _set_date_filter(driver, element_id: str, formatted_date: str) -> None:
+    field = driver.find_element("id", element_id)
+    field.clear()
+    field.send_keys(formatted_date.replace("/", ""))
+    actual_date = field.get_attribute("value").strip()
+    if actual_date != formatted_date:
+        raise SourceError(
+            f"BCB date filter {element_id} is {actual_date!r}, "
+            f"expected {formatted_date!r}"
+        )
+
+
+def _successful_post_status(driver, method_fragment: str, timeout_ms: int) -> int:
+    """Wait for Selenium's Chrome performance log to confirm the source POST."""
+    from selenium.webdriver.support.ui import WebDriverWait
+
+    requests: dict[str, str] = {}
+
+    def find_response(browser):
+        for entry in browser.get_log("performance"):
+            try:
+                event = json.loads(entry["message"])["message"]
+            except (KeyError, TypeError, ValueError):
+                continue
+            params = event.get("params", {})
+            request_id = params.get("requestId")
+            if event.get("method") == "Network.requestWillBeSent":
+                request = params.get("request", {})
+                url = request.get("url", "")
+                if request.get("method") == "POST" and method_fragment in url:
+                    requests[request_id] = url
+            elif (
+                event.get("method") == "Network.responseReceived"
+                and request_id in requests
+            ):
+                status = int(params.get("response", {}).get("status", 0))
+                if not 200 <= status < 400:
+                    raise SourceError(
+                        f"the BCB {method_fragment} request returned HTTP {status}"
+                    )
+                return status
+        return False
+
+    try:
+        return WebDriverWait(
+            driver, timeout_ms / 1000, poll_frequency=0.1
+        ).until(find_response)
+    except SourceError:
+        raise
+    except Exception as exc:
+        raise SourceError(
+            f"the BCB {method_fragment} POST did not complete successfully: {exc}"
+        ) from exc
+
+
 class SgsSelicClient:
-    """Use the visible SGS chart controls and page through every value row."""
+    """Use Selenium and headless Chrome to scrape every SGS values page."""
 
     def __init__(
         self,
         *,
-        playwright_factory: Callable | None = None,
+        driver_factory: Callable | None = None,
         pacing_seconds: float = DEFAULT_PACING_SECONDS,
         timeout_ms: int = DEFAULT_TIMEOUT_MS,
     ):
-        self._playwright_factory = playwright_factory
+        self._driver_factory = driver_factory
         self._pacing_seconds = pacing_seconds
         self._timeout_ms = timeout_ms
 
     def fetch(self) -> SourceResult:
         try:
-            factory = self._playwright_factory
-            if factory is None:
-                from playwright.sync_api import sync_playwright
-
-                factory = sync_playwright
+            from selenium import webdriver
+            from selenium.webdriver.support.ui import WebDriverWait
         except ImportError as exc:
             raise SourceError(
-                "Playwright is required; install backend requirements and run "
-                "python -m playwright install chromium"
+                "Selenium is required; install backend requirements and ensure Chrome "
+                "is available. Selenium Manager may need network access to resolve "
+                "a matching driver on the first run."
             ) from exc
 
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless=new")
+        options.add_argument("--disable-gpu")
+        options.add_experimental_option(
+            "prefs", {"intl.accept_languages": "en-US,en"}
+        )
+        options.set_capability("goog:loggingPrefs", {"performance": "ALL"})
         observations: list[Observation] = []
+        driver = None
         try:
-            with factory() as runtime:
-                browser = runtime.chromium.launch(headless=True)
-                try:
-                    page = browser.new_page()
-                    page.set_default_timeout(self._timeout_ms)
-                    page.goto(CHART_URL, wait_until="domcontentloaded")
-                    selected = page.locator("#seriesSelecionadas").inner_text()
-                    if not _identifies_series_11(selected):
-                        raise SourceError("the chart does not identify SGS series 11 Selic")
-                    if UNIT.casefold() not in selected.casefold():
-                        raise SourceError("the chart does not identify the % p.d. unit")
-                    dates = [parse_date(item) for item in _DATE_TOKEN.findall(selected)]
-                    if len(dates) < 2:
-                        raise SourceError("the chart does not show its latest available date")
-                    latest_date = dates[-1]
-                    latest_text = latest_date.strftime("%d/%m/%Y")
+            factory = self._driver_factory or (
+                lambda chrome_options: webdriver.Chrome(options=chrome_options)
+            )
+            driver = factory(options)
+            driver.set_page_load_timeout(self._timeout_ms / 1000)
+            driver.execute_cdp_cmd("Network.enable", {})
+            driver.get(CHART_URL)
+            wait = WebDriverWait(driver, self._timeout_ms / 1000, poll_frequency=0.1)
+            selected = wait.until(
+                lambda browser: (
+                    element.text
+                    if (element := browser.find_element("id", "seriesSelecionadas")).is_displayed()
+                    else False
+                )
+            )
+            if not _identifies_series_11(selected):
+                raise SourceError("the chart does not identify SGS series 11 Selic")
+            if UNIT.casefold() not in selected.casefold():
+                raise SourceError("the chart does not identify the % p.d. unit")
+            dates = [parse_date(item) for item in _DATE_TOKEN.findall(selected)]
+            if len(dates) < 2:
+                raise SourceError("the chart does not show its latest available date")
+            latest_date = dates[-1]
+            latest_text = latest_date.strftime("%d/%m/%Y")
 
-                    page.locator("#dataInicio").fill(START_FILTER)
-                    page.locator("#dataFim").fill(latest_text)
-                    page.frame_locator("#frmGraficoAlt").locator("form").first.wait_for(
-                        state="attached", timeout=self._timeout_ms
-                    )
-                    with page.expect_response(
-                        lambda response: response.request.method == "POST"
-                        and "atualizarGraficoEstatico" in response.url,
-                        timeout=self._timeout_ms,
-                    ) as refresh_response:
-                        page.locator("input.botao[value='Refresh chart']").click()
-                    if not 200 <= refresh_response.value.status < 400:
-                        raise SourceError(
-                            f"the BCB chart refresh returned HTTP {refresh_response.value.status}"
-                        )
-                    chart_image = page.frame_locator("#frmGraficoAlt").locator("img")
-                    chart_image.wait_for(state="visible", timeout=self._timeout_ms)
-                    if not chart_image.evaluate("image => image.complete && image.naturalWidth > 0"):
-                        raise SourceError("the BCB refreshed chart did not finish rendering")
-                    page.locator("input.botao[value='View values from chart']").click()
+            _set_date_filter(driver, "dataInicio", START_FILTER)
+            _set_date_filter(driver, "dataFim", latest_text)
 
-                    seen_pages: set[tuple[tuple[date, str], ...]] = set()
-                    expected_count: int | None = None
-                    for _ in range(1000):
-                        page_rows, page_count = _verify_values_page(
-                            page, latest_text, require_header=expected_count is None
-                        )
-                        if expected_count is None:
-                            expected_count = page_count
-                        elif page_count != expected_count:
-                            raise SourceError("BCB changed the reported observation count while paging")
-                        signature = tuple((row.date, row.rate) for row in page_rows)
-                        if not signature:
-                            raise SourceError("the BCB values page contains no observations")
-                        if signature in seen_pages:
-                            raise SourceError("BCB repeated a values page while pagination was active")
-                        seen_pages.add(signature)
-                        observations.extend(page_rows)
-                        if len(observations) > expected_count:
-                            raise SourceError("BCB returned more rows than its reported count")
-                        next_link = page.get_by_role("link", name="Next", exact=True)
-                        if next_link.count() == 0:
-                            if len(observations) != expected_count:
-                                raise SourceError("BCB ended pagination before all observations were read")
-                            break
-                        if len(observations) == expected_count:
-                            raise SourceError("BCB pagination continues after reported count was reached")
-                        if self._pacing_seconds:
-                            time.sleep(self._pacing_seconds)
-                        with page.expect_response(
-                            lambda response: response.request.method == "POST"
-                            and "method=getPagina" in response.url,
-                            timeout=self._timeout_ms,
-                        ) as page_response:
-                            with page.expect_navigation(
-                                wait_until="domcontentloaded", timeout=self._timeout_ms
-                            ):
-                                next_link.first.click()
-                        if not 200 <= page_response.value.status < 400:
-                            raise SourceError(
-                                f"the BCB next-page request returned HTTP {page_response.value.status}"
-                            )
-                    else:
-                        raise SourceError("BCB pagination exceeded the safe 1000-page limit")
-                finally:
-                    browser.close()
+            chart_frame = wait.until(
+                lambda browser: (
+                    element
+                    if (element := browser.find_element("id", "frmGraficoAlt")).is_displayed()
+                    else False
+                )
+            )
+            driver.switch_to.frame(chart_frame)
+            wait.until(
+                lambda browser: (
+                    element
+                    if (element := browser.find_element("tag name", "form")).is_displayed()
+                    else False
+                )
+            )
+            driver.switch_to.default_content()
+
+            driver.find_element(
+                "css selector", "input.botao[value='Refresh chart']"
+            ).click()
+            _successful_post_status(driver, "atualizarGraficoEstatico", self._timeout_ms)
+            driver.switch_to.frame(chart_frame)
+            chart_image = wait.until(
+                lambda browser: (
+                    element
+                    if (element := browser.find_element("tag name", "img")).is_displayed()
+                    else False
+                )
+            )
+            if not wait.until(
+                lambda browser: browser.execute_script(
+                    "return arguments[0].complete && arguments[0].naturalWidth > 0",
+                    chart_image,
+                )
+            ):
+                raise SourceError("the BCB refreshed chart did not finish rendering")
+            driver.switch_to.default_content()
+            driver.find_element(
+                "css selector", "input.botao[value='View values from chart']"
+            ).click()
+            wait.until(
+                lambda browser: browser.find_element(
+                    "id", "valoresSeries"
+                ).is_displayed()
+            )
+
+            seen_pages: set[tuple[tuple[date, str], ...]] = set()
+            expected_count: int | None = None
+            for _ in range(1000):
+                page_rows, page_count = _verify_values_page(
+                    driver, latest_text, require_header=expected_count is None
+                )
+                if expected_count is None:
+                    expected_count = page_count
+                elif page_count != expected_count:
+                    raise SourceError("BCB changed the reported observation count while paging")
+                signature = tuple((row.date, row.rate) for row in page_rows)
+                if not signature:
+                    raise SourceError("the BCB values page contains no observations")
+                if signature in seen_pages:
+                    raise SourceError("BCB repeated a values page while pagination was active")
+                seen_pages.add(signature)
+                observations.extend(page_rows)
+                if len(observations) > expected_count:
+                    raise SourceError("BCB returned more rows than its reported count")
+                next_links = driver.find_elements("link text", "Next")
+                if not next_links:
+                    if len(observations) != expected_count:
+                        raise SourceError("BCB ended pagination before all observations were read")
+                    break
+                if len(observations) == expected_count:
+                    raise SourceError("BCB pagination continues after reported count was reached")
+                if self._pacing_seconds:
+                    time.sleep(self._pacing_seconds)
+                prior_table_id = driver.find_element("id", "valoresSeries").id
+                next_links[0].click()
+                wait.until(
+                    lambda browser: browser.find_element(
+                        "id", "valoresSeries"
+                    ).id != prior_table_id
+                )
+                _successful_post_status(driver, "method=getPagina", self._timeout_ms)
+            else:
+                raise SourceError("BCB pagination exceeded the safe 1000-page limit")
         except SourceError:
             raise
         except Exception as exc:
             raise SourceError(f"BCB chart request or pagination failed: {exc}") from exc
+        finally:
+            if driver is not None:
+                driver.quit()
 
         assert expected_count is not None
         validated = validate_observations(observations, latest_date, expected_count)

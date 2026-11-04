@@ -1,0 +1,514 @@
+{
+  "prior_task": "docs/tasks/003-selic-daily-acquisition",
+  "attempts_without_progress": 0,
+  "state_writer": "tech-lead",
+  "spec_revision": {
+    "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+    "id": "s001"
+  },
+  "acceptance_results": [
+    {
+      "id": "AC-001",
+      "evidence": [
+        "evidence/qa-focused-suite.txt",
+        "evidence/qa-round-2-before.json",
+        "evidence/qa-round-2-after.json"
+      ],
+      "code_revision": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+      "expected": "Explicit Selic acquisition uses Selenium and headless Chrome; imports and CLI help do not start network/browser work; requirements/docs explain setup.",
+      "plan_revision": {
+        "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+        "id": "p001"
+      },
+      "actual": "CLI help and compile checks passed. Selenium 4.30.0 launched Chrome 156.0.8078.80. Focused suite passed; no Playwright/greenlet use remains.",
+      "spec_revision": {
+        "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+        "id": "s001"
+      },
+      "status": "pass"
+    },
+    {
+      "id": "AC-002",
+      "evidence": [
+        "evidence/qa-bcb-source-comparison.json",
+        "evidence/qa-live-data-validation.json"
+      ],
+      "code_revision": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+      "expected": "BCB SGS 11 selected from 2011-01-01 through source latest, all table pages and reported count read with exact source precision; failures reject incomplete data.",
+      "plan_revision": {
+        "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+        "id": "p001"
+      },
+      "actual": "Independent Chrome session confirmed date fields, 200 refresh POST, 40 pages, 200 pagination POST, 3,977 rows strictly increasing from 2011-01-03 to 2026-11-03 and metadata/unit.",
+      "spec_revision": {
+        "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+        "id": "s001"
+      },
+      "status": "pass"
+    },
+    {
+      "id": "AC-003",
+      "evidence": [
+        "evidence/qa-focused-suite.txt",
+        "evidence/qa-live-cleanup.json"
+      ],
+      "code_revision": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+      "expected": "Existing CLI, storage/provenance/restore and unrelated getters retain behavior; active project data remains unchanged.",
+      "plan_revision": {
+        "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+        "id": "p001"
+      },
+      "actual": "56 focused tests across public/shared, IBOVESPA and Selic passed, including storage/backup/recovery/restore. No data paths are modified in git status; QA temporary files removed.",
+      "spec_revision": {
+        "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+        "id": "s001"
+      },
+      "status": "pass"
+    },
+    {
+      "id": "AC-004",
+      "evidence": [
+        "backend/requirements.txt",
+        "backend/src/internet_data_getter/README.md",
+        "backend/README.md"
+      ],
+      "code_revision": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+      "expected": "Selenium dependency and browser/driver setup guidance document the actual environment and network need.",
+      "plan_revision": {
+        "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+        "id": "p001"
+      },
+      "actual": "Verified requirements declare Selenium; docs require local Chrome and explain first-use Selenium Manager driver resolution and possible network access. Tested with Python 3.9.4/Selenium 4.30.0/Chrome 156.0.8078.80.",
+      "spec_revision": {
+        "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+        "id": "s001"
+      },
+      "status": "pass"
+    },
+    {
+      "id": "AC-005",
+      "evidence": [
+        "evidence/qa-focused-suite.txt",
+        "evidence/qa-full-suite.txt",
+        "review.md"
+      ],
+      "code_revision": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+      "expected": "Controlled offline source/error and existing getter regressions run without BCB contact; actual checks and any prior failures recorded.",
+      "plan_revision": {
+        "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+        "id": "p001"
+      },
+      "actual": "56 focused tests passed. Full discovery ran 78 tests: 77 passed and one existing IFIX CLI help-text assertion failed; the test/parser wording mismatch predates this change and is outside the refactor.",
+      "spec_revision": {
+        "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+        "id": "s001"
+      },
+      "status": "pass"
+    },
+    {
+      "id": "AC-006",
+      "evidence": [
+        "evidence/qa-bcb-source-comparison.json",
+        "evidence/qa-live-data-validation.json",
+        "evidence/qa-live-cleanup.json"
+      ],
+      "code_revision": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+      "expected": "Independent live BCB browser compare count, range and representative first/middle/last values against CLI output in a temporary directory.",
+      "plan_revision": {
+        "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+        "id": "p001"
+      },
+      "actual": "Separate CLI acquisition and browser table traversal both read 3,977 rows. Range and first/middle/last text values match exactly; CSV SHA-256 equals manifest. Temporary directory removed; active data unchanged.",
+      "spec_revision": {
+        "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+        "id": "s001"
+      },
+      "status": "pass"
+    }
+  ],
+  "state_version": 13,
+  "task_id": "004",
+  "prior_task_stage": "awaiting_final_approval",
+  "approvals": {
+    "specification": {
+      "user_message": "approved",
+      "spec_revision": {
+        "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+        "id": "s001"
+      },
+      "reference": "User response to main-chat request to approve spec s001 and plan p001, including implementation and verification",
+      "decision": "approved",
+      "plan_revision": {
+        "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+        "id": "p001"
+      },
+      "timestamp": "2026-11-04 00:13:45 America/Sao_Paulo"
+    },
+    "correction_plan": null,
+    "final": {
+      "reference": "User response to main-chat final approval request, including acknowledgment of BASELINE-001",
+      "plan_revision": {
+        "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+        "id": "p001"
+      },
+      "acknowledged_items": [
+        "BASELINE-001"
+      ],
+      "snapshot_equivalence": "Evaluated content digest unchanged; intervening HEAD commit changes only excluded docs/agent-log/LOG.md",
+      "user_message": "approved",
+      "decision": "approved",
+      "evidence": "evidence/final-approval-snapshot.json",
+      "timestamp": "2026-11-04 01:01:07 America/Sao_Paulo",
+      "code_revision": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+      "current_snapshot": "d9b4897a986e906e6261a8e9ec2454d32508f9f2:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+      "spec_revision": {
+        "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+        "id": "s001"
+      }
+    }
+  },
+  "active_assignments": [
+    {
+      "effort": "max",
+      "allowed_files": [
+        "backend/requirements.txt",
+        "backend/src/internet_data_getter/selic/",
+        "backend/src/internet_data_getter/tests/",
+        "backend/src/internet_data_getter/README.md",
+        "backend/README.md",
+        "docs/architecture/internet-data-getter.md",
+        "docs/tasks/004-selic-selenium-refactor/verification.md",
+        "docs/tasks/004-selic-selenium-refactor/state.json",
+        "docs/tasks/004-selic-selenium-refactor/evidence/"
+      ],
+      "slice": "Selenium source adapter, dependency changes, regression coverage and affected documentation",
+      "input_revisions": {
+        "spec": {
+          "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+          "id": "s001"
+        },
+        "baseline": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:2a0247f9dd796239993c2300e6b78eafc5b1fca1d8f703fba9d960075c9e3f23",
+        "plan": {
+          "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+          "id": "p001"
+        }
+      },
+      "role": "developer",
+      "id": "initial-round-1",
+      "model": "gpt-6-luna",
+      "writer_ownership": "sole writer of verification.md, assigned implementation fields in state.json and developer evidence",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "status": "completed",
+      "deliverables": [
+        "TDD red/green/refactor evidence",
+        "integrated implementation and documentation",
+        "offline checks and snapshot",
+        "handoff"
+      ]
+    },
+    {
+      "input_revisions": {
+        "plan": {
+          "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+          "id": "p001"
+        },
+        "spec": {
+          "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+          "id": "s001"
+        },
+        "code": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:a220049644a59a779c5d51a2668242cbb17a2ca3b8f47e4bde69ef40bb6128f0"
+      },
+      "status": "completed",
+      "writer_ownership": "sole writer of review.md, review/findings fields in state.json and reviewer evidence",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "role": "reviewer",
+      "deliverables": [
+        "dated review and actionable findings",
+        "before and after snapshot freshness",
+        "baseline failure assessment"
+      ],
+      "id": "review-initial-round-1",
+      "model": "gpt-6.1-sol",
+      "allowed_files": [
+        "docs/tasks/004-selic-selenium-refactor/review.md",
+        "docs/tasks/004-selic-selenium-refactor/state.json",
+        "docs/tasks/004-selic-selenium-refactor/evidence/"
+      ],
+      "slice": "Independent integrated review of approved Selenium refactor",
+      "effort": "high"
+    },
+    {
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-005"
+      ],
+      "role": "developer",
+      "deliverables": [
+        "observed RF-001 and RF-002 regression reds and greens",
+        "related offline checks and implementation snapshot",
+        "handoff"
+      ],
+      "status": "completed",
+      "writer_ownership": "sole writer of verification.md, assigned implementation fields in state.json and developer evidence",
+      "effort": "max",
+      "allowed_files": [
+        "backend/src/internet_data_getter/selic/",
+        "backend/src/internet_data_getter/tests/",
+        "backend/src/internet_data_getter/README.md",
+        "docs/architecture/internet-data-getter.md",
+        "docs/tasks/004-selic-selenium-refactor/verification.md",
+        "docs/tasks/004-selic-selenium-refactor/state.json",
+        "docs/tasks/004-selic-selenium-refactor/evidence/"
+      ],
+      "id": "initial-round-2",
+      "slice": "Repair confirmed RF-001 and RF-002 with observed failing regressions",
+      "input_revisions": {
+        "spec": {
+          "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+          "id": "s001"
+        },
+        "code": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:a220049644a59a779c5d51a2668242cbb17a2ca3b8f47e4bde69ef40bb6128f0",
+        "plan": {
+          "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+          "id": "p001"
+        }
+      },
+      "model": "gpt-6-luna"
+    },
+    {
+      "allowed_files": [
+        "docs/tasks/004-selic-selenium-refactor/review.md",
+        "docs/tasks/004-selic-selenium-refactor/state.json",
+        "docs/tasks/004-selic-selenium-refactor/evidence/"
+      ],
+      "writer_ownership": "sole writer of review.md, review/findings fields in state.json and reviewer evidence",
+      "input_revisions": {
+        "plan": {
+          "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+          "id": "p001"
+        },
+        "spec": {
+          "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+          "id": "s001"
+        },
+        "code": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc"
+      },
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "id": "review-initial-round-2",
+      "slice": "Independent integrated re-review including RF-001 and RF-002",
+      "role": "reviewer",
+      "status": "completed",
+      "deliverables": [
+        "dated review and finding dispositions",
+        "before and after snapshot freshness",
+        "baseline failure and test results assessment"
+      ],
+      "model": "gpt-6.1-sol",
+      "effort": "high"
+    },
+    {
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "input_revisions": {
+        "spec": {
+          "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+          "id": "s001"
+        },
+        "code": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+        "plan": {
+          "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+          "id": "p001"
+        }
+      },
+      "id": "qa-initial-round-2",
+      "writer_ownership": "sole writer of verification.md, acceptance/QA fields in state.json and QA evidence",
+      "deliverables": [
+        "criterion matrix and observed adverse cases",
+        "independent live BCB comparison or explicit blocker",
+        "before and after snapshot freshness"
+      ],
+      "effort": "max",
+      "role": "qa",
+      "slice": "Independent integrated QA and temporary live BCB comparison",
+      "allowed_files": [
+        "docs/tasks/004-selic-selenium-refactor/verification.md",
+        "docs/tasks/004-selic-selenium-refactor/state.json",
+        "docs/tasks/004-selic-selenium-refactor/evidence/"
+      ],
+      "model": "gpt-6-luna",
+      "status": "completed"
+    }
+  ],
+  "next_action": "None; feature completed with final human approval",
+  "open_findings": [
+    {
+      "id": "RF-001",
+      "evidence": "review.md initial round 1: real default Selenium fetch opens Portuguese SGS and raises SourceError at the unit check. An English language preference restores matching labels.",
+      "status": "resolved",
+      "blocking": true,
+      "location": "backend/src/internet_data_getter/selic/source.py:248–251,270–273",
+      "severity": "P1",
+      "resolution_evidence": "Round 2 review: Chrome preference set before driver construction. Isolated locale and integrated interaction regressions passed. Review round-1 live probe established this preference selects English BCB labels.",
+      "consequence": "The existing English validation and selectors fail under the host Chrome language.",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-005"
+      ],
+      "source": "review-initial-round-1"
+    },
+    {
+      "id": "RF-002",
+      "evidence": "review.md initial round 1: actual inputs become 01//0/1/20 and 03//1/1/20; digits-only entry results in the correct full range and two successful page reads.",
+      "status": "resolved",
+      "blocking": true,
+      "location": "backend/src/internet_data_getter/selic/source.py:280–285",
+      "severity": "P1",
+      "resolution_evidence": "Round 2 review: digits-only entry and observed field value verification for both date controls. Independent regression and integrated interaction tests passed, including fail-before-refresh and cleanup. Round-1 live probe verified mask-compatible typing.",
+      "consequence": "Sending slashes corrupts masked BCB dates and refresh returns a range the adapter must reject.",
+      "criterion_ids": [
+        "AC-002",
+        "AC-005"
+      ],
+      "source": "review-initial-round-1"
+    }
+  ],
+  "baseline_revision": {
+    "evidence": "evidence/baseline-snapshot.json",
+    "code_revision": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:2a0247f9dd796239993c2300e6b78eafc5b1fca1d8f703fba9d960075c9e3f23",
+    "worktree_status": [
+      "?? docs/tasks/004-selic-selenium-refactor/"
+    ],
+    "head": "72e61975a82034ce3235eecf7cc5fc8f20288632"
+  },
+  "task_relation": "New user-requested Selenium refactor after prior independent review and QA; preserve prior task history and counters.",
+  "model_policy": "initial",
+  "stage": "completed",
+  "code_revision": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+  "schema_version": 1,
+  "review_rounds": {
+    "correction": 0,
+    "initial": 2
+  },
+  "plan_revision": {
+    "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+    "id": "p001"
+  },
+  "implementation": {
+    "status": "complete",
+    "evidence": [
+      "verification.md: round 1 TDD red/green and checks",
+      "evidence/implementation-round-1-snapshot.json",
+      "evidence/selic-shared-ibovespa-suite.txt: 54 tests passed",
+      "evidence/full-getter-suite.txt: 76 tests, 75 passed; existing IFIX CLI help assertion failed, confirmed pre-existing by tech-lead baseline inspection",
+      "evidence/offline-checks.txt: compileall, CLI help, requirement install, import and diff checks passed",
+      "evidence/selenium-chrome-smoke.txt: headless Chrome 156.0.8078.80 launched with Selenium Manager resolved driver; no BCB scrape performed",
+      "AC-006 live Selenium comparison remains for independent QA",
+      "verification.md: round 2 RF-001 and RF-002 observed red/green, malformed-field rejection and checks",
+      "evidence/round-2-regression-tests.txt: isolated locale, masked-date, and integrated Selenium interaction tests passed",
+      "evidence/round-2-focused-suite.txt: 56 shared getter, IBOVESPA and Selic tests passed",
+      "evidence/round-2-full-suite.txt: 76 tests, 75 passed; same baseline IFIX help assertion failed",
+      "evidence/round-2-live-smoke.json: live BCB CLI saved 3,977 rows with matching reported count and CSV/manifest hash in temporary directory; temp dataset removed",
+      "evidence/implementation-round-2-snapshot.json"
+    ],
+    "snapshot": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc"
+  },
+  "model_switch_reason": null,
+  "qa": {
+    "browser": "passed_source_workflow",
+    "evidence": [
+      "verification.md: Independent QA — initial round 2",
+      "evidence/qa-round-2-before.json",
+      "evidence/qa-round-2-after.json",
+      "evidence/qa-bcb-source-comparison.json",
+      "evidence/qa-live-data-validation.json",
+      "evidence/qa-live-cleanup.json",
+      "evidence/qa-focused-suite.txt",
+      "evidence/qa-full-suite.txt"
+    ],
+    "code_revision": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+    "plan_revision": {
+      "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+      "id": "p001"
+    },
+    "spec_revision": {
+      "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+      "id": "s001"
+    },
+    "status": "passed"
+  },
+  "correction_cycle": 0,
+  "review": {
+    "code_revision": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+    "evidence": [
+      "review.md initial round 2",
+      "evidence/review-round-2-before.json",
+      "evidence/review-round-2-after.json",
+      "evidence/review-round-2-focused.txt",
+      "evidence/review-round-2-suite.txt",
+      "evidence/review-round-2-help-no-dependency.txt"
+    ],
+    "status": "passed",
+    "plan_revision": {
+      "sha256": "2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0",
+      "id": "p001"
+    },
+    "spec_revision": {
+      "sha256": "bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4",
+      "id": "s001"
+    }
+  },
+  "task_slug": "selic-selenium-refactor",
+  "limits": {
+    "rounds_per_cycle": 3,
+    "correction_cycles": 1
+  },
+  "nonblocking_items": [
+    {
+      "disposition": "Preserve unrelated IFIX test and CLI during Selic refactor; report failing assertion clearly.",
+      "evidence": [
+        "verification.md: Lead final audit",
+        "evidence/qa-full-suite.txt",
+        "review.md: initial round 2"
+      ],
+      "classification": "pre-existing unrelated test failure",
+      "id": "BASELINE-001",
+      "status": "acknowledged by user in final approval"
+    }
+  ],
+  "final_audit": {
+    "checks": "git diff --check passed with line-ending notices; independent review and QA passed with pre-existing IFIX failure disclosed",
+    "evidence": "evidence/final-audit-snapshot.json",
+    "snapshot": "72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc",
+    "verification": "verification.md: Lead final audit",
+    "date": "2026-11-04 America/Sao_Paulo"
+  }
+}

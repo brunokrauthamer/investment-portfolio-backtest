@@ -1,0 +1,17 @@
+usage: -c [-h] [--data-dir DATA_DIR] [--getter {ifix,ibovespa,selic}]
+          {restore,restore-ibovespa,restore-selic} ...
+
+Acquire or restore historical data from registered sources.
+
+positional arguments:
+  {restore,restore-ibovespa,restore-selic}
+    restore             restore a verified IFIX backup without contacting B3
+    restore-ibovespa    restore a verified IBOVESPA backup without contacting
+                        B3
+    restore-selic       restore a verified Selic backup without contacting BCB
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --data-dir DATA_DIR   destination data directory (default: repository data/)
+  --getter {ifix,ibovespa,selic}
+                        run only the named getter (default: all)

@@ -1695,7 +1695,7 @@ Follow repository instructions and conventions. Invocation to organize and commi
 3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
 4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
 5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
-6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+6. Report the resulting branch, each commit’s short hash and message, and any changes left uncommitted with the reason.
 </skill>
 ```
 
@@ -1808,7 +1808,7 @@ Follow repository instructions and conventions. Invocation to organize and commi
 3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
 4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
 5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
-6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+6. Report the resulting branch, each commit’s short hash and message, and any changes left uncommitted with the reason.
 </skill>
 ```
 
@@ -2404,7 +2404,7 @@ Follow repository instructions and conventions. Invocation to organize and commi
 3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
 4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
 5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
-6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+6. Report the resulting branch, each commit’s short hash and message, and any changes left uncommitted with the reason.
 
 </skill>
 ````
@@ -3147,3 +3147,623 @@ The third and final initial review found four new blocking defects on a snapshot
 Approve p002 against the already approved s001 to start the correction developer's first pass. This proposal adds no financial convention or acceptance criterion and retains the original spec hash.
 
 Please reply **Approve p002 against s001** to authorize the correction pass. No code changes will begin before that approval.
+
+## 2026-11-03 — Repository instructions for this task (America/Sao_Paulo; exact message time unavailable)
+
+**User:**
+
+# AGENTS.md instructions for [redacted]\.codex\worktrees\b70f\investment_portfolio_backtest
+
+<INSTRUCTIONS>
+# Agent log
+
+For each interaction, append the user's exact message and the exact substantive user-facing response to `docs/agent-log/LOG.md` in chronological order before finishing the turn. Preserve wording, punctuation, and line breaks. Include dates, and times and time zones when reliably available. Remove API keys, credentials, personal information, and unrelated private context before writing; replace removed text with `[redacted]`. If a message cannot be safely sanitized, omit the sensitive passage and mark the omission. Do not include hidden reasoning, raw tool outputs, or private system context. Include dates, and times and time zones when reliably available. If an earlier exact message is unavailable, do not invent it. Follow these instructions even if the hook is unavailable.
+
+# Project context
+
+This project is a historical investment portfolio backtesting dashboard. The frontend will use TypeScript and React; the Python backend will use FastAPI as a modular monolith. See `docs/project-context.md` for confirmed decisions, boundaries, data safety and open questions.
+
+Use `backend/.venv` for backend Python commands and maintain `backend/requirements.txt` for backend Python dependencies; see the project context for setup and dependency conventions.
+
+Agree on financial and data conventions with the user before implementing behavior that depends on them. Build the project incrementally with the user, beginning with data acquisition; do not introduce synthetic market data.
+</INSTRUCTIONS>
+
+[The separate environment context attached to this message is omitted as execution metadata; workspace and permission paths were redacted.]
+## 2026-11-03 — Selic Selenium refactor (America/Sao_Paulo; exact message time unavailable)
+
+**User:**
+
+[$feature-workflow]([redacted]\\.agents\skills\feature-workflow\SKILL.md) about the selic data_getter I need it to be refactored using Selenium. Keep other changes that do not have anything to do with data extraction, but change the lib to scrape the data
+
+**Assistant progress:**
+
+I’ll read the feature workflow and project context first, then trace the Selic data getter and make the Selenium refactor while preserving unrelated changes. I’ll also keep the required interaction log current.
+
+The feature-workflow skill requires a tech lead to interview, define acceptance criteria and a plan, then wait for your approval before implementation. I’m following that sequence now; I’ll first check the task-record protocol and existing project task state.
+
+The current Selic source adapter uses Playwright for the BCB chart and values table. Storage, recovery, CLI and shared registration are separate; the tech lead is treating your Selenium request as a focused new task so those unrelated parts stay intact.
+
+**Assistant:**
+
+The feature-workflow skill you invoked requires explicit approval of both proposal revisions before any implementation. I’ve prepared them and have not changed application code or run tests.
+
+### Proposed specification and plan
+
+- [Specification s001]([redacted]/docs/tasks/004-selic-selenium-refactor/spec.md) — SHA-256 `bf8916f17c031f8b69ae4a39159ed8986bce691fddf030c2f830fbb5f8a251b4`
+- [Plan p001]([redacted]/docs/tasks/004-selic-selenium-refactor/plan.md) — SHA-256 `2e6f16b1809bd14f9e7ed03efeb721b62a85f35d3e687b80670cc03e640beea0`
+
+**Goal and scope:** Replace Playwright with Selenium WebDriver and headless Chrome for the existing BCB SGS 11 chart and values-table scrape. Keep the existing daily-rate representation, source, Python and CLI behavior, CSV schema, provenance, safe storage, backups, recovery, offline restore, shared registration, and IFIX/IBOVESPA work. Make only demonstrated integration changes outside extraction. Leave the earlier Selic task and its evidence intact.
+
+**Acceptance criteria:**
+
+- **AC-001 — Selenium source:** Explicit Selic acquisition uses Selenium on the existing BCB chart and table. Selic extraction no longer requires Playwright. Imports, help, and app startup do not access the browser or network. Setup and missing-dependency failures are clear.
+- **AC-002 — Complete extraction:** Identify series 11 and `% p.d.`, read the source latest date, request 01/01/2011 through that date, refresh the Linear chart, open the values and traverse every page. Validate source metadata, period, unit, exact column, reported count, strict order and unique dates, first observation in 2011, and the latest observation against the source. Preserve displayed precision; reject malformed, repeated, missing, truncated, inconsistent or inaccessible pages. Use bounded waits, always close the browser, and do not publish partial data.
+- **AC-003 — Preservation:** Retain the existing public Python and CLI selection and report semantics, deterministic `date,rate_percent_per_day` CSV, provenance, unchanged/updated/failed behavior, backup, lock, recovery, and restore behavior. Preserve other getters and project data.
+- **AC-004 — Dependencies and docs:** Add a compatible Selenium dependency. Remove Playwright and greenlet only if no other code needs them. Document Chrome/driver setup and Selenium Manager’s possible first-run network access. Update current acquisition and architecture documentation while preserving supported Python versions unless a concrete issue needs a decision.
+- **AC-005 — Offline verification:** Exercise Selenium interactions and error handling with controlled, non-market fixtures and run relevant getter, storage, and registry regressions. Tests do not contact BCB; retain meaningful existing checks and record actual results or execution limits.
+- **AC-006 — Live evidence:** Run the scraper against live BCB with a temporary data directory. Independently compare reported count, range, and representative first, middle, and last values with output. Record browser/driver environment, time, results, and limitations. Mark this criterion blocked if source access or browser setup is unavailable. Do not modify active project data.
+
+**Exclusions:** No financial calculations, new source or data conventions, synthetic market data, scheduling, API/frontend work, unrelated refactors, or acquisition into the active project data directory.
+
+**Implementation plan:** (1) Record HEAD, worktree status and snapshot; implement the Selenium source with test-first coverage for browser interaction, waits, cleanup, validation, pagination and failures; update dependencies and affected docs. (2) Run offline getter regressions and checks in `backend/.venv`, record evidence and snapshot, then obtain independent review and repair any confirmed defects with failing regressions. (3) Have independent QA verify the criteria and adverse cases, including a live Selenium scrape into a temporary directory and comparison against BCB samples; record a blocker if unavailable. (4) Audit the current snapshot, review, QA, docs and findings before requesting final approval.
+
+**Architecture and risks:** Keep `selic/source.py` responsible for browser interaction and validation and preserve its `SourceResult`/`Observation` contract. Use bounded explicit waits, verify refresh and page transitions, inject a small driver boundary for offline tests, and always quit the driver. Keep service, registry, storage and restore boundaries. Selenium Manager may need network access to resolve a driver, and BCB’s asynchronous pages may change; strict validation and live comparison reduce stale or incomplete reads. Values changing between pages without a count change may not be detectable.
+
+To authorize implementation, offline checks, and the planned live comparison in a temporary directory, reply **“Approve spec s001 and plan p001.”** You can also send changes to the proposal; implementation waits for explicit approval of these exact revisions.
+
+## 2026-11-04 00:00 -03:00 — Date context update
+
+Client date context advanced to 2026-11-04 in America/Sao_Paulo. Workspace and permission paths from that context are omitted as unrelated private information.
+
+## 2026-11-04 — Selic Selenium refactor approval (America/Sao_Paulo)
+
+**User:**
+
+approved
+
+**Assistant progress:**
+
+I’m treating “approved” as approval of spec s001 and plan p001 exactly as presented. I’ll record that decision and continue with the approved test-first implementation workflow.
+
+The tech lead recorded approval against the exact spec and plan hashes and captured the baseline. The developer has started round 1; `backend/.venv` is absent in this worktree, so setting it up is included in the approved implementation pass.
+
+**Assistant progress:**
+
+The approved implementation pass is still underway. I’m waiting for the developer’s test-first evidence and integrated snapshot before moving the task to independent review.
+
+**Assistant progress:**
+
+Round 1 has not reached handoff yet. I’ll wait for its evidence before starting independent review, keeping the existing storage and other asset getters outside the Selenium extraction change.
+
+**Assistant progress:**
+
+The tech lead has asked the developer for an early checkpoint with either the first observed failing test or any environment blocker. The pass remains active; no source or test result has been handed off yet.
+
+**Assistant progress:**
+
+The first Selenium interaction test failed against the existing Playwright client as expected, giving the test-first baseline. The missing Python 3.9 environment is now set up with Selenium 4.30.0, and the implementation is underway.
+
+**Assistant progress:**
+
+The expected red is documented; the developer is now replacing the browser adapter and checking the new interaction path. The integrated pass has not handed off yet.
+
+**Assistant progress:**
+
+The developer is still within the same implementation round, with the first Selenium test already observed failing. I’m waiting for the passing interaction and regression results before review.
+
+**Assistant progress:**
+
+Chrome is available locally. A matching ChromeDriver was not found on `PATH` or in Selenium’s cache, so the first launch may rely on Selenium Manager; the tech lead is checking whether that works in this environment.
+
+The Selenium client now passes its first multi-page fixture, including date filters, displayed precision and browser cleanup. The developer is adding adverse pagination cases and updating setup documentation before the integrated check.
+
+**Assistant progress:**
+
+The main paginated Selenium interaction is passing in the fixture. Adverse pagination and error cases, dependency cleanup, and documentation are still being finished; I haven’t started review on a partial snapshot.
+
+**Assistant progress:**
+
+Selenium’s pagination and error fixtures pass, and the dependency/setup docs now use Selenium. The full getter suite reports 75 passes and one IFIX help-text mismatch; the developer is checking ChromeDriver resolution, and the IFIX result will be compared with baseline to avoid scope creep.
+
+**Assistant progress:**
+
+Headless Chrome launched successfully after Selenium Manager resolved a matching driver. The tech lead also confirmed the IFIX help assertion was already stale at baseline; the approved Selenium work remains scoped to the Selic getter.
+
+**Assistant progress:**
+
+Implementation and adverse-case checks are complete, documentation is updated, and headless Chrome has launched through Selenium Manager. The developer is recording the observed results and final round-1 snapshot for handoff.
+
+**Assistant progress:**
+
+The implementation checks are complete, and the developer is finishing the verification record and snapshot. Independent review will start after the round-1 writer handoff is recorded.
+
+**Assistant progress:**
+
+Round 1 is handed off for independent review on snapshot `72e6197…`. The focused Selic/shared/IBOVESPA suite passed 54 tests; full discovery passed 75 of 76, with the remaining IFIX help assertion confirmed as a baseline failure. Live BCB comparison is still pending QA.
+
+**Assistant progress:**
+
+Independent review found a likely live-source localization mismatch: BCB is serving Portuguese labels, while the adapter expects English labels and `% p.d.`. The reviewer is reproducing it through the real Selenium client; if confirmed, the developer will address it with a failing regression before the fix.
+
+**Assistant progress:**
+
+The review confirmed a second live-source issue: BCB’s masked date field mangles Selenium’s typed input, preventing the requested 2011 start date from being submitted correctly. The reviewer is also checking pagination; confirmed defects will be fixed test-first in the next round.
+
+**Assistant progress:**
+
+The reviewer is continuing the live BCB reproduction to capture the affected pagination behavior and actionable evidence. I’m waiting for the review record before assigning the repair pass.
+
+**Assistant progress:**
+
+The reviewer reproduced the localization and masked-date blockers against BCB and confirmed a candidate fix on the first two pages. Round 2 has started with separate failing regression tests for both behaviors.
+
+**Assistant progress:**
+
+Round 2 is formally active, with separate failing regression tests required for the language and date-field findings. I’m waiting for those red results and the fixes before review runs again.
+
+**Assistant progress:**
+
+Both review findings now have observed failing regression tests. The browser-language fix passes its test; the developer is implementing and checking the mask-safe date entry fix.
+
+**Assistant progress:**
+
+The language regression now passes. The date-field regression is still being fixed; after it passes, the developer will run a live CLI smoke using temporary data before handing the snapshot back for review.
+
+**Assistant progress:**
+
+The mask-safe date entry now passes, including rejection of a truncated field before refresh. The 54 relevant getter tests pass again; the developer is starting the temporary-directory BCB smoke.
+
+**Assistant progress:**
+
+The temporary-directory live scrape is in progress after the regression fixes. I’m waiting for its range/count comparison and the updated snapshot before sending the code back through review.
+
+**Assistant progress:**
+
+The live Selenium CLI smoke succeeded in a temporary directory: 3,977 rows covering 2011-01-03 through 2026-11-03, matching BCB’s reported count. The active project dataset was untouched; the repaired snapshot is returning to independent review.
+
+**Assistant progress:**
+
+The temporary scrape matched BCB’s count and date range with no project-data write. I’m waiting for the developer’s recorded handoff so the reviewer can verify the repaired snapshot and QA can begin.
+
+**Assistant progress:**
+
+The Selenium smoke and regression checks are complete. The developer is recording their results and the repaired snapshot; re-review will start as soon as that handoff is returned.
+
+**Assistant progress:**
+
+Round 2 has handed off on the current snapshot, and a fresh reviewer is checking both fixes and the integrated change. QA will follow if the independent review passes.
+
+**Assistant progress:**
+
+The independent re-review confirms both repairs. On the current snapshot, 56 focused tests pass; full discovery runs 78 tests with only the previously confirmed IFIX help assertion failing. I’m waiting for the review verdict and QA handoff.
+
+**Assistant progress:**
+
+Round-2 review passed with both findings resolved and matching snapshots. Independent QA is now checking all approved criteria, including a fresh live BCB table comparison against output in a temporary directory.
+
+**Assistant progress:**
+
+QA confirmed the reviewed snapshot and reproduced the same baseline-only test failure. Its first live comparison was blocked by the network sandbox; the approved retry is now running with network access.
+
+**Assistant progress:**
+
+The independent live comparison retry is still in progress. QA is checking the temporary CSV against BCB’s reported count, coverage, and representative values before closing the acceptance record.
+
+**Assistant progress:**
+
+QA’s independent CLI run saved 3,977 observations in its temporary directory. It is now comparing the first, middle, and last values against a separate BCB browser session.
+
+**Assistant progress:**
+
+The independent BCB comparison passed. QA traversed all 40 pages in a separate Chrome session and matched the 3,977-row count, date range, first/middle/last values, and CSV manifest hash.
+
+**Assistant progress:**
+
+The independent live source comparison passed across all 40 pages. QA is recording the criterion-by-criterion evidence and final snapshot before the lead’s audit.
+
+**Assistant progress:**
+
+The live comparison evidence and QA after-snapshot are saved. QA is completing the acceptance matrix and state handoff; the tech lead will audit the records before asking for final approval.
+
+## 2026-11-04 00:58 -03:00 — Selic Selenium refactor final review
+
+**Assistant:**
+
+The Selenium refactor is implemented and has passed independent review and QA on evaluated snapshot `72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc`.
+
+- Replaced the Selic Playwright adapter with Selenium WebDriver and headless Chrome in [source.py]([redacted]/backend/src/internet_data_getter/selic/source.py). The adapter selects English BCB labels, enters dates through the masked fields and verifies them, checks refresh and pagination responses, waits for updated pages, validates all observations, and closes Chrome on success or failure.
+- Updated [backend requirements]([redacted]/backend/requirements.txt), [acquisition guidance]([redacted]/backend/src/internet_data_getter/README.md), [backend setup guidance]([redacted]/backend/README.md), and [getter architecture docs]([redacted]/docs/architecture/internet-data-getter.md). Storage, CSV/provenance, CLI, registry, other getters, and project data were preserved.
+- Focused shared, IBOVESPA, and Selic checks passed **56/56**. Full discovery ran **78 tests: 77 passed, 1 failed**. The remaining IFIX help assertion expects “Acquire historical data from registered sources,” while existing CLI output says “Acquire or restore historical data from registered sources.” Review confirmed this mismatch predates the refactor; it is recorded as nonblocking item BASELINE-001.
+- Independent live QA traversed all 40 BCB pages and matched the count of **3,977 observations**, range **2011-01-03 through 2026-11-03**, representative first/middle/last values, and the CSV manifest hash. The temporary data was removed and active project data was unchanged. Selenium Manager may require network access to resolve ChromeDriver on a first run.
+
+The complete acceptance matrix is in [verification.md]([redacted]/docs/tasks/004-selic-selenium-refactor/verification.md), and the independent findings and review verdict are in [review.md]([redacted]/docs/tasks/004-selic-selenium-refactor/review.md).
+
+The feature-workflow skill requires explicit final approval of the exact specification and evaluated snapshot, so task 004 is awaiting that decision. Please reply **“Approve spec s001 and snapshot 72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc; acknowledge BASELINE-001.”** This acknowledges the pre-existing IFIX assertion failure. No commit or push was made.
+
+## 2026-11-04 01:01 -03:00 — Selic Selenium refactor final approval
+
+**User:**
+
+approved
+
+**Assistant progress:**
+
+I’m treating “approved” as final approval of spec s001 and the evaluated snapshot, including acknowledgment of `BASELINE-001`. I’ll record the final decision; no commit or push is authorized by that approval.
+
+**Assistant:**
+
+Final approval is recorded. Task 004 is complete.
+
+- The Selic source now uses Selenium WebDriver and headless Chrome, with fixes for BCB’s language selection and masked date fields. The storage, CLI, other getters, and project data were preserved.
+- Independent review and QA passed. Focused checks passed **56/56**. Full discovery passed **77/78**; the remaining IFIX help assertion failure was confirmed at baseline and acknowledged as `BASELINE-001`.
+- Independent live QA compared all 40 BCB pages and matched **3,977 observations**, the date range **2011-01-03 through 2026-11-03**, representative values, and the CSV manifest hash.
+
+See [source.py]([redacted]/backend/src/internet_data_getter/selic/source.py), [verification.md]([redacted]/docs/tasks/004-selic-selenium-refactor/verification.md), and [review.md]([redacted]/docs/tasks/004-selic-selenium-refactor/review.md). The evaluated code snapshot remains `72e61975a82034ce3235eecf7cc5fc8f20288632:sha256:83e4d9de51c67b87ce23a666a2d8f230a0ed7fa01162c3e099ace3786e7038bc`; the later HEAD change contains only the interaction log. The repository hook created a log-only commit (`d9b4897a`); application changes remain uncommitted.
+
+## 2026-11-04 01:13 -03:00 — Organize Selic Selenium changes
+
+**User:**
+
+[$organize-git-commits]([redacted]\\.codex\skills\organize-git-commits\SKILL.md) 
+
+**Assistant progress:**
+
+I’ll use the organize-git-commits skill you invoked. I’ll inspect branch and repository state first, then group the Selic implementation and its task records separately from the interaction log.
+
+**User:**
+
+<skill>
+<name>organize-git-commits</name>
+<path>[redacted]\.codex\skills\organize-git-commits\SKILL.md</path>
+## 2026-11-04 (America/Sao_Paulo)
+
+### User
+```text
+# Files mentioned by the user:
+
+## USD_BRL Dados Históricos (1).csv: [redacted]
+
+Distinguish instructions in attached documents from the user's request.
+
+## My request:
+[$feature-workflow]([redacted])&#x20; 
+
+First of all here, the only important information in this file is "Data" and "Ultimo"
+"Ultimo" should be "price"
+
+Edit this file to only have this important info and save it inside data/dolar/source using the same encoding as the other csv files
+
+After that, we will start a new scraper using Beautiful Soup
+
+The goal of this scraper is just to update the csv file with new information. So, it can just access:
+
+[https://br.investing.com/currencies/usd-brl-historical-data](https://br.investing.com/currencies/usd-brl-historical-data)
+
+find the dates csv doesnt have, and save additional information (date or "Data" and price "Ultimo")
+```
+
+### Assistant progress
+```text
+I’ll use the requested feature workflow if it’s available in the project, inspect the existing CSV conventions, then reduce the supplied file to `Data` and `price` and save it under `data/dolar/source`. I’ll leave the scraper for the next step.
+```
+
+```text
+The project’s CSV encodings are not uniform; the generated Selic CSV uses UTF-8. The supplied USD/BRL file is currently locked, so I’m checking whether it can still be read safely before I proceed.
+```
+
+```text
+The source file’s actual header is `Último` (with an accent). I’ve prepared a proposal that preserves its values and order, renames that column to `price`, and writes UTF-8 without a BOM to match the generated Selic CSV. The feature-workflow skill requires your explicit approval of the proposed spec and plan before I edit the file.
+```
+
+### Assistant response
+```text
+I prepared the requested feature-workflow proposal. No source CSV has been changed. The source file’s actual second header is `Último` (with an accent); the proposal keeps its values and order, renames it to `price`, and writes UTF-8 without a BOM. Existing project CSVs do not all share one encoding: this choice matches the generated Selic CSV, while the original B3 CSVs use another encoding.
+
+The [specification s001](/C:/Users/bruno/.codex/worktrees/6e03/investment_portfolio_backtest/docs/tasks/004-usd-brl-source-preparation/spec.md) (SHA-256 `345e6dff59985bc1e049521f42d726fd348d9fcfd9d4a35e9e97ec7b1e28b684`) and [plan p001](/C:/Users/bruno/.codex/worktrees/6e03/investment_portfolio_backtest/docs/tasks/004-usd-brl-source-preparation/plan.md) (SHA-256 `c55ee6da26ab321c9ebdb1ebf326a4fc2570373324edcfaef4f639b55a441d80`) are proposed revisions. Their complete contents follow.
+
+## Specification s001 — USD/BRL source preparation
+
+### Goal and scope
+
+Prepare the user-supplied Investing.com CSV as `data/dolar/source/USD_BRL Dados Históricos (1).csv`. Keep only `Data` and `Último`, renaming the latter `price`. This is a one-time preparation of the supplied file. The user described a future Beautiful Soup updater, which is outside this task.
+
+The supplied input inspected during discovery is UTF-8 with a BOM, has headers `Data,Último,Abertura,Máxima,Mínima,Vol.,Var%`, and contains 4,132 records. Its SHA-256 is `0fa13625511a444b282e7626eef081c8408896213191687580428dbd33ccf3a7`. Dates use `DD.MM.YYYY`; prices use a decimal comma. The observed records run from 03.11.2026 to 03.01.2011 in their original order. Treat these observations as a snapshot, not a promise about any later input.
+
+### Acceptance criteria
+
+- **AC-001 — Exact projection:** Read the supplied CSV as CSV, including quoted values and the accented `Último` header. Produce exactly two columns in order, `Data` and `price`, with one output record for every input record. Preserve each selected field's text and input order, including decimal precision; do not sort, deduplicate, convert dates or prices, or synthesize data. Quote fields as required for a valid comma-delimited CSV.
+- **AC-002 — Destination and encoding:** Save the CSV at the path stated above, using UTF-8 without BOM, consistent with the project's generated Selic CSV. The B3 original CSVs use a different encoding; they are preserved source downloads. Leave the supplied download unchanged.
+- **AC-003 — Safety and provenance:** Treat an existing destination or provenance file as a conflict and stop without overwriting it. Stage output before publishing it. Keep a write-ahead recovery record until both the active CSV and a matching `data/dolar/manifest.json` have been committed, using atomic file replacement for each. Record the supplied file name and hash, the output hash and record count, the Investing.com page URL, the local transformation and schema, and the fact that the original retrieval time and usage terms are unverified; do not invent them. Document recovery from an interrupted initial import. Do not include backups as active inputs.
+- **AC-004 — Boundaries:** No network request, scraper, return calculation, financial transformation, dependency or backend command is introduced. An unavailable, changed, malformed or unexpectedly structured input must stop without publishing partial or misleading data.
+
+### Decisions and limits
+
+The source snapshot was supplied by the user; the specified URL identifies its stated origin and is not evidence of its retrieval time or a grant of redistribution rights. This task does not settle market-data alignment, financial interpretation, or future update behavior. A changed input after discovery requires a fresh read and a recorded decision before publication.
+
+## Plan p001 — USD/BRL source preparation
+
+Proposed against specification s001; neither revision is approved yet.
+
+### Design and boundaries
+
+Perform a one-time local CSV projection; no reusable scraper, service, abstraction or application dependency is needed. Read the supplied file with a CSV parser that supports quoted commas and UTF-8 BOM. Preserve the selected field text exactly, and serialize valid comma-delimited UTF-8 without BOM. Name the output as the user-supplied file to avoid inventing a new naming convention.
+
+Use a source directory containing only the active CSV. Put provenance in `data/dolar/manifest.json`, and a temporary recovery record outside the source directory. Never overwrite a pre-existing CSV or manifest. Retain the original supplied file unchanged. Since this is an initial creation, no prior active dataset exists to back up; future updates require the project's backup, recovery, provenance and offline-restore conventions to be designed in their own task. Document the initial import and recovery procedure in `data/dolar/README.md`.
+
+### Ordered work
+
+1. After explicit approval of s001 and p001, record the Git baseline and worktree snapshot. Reopen the input with shared read access, compare its SHA-256 to the discovery snapshot, and validate its CSV structure and required headers. Stop on conflict or changed input.
+2. Under a single developer assignment, create the CSV and provenance as staged files, prepare a write-ahead record describing their expected hashes and safe recovery, and publish each file atomically without overwriting existing files. Remove the recovery record only after both files are in place. Document origin, format, limitations and interruption recovery.
+3. Obtain independent review and QA of the artifacts against the approved criteria, without adding or running tests unless the user requests testing or verification. Record any limitations, exact snapshot identity and findings. Browser scenarios do not apply to this local file preparation.
+4. The lead audits the outcome and records the final approval request, as required by the workflow. The supplied download remains available for recovery; no network access is necessary.
+
+### Risks
+
+The input can change while another process has it open. Read a consistent byte snapshot, check its hash and stop if it differs from discovery. Decimal commas require correct CSV quoting; parsing and preserving strings avoids numeric conversion. Two files cannot be committed as one atomic operation, so a retained recovery record must make interrupted publication detectable and recoverable without clobbering unknown data. The source's terms and original retrieval time are not established.
+
+The feature-workflow skill at `.agents/skills/feature-workflow/SKILL.md` requires explicit approval of both exact revisions before implementation. Do you approve **specification s001 and plan p001** as written? Reply `approve s001/p001`, or tell me what to change.
+```
+## 2026-11-04 (America/Sao_Paulo)
+
+### User
+```text
+do the plan consider this part?
+
+After that, we will start a new scraper using Beautiful Soup
+
+The goal of this scraper is just to update the csv file with new information. So, it can just access:
+
+[https://br.investing.com/currencies/usd-brl-historical-data](https://br.investing.com/currencies/usd-brl-historical-data)
+
+find the dates csv doesnt have, and save additional information (date or "Data" and price "Ultimo")
+```
+
+### Assistant progress
+```text
+The draft records a future Beautiful Soup updater as deferred, but it doesn’t capture the specific URL, missing-date check, and `Data`/`price` fields you described. I’ll add those as explicit context for the follow-up task while keeping scraper implementation outside this CSV-preparation plan.
+```
+
+### Assistant response
+```text
+Yes. The updated draft explicitly records that, after CSV preparation, the follow-up is a new Beautiful Soup scraper for the Investing.com USD/BRL historical-data page. Its stated goal is to find dates missing from the CSV and add only the date (`Data`) and source `Último` value as `price`. Scraper implementation and detailed update behavior remain outside this CSV-preparation task.
+
+I updated the proposed [specification s002](/C:/Users/bruno/.codex/worktrees/6e03/investment_portfolio_backtest/docs/tasks/004-usd-brl-source-preparation/spec.md) (SHA-256 `94143757148b27d7ecd713acb40d066f917716d6f8c891ff53d401fe3e52362c`) and [plan p002](/C:/Users/bruno/.codex/worktrees/6e03/investment_portfolio_backtest/docs/tasks/004-usd-brl-source-preparation/plan.md) (SHA-256 `17076c56b8ae90d5b890e2f2797b7072d86dcb32de3e891bd5aa446c1b9e1877`). The previous draft revisions are archived. No CSV or application code has been changed. The feature-workflow skill requires explicit approval of the current spec and plan before implementation. Their complete contents follow.
+
+## Specification s002 — USD/BRL source preparation
+
+### Goal and scope
+
+Prepare the user-supplied Investing.com CSV as `data/dolar/source/USD_BRL Dados Históricos (1).csv`. Keep only `Data` and `Último`, renaming the latter `price`. This is a one-time preparation of the supplied file.
+
+The supplied input inspected during discovery is UTF-8 with a BOM, has headers `Data,Último,Abertura,Máxima,Mínima,Vol.,Var%`, and contains 4,132 records. Its SHA-256 is `0fa13625511a444b282e7626eef081c8408896213191687580428dbd33ccf3a7`. Dates use `DD.MM.YYYY`; prices use a decimal comma. The observed records run from 03.11.2026 to 03.01.2011 in their original order. Treat these observations as a snapshot, not a promise about any later input.
+
+### Acceptance criteria
+
+- **AC-001 — Exact projection:** Read the supplied CSV as CSV, including quoted values and the accented `Último` header. Produce exactly two columns in order, `Data` and `price`, with one output record for every input record. Preserve each selected field's text and input order, including decimal precision; do not sort, deduplicate, convert dates or prices, or synthesize data. Quote fields as required for a valid comma-delimited CSV.
+- **AC-002 — Destination and encoding:** Save the CSV at the path stated above, using UTF-8 without BOM, consistent with the project's generated Selic CSV. The B3 original CSVs use a different encoding; they are preserved source downloads. Leave the supplied download unchanged.
+- **AC-003 — Safety and provenance:** Treat an existing destination or provenance file as a conflict and stop without overwriting it. Stage output before publishing it. Keep a write-ahead recovery record until both the active CSV and a matching `data/dolar/manifest.json` have been committed, using atomic file replacement for each. Record the supplied file name and hash, the output hash and record count, the Investing.com page URL, the local transformation and schema, and the fact that the original retrieval time and usage terms are unverified; do not invent them. Document recovery from an interrupted initial import. Do not include backups as active inputs.
+- **AC-004 — Boundaries:** No network request, scraper, return calculation, financial transformation, dependency or backend command is introduced. An unavailable, changed, malformed or unexpectedly structured input must stop without publishing partial or misleading data.
+
+### Decisions and limits
+
+The source snapshot was supplied by the user; the specified URL identifies its stated origin and is not evidence of its retrieval time or a grant of redistribution rights. This task does not settle market-data alignment, financial interpretation, or future update behavior. A changed input after discovery requires a fresh read and a recorded decision before publication.
+
+### Follow-up context: scraper
+
+After preparing the CSV, the user intends to start a new Beautiful Soup scraper. Its stated goal is to access `https://br.investing.com/currencies/usd-brl-historical-data`, find dates absent from the CSV, and add only the date (`Data`) and price (the source's `Último`, stored as `price`). This is context for subsequent work, not an approved design or acceptance criterion for this preparation task. Scraper implementation and its detailed behavior remain outside the present scope.
+
+## Plan p002 — USD/BRL source preparation
+
+Proposed against specification s002; neither revision is approved yet.
+
+### Design and boundaries
+
+Perform a one-time local CSV projection; no reusable scraper, service, abstraction or application dependency is needed. Read the supplied file with a CSV parser that supports quoted commas and UTF-8 BOM. Preserve the selected field text exactly, and serialize valid comma-delimited UTF-8 without BOM. Name the output as the user-supplied file to avoid inventing a new naming convention.
+
+Use a source directory containing only the active CSV. Put provenance in `data/dolar/manifest.json`, and a temporary recovery record outside the source directory. Never overwrite a pre-existing CSV or manifest. Retain the original supplied file unchanged. Since this is an initial creation, no prior active dataset exists to back up; future updates require the project's backup, recovery, provenance and offline-restore conventions to be designed in their own task. Document the initial import and recovery procedure in `data/dolar/README.md`.
+
+### Ordered work
+
+1. After explicit approval of s002 and p002, record the Git baseline and worktree snapshot. Reopen the input with shared read access, compare its SHA-256 to the discovery snapshot, and validate its CSV structure and required headers. Stop on conflict or changed input.
+2. Under a single developer assignment, create the CSV and provenance as staged files, prepare a write-ahead record describing their expected hashes and safe recovery, and publish each file atomically without overwriting existing files. Remove the recovery record only after both files are in place. Document origin, format, limitations and interruption recovery.
+3. Obtain independent review and QA of the artifacts against the approved criteria, without adding or running tests unless the user requests testing or verification. Record any limitations, exact snapshot identity and findings. Browser scenarios do not apply to this local file preparation.
+4. The lead audits the outcome and records the final approval request, as required by the workflow. The supplied download remains available for recovery; no network access is necessary.
+
+The user's later scraper request provides context for this file's two-column layout: a new Beautiful Soup scraper should access the stated Investing.com USD/BRL historical-data page, find dates missing from the CSV, and add only `Data` and `price` values derived from the source date and `Último`. Planning and implementing that scraper, including its update and safety behavior, belongs to subsequent work.
+
+### Risks
+
+The input can change while another process has it open. Read a consistent byte snapshot, check its hash and stop if it differs from discovery. Decimal commas require correct CSV quoting; parsing and preserving strings avoids numeric conversion. Two files cannot be committed as one atomic operation, so a retained recovery record must make interrupted publication detectable and recoverable without clobbering unknown data. The source's terms and original retrieval time are not established.
+
+Do you approve specification s002 and plan p002 as written? Reply `approve s002/p002`, or tell me what to change.
+```
+## 2026-11-04 (America/Sao_Paulo)
+
+### User
+```text
+approved
+```
+
+### Assistant progress
+```text
+Approval is recorded for specification s002 and plan p002. I’ll now prepare the two-column CSV and its provenance records; the scraper remains a separate follow-up task.
+```
+
+```text
+The approved revisions are recorded, and the source snapshot has been rechecked before processing. The developer is preparing the CSV, provenance manifest, and recovery documentation; independent review and QA will follow.
+```
+
+```text
+The prepared CSV contains 4,132 rows in the original order, with `Data` and `price` columns in UTF-8 without a BOM. The independent reviewer is checking the output and recovery documentation now.
+```
+
+### Assistant response
+```text
+The one-time CSV preparation is complete and reviewed:
+
+- [USD_BRL Dados Históricos (1).csv](</C:/Users/bruno/.codex/worktrees/6e03/investment_portfolio_backtest/data/dolar/source/USD_BRL Dados Históricos (1).csv>) contains 4,132 records in source order, with `Data` and `price` columns, encoded as UTF-8 without a BOM.
+- [manifest.json](/C:/Users/bruno/.codex/worktrees/6e03/investment_portfolio_backtest/data/dolar/manifest.json) records the source and output hashes and provenance.
+- [README.md](/C:/Users/bruno/.codex/worktrees/6e03/investment_portfolio_backtest/data/dolar/README.md) documents the initial-import recovery steps.
+
+Independent review and QA each matched all 4,132 selected rows against the supplied source. No tests were added or run. The initial publication sequence and interruption recovery were not replayed. The source's original retrieval time and usage terms remain unverified. The scraper was not built and remains follow-up work.
+
+The reviewed result corresponds to specification s002, plan p002, and snapshot `e322d90ff4d70fc3561b0ddb7510ade64bbcc589:sha256:a3ec5e02675212570a1b3e5fc06c363389d5b7e461a3ad4046339d4c0bf318c5`. The explicitly invoked `.agents/skills/feature-workflow/SKILL.md` requires explicit final approval after review and QA before I can mark the task complete. Do you approve completion for this snapshot? You can reply `approved`.
+```
+## 2026-11-04 (America/Sao_Paulo)
+
+### User
+```text
+approved
+```
+
+### Assistant progress
+```text
+Final approval received for the reviewed snapshot. I’ll record it against s002, p002, and the completed artifact snapshot, then close the workflow.
+```
+
+### Assistant response
+```text
+Completed. Final approval is recorded for specification s002, plan p002, and the reviewed snapshot; the workflow state is completed in [state.json]([redacted]). The prepared CSV and provenance artifacts are available at [USD_BRL Dados Históricos (1).csv]([redacted]), [manifest.json]([redacted]), and [README.md]([redacted]). Scraper work remains the separate follow-up task.
+```
+## 2026-11-04 (America/Sao_Paulo)
+
+### User request
+```text
+[$organize-git-commits]([redacted]) 
+```
+
+### Attached skill instructions
+```text
+<skill>
+<name>organize-git-commits</name>
+<path>[redacted]</path>
+---
+name: organize-git-commits
+description: Organize existing Git changes into a suitable branch and focused local commits when asked to commit or organize the work.
+---
+
+# Organize Git commits
+
+Follow repository instructions and conventions. Invocation to organize and commit authorizes creating local branches and commits. Do not push, create a pull request, amend commits, rewrite history, discard changes, or modify remote state without separate authorization.
+
+1. Before changing Git state, inspect the current branch and HEAD, staged and unstaged diffs, renames and deletions, and untracked files. Read relevant changes and surrounding context to understand their purpose and scope. Check for an ongoing merge, rebase, cherry-pick, or unresolved conflicts; stop before changing Git state if they prevent safe organization.
+2. On `master`, create a descriptive branch at the current HEAD while preserving local changes. Follow the repository's branch naming convention, or choose a concise name reflecting the work; resolve name collisions with a different name, never by overwriting a branch. On any other branch, continue there.
+3. Plan cohesive commits by purpose and dependency, in an order that makes the history easy to review. A commit may include several related files when they form one logical change. Distinct changes in the same file may belong in separate commits when they can be separated safely. Avoid combining unrelated changes in a large catch-all commit.
+4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
+5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
+6. Report the resulting branch, each commit’s short hash and message, and any changes left uncommitted with the reason.
+</skill>
+
+**Assistant progress:**
+
+The worktree is detached at `67f2f1f`, with no staged changes or in-progress merge/rebase. The Selic code, docs, and task records form one feature change; the interaction log is already in a separate commit. I’ll create a descriptive branch before committing the feature.
+
+The staged feature set contains the Selenium adapter, its tests and docs, plus task 004 records and evidence. It includes no project data or unrelated code. I’m committing this cohesive change separately from the interaction log.
+
+**Assistant:**
+
+Organized on branch `codex/selic-selenium-refactor`.
+
+- `7eb03a3` — `feat: refactor Selic acquisition to Selenium`: commits the Selenium source, tests, docs, and task 004 review/QA records.
+- The configured Stop hook will commit this turn’s interaction-log entry separately as `docs: update agent interaction log`.
+
+The only pending worktree change is this turn’s `docs/agent-log/LOG.md` entry; the configured Stop hook will commit it after the reply. No project data or other changes remain.
+
+## 2026-11-04 01:19 -03:00 — Push request
+
+**User:**
+
+git push
+
+**Assistant progress:**
+
+I’ll check the current branch, its upstream, and the worktree state, then push the requested branch to its remote.
+
+The push was rejected by automatic approval review because `origin` is unverified for this payload. I won’t retry it. The local branch and commits remain intact, and the worktree is clean.
+
+**Assistant:**
+
+The push did not complete. Automatic approval review rejected `git push --set-upstream origin codex/selic-selenium-refactor`, stating it would send potentially private implementation and task evidence to an unverified `origin` without approval of this specific destination and payload.
+
+The local branch `codex/selic-selenium-refactor` is unchanged. The commits currently ahead of `origin/master` are:
+
+- `72e6197`, `d9b4897`, `67f2f1f` — `docs: update agent interaction log`
+- `7eb03a3` — `feat: refactor Selic acquisition to Selenium`
+- `fabf8eb` — `docs: update agent interaction log`
+
+The remote branch did not exist before the attempt, and the rejected push made no remote changes. The configured Stop hook will create one additional log-only commit after this response.
+
+Please explicitly confirm that `origin` is the intended remote and authorize publishing the entire `codex/selic-selenium-refactor` branch, including its Selic feature and interaction-log commits. I’ll wait for that confirmation before trying again.
+
+## 2026-11-04 01:22 -03:00 — Clarify push authorization
+
+**User:**
+
+how do i do that?
+
+**Assistant progress:**
+
+I’ll check the configured `origin` safely so I can give you an exact confirmation sentence with the repository named.
+
+**Assistant:**
+
+Check that this is your intended GitHub repository: `github.com/[redacted]/investment-portfolio-backtest.git`.
+
+If it is, reply:
+
+> I confirm `origin` (`github.com/[redacted]/investment-portfolio-backtest.git`) is the intended destination and authorize pushing the current `codex/selic-selenium-refactor` branch, including its Selic feature and interaction-log commits.
+
+I haven’t retried the push. If the repository is wrong, tell me the correct remote.
+
+## 2026-11-04 01:22 -03:00 — Push authorized branch
+
+**User:**
+
+push
+
+**Assistant progress:**
+
+I understand “push” as authorization to publish the current `codex/selic-selenium-refactor` branch to the `origin` repository I just identified. I’ll check the latest branch state, then push it.
+
+**Assistant progress:**
+
+The branch push succeeded and set the upstream. I’ll commit this turn’s required interaction-log entry separately, then push the updated branch tip so the remote includes it too.
+
+**Assistant:**
+
+Pushed the current branch, `codex/selic-selenium-refactor`, to `origin` and set its upstream. It includes Selic refactor commit `7eb03a3`.
+3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
+4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
+5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
+6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+</skill>
+```
+
+### Assistant progress
+```text
+I’m applying the organize-git-commits workflow. I’ll inspect the branch, index, and all local changes first, then group the completed USD/BRL source artifacts and workflow records into focused local commits if the worktree is safe to organize.
+```
+
+```text
+The worktree is detached at `42d49b8`, with no staged or tracked edits and no active merge/rebase/cherry-pick. The only untracked files are the USD/BRL data and its approved task records. I’ll create a `codex/usd-brl-source-preparation` branch at this HEAD, then commit the data artifacts and workflow records separately.
+```
+
+```text
+Branch creation needs to write to the repository’s shared Git metadata under `[redacted]`, outside this workspace’s writable roots. I’m requesting the required Git metadata access to create the local branch; the worktree files remain untouched.
+```
+
+```text
+The staged data commit contains only the CSV, manifest, and recovery README; the staged review showed 4,132 CSV records, and the whitespace check was clean. I’m committing those as one data change, then I’ll stage and inspect the task records separately.
+```
+
+### Assistant response
+```text
+Created branch `codex/usd-brl-source-preparation` at `42d49b8`.
+
+Commits:
+
+- `d4615df` — `data: add USD/BRL source dataset`
+- `7bc76d1` — `docs: record USD/BRL source preparation`
+
+The only uncommitted change is [LOG.md]([redacted]), updated as required by AGENTS.md. The USD/BRL data and workflow records are committed. No changes were pushed.
+```

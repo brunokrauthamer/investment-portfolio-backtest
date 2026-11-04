@@ -1,0 +1,21 @@
+{
+  "command": "python -m backend.src.internet_data_getter --data-dir <task-local temporary directory> --getter selic",
+  "python": "3.9.4",
+  "selenium": "4.30.0",
+  "chrome": "156.0.8078.80",
+  "status": "saved",
+  "rows": 3977,
+  "source_reported_count": 3977,
+  "first_date": "2011-01-03",
+  "first_rate": "0.040239",
+  "middle_index": 1988,
+  "middle_date": "2018-12-03",
+  "middle_rate": "0.024620",
+  "last_date": "2026-11-03",
+  "last_rate": "0.050788",
+  "requested_start": "2011-01-01",
+  "requested_end": "2026-11-03",
+  "sha256": "b9f3d96ac8504f77bcc08fdbe3024eb2e760c9e8190a8fba726a20ad79414688",
+  "matches_manifest_hash": true,
+  "retrieved_at": "2026-11-04T03:41:06Z"
+}
