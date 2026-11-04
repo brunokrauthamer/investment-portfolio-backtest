@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "asset": "USD/BRL",
+  "source_url": "https://br.investing.com/currencies/usd-brl-historical-data",
+  "original_input": {
+    "filename": "USD_BRL Dados Históricos (1).csv",
+    "sha256": "0fa13625511a444b282e7626eef081c8408896213191687580428dbd33ccf3a7",
+    "encoding": "UTF-8 with BOM",
+    "original_retrieved_at": null,
+    "retrieval_time_known": false,
+    "usage_terms_verified": false
+  },
+  "transformation": "One-time local CSV projection preserving Data and Último values and original row order; rename Último to price.",
+  "csv": {
+    "path": "source/USD_BRL Dados Históricos (1).csv",
+    "encoding": "UTF-8 without BOM",
+    "delimiter": ",",
+    "columns": [
+      "Data",
+      "price"
+    ],
+    "rows": 4132,
+    "first_date_as_supplied": "03.11.2026",
+    "last_date_as_supplied": "03.01.2011",
+    "sha256": "b43e448cdd88c22cf4690c1803cf3c96c4778e03d0ae3dd8c2c43dd2e7f68169"
+  },
+  "transformed_at": "2026-11-04T00:42:21-03:00"
+}
