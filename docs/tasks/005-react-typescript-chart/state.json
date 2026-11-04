@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "state_version": 15,
+  "state_version": 26,
   "task_id": "005",
   "task_slug": "react-typescript-chart",
-  "stage": "awaiting_correction_approval",
-  "spec_revision": "s001",
-  "spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
-  "plan_revision": "p002",
-  "plan_sha256": "dd1db8ef75dc13408ee19a3ae6d8e08a7b60636efec4dfe36c9c15eeec195c87",
-  "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+  "stage": "qa",
+  "spec_revision": "s002",
+  "spec_sha256": "688866c1ef10655c7b692a985600c8298b1212bbb8bf4769c1fd397876f8a067",
+  "plan_revision": "p003",
+  "plan_sha256": "db3514f89da2f4a892c5edae7355ccc1c309b28432592630bfb8ebfb2a936ec8",
+  "code_revision": "23e00b868e0537eaea51eff56217047692a2d270:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
   "baseline_revision": "b69fee73108494a2cd183f00ee2d5447131b88d8:sha256:50a22036c79cd3590784c12aa76388d0da5512cb9b6212103552a38414af86de",
   "baseline_snapshot": "evidence/baseline-snapshot.json",
   "baseline_worktree_status": "clean before task record creation",
@@ -17,110 +17,136 @@
   "model_switch_reason": "Initial independent browser QA found a blocking implementation failure: React renders a blank root page with an invalid element type error in ExampleChart.",
   "review_rounds": {
     "initial": 2,
-    "correction": 0
+    "correction": 1
   },
   "limits": {
     "rounds_per_cycle": 3,
     "correction_cycles": 1
   },
-  "state_writer": "tech-lead-correction",
-  "active_assignments": [],
+  "state_writer": "qa",
+  "active_assignments": [
+    {
+      "id": "scope-amendment-qa",
+      "role": "qa",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "findings": [
+        "CHART-QA-01",
+        "CHART-QA-02"
+      ],
+      "slice": "Independent acceptance evaluation of s002/p003 with focused 1280 px Chrome checks on Vite dev and preview.",
+      "allowed_files": [
+        "docs/tasks/005-react-typescript-chart/verification.md",
+        "docs/tasks/005-react-typescript-chart/state.json",
+        "docs/tasks/005-react-typescript-chart/evidence/"
+      ],
+      "input_spec": "s002",
+      "input_spec_sha256": "688866c1ef10655c7b692a985600c8298b1212bbb8bf4769c1fd397876f8a067",
+      "input_plan": "p003",
+      "input_plan_sha256": "db3514f89da2f4a892c5edae7355ccc1c309b28432592630bfb8ebfb2a936ec8",
+      "input_snapshot": "23e00b868e0537eaea51eff56217047692a2d270:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "writer": "qa: QA fields, acceptance results, verification.md and QA evidence",
+      "deliverables": "Focused real Chrome checks, evidence reuse rationale and traceable links for unaffected criteria, before/after snapshots, final independent verdict and handoff.",
+      "status": "active"
+    }
+  ],
   "implementation": {
     "status": "complete",
     "evidence": [
-      "TDD red and green observations, initial-version evidence, and pinned-version compatibility are recorded in verification.md.",
-      "verification.md: exact-pinned install, frozen-lockfile install, tests, typecheck, build, and development-server root smoke.",
-      "evidence/implementation-round-1.json",
-      "Round 2 snapshot `186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86`; regression red/green and integrated checks are recorded in verification.md."
+      "Correction round 1 TDD, browser observations and final checks: verification.md, Correction implementation round 1; evidence/correction-implementation-1.json"
     ]
   },
   "review": {
     "status": "passed",
-    "spec_revision": "s001",
-    "plan_revision": "p001",
-    "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+    "spec_revision": "s002",
+    "plan_revision": "p003",
+    "code_revision": "23e00b868e0537eaea51eff56217047692a2d270:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
     "evidence": [
-      "review.md#initial-round-1--2026-11-04-americasao_paulo",
-      "evidence/review-initial-1-before.json",
-      "evidence/review-initial-1-after.json",
-      "review.md#initial-round-2--2026-11-04-americasao_paulo",
-      "evidence/review-initial-2-before.json",
-      "evidence/review-initial-2-after.json"
+      "review.md#scope-amendment-review---2026-11-04-americasao_paulo",
+      "evidence/review-scope-amendment-before.json",
+      "evidence/review-scope-amendment-after.json"
     ]
   },
   "qa": {
     "status": "failed",
     "spec_revision": "s001",
-    "plan_revision": "p001",
-    "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+    "plan_revision": "p002",
+    "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
     "evidence": [
-      "verification.md#independent-qa--2026-11-04-americasao_paulo",
-      "evidence/qa-dispatch.json",
-      "evidence/qa-after.json",
-      "Chrome at http://127.0.0.1:5173/: blank page screenshot and React render error observed; no screenshot artifact retained"
+      "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
+      "evidence/qa-correction-1-before.json",
+      "evidence/qa-correction-1-after.json"
     ],
     "browser": "failed"
   },
   "acceptance_results": [
     {
+      "spec_revision": "s001",
+      "plan_revision": "p002",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
       "criterion_id": "AC-001",
-      "status": "fail",
-      "spec_revision": "s001",
-      "plan_revision": "p001",
-      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
-      "expected": "SPA renders at root URL",
-      "actual": "Root shell loaded but body was blank; React rendered an invalid element error. Reload reproduced.",
-      "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+      "status": "pass",
+      "expected": "SPA root renders and production build runs.",
+      "actual": "Both dev and production preview root pages rendered one chart on direct load and reload."
     },
     {
+      "spec_revision": "s001",
+      "plan_revision": "p002",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
       "criterion_id": "AC-002",
-      "status": "fail",
-      "spec_revision": "s001",
-      "plan_revision": "p001",
-      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
-      "expected": "ApexCharts line with date and percentage axes and working hover tooltip",
-      "actual": "No .apexcharts-canvas element rendered (count 0); tooltip not available.",
-      "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+      "status": "pass",
+      "expected": "Date-based chart with percentage axes and accurate positive/negative hover values.",
+      "actual": "One real ApexCharts chart appeared in dev and preview. February hover showed 2024-02-01 / 2.5%; March hover showed 2024-03-01 / -1.2%."
     },
     {
+      "spec_revision": "s001",
+      "plan_revision": "p002",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
       "criterion_id": "AC-003",
-      "status": "fail",
-      "spec_revision": "s001",
-      "plan_revision": "p001",
-      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
-      "expected": "Visible illustrative label and all six fixed UTC date/value pairs",
-      "actual": "Document body text empty; sample series was not presented.",
-      "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+      "status": "pass",
+      "expected": "Six fixed UTC example pairs appear chronologically and are labeled illustrative.",
+      "actual": "Visible illustrative label and accessible disclosure showed all six exact UTC date/value rows. UTC formatter tests passed across three time zones."
     },
     {
+      "spec_revision": "s001",
+      "plan_revision": "p002",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
       "criterion_id": "AC-004",
       "status": "fail",
-      "spec_revision": "s001",
-      "plan_revision": "p001",
-      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
-      "expected": "Accessible readable content and chart at 320 px and 1280 px",
-      "actual": "Blank app at root; 320 px empty body had no overflow but was not readable content. 1280 px and disclosure were not verified.",
-      "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+      "expected": "Accessible readable chart and description at 320 px and 1280 px without page-level horizontal overflow or chart clipping.",
+      "actual": "At 1280 px both paths had client and document scroll widths 1280 px. At 320 px the chart and month labels fit. When the disclosure is open, both paths have innerWidth 320 px, document clientWidth 305 px and scrollWidth 320 px, with a visible page-level horizontal scrollbar caused by body min-width 320 px and vertical page scrolling. See CHART-QA-02 in verification.md."
     },
     {
+      "spec_revision": "s001",
+      "plan_revision": "p002",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
       "criterion_id": "AC-005",
-      "status": "blocked",
-      "spec_revision": "s001",
-      "plan_revision": "p001",
-      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
-      "expected": "Frontend-only example data renders without backend or external data service",
-      "actual": "Render error prevented independent runtime verification; criterion unassessed.",
-      "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+      "status": "pass",
+      "expected": "Page renders fixed local example data without backend, external service or market data.",
+      "actual": "Dev entry scripts and production JS/CSS assets are same-origin. The rendered app has no iframe or form and no backend is required."
     },
     {
-      "criterion_id": "AC-006",
-      "status": "not_run",
       "spec_revision": "s001",
-      "plan_revision": "p001",
-      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
-      "expected": "Documented install/run/build commands, prerequisites and source layout verified",
-      "actual": "Not independently run or checked during QA.",
-      "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+      "plan_revision": "p002",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
+      "criterion_id": "AC-006",
+      "status": "pass",
+      "expected": "Documented frontend prerequisites, install, run, build, verification and source layout are correct.",
+      "actual": "README commands and source layout were checked. Frozen install, test suite, typecheck and production build all passed."
     }
   ],
   "open_findings": [
@@ -170,8 +196,29 @@
       "consequence": "The SPA renders a blank page, so its chart and accessible example content are unavailable.",
       "reproduction": "Start the Vite server and open or reload / in Chrome. The body is blank and the console reports that ExampleChart attempted to render an invalid element type: object.",
       "evidence": "verification.md, Independent QA; evidence/qa-dispatch.json and evidence/qa-after.json",
-      "status": "open",
-      "resolution_evidence": null
+      "status": "resolved",
+      "resolution_evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo; independent direct load and reload each produced one real chart in Chrome on both development and production preview.",
+      "correction_review_evidence": "Correction round 1 passed integrated review of the runtime adapter and regression on the p002 snapshot. Independent Chrome confirmation on development and production preview is pending. See review.md."
+    },
+    {
+      "id": "CHART-QA-02",
+      "source": "qa",
+      "severity": "P2",
+      "blocking": false,
+      "criterion_ids": [
+        "AC-004"
+      ],
+      "location": "frontend/src/styles.css:30-33; ExampleChart native example data disclosure",
+      "consequence": "Opening the accessible six-row disclosure at a 320 px viewport introduces 15 px of horizontal page overflow when the vertical scrollbar reduces available width.",
+      "reproduction": "In Chrome on Vite dev strict port 5173 or built preview strict port 4173, set the viewport width to 320 px and open Read the example data. The outer horizontal scrollbar appears. document.scrollingElement.clientWidth is 305 px and scrollWidth is 320 px, with computed body min-width 320 px. Closed disclosure and 1280 px scenarios fit.",
+      "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
+      "status": "accepted",
+      "resolution_evidence": "The user accepted the observed overflow at 320 px as outside intended use. The failure against s001 remains in QA history. This finding becomes outside the required scope under s002/p003 when approved. verification.md#human-scope-decision--2026-11-04-americasao_paulo Approved s002/p003 excludes the 320 px scenario.",
+      "prior_blocking_scope": {
+        "spec_revision": "s001",
+        "plan_revision": "p002",
+        "blocking": true
+      }
     }
   ],
   "attempts_without_progress": 0,
@@ -189,10 +236,35 @@
       "approval_message_time": null,
       "reference": "User replied approved in the main chat to the explicit request for s001 and p001."
     },
-    "correction_plan": null,
-    "final": null
+    "correction_plan": {
+      "decision": "approved",
+      "exact_user_reply": "implement the:",
+      "spec_revision": "s001",
+      "spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+      "plan_revision": "p002",
+      "plan_sha256": "92b281a4b439477445670a51a5c9bae5be7ac0cc6093adec88e909cec1a884bb",
+      "recorded_at_utc": "2026-11-04T21:23:06Z",
+      "recorded_at_local": "2026-11-04T18:23:06-03:00",
+      "timezone": "America/Sao_Paulo",
+      "approval_message_time": null,
+      "reference": "The user explicitly requested implementation of the attached p002 plan in the main chat. The attachment and checked-out plan.md have identical SHA-256 hashes."
+    },
+    "final": null,
+    "scope_amendment": {
+      "decision": "approved",
+      "exact_user_reply": "approved",
+      "spec_revision": "s002",
+      "spec_sha256": "688866c1ef10655c7b692a985600c8298b1212bbb8bf4769c1fd397876f8a067",
+      "plan_revision": "p003",
+      "plan_sha256": "db3514f89da2f4a892c5edae7355ccc1c309b28432592630bfb8ebfb2a936ec8",
+      "recorded_at_utc": "2026-11-04T21:57:37Z",
+      "recorded_at_local": "2026-11-04T18:57:37-03:00",
+      "timezone": "America/Sao_Paulo",
+      "approval_message_time": null,
+      "reference": "The user replied approved to the main chat request for approval of s002 and p003."
+    }
   },
-  "next_action": "Await explicit human approval of correction plan p002 against approved s001 before assigning correction implementation.",
+  "next_action": "Independently verify s002/p003 on the current snapshot with Chrome at 1280 px on Vite dev and preview and return the writer token.",
   "dependency_decision": {
     "recorded_at_utc": "2026-11-04T20:12:21Z",
     "initial_install": [
@@ -362,6 +434,169 @@
       "writer": "qa: QA fields, acceptance results, verification.md and evidence",
       "deliverables": "Independent criterion matrix, browser actions, expected/actual results, before/after snapshots and QA verdict",
       "status": "completed_with_failed_verdict"
+    },
+    {
+      "id": "correction-developer-round-1",
+      "role": "developer-correction",
+      "model": "gpt-6.1-terra",
+      "effort": "medium",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "findings": [
+        "CHART-QA-01"
+      ],
+      "slice": "Implement the local React wrapper interop repair in p002, focused tests, frontend README and repeatable browser verification.",
+      "allowed_files": [
+        "frontend/src/pages/ExampleChart/",
+        "frontend/README.md",
+        "docs/tasks/005-react-typescript-chart/verification.md",
+        "docs/tasks/005-react-typescript-chart/state.json",
+        "docs/tasks/005-react-typescript-chart/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+      "input_plan": "p002",
+      "input_plan_sha256": "92b281a4b439477445670a51a5c9bae5be7ac0cc6093adec88e909cec1a884bb",
+      "input_snapshot": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:10deab40d50411e871720265cd8748b495f3bd5eb9b869591de04d51da9cf1ad",
+      "writer": "developer-correction: implementation/status, code_revision, verification.md and implementation evidence",
+      "deliverables": "Test and actual-browser red/green evidence, integrated tests/typecheck/build, frontend documentation, complete output snapshot and handoff.",
+      "status": "completed",
+      "output_snapshot": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc"
+    },
+    {
+      "id": "correction-review-round-1",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "findings": [
+        "CHART-QA-01"
+      ],
+      "slice": "Independent integrated review of p002 correction, responsive labels, all approved criteria and complete worktree.",
+      "allowed_files": [
+        "docs/tasks/005-react-typescript-chart/review.md",
+        "docs/tasks/005-react-typescript-chart/state.json",
+        "docs/tasks/005-react-typescript-chart/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+      "input_plan": "p002",
+      "input_plan_sha256": "92b281a4b439477445670a51a5c9bae5be7ac0cc6093adec88e909cec1a884bb",
+      "input_snapshot": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "writer": "reviewer: review fields, findings and review.md",
+      "deliverables": "Independent review verdict and actionable findings, before/after snapshots, and handoff.",
+      "status": "completed",
+      "output_snapshot": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc"
+    },
+    {
+      "id": "correction-qa",
+      "role": "qa",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "findings": [
+        "CHART-QA-01"
+      ],
+      "slice": "Independent integrated s001 acceptance matrix with real Chrome development and production preview runs.",
+      "allowed_files": [
+        "docs/tasks/005-react-typescript-chart/verification.md",
+        "docs/tasks/005-react-typescript-chart/state.json",
+        "docs/tasks/005-react-typescript-chart/evidence/"
+      ],
+      "input_spec": "s001",
+      "input_spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+      "input_plan": "p002",
+      "input_plan_sha256": "92b281a4b439477445670a51a5c9bae5be7ac0cc6093adec88e909cec1a884bb",
+      "input_snapshot": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "writer": "qa: QA fields, acceptance results, verification.md and QA evidence",
+      "deliverables": "Independent browser matrix and verification commands, expected/actual criteria, before/after snapshots and handoff.",
+      "status": "completed_with_failed_verdict",
+      "output_snapshot": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc"
+    },
+    {
+      "id": "scope-amendment-review",
+      "role": "reviewer",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "findings": [
+        "CHART-QA-01",
+        "CHART-QA-02"
+      ],
+      "slice": "Independent review of s002/p003 scope, unchanged implementation snapshot and applicability of prior evidence.",
+      "allowed_files": [
+        "docs/tasks/005-react-typescript-chart/review.md",
+        "docs/tasks/005-react-typescript-chart/state.json",
+        "docs/tasks/005-react-typescript-chart/evidence/"
+      ],
+      "input_spec": "s002",
+      "input_spec_sha256": "688866c1ef10655c7b692a985600c8298b1212bbb8bf4769c1fd397876f8a067",
+      "input_plan": "p003",
+      "input_plan_sha256": "db3514f89da2f4a892c5edae7355ccc1c309b28432592630bfb8ebfb2a936ec8",
+      "input_snapshot": "23e00b868e0537eaea51eff56217047692a2d270:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "writer": "reviewer: review fields, findings and review.md",
+      "deliverables": "Independent review verdict and actionable findings, before/after snapshots, and handoff.",
+      "status": "completed",
+      "output_snapshot": "23e00b868e0537eaea51eff56217047692a2d270:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc"
+    },
+    {
+      "id": "scope-amendment-qa",
+      "role": "qa",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "findings": [
+        "CHART-QA-01",
+        "CHART-QA-02"
+      ],
+      "slice": "Independent acceptance evaluation of s002/p003 with focused 1280 px Chrome checks on Vite dev and preview.",
+      "allowed_files": [
+        "docs/tasks/005-react-typescript-chart/verification.md",
+        "docs/tasks/005-react-typescript-chart/state.json",
+        "docs/tasks/005-react-typescript-chart/evidence/"
+      ],
+      "input_spec": "s002",
+      "input_spec_sha256": "688866c1ef10655c7b692a985600c8298b1212bbb8bf4769c1fd397876f8a067",
+      "input_plan": "p003",
+      "input_plan_sha256": "db3514f89da2f4a892c5edae7355ccc1c309b28432592630bfb8ebfb2a936ec8",
+      "input_snapshot": "23e00b868e0537eaea51eff56217047692a2d270:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "writer": "qa: QA fields, acceptance results, verification.md and QA evidence",
+      "deliverables": "Focused real Chrome checks, evidence reuse rationale and traceable links for unaffected criteria, before/after snapshots, final independent verdict and handoff.",
+      "status": "active"
     }
   ],
   "correction_baseline": {
@@ -383,5 +618,270 @@
     "finding_id": "CHART-QA-01",
     "archived_plan": "history/plan-p001.md",
     "diagnosis": "The Vite client transform passes the pinned wrapper CommonJS exports object to React. The callable chart component is its default property."
+  },
+  "initial_verdicts": {
+    "implementation": {
+      "status": "complete",
+      "evidence": [
+        "TDD red and green observations, initial-version evidence, and pinned-version compatibility are recorded in verification.md.",
+        "verification.md: exact-pinned install, frozen-lockfile install, tests, typecheck, build, and development-server root smoke.",
+        "evidence/implementation-round-1.json",
+        "Round 2 snapshot `186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86`; regression red/green and integrated checks are recorded in verification.md."
+      ]
+    },
+    "review": {
+      "status": "passed",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+      "evidence": [
+        "review.md#initial-round-1--2026-11-04-americasao_paulo",
+        "evidence/review-initial-1-before.json",
+        "evidence/review-initial-1-after.json",
+        "review.md#initial-round-2--2026-11-04-americasao_paulo",
+        "evidence/review-initial-2-before.json",
+        "evidence/review-initial-2-after.json"
+      ]
+    },
+    "qa": {
+      "status": "failed",
+      "spec_revision": "s001",
+      "plan_revision": "p001",
+      "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+      "evidence": [
+        "verification.md#independent-qa--2026-11-04-americasao_paulo",
+        "evidence/qa-dispatch.json",
+        "evidence/qa-after.json",
+        "Chrome at http://127.0.0.1:5173/: blank page screenshot and React render error observed; no screenshot artifact retained"
+      ],
+      "browser": "failed"
+    },
+    "acceptance_results": [
+      {
+        "criterion_id": "AC-001",
+        "status": "fail",
+        "spec_revision": "s001",
+        "plan_revision": "p001",
+        "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+        "expected": "SPA renders at root URL",
+        "actual": "Root shell loaded but body was blank; React rendered an invalid element error. Reload reproduced.",
+        "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+      },
+      {
+        "criterion_id": "AC-002",
+        "status": "fail",
+        "spec_revision": "s001",
+        "plan_revision": "p001",
+        "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+        "expected": "ApexCharts line with date and percentage axes and working hover tooltip",
+        "actual": "No .apexcharts-canvas element rendered (count 0); tooltip not available.",
+        "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+      },
+      {
+        "criterion_id": "AC-003",
+        "status": "fail",
+        "spec_revision": "s001",
+        "plan_revision": "p001",
+        "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+        "expected": "Visible illustrative label and all six fixed UTC date/value pairs",
+        "actual": "Document body text empty; sample series was not presented.",
+        "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+      },
+      {
+        "criterion_id": "AC-004",
+        "status": "fail",
+        "spec_revision": "s001",
+        "plan_revision": "p001",
+        "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+        "expected": "Accessible readable content and chart at 320 px and 1280 px",
+        "actual": "Blank app at root; 320 px empty body had no overflow but was not readable content. 1280 px and disclosure were not verified.",
+        "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+      },
+      {
+        "criterion_id": "AC-005",
+        "status": "blocked",
+        "spec_revision": "s001",
+        "plan_revision": "p001",
+        "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+        "expected": "Frontend-only example data renders without backend or external data service",
+        "actual": "Render error prevented independent runtime verification; criterion unassessed.",
+        "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+      },
+      {
+        "criterion_id": "AC-006",
+        "status": "not_run",
+        "spec_revision": "s001",
+        "plan_revision": "p001",
+        "code_revision": "186856e0c2f04b0308a585b133ed5e685987b238:sha256:7f4f5429005c9bd5c1385df8382f3987202b5640ba50f19a49d13e5913de8b86",
+        "expected": "Documented install/run/build commands, prerequisites and source layout verified",
+        "actual": "Not independently run or checked during QA.",
+        "evidence": "verification.md#independent-qa--2026-11-04-americasao_paulo"
+      }
+    ]
+  },
+  "correction_resume": {
+    "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:10deab40d50411e871720265cd8748b495f3bd5eb9b869591de04d51da9cf1ad",
+    "snapshot": "evidence/correction-resume-before.json",
+    "historical_handoff_recheck": "The historical handoff and failed QA after-snapshot have the same code revision. All 23 frontend paths match the handoff after allowing for Windows checkout CRLF. Current HEAD incorporates the committed chart work and other merged work, so this checkout has a new full-worktree snapshot.",
+    "plan_hash_recheck": {
+      "historical_proposal_sha256": "dd1db8ef75dc13408ee19a3ae6d8e08a7b60636efec4dfe36c9c15eeec195c87",
+      "approved_attachment_and_checkout_sha256": "92b281a4b439477445670a51a5c9bae5be7ac0cc6093adec88e909cec1a884bb",
+      "git_blob_contents_sha256": "bf5b7aef06bb05cf805a4accd5999c4ff0a7ac265b4a4353b83887e79b65d637",
+      "note": "Neither hash of the current plan bytes matches the historical proposal hash. The current checkout and the user-submitted approved plan are byte-for-byte identical."
+    },
+    "spec_checkout_sha256": "9c93d1e4aef9d360ce01d1546c6bc5499ee8b163f0da833c176c4341a88149a4",
+    "spec_hash_note": "The approved s001 hash matches the checkout after normalizing CRLF to LF."
+  },
+  "final_audit": {
+    "status": "awaiting_scope_evaluation",
+    "spec_revision": "s002",
+    "plan_revision": "p003",
+    "code_revision": "23e00b868e0537eaea51eff56217047692a2d270:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc"
+  },
+  "pre_scope_amendment": {
+    "spec_revision": "s001",
+    "spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+    "plan_revision": "p002",
+    "plan_sha256": "92b281a4b439477445670a51a5c9bae5be7ac0cc6093adec88e909cec1a884bb",
+    "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+    "review": {
+      "status": "passed",
+      "spec_revision": "s001",
+      "plan_revision": "p002",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "evidence": [
+        "review.md#correction-round-1--2026-11-04-americasao_paulo",
+        "evidence/review-correction-1-before.json",
+        "evidence/review-correction-1-after.json"
+      ]
+    },
+    "qa": {
+      "status": "failed",
+      "spec_revision": "s001",
+      "plan_revision": "p002",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "evidence": [
+        "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
+        "evidence/qa-correction-1-before.json",
+        "evidence/qa-correction-1-after.json"
+      ],
+      "browser": "failed"
+    },
+    "acceptance_results": [
+      {
+        "spec_revision": "s001",
+        "plan_revision": "p002",
+        "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+        "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
+        "criterion_id": "AC-001",
+        "status": "pass",
+        "expected": "SPA root renders and production build runs.",
+        "actual": "Both dev and production preview root pages rendered one chart on direct load and reload."
+      },
+      {
+        "spec_revision": "s001",
+        "plan_revision": "p002",
+        "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+        "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
+        "criterion_id": "AC-002",
+        "status": "pass",
+        "expected": "Date-based chart with percentage axes and accurate positive/negative hover values.",
+        "actual": "One real ApexCharts chart appeared in dev and preview. February hover showed 2024-02-01 / 2.5%; March hover showed 2024-03-01 / -1.2%."
+      },
+      {
+        "spec_revision": "s001",
+        "plan_revision": "p002",
+        "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+        "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
+        "criterion_id": "AC-003",
+        "status": "pass",
+        "expected": "Six fixed UTC example pairs appear chronologically and are labeled illustrative.",
+        "actual": "Visible illustrative label and accessible disclosure showed all six exact UTC date/value rows. UTC formatter tests passed across three time zones."
+      },
+      {
+        "spec_revision": "s001",
+        "plan_revision": "p002",
+        "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+        "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
+        "criterion_id": "AC-004",
+        "status": "fail",
+        "expected": "Accessible readable chart and description at 320 px and 1280 px without page-level horizontal overflow or chart clipping.",
+        "actual": "At 1280 px both paths had client and document scroll widths 1280 px. At 320 px the chart and month labels fit. When the disclosure is open, both paths have innerWidth 320 px, document clientWidth 305 px and scrollWidth 320 px, with a visible page-level horizontal scrollbar caused by body min-width 320 px and vertical page scrolling. See CHART-QA-02 in verification.md."
+      },
+      {
+        "spec_revision": "s001",
+        "plan_revision": "p002",
+        "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+        "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
+        "criterion_id": "AC-005",
+        "status": "pass",
+        "expected": "Page renders fixed local example data without backend, external service or market data.",
+        "actual": "Dev entry scripts and production JS/CSS assets are same-origin. The rendered app has no iframe or form and no backend is required."
+      },
+      {
+        "spec_revision": "s001",
+        "plan_revision": "p002",
+        "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+        "evidence": "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
+        "criterion_id": "AC-006",
+        "status": "pass",
+        "expected": "Documented frontend prerequisites, install, run, build, verification and source layout are correct.",
+        "actual": "README commands and source layout were checked. Frozen install, test suite, typecheck and production build all passed."
+      }
+    ],
+    "final_audit": {
+      "status": "blocked_by_failed_acceptance",
+      "spec_revision": "s001",
+      "plan_revision": "p002",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "evidence": [
+        "review.md#correction-round-1--2026-11-04-americasao_paulo",
+        "verification.md#independent-correction-qa--2026-11-04-americasao_paulo",
+        "verification.md#correction-lead-audit--2026-11-04-americasao_paulo"
+      ],
+      "blocking_finding": "CHART-QA-02",
+      "failed_criterion": "AC-004",
+      "workflow_gate": ".agents/skills/feature-workflow/SKILL.md section 4"
+    }
+  },
+  "scope_amendment": {
+    "status": "approved",
+    "human_scope_decision": {
+      "decision": "accept_320px_overflow_as_outside_intended_use",
+      "exact_user_reply": "So its good enough. The dashboard is not meant to be used in such small screen",
+      "spec_revision": "s001",
+      "spec_sha256": "18579d0e36c51729f0c4d7ff86601837ee9d08ec8923e35ef558fec70656da57",
+      "plan_revision": "p002",
+      "plan_sha256": "92b281a4b439477445670a51a5c9bae5be7ac0cc6093adec88e909cec1a884bb",
+      "code_revision": "4371d83c90b5306b05eef12ee7395e2912dce711:sha256:c59496554d0de6a25f22d5d41967f51f6e685517588dedf68ecbb489f1824edc",
+      "finding_id": "CHART-QA-02",
+      "recorded_at_utc": "2026-11-04T21:53:27Z",
+      "recorded_at_local": "2026-11-04T18:53:27-03:00",
+      "timezone": "America/Sao_Paulo",
+      "evidence": "verification.md#human-scope-decision--2026-11-04-americasao_paulo"
+    },
+    "archives": [
+      "history/spec-s001.md",
+      "history/plan-p002.md"
+    ],
+    "s002_sha256": "688866c1ef10655c7b692a985600c8298b1212bbb8bf4769c1fd397876f8a067",
+    "p003_sha256": "db3514f89da2f4a892c5edae7355ccc1c309b28432592630bfb8ebfb2a936ec8",
+    "approval": {
+      "decision": "approved",
+      "exact_user_reply": "approved",
+      "spec_revision": "s002",
+      "spec_sha256": "688866c1ef10655c7b692a985600c8298b1212bbb8bf4769c1fd397876f8a067",
+      "plan_revision": "p003",
+      "plan_sha256": "db3514f89da2f4a892c5edae7355ccc1c309b28432592630bfb8ebfb2a936ec8",
+      "recorded_at_utc": "2026-11-04T21:57:37Z",
+      "recorded_at_local": "2026-11-04T18:57:37-03:00",
+      "timezone": "America/Sao_Paulo",
+      "approval_message_time": null,
+      "reference": "The user replied approved to the main chat request for approval of s002 and p003."
+    },
+    "resume_snapshot": "evidence/scope-amendment-resume.json",
+    "snapshot_comparison": "All included file metadata and hashes match p002 QA. The intervening HEAD commit changed only the excluded agent log.",
+    "approval_snapshot": "evidence/scope-amendment-approved.json",
+    "approval_snapshot_comparison": "All included file metadata and hashes match p002 implementation, review and QA. Git HEAD moved only through agent-log changes."
   }
 }
