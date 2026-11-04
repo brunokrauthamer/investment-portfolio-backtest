@@ -1,0 +1,29 @@
+{
+  "command": [
+    "C:\\Users\\[redacted]\\.codex\\worktrees\\aaeb\\investment_portfolio_backtest\\backend\\.venv\\Scripts\\python.exe",
+    "-m",
+    "uvicorn",
+    "backend.src.api.main:app",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "58502",
+    "--no-access-log"
+  ],
+  "results": {
+    "GET /health": {
+      "status": 200,
+      "content_type": "application/json",
+      "json": {
+        "status": "ok"
+      }
+    },
+    "POST /health": {
+      "status": 405
+    },
+    "GET /missing": {
+      "status": 404
+    }
+  },
+  "server_output": "INFO:     Started server process [63892]\nINFO:     Waiting for application startup.\nINFO:     Application startup complete.\nINFO:     Uvicorn running on http://127.0.0.1:58502 (Press CTRL+C to quit)\n"
+}
