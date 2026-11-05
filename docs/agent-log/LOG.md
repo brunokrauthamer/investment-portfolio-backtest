@@ -5492,3 +5492,82 @@ I’ll proceed on the assumption that the backend will later return the response
 Do you approve this spec and plan so I can begin implementation?
 
 Approval is pending; no implementation changes have been made.
+### Interaction — 2026-11-04 (America/Sao_Paulo)
+
+#### User
+
+Approve and proceed
+
+#### Assistant progress
+
+Thanks, I’ll proceed with the approved frontend-only plan. The documented future response shape is the contract for this implementation; backend files remain out of scope.
+#### Assistant progress
+
+The approved task record is in place, and implementation is underway in the frontend files. The developer is adding contract validation and append/remove behavior with tests; no backend changes are planned.
+#### Assistant progress
+
+The developer is still working through the frontend changes and their focused checks. I’ll relay the implementation handoff to an independent reviewer before starting QA.
+#### Assistant progress
+
+Implementation hasn’t been handed off yet, so independent review and QA have not started. I’m waiting for the developer’s completed snapshot.
+#### Assistant progress
+
+The workflow lead confirms the developer is still working and has requested a progress update. The approved scope remains unchanged.
+#### Assistant progress
+
+The developer has changed the portfolio service, chart/page, styles, and focused tests. The handoff is still pending, so review and QA have not begun.
+#### Assistant progress
+
+The first Vitest run could not start because its packages are not cached and network access is restricted. The developer is checking local tooling; any checks that remain unavailable will be reported as blocked. No backend files have changed.
+#### Assistant progress
+
+Implementation is continuing while the developer checks whether the existing workspace can run the frontend checks without fetching packages. I’m waiting for the completed handoff before review.
+#### Assistant progress
+
+There’s no completed handoff yet. I’ve asked the lead to move to review as soon as the implementation is complete, documenting any dependency-blocked checks along the way.
+#### Assistant progress
+
+The lead relayed the local-dependencies-only instruction. The developer is still finalizing the frontend handoff; I’ll proceed to review once it’s ready.
+#### Assistant progress
+
+The implementation is handed off, and `git diff --check` passed. Vitest, typecheck, and build are blocked because frontend dependencies are absent and fetching packages hit the network restriction. Independent review has started.
+#### Assistant progress
+
+The independent reviewer is examining the frontend changes against the approved contract and acceptance criteria. The dependency-related check blockers are recorded for the review and QA handoffs.
+#### Assistant progress
+
+Review found two outdated tests and a reproducible color collision between portfolio labels 7 and 384. The lead is routing those findings through the workflow’s single fix pass; QA follows, with no second review.
+#### Assistant progress
+
+The reviewer confirmed the fixes: correct the allocation and strategy assertions, adapt the interop test to the empty state, and remove the color collision. The single fix pass is underway.
+#### Assistant progress
+
+The single fix pass is still underway. Executable frontend checks remain blocked by unavailable local dependencies, and QA will report that limitation alongside its findings.
+#### Assistant progress
+
+The developer is still working through the one review-fix pass. I’m waiting for that handoff before starting QA, as required by the workflow.
+#### Assistant progress
+
+I’ve asked the lead for a concrete status and to hand off to QA immediately once the review fixes are complete.
+
+The developer reports both test updates are complete and the color assignment now avoids previously used colors, with a regression covering 1,024 assignments. The lead is collecting the final snapshot before QA; executable checks remain dependency-blocked.
+#### Assistant progress
+
+The fix pass is complete. A local probe confirmed 1,024 distinct generated colors after the change, and QA is now checking the resulting frontend snapshot. Vitest, typecheck, and build remain blocked by missing dependencies.
+#### Assistant progress
+
+QA is still in progress. I’ll report its findings and distinguish any checks that could not run from checks that passed.
+#### Assistant progress
+
+QA’s static inspection confirms the intended state flow and direct `x`/`y` mapping, and independently confirmed 1,024 distinct colors. Browser QA is blocked because the available localhost page is a stale build and the current frontend cannot be rebuilt without the missing dependencies.
+#### Assistant progress
+
+QA is complete. Source inspection and the color probe passed, but Vitest, typecheck, build, and browser QA remain blocked because dependencies are unavailable and the browser serves an older build. I’m checking the recorded handoff and changed-file list before reporting the final status.
+
+#### Assistant
+
+Frontend implementation is in place for the future series contract. It validates one series per response, appends each result with its submission snapshot, stable “Portfolio N” label/color and UI-only ID, maps x/y directly into ApexCharts, supports empty results and accessible removal, resets only after valid success, preserves the form on errors, and removes production examples. No backend behavior changed.
+
+The main changes are in [portfolio.ts](/C:/Users/[redacted]/.codex/worktrees/e778/investment_portfolio_backtest/frontend/src/services/portfolio.ts), [the ExampleChart page](/C:/Users/[redacted]/.codex/worktrees/e778/investment_portfolio_backtest/frontend/src/pages/ExampleChart/index.tsx), chart styling and tests, plus the frontend README. The review fixes are included. QA source inspection confirmed the intended state flow and direct point mapping, and an independent probe confirmed 1,024 distinct generated colors. `git diff --check` passed.
+
+Runtime acceptance is still unverified: Vitest, typecheck, and build could not run because frontend dependencies are absent and package retrieval hit EACCES. Browser QA could not run because the available localhost page serves an older build. The current backend still returns only an acknowledgement, so it cannot demonstrate a successful real-series submission. The task record is marked blocked pending dependencies and runtime verification in [verification.md](/C:/Users/[redacted]/.codex/worktrees/e778/investment_portfolio_backtest/docs/tasks/007-multiple-portfolio-results/verification.md).
