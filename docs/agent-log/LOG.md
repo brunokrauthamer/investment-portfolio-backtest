@@ -5011,3 +5011,189 @@ The application changes are now committed on `codex/portfolio-configuration` as 
 ```text
 The separate documentation commit will include the workflow evidence as recorded, including the correction-planning status; I’m not changing the review outcome or claiming the API edge case is fixed. I’ll log both your request and the supplied commit instructions before pushing.
 ```
+
+## 2026-11-04 — Fluxograma do workflow
+
+### User
+
+```text
+Desenhe um fluxograma de como está funcionando o workflow ao pedir uma task nova
+```
+
+### Assistant progress
+
+```text
+Vou verificar as instruções e os arquivos do repositório para desenhar o fluxo que está configurado atualmente ao receber uma nova task.
+```
+
+### Assistant
+
+````text
+O fluxo configurado para uma nova **feature** é este:
+
+```mermaid
+flowchart TD
+    A[Você pede uma nova task] --> B[Tech lead investiga e esclarece requisitos]
+    B --> C[Cria especificação, plano e registros da task]
+    C --> D{Você aprova a especificação e o plano?}
+    D -- Ajustes --> B
+    D -- Sim --> E[Developer implementa com TDD e registra evidências]
+    E --> F[Reviewer independente avalia o resultado]
+    F --> G{Review passou?}
+    G -- Não, há rodadas disponíveis --> E
+    G -- Não, esgotou 3 rodadas --> H[QA avalia o que for possível]
+    G -- Sim --> I[QA independente verifica critérios e regressões]
+    I --> J{QA passou?}
+    J -- Defeito de implementação ou arquitetura --> K[Lead de correção prepara plano revisado]
+    H --> K
+    K --> L{Você aprova o plano de correção?}
+    L -- Ajustes --> K
+    L -- Sim --> M[Developer de correção implementa com TDD]
+    M --> N[Review independente]
+    N --> O{Review passou?}
+    O -- Não, há rodadas disponíveis --> M
+    O -- Sim --> P[QA independente]
+    O -- Não, esgotou 3 rodadas --> Q[Intervenção humana]
+    P --> R{QA passou?}
+    R -- Não, há defeito --> Q
+    R -- Sim --> S[Lead confere documentação, evidências e verificações finais]
+    J -- Sim --> S
+    S --> T{Tudo válido na versão atual?}
+    T -- Não --> U[Corrigir e repetir avaliações afetadas, respeitando os limites]
+    U --> S
+    T -- Sim --> V[Você avalia o resultado e aprova a entrega]
+    V --> W[Task concluída]
+```
+
+- Cada ciclo permite até **três rodadas** de implementação e review; existe **um ciclo automático de correção**. Problemas de ambiente ou ferramentas ficam bloqueados até serem resolvidos, sem consumir esse ciclo por si só.
+- Mudanças na especificação exigem nova aprovação. Alterações no código ou na documentação após a avaliação podem exigir novo review e QA. Para funcionalidades web visíveis, o QA deve testar no navegador.
+- A aprovação final se refere à versão avaliada e **não autoriza automaticamente** commit, push, merge ou deploy.
+
+Este é o processo **definido nos arquivos**, não uma garantia de execução automática: a coordenação e os registros são conduzidos pelos agentes. Pedidos de explicação ou status, como este, não iniciam uma feature. Fontes: [workflow](C:/Users/bruno/.codex/worktrees/0b88/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md) e [protocolo de registros](C:/Users/bruno/.codex/worktrees/0b88/investment_portfolio_backtest/.agents/skills/feature-workflow/references/task-records.md).
+````
+
+## 2026-11-04 — Modelos do workflow
+
+### User
+
+```text
+Me ajude a simplificar o fluxo, por favor... 
+
+Não devem ser permitidas tantas retentativas...
+
+Eu peço uma task -> tech lead cria o plano e o sepc (se eu pedir algum ajuste ele faz) -> developer desenvolve -> reviewr revisa (apos aqui, o developer tem so mais uma chance de arrumar o codigo e já vai direto para o QA) -> QA testa e pronto... se tiver algum problema ele me avisa qual foi e eu decido o que fazer.
+
+Antes de vc ajustar esse fluxo, me diga, quais modelos e força estão configurados já por padrão no meu novo fluxo
+```
+
+### Assistant progress
+
+```text
+Vou conferir as configurações dos agentes e o workflow atual para listar os modelos e níveis de esforço previstos em cada etapa, antes de alterar qualquer arquivo do fluxo.
+```
+
+### Assistant
+
+```text
+Para as etapas que você descreveu, os agentes estão configurados atualmente assim:
+
+| Etapa | Agente | Modelo | Esforço de raciocínio |
+|---|---|---|---|
+| Especificação e plano | Tech lead | GPT-6.1 Terra | `xhigh` |
+| Desenvolvimento e eventual ajuste após o review | Developer | GPT-6 Luna | `max` |
+| Revisão | Reviewer | GPT-6.1 Sol | `high` |
+| Testes | QA | GPT-6 Luna | `max` |
+
+No fluxo atual também existem agentes específicos para um ciclo de correção: **tech-lead-correction** usa GPT-6.1 Sol com `high`, e **developer-correction** usa GPT-6.1 Terra com `medium`. Eles pertencem ao processo atual de correção; a simplificação que você descreveu não precisa desse ciclo automático.
+
+Esses valores vêm dos [arquivos de configuração dos agentes](C:/Users/bruno/.codex/worktrees/0b88/investment_portfolio_backtest/.codex/agents) e são coerentes com o [workflow atual](C:/Users/bruno/.codex/worktrees/0b88/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md). Ainda não alterei o fluxo.
+```
+
+## 2026-11-04 — Onde o workflow está definido
+
+### User
+
+```text
+uma dúvida, todo esse fluxo e essas forças estão definidos na skill e nos subagents ne?
+```
+
+### Assistant progress
+
+```text
+Vou conferir também onde ficam as instruções complementares e como elas se relacionam com a skill e os subagentes.
+```
+
+### Assistant
+
+```text
+Sim. O fluxo e as configurações estão distribuídos principalmente entre a skill e os arquivos dos subagentes:
+
+- A [skill feature-workflow](C:/Users/bruno/.codex/worktrees/0b88/investment_portfolio_backtest/.agents/skills/feature-workflow/SKILL.md) define a sequência, as aprovações, os limites de tentativas e os papéis. Ela também menciona os modelos e esforços esperados.
+- Os [arquivos dos subagentes](C:/Users/bruno/.codex/worktrees/0b88/investment_portfolio_backtest/.codex/agents) definem, para cada papel, o `model`, o `model_reasoning_effort` e instruções próprias. Algumas dessas instruções repetem regras do fluxo.
+- Há regras complementares no [protocolo de registros](C:/Users/bruno/.codex/worktrees/0b88/investment_portfolio_backtest/.agents/skills/feature-workflow/references/task-records.md) e na [skill de TDD](C:/Users/bruno/.codex/worktrees/0b88/investment_portfolio_backtest/.agents/skills/feature-tdd/SKILL.md). As instruções `AGENTS.md` aplicáveis também orientam o trabalho.
+
+Por isso, ao simplificar o processo, será necessário manter esses pontos coerentes entre si, inclusive as instruções repetidas nos subagentes. A configuração indica o que deve ser usado; ela, por si só, não comprova que um agente executou uma etapa.
+```
+
+## 2026-11-04 — Criação do fluxo simplificado
+
+### User
+
+```text
+ok... nao precisa apagar a skill e os agentes existentes.
+
+
+
+Quero que vc crie um novo fluxo apenas que seria esse simplificado (crie uma skill para que chama-lo). As forças e modelos usados devem ser
+
+
+
+
+
+| Etapa                                           | Agente    | Modelo        | Esforço de raciocínio |
+| ----------------------------------------------- | --------- | ------------- | --------------------- |
+| Especificação e plano                           | Tech lead | GPT-6.1 Terra | high                  |
+| Desenvolvimento e eventual ajuste após o review | Developer | GPT-6 Luna    | `max`                 |
+| Revisão                                         | Reviewer  | GPT-6.1 Terra | `high`                |
+| Testes                                          | QA        | GPT-6 Luna    | `max`                 |
+```
+
+### Assistant progress
+
+```text
+Vou criar uma skill separada para o fluxo simplificado e configurações próprias para seus agentes, preservando o fluxo existente. Vou usar a skill de criação de skills para estruturar e validar a nova opção.
+```
+
+```text
+A nova skill terá um único ajuste de código após o review e encaminhará o resultado diretamente ao QA. As configurações novas ficarão separadas das atuais, inclusive os modelos do tech lead e do reviewer.
+```
+
+### Assistant
+
+```text
+Criei o fluxo separado **`$simple-feature-workflow`**, com os quatro agentes e os modelos e esforços que você definiu. A skill e os agentes do fluxo anterior foram preservados.
+
+O novo fluxo segue: plano e especificação para sua aprovação → desenvolvimento → uma revisão → no máximo uma rodada de ajustes pelo developer → QA diretamente. Se houver problema ou bloqueio, o resultado é apresentado a você para decidir o próximo passo; não há ciclo automático de correção nem aprovação final separada para concluir a task.
+
+A [skill](C:/Users/bruno/.codex/worktrees/0b88/investment_portfolio_backtest/.agents/skills/simple-feature-workflow/SKILL.md) passou na validação de estrutura. Os novos agentes estão em [configurações de agentes](C:/Users/bruno/.codex/worktrees/0b88/investment_portfolio_backtest/.codex/agents). A descoberta da nova skill ou dos agentes pode exigir uma nova sessão do Codex.
+```
+
+## 2026-11-04 — Organização de commits e push
+
+### User
+
+```text
+[$organize-git-commits]([redacted]) and then push
+```
+
+O caminho local pessoal foi substituído por `[redacted]`. O usuário também forneceu o conteúdo da skill `organize-git-commits` nesta interação.
+
+### Assistant progress
+
+```text
+Vou usar a skill `organize-git-commits` para inspecionar e organizar as alterações em commits coesos; em seguida, farei o push autorizado.
+```
+
+```text
+O checkout está sem branch associada, e as alterações correspondem ao novo fluxo e ao histórico da conversa. Vou criar uma branch para publicá-las e separá-las em um commit da configuração e outro do log.
+```
