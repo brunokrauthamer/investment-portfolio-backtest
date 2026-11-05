@@ -1,73 +1,68 @@
 import { afterEach, describe, expect, it } from "vitest";
 import {
-  exampleChartOptions,
-  examplePercentageData,
-  exampleSeriesData,
+  createChartOptions,
   formatPercentage,
   formatUtcDate,
   formatUtcMonth,
+  portfolioColor,
 } from "./chart";
 
-describe("example percentage chart data", () => {
+describe("cumulative-return chart helpers", () => {
   const initialTimeZone = process.env.TZ;
 
   afterEach(() => {
-    if (initialTimeZone === undefined) {
-      delete process.env.TZ;
-    } else {
-      process.env.TZ = initialTimeZone;
-    }
+    if (initialTimeZone === undefined) delete process.env.TZ;
+    else process.env.TZ = initialTimeZone;
   });
 
-  it("treats supplied values as percentages, including a negative example", () => {
+  it("formats returned percentages without changing chart values", () => {
     expect(formatPercentage(-1.2)).toBe("-1.2%");
     expect(formatPercentage(5.1)).toBe("5.1%");
-    expect(exampleSeriesData.map(({ y }) => y)).toEqual([0, 2.5, -1.2, 3.8, 2, 5.1]);
   });
 
-  it("keeps chart date labels and exact tooltip dates on the UTC calendar", () => {
-    const marchPoint = exampleSeriesData[2];
-    const axisFormatter = exampleChartOptions.xaxis?.labels?.formatter;
-    const tooltipFormatter = exampleChartOptions.tooltip?.x?.formatter;
+  it("keeps chart date labels and tooltips on the UTC calendar", () => {
+    const timestamp = Date.parse("2024-03-01T00:00:00.000Z");
+    const options = createChartOptions(["#147a62"], () => ({
+      date: "2024-03-01",
+      daily_return_pct: 0.25,
+    }));
+    const axisFormatter = options.xaxis?.labels?.formatter;
+    const tooltipFormatter = options.tooltip?.x?.formatter;
+    const tooltipY = Array.isArray(options.tooltip?.y) ? options.tooltip?.y[0] : options.tooltip?.y;
 
     for (const timeZone of ["America/Sao_Paulo", "America/Los_Angeles", "Asia/Tokyo"]) {
       process.env.TZ = timeZone;
-      expect(formatUtcDate(marchPoint.x)).toBe("2024-03-01");
-      expect(formatUtcMonth(marchPoint.x)).toBe("Mar 2024");
-      expect(axisFormatter?.(String(marchPoint.x), marchPoint.x)).toBe("Mar 2024");
-      const narrowFormatter = exampleChartOptions.responsive?.[0].options?.xaxis?.labels?.formatter;
-      expect(narrowFormatter?.(String(marchPoint.x), marchPoint.x)).toBe("Mar");
-      expect(
-        (tooltipFormatter as unknown as (
-          value: string,
-          context: { dataPointIndex: number },
-        ) => string)("", { dataPointIndex: 2 }),
-      ).toBe("2024-03-01");
+      expect(formatUtcDate(timestamp)).toBe("2024-03-01");
+      expect(formatUtcMonth(timestamp)).toBe("Mar 2024");
+      expect(axisFormatter?.(String(timestamp), timestamp)).toBe("Mar 2024");
+      expect((tooltipFormatter as unknown as (value: number, context: object) => string)(timestamp, {
+        seriesIndex: 0,
+        dataPointIndex: 0,
+      })).toBe("2024-03-01");
+      expect((tooltipY?.formatter as unknown as (value: number, context: object) => string)(1.5, {
+        seriesIndex: 0,
+        dataPointIndex: 0,
+      })).toBe("1.5% (daily return: 0.25%)");
     }
-
-    expect(examplePercentageData.map(({ date }) => date)).toEqual([
-      "2024-01-01",
-      "2024-02-01",
-      "2024-03-01",
-      "2024-04-01",
-      "2024-05-01",
-      "2024-06-01",
-    ]);
   });
 
-  it("configures a date based horizontal axis and percentage values in the tooltip", () => {
-    expect(exampleChartOptions.chart?.type).toBe("line");
-    expect(exampleChartOptions.xaxis?.type).toBe("datetime");
-    const yAxis = exampleChartOptions.yaxis;
-    expect(Array.isArray(yAxis)).toBe(false);
-    const tooltipY = Array.isArray(exampleChartOptions.tooltip?.y)
-      ? exampleChartOptions.tooltip.y[0]
-      : exampleChartOptions.tooltip?.y;
+  it("generates distinct colors as portfolio count grows", () => {
+    const colors: string[] = [];
+    for (let index = 0; index < 1024; index += 1) {
+      colors.push(portfolioColor(index, colors));
+    }
+    expect(new Set(colors).size).toBe(colors.length);
+    expect(colors.every((color) => /^#[0-9a-f]{6}$/.test(color))).toBe(true);
+    expect(colors[7]).not.toBe(colors[384]);
+  });
 
-    expect(
-      (yAxis as { labels?: { formatter?: (value: number) => string } }).labels
-        ?.formatter?.(-1.2),
-    ).toBe("-1.2%");
+  it("configures a date-based chart with dynamic line colors", () => {
+    const options = createChartOptions(["#147a62", "#bb5115"], () => undefined);
+    expect(options.chart?.type).toBe("line");
+    expect(options.xaxis?.type).toBe("datetime");
+    expect(options.colors).toEqual(["#147a62", "#bb5115"]);
+    expect(options.yaxis && !Array.isArray(options.yaxis) && options.yaxis.labels?.formatter?.(-1.2)).toBe("-1.2%");
+    const tooltipY = Array.isArray(options.tooltip?.y) ? options.tooltip?.y[0] : options.tooltip?.y;
     expect(tooltipY?.formatter?.(5.1)).toBe("5.1%");
   });
 });

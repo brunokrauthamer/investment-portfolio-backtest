@@ -1,11 +1,6 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import ChartImport from "react-apexcharts";
-import {
-  exampleChartOptions,
-  examplePercentageData,
-  exampleSeries,
-  formatPercentage as formatChartPercentage,
-} from "./chart";
+import { createChartOptions, portfolioColor } from "./chart";
 import {
   equalAllocations,
   formatPercentage,
@@ -15,8 +10,11 @@ import {
 } from "./allocation";
 import {
   fetchIndexes,
+  InvalidPortfolioSeriesError,
   submitPortfolio,
   type IndexOption,
+  type PortfolioSeries,
+  type PortfolioSeriesPoint,
   type RebalancingStrategy,
 } from "../../services/portfolio";
 import "./index.css";
@@ -41,6 +39,22 @@ const strategies: { value: RebalancingStrategy; label: string }[] = [
   { value: "3_years", label: "3 years" },
 ];
 
+const DEFAULT_INITIAL_DATE = "2011-01-04";
+const DEFAULT_END_DATE = "2026-10-30";
+
+interface PortfolioEntry {
+  id: string;
+  label: string;
+  color: string;
+  snapshot: {
+    initial_date: string;
+    end_date: string;
+    allocations: { index: IndexOption; percentage: number }[];
+    rebalancing: RebalancingStrategy;
+  };
+  series: PortfolioSeries;
+}
+
 function isCalendarDate(value: string): boolean {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const parsed = new Date(`${value}T00:00:00.000Z`);
@@ -60,14 +74,18 @@ export function ExampleChart() {
   const [loadVersion, setLoadVersion] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [initialDate, setInitialDate] = useState("2011-01-04");
-  const [endDate, setEndDate] = useState("2026-10-30");
+  const [initialDate, setInitialDate] = useState(DEFAULT_INITIAL_DATE);
+  const [endDate, setEndDate] = useState(DEFAULT_END_DATE);
   const [rebalancing, setRebalancing] = useState<RebalancingStrategy>("none");
   const [activeDraft, setActiveDraft] = useState<{ indexId: IndexOption["id"]; value: string } | null>(null);
   const [shareError, setShareError] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [acknowledgement, setAcknowledgement] = useState(false);
+  const [submissionMessage, setSubmissionMessage] = useState<string | null>(null);
+  const [portfolios, setPortfolios] = useState<PortfolioEntry[]>([]);
+  const nextPortfolioNumber = useRef(1);
+  const submissionInProgress = useRef(false);
+  const assignedPortfolioColors = useRef<string[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -96,7 +114,7 @@ export function ExampleChart() {
   }, [loadVersion]);
 
   const resetResponseState = () => {
-    setAcknowledgement(false);
+    setSubmissionMessage(null);
     setFormError(null);
   };
 
@@ -158,7 +176,8 @@ export function ExampleChart() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setAcknowledgement(false);
+    if (submissionInProgress.current) return;
+    setSubmissionMessage(null);
     setFormError(null);
     if (activeDraft) {
       const line = allocations.find(({ index }) => index.id === activeDraft.indexId);
@@ -180,24 +199,69 @@ export function ExampleChart() {
       return;
     }
 
+    const request = {
+      initial_date: initialDate,
+      end_date: endDate,
+      allocations: allocations.map(({ index, hundredths }) => ({
+        index: index.id,
+        percentage: hundredths / 100,
+      })),
+      rebalancing,
+    };
+    const snapshot: PortfolioEntry["snapshot"] = {
+      initial_date: initialDate,
+      end_date: endDate,
+      allocations: allocations.map(({ index, hundredths }) => ({
+        index: { ...index },
+        percentage: hundredths / 100,
+      })),
+      rebalancing,
+    };
+
+    submissionInProgress.current = true;
     setIsSubmitting(true);
     try {
-      await submitPortfolio({
-        initial_date: initialDate,
-        end_date: endDate,
-        allocations: allocations.map(({ index, hundredths }) => ({
-          index: index.id,
-          percentage: hundredths / 100,
-        })),
-        rebalancing,
-      });
-      setAcknowledgement(true);
-    } catch {
-      setFormError("Could not submit the settings. Check your connection and try again.");
+      const response = await submitPortfolio(request);
+      const sequence = nextPortfolioNumber.current;
+      nextPortfolioNumber.current += 1;
+      const color = portfolioColor(sequence - 1, assignedPortfolioColors.current);
+      assignedPortfolioColors.current.push(color);
+      setPortfolios((current) => [...current, {
+        id: `portfolio-${sequence}`,
+        label: `Portfolio ${sequence}`,
+        color,
+        snapshot,
+        series: response.series[0],
+      }]);
+
+      setInitialDate(DEFAULT_INITIAL_DATE);
+      setEndDate(DEFAULT_END_DATE);
+      setAllocations(equalAllocations(indexes ?? []));
+      setRebalancing("none");
+      setActiveDraft(null);
+      setShareError(null);
+      setSubmissionMessage(`Added Portfolio ${sequence}.`);
+    } catch (error) {
+      setFormError(error instanceof InvalidPortfolioSeriesError
+        ? "The server returned an invalid cumulative-return series. Your settings are unchanged."
+        : "Could not submit the portfolio. Check your connection and try again; your settings are unchanged.");
     } finally {
+      submissionInProgress.current = false;
       setIsSubmitting(false);
     }
   };
+
+  const chartSeries = portfolios.map(({ label, series }) => ({
+    name: label,
+    data: series.data.map(({ x, y }) => ({ x, y })),
+  }));
+  const chartOptions = createChartOptions(
+    portfolios.map(({ color }) => color),
+    (seriesIndex, dataPointIndex) => {
+      const point: PortfolioSeriesPoint | undefined = portfolios[seriesIndex]?.series.data[dataPointIndex];
+      return point ? { date: point.date, daily_return_pct: point.daily_return_pct } : undefined;
+    },
+  );
 
   return (
     <main className="chart-page">
@@ -205,72 +269,101 @@ export function ExampleChart() {
         <section aria-labelledby="page-title" className="chart-card">
           <header className="chart-header">
             <div className="chart-heading-group">
-              <span className="chart-eyebrow">Visual demo</span>
-              <h1 id="page-title">Percentage over time</h1>
+              <span className="chart-eyebrow">Portfolio comparison</span>
+              <h1 id="page-title">Cumulative return over time</h1>
               <p className="chart-description" id="chart-description">
-                A simple line chart plotted against UTC calendar dates.
+                Compare submitted portfolio results using the cumulative-return percentages returned by the API.
               </p>
-            </div>
-            <div aria-label="Date range: January through June 2024" className="date-range">
-              <span className="date-range-label">Example period</span>
-              <span className="date-range-value">Jan – Jun 2024</span>
             </div>
           </header>
 
           <figure
             aria-describedby="chart-description"
-            aria-label="Illustrative percentage line chart. Open the example data table for exact dates and values."
+            aria-label="Cumulative portfolio return chart with dates shown in UTC."
             className="chart-figure"
             role="img"
           >
             <div className="chart-container">
-              <ReactApexChart
-                height={320}
-                options={exampleChartOptions}
-                series={exampleSeries}
-                type="line"
-                width="100%"
-              />
+              {portfolios.length === 0 ? (
+                <p aria-live="polite" className="chart-empty-state">Submit a portfolio to add its results to the chart.</p>
+              ) : chartSeries.every(({ data }) => data.length === 0) ? (
+                <p aria-live="polite" className="chart-empty-state">The submitted portfolios returned no data points for these date ranges.</p>
+              ) : (
+                <ReactApexChart
+                  height={320}
+                  options={chartOptions}
+                  series={chartSeries}
+                  type="line"
+                  width="100%"
+                />
+              )}
             </div>
             <figcaption className="chart-axis-caption">
               <span>Dates shown in UTC</span>
-              <span>Percentage</span>
+              <span>Cumulative return (%)</span>
             </figcaption>
           </figure>
 
-          <footer className="chart-footer">
-            <p className="data-notice">
-              <span aria-hidden="true" className="notice-dot" />
-              <span>
-                <strong>Illustrative example data.</strong> These values are for
-                display only and are not actual market performance.
-              </span>
-            </p>
-
-            <details className="example-data">
-              <summary>Read the example data</summary>
-              <div className="example-data-table-wrap">
-                <table>
-                  <caption className="visually-hidden">
-                    Illustrative example percentage values by UTC date
-                  </caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">Date (UTC)</th>
-                      <th scope="col">Example percentage</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {examplePercentageData.map(({ date, value }) => (
-                      <tr key={date}>
-                        <td>{date}</td>
-                        <td>{formatChartPercentage(value)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+          <section aria-labelledby="portfolio-results-heading" className="portfolio-results">
+            <header className="portfolio-results-header">
+              <h2 id="portfolio-results-heading">Portfolio results</h2>
+              <p>{portfolios.length} retained</p>
+            </header>
+            {portfolios.length === 0 ? (
+              <p className="portfolio-results-empty">Successful submissions will appear here.</p>
+            ) : (
+              <div className="portfolio-results-list" role="list">
+                {portfolios.map((portfolio) => (
+                  <article
+                    aria-labelledby={`portfolio-title-${portfolio.id}`}
+                    className="portfolio-result-card"
+                    key={portfolio.id}
+                    role="listitem"
+                    style={{ borderInlineStart: `4px solid ${portfolio.color}` }}
+                  >
+                    <header className="portfolio-result-card-header">
+                      <div className="portfolio-result-title-group">
+                        <span aria-hidden="true" className="portfolio-color-chip" style={{ backgroundColor: portfolio.color }} />
+                        <h3 id={`portfolio-title-${portfolio.id}`}>{portfolio.label}</h3>
+                      </div>
+                      <button
+                        aria-label={`Remove ${portfolio.label}`}
+                        className="remove-portfolio-button"
+                        onClick={() => setPortfolios((current) => current.filter(({ id }) => id !== portfolio.id))}
+                        type="button"
+                      >
+                        Remove
+                      </button>
+                    </header>
+                    <dl className="portfolio-characteristics">
+                      <div>
+                        <dt>Date range</dt>
+                        <dd>{portfolio.snapshot.initial_date} – {portfolio.snapshot.end_date}</dd>
+                      </div>
+                      <div>
+                        <dt>Rebalancing</dt>
+                        <dd>{strategies.find(({ value }) => value === portfolio.snapshot.rebalancing)?.label}</dd>
+                      </div>
+                    </dl>
+                    <div className="portfolio-allocations">
+                      <h4>Allocations</h4>
+                      <ul>
+                        {portfolio.snapshot.allocations.map(({ index, percentage }) => (
+                          <li key={index.id}>{index.name}: {formatPercentage(percentage * 100)}%</li>
+                        ))}
+                      </ul>
+                    </div>
+                    {portfolio.series.data.length === 0 && (
+                      <p className="portfolio-no-data">No data points were returned for this portfolio.</p>
+                    )}
+                  </article>
+                ))}
               </div>
-            </details>
+            )}
+          </section>
+
+          <footer className="chart-footer">
+            <p>Chart values use the API's cumulative return percentages; supplemental daily returns appear in tooltips.</p>
           </footer>
         </section>
 
@@ -429,13 +522,9 @@ export function ExampleChart() {
               </label>
 
               {formError && <p className="form-message form-message-error" role="alert">{formError}</p>}
-              {acknowledgement && (
-                <p aria-live="polite" className="form-message form-message-success">
-                  Settings were received. Calculations are not available yet.
-                </p>
-              )}
+              {submissionMessage && <p aria-live="polite" className="form-message form-message-success">{submissionMessage}</p>}
               <button className="submit-button" disabled={isSubmitting} type="submit">
-                {isSubmitting ? "Sending settings…" : "Submit portfolio"}
+                {isSubmitting ? "Adding portfolio…" : "Add portfolio to chart"}
               </button>
             </form>
           )}
@@ -443,7 +532,7 @@ export function ExampleChart() {
       </div>
 
       <footer className="page-footer">
-        Sample values are fictional and carry no financial interpretation.
+        Results shown here are returned by the portfolio API.
       </footer>
     </main>
   );

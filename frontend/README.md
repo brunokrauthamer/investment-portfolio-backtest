@@ -1,6 +1,6 @@
 # Frontend
 
-The React and TypeScript single-page app uses Vite, ApexCharts and Axios. It shows an illustrative date-based percentage chart beside a portfolio setup form. The chart's fixed sample values are for display only; they are not historical market data, actual investment performance, or backtest results.
+The React and TypeScript single-page app uses Vite, ApexCharts and Axios. It shows a portfolio setup form beside a chart that accumulates each successful portfolio response, with a characteristics card and remove action for every retained result. Chart values use the API's cumulative-return percentages as supplied, with dates displayed in UTC.
 
 The chart dependencies are pinned to `apexcharts` 4.7.0 and `react-apexcharts` 1.7.0. ApexCharts changed to a dual-license model in later releases, so review the applicable license before changing either pin; a semver range could otherwise select a version with different terms.
 
@@ -34,9 +34,9 @@ The preview command serves the production build at `http://127.0.0.1:4173`.
 ## Source layout
 
 - `src/main.tsx` mounts the single page.
-- `src/pages/ExampleChart/` contains the page, its example data, chart options, allocation logic, tests and local styles.
+- `src/pages/ExampleChart/` contains the page, reusable chart options, allocation logic, tests and local styles.
 - `src/services/portfolio.ts` owns Axios requests and response validation for the portfolio setup API.
 
-If the API is unavailable, the chart still renders and the form displays a retry action when its index list cannot be loaded. A successful form submission only means the server accepted the settings; no portfolio is stored or calculated yet.
+The frontend expects `POST /api/portfolio` to return one cumulative-return series in the agreed response shape. It rejects acknowledgement-only or invalid responses and preserves the form after an error. Empty series are accepted and shown as portfolios without data points. The current backend returns only an acknowledgement, so portfolio submissions will show an invalid-response error until the backend implements the time-series contract. Index-list loading errors provide a retry action.
 
 See [frontend conventions](AGENTS.md) and [project context](../docs/project-context.md).
