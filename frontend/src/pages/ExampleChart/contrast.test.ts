@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
-import { portfolioChartOptions } from "./chart";
+import { createChartOptions } from "./chart";
 
 function colorFromRule(stylesheet: string, selector: string, property: string): string {
   const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -48,6 +48,7 @@ const stylesheet = readFileSync(
   resolve(process.cwd(), "src/pages/ExampleChart/index.css"),
   "utf8",
 );
+const exampleChartOptions = createChartOptions(["#16816f"], () => undefined);
 const cardBackground = colorFromRule(stylesheet, ".chart-card", "background");
 const axisCaptionColor = colorFromRule(stylesheet, ".chart-axis-caption", "color");
 const allocationCardBackground = colorFromRule(stylesheet, ".portfolio-card", "background");

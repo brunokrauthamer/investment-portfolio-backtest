@@ -20,7 +20,7 @@ export interface PortfolioRequest {
   rebalancing: RebalancingStrategy;
 }
 
-export interface PortfolioPoint {
+export interface PortfolioSeriesPoint {
   x: number;
   y: number;
   date: string;
@@ -29,12 +29,53 @@ export interface PortfolioPoint {
 }
 
 export interface PortfolioSeries {
-  name: "Cumulative portfolio return";
-  data: PortfolioPoint[];
+  name: string;
+  data: PortfolioSeriesPoint[];
 }
 
-export interface PortfolioResponse {
-  series: PortfolioSeries[];
+export interface PortfolioSeriesResponse {
+  series: [PortfolioSeries];
+}
+
+export class InvalidPortfolioSeriesError extends Error {
+  constructor() {
+    super("The server response did not include a valid cumulative-return series.");
+    this.name = "InvalidPortfolioSeriesError";
+  }
+}
+
+function isCalendarDate(value: unknown): value is string {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const parsed = new Date(`${value}T00:00:00.000Z`);
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isValidPoint(value: unknown): value is PortfolioSeriesPoint {
+  if (!isRecord(value)) return false;
+  const { x, y, date, daily_return_pct, cumulative_return_pct } = value;
+  if (
+    typeof x !== "number" || !Number.isSafeInteger(x) || Number.isNaN(new Date(x).getTime()) ||
+    typeof y !== "number" || !Number.isFinite(y) ||
+    typeof daily_return_pct !== "number" || !Number.isFinite(daily_return_pct) ||
+    typeof cumulative_return_pct !== "number" || !Number.isFinite(cumulative_return_pct) ||
+    !isCalendarDate(date) || y !== cumulative_return_pct
+  ) return false;
+
+  return new Date(x).toISOString().slice(0, 10) === date;
+}
+
+function isValidPortfolioSeriesResponse(value: unknown): value is PortfolioSeriesResponse {
+  if (!isRecord(value) || !Array.isArray(value.series) || value.series.length !== 1) return false;
+  const series = value.series[0];
+  return (
+    isRecord(series) &&
+    typeof series.name === "string" && series.name.trim().length > 0 &&
+    Array.isArray(series.data) && series.data.every(isValidPoint)
+  );
 }
 
 const expectedIndexes: IndexOption[] = [
@@ -127,10 +168,10 @@ function isPortfolioResponse(value: unknown): value is PortfolioResponse {
 
 export async function submitPortfolio(
   request: PortfolioRequest,
-): Promise<PortfolioResponse> {
+): Promise<PortfolioSeriesResponse> {
   const response = await axios.post<unknown>("/api/portfolio", request);
-  if (!isPortfolioResponse(response.data)) {
-    throw new Error("The server returned an invalid portfolio result.");
+  if (!isValidPortfolioSeriesResponse(response.data)) {
+    throw new InvalidPortfolioSeriesError();
   }
   return response.data;
 }
