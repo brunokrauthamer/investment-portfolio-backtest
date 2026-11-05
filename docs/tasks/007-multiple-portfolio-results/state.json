@@ -1,0 +1,17 @@
+{
+  "workflow": "simple-feature-workflow",
+  "task_id": "007",
+  "task_slug": "multiple-portfolio-results",
+  "state_version": 6,
+  "stage": "blocked",
+  "spec_revision": "s001",
+  "plan_revision": "p001",
+  "baseline_head": "9635e616d1e274383a4c3b4f049251dce6ba8624",
+  "baseline_worktree": [" M docs/agent-log/LOG.md"],
+  "approval": {"decision": "Approve and proceed", "date": "2026-11-04", "timezone": "America/Sao_Paulo", "spec_revision": "s001", "spec_sha256": "7104fd76228e0884f4cfc874fdf0b65b4b3d3fb93b2f9ee221b631704c3f9d00", "plan_revision": "p001", "plan_sha256": "30de43fb82e5f3f9b4f4013661d8d869c88d63f660e5f49e507bfe1101860e25"},
+  "state_writer": "simple-tech-lead",
+  "implementation": {"status": "handed_off", "assignee": "simple-developer", "code_revision": "9635e616d1e274383a4c3b4f049251dce6ba8624:sha256:ed3d3023fd77693424cf15364cce0783579516ebb2c132e48dc5e0a02a3e3262", "evidence": ["verification.md"]},
+  "review": {"status": "complete", "assignee": "simple-reviewer", "findings": ["R1", "R2", "R3"], "evidence": ["review.md"]},
+  "qa": {"status": "blocked", "assignee": "simple-qa", "results": ["A1-A5 inspected; runtime and browser verification blocked"], "evidence": ["verification.md"]},
+  "next_action": "User decision on obtaining frontend dependencies and resuming blocked verification"
+}
