@@ -31,7 +31,7 @@ Start the API from the repository root on Windows:
 Run the health and portfolio API contract tests from the repository root with:
 
 ```powershell
-.\backend\.venv\Scripts\python.exe -m unittest backend.src.api.tests.test_health backend.src.api.tests.test_portfolio -v
+.\backend\.venv\Scripts\python.exe -m unittest backend.src.api.tests.test_health backend.src.api.tests.test_portfolio backend.src.api.tests.test_portfolio_calculation backend.src.api.tests.test_portfolio_result_contract -v
 ```
 
 `GET http://127.0.0.1:8000/health` returns HTTP 200 with `{"status":"ok"}`. It confirms only that the API process is serving requests. Importing and starting the API do not acquire market data.
@@ -54,4 +54,6 @@ Run the health and portfolio API contract tests from the repository root with:
 }
 ```
 
-A valid request returns `{"status":"ok"}`. Invalid requests return HTTP 422. The route applies the same exact JSON validation when `Content-Type` is omitted or empty; `application/json` and `+json` media types are also supported, while other media types are rejected. Duplicate JSON member names, nonfinite numbers, and percentages with more than two decimal places are invalid. The route only validates and acknowledges settings; it does not persist them, acquire market data or calculate portfolio results. The Vite development and preview servers proxy same-origin `/api` requests to `127.0.0.1:8000`. A production host must provide an equivalent same-origin reverse proxy.
+The API reads `data/normalized/daily_returns_reais.csv` with pandas for each valid request. It filters the requested dates inclusively and returns one cumulative portfolio return series point per available CSV date. Each point includes UTC-midnight epoch milliseconds in `x`, cumulative percentage points in `y`, the ISO date, the day's return percentage points and the cumulative return percentage points. The first available row contributes its return. Daily portfolio returns use the weights at the start of that row, then weights drift with relative asset returns. Calendar rebalancing resets to the requested weights after the first available row on or after each anniversary; Selic compounds as a daily return like the other selected assets. A valid range with no CSV dates returns an empty `data` list. No starting currency amount is used.
+
+Invalid requests return HTTP 422. Missing or malformed historical data and calculations that cannot continue after a total portfolio loss return HTTP 503 with a safe error detail. The route applies the same exact JSON validation when `Content-Type` is omitted or empty; `application/json` and `+json` media types are also supported, while other media types are rejected. Duplicate JSON member names, nonfinite numbers, and percentages with more than two decimal places are invalid. Importing and starting the API do not read the CSV or make network requests. The Docker Compose API service mounts the normalized CSV read-only at the expected path. The Vite development and preview servers proxy same-origin `/api` requests to `127.0.0.1:8000`. A production host must provide an equivalent same-origin reverse proxy and the normalized CSV file.
