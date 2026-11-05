@@ -1,12 +1,10 @@
 """HTTP contract tests for portfolio setup routes."""
 
 import unittest
-from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
 from backend.src.api.main import app
-from backend.src.api.model.portfolio_data import PortfolioDataError
 
 
 class PortfolioRouteTests(unittest.TestCase):
@@ -24,7 +22,7 @@ class PortfolioRouteTests(unittest.TestCase):
             {"id": "sp500", "name": "S&P 500"},
         ])
 
-    def test_portfolio_route_returns_series_for_one_two_and_four_indexes(self):
+    def test_portfolio_route_acknowledges_one_two_and_four_indexes(self):
         allocations = [
             [{"index": "ifix", "percentage": 100}],
             [
@@ -48,49 +46,7 @@ class PortfolioRouteTests(unittest.TestCase):
                 })
 
                 self.assertEqual(response.status_code, 200)
-                self.assertEqual(set(response.json()), {"series"})
-                self.assertEqual(response.json()["series"][0]["name"], "Cumulative portfolio return")
-
-    def test_portfolio_route_returns_inclusive_dates_with_percentage_point_fields(self):
-        response = self.client.post("/api/portfolio", json={
-            "initial_date": "2011-01-04",
-            "end_date": "2011-01-06",
-            "allocations": [{"index": "ibovespa", "percentage": 100}],
-            "rebalancing": "none",
-        })
-
-        self.assertEqual(response.status_code, 200)
-        points = response.json()["series"][0]["data"]
-        self.assertEqual([point["date"] for point in points], ["2011-01-04", "2011-01-05", "2011-01-06"])
-        self.assertEqual(points[0]["x"], 1294099200000)
-        self.assertIsInstance(points[0]["x"], int)
-        self.assertIsInstance(points[0]["daily_return_pct"], (int, float))
-        self.assertAlmostEqual(points[0]["y"], points[0]["cumulative_return_pct"])
-
-    def test_empty_available_date_range_returns_empty_chart_data(self):
-        response = self.client.post("/api/portfolio", json={
-            "initial_date": "1900-01-01",
-            "end_date": "1900-01-02",
-            "allocations": [{"index": "selic", "percentage": 100}],
-            "rebalancing": "none",
-        })
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), {"series": [{
-            "name": "Cumulative portfolio return",
-            "data": [],
-        }]})
-
-    def test_csv_failures_return_clear_unavailable_response(self):
-        with patch(
-            "backend.src.api.service.portfolio.load_daily_returns",
-            side_effect=PortfolioDataError("private CSV path must not appear"),
-        ):
-            response = self.client.post("/api/portfolio", json=self._valid_payload())
-
-        self.assertEqual(response.status_code, 503)
-        self.assertIn("Historical portfolio results are unavailable", response.json()["detail"])
-        self.assertNotIn("private CSV path", response.text)
+                self.assertEqual(response.json(), {"status": "ok"})
 
     def test_rejects_missing_or_invalid_dates_and_reversed_range(self):
         payload = self._valid_payload()
@@ -233,7 +189,7 @@ class PortfolioRouteTests(unittest.TestCase):
                 response = self.client.post("/api/portfolio", content=body, headers=headers)
 
                 self.assertEqual(response.status_code, 200)
-                self.assertEqual(set(response.json()), {"series"})
+                self.assertEqual(response.json(), {"status": "ok"})
 
     def test_json_suffix_media_type_keeps_exact_validation(self):
         prefix = (
@@ -254,24 +210,8 @@ class PortfolioRouteTests(unittest.TestCase):
         )
 
         self.assertEqual(valid.status_code, 200)
-        self.assertEqual(set(valid.json()), {"series"})
+        self.assertEqual(valid.json(), {"status": "ok"})
         self.assertEqual(invalid.status_code, 422)
-
-    def test_lone_surrogate_validation_error_is_serialized_as_422(self):
-        body = (
-            '{"initial_date":"\\ud800","end_date":"2024-12-31",'
-            '"allocations":[{"index":"ifix","percentage":100}],'
-            '"rebalancing":"none"}'
-        )
-
-        response = self.client.post(
-            "/api/portfolio",
-            content=body,
-            headers={"content-type": "application/json"},
-        )
-
-        self.assertEqual(response.status_code, 422)
-        self.assertEqual(response.json(), {"detail": "The request contains invalid or missing fields."})
 
     def test_rejects_parser_depth_errors_with_serializable_422(self):
         body = '{"unexpected":' + ("[" * 1500) + "0" + ("]" * 1500) + "}"

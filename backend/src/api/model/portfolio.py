@@ -35,32 +35,3 @@ class PortfolioConfiguration(BaseModel):
         json_schema_extra={"minItems": 1, "maxItems": 4}
     )
     rebalancing: Rebalancing
-
-
-class PortfolioPoint(BaseModel):
-    """One date's chart point and percentage return details."""
-
-    model_config = ConfigDict(extra="forbid")
-
-    x: int
-    y: float
-    date: str
-    daily_return_pct: float
-    cumulative_return_pct: float
-
-
-class PortfolioSeries(BaseModel):
-    """ApexCharts line series for cumulative portfolio return."""
-
-    model_config = ConfigDict(extra="forbid")
-
-    name: str
-    data: list[PortfolioPoint]
-
-
-class PortfolioResponse(BaseModel):
-    """Chart-ready backtest response."""
-
-    model_config = ConfigDict(extra="forbid")
-
-    series: list[PortfolioSeries]

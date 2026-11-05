@@ -12,7 +12,11 @@ export function formatPercentage(value: number): string {
 }
 
 export function formatUtcDate(value: string | number): string {
-  const timestamp = typeof value === "string" ? Number(value) : value;
+  const timestamp =
+    typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)
+      ? Date.parse(`${value}T00:00:00.000Z`)
+      : Number(value);
+
   return new Date(timestamp).toISOString().slice(0, 10);
 }
 
