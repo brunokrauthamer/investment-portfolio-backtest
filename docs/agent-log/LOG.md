@@ -5400,3 +5400,74 @@ Created local branch `codex/api-service-layer` and commit `2390382` (`Refactor A
 
 [LOG.md](C:/Users/[redacted]/.codex/worktrees/87ce/investment_portfolio_backtest/docs/agent-log/LOG.md) is the only uncommitted change. It records this interaction and final response as required by `AGENTS.md`, so it was updated after the code commit. No changes were pushed, and no tests were run.
 ```
+### Interaction — 2026-11-04 (America/Sao_Paulo)
+
+#### User
+
+[$simple-feature-workflow](C:\Users\[redacted]\Documents\ChatGPT\investment_portfolio_backtest\\.agents\skills\simple-feature-workflow\SKILL.md) Implement the frontend flow for adding multiple real portfolio backtest results to one chart, one portfolio submission at a time.
+
+Before making changes, read the repository and frontend AGENTS.md instructions and inspect the current frontend and backend API contract. The frontend is TypeScript and React, uses Axios for API calls, and uses ApexCharts for the chart.
+
+Important API prerequisite and response contract:
+Each POST /api/portfolio request represents one portfolio. A successful response returns that portfolio's cumulative-return time series in this shape:
+
+\~\~\~json
+{
+&#x20; "series": [
+&#x20;   {
+&#x20;     "name": "Cumulative portfolio return",
+&#x20;     "data": [
+&#x20;       {
+&#x20;         "x": 1294099200000,
+&#x20;         "y": 1.0,
+&#x20;         "date": "2011-01-04",
+&#x20;         "daily_return_pct": 1.0,
+&#x20;         "cumulative_return_pct": 1.0
+&#x20;       },
+&#x20;       {
+&#x20;         "x": 1294185600000,
+&#x20;         "y": 1.0,
+&#x20;         "date": "2011-01-05",
+&#x20;         "daily_return_pct": 0.0,
+&#x20;         "cumulative_return_pct": 1.0
+&#x20;       },
+&#x20;       {
+&#x20;         "x": 1294272000000,
+&#x20;         "y": 2.01,
+&#x20;         "date": "2011-01-06",
+&#x20;         "daily_return_pct": 1.0,
+&#x20;         "cumulative_return_pct": 2.01
+&#x20;       }
+&#x20;     ]
+&#x20;   }
+&#x20; ]
+}
+\~\~\~
+Use the implemented backend schema as the source of truth. Each successful request is expected to return one series. In each point, x is a UTC Unix timestamp in milliseconds and y is the cumulative return percentage to plot. The date field is the corresponding UTC calendar date, and cumulative_return_pct represents the same plotted value as y. daily_return_pct is supplemental point information and is not the chart's y value. Values are already expressed as percentages; do not calculate, normalize, rescale, or otherwise transform returns in the frontend.
+
+If the endpoint still returns only an acknowledgement or does not return the time series, report the specific missing backend contract and stop. Do not fabricate results or use mock data in production.
+
+Requirements:
+- Keep the existing one-portfolio-per-submission form flow. Every successful submission adds its returned series to the existing chart and portfolio list. Do not replace results from earlier successful submissions.
+- After a successful submission only, reset the form to its existing initial/default state. If the request fails or its response is invalid, show an error and preserve the user's form values so they can retry.
+- Store each successful result together with a snapshot of the submitted configuration. Use that snapshot to render a characteristics card with the available submitted fields, such as allocations, date range, and rebalancing strategy. Resetting the form must not change cards already created.
+- The API's series name describes the metric and is not a unique portfolio name. Assign frontend display labels in successful submission order: "Portfolio 1", "Portfolio 2", and so on. Do not renumber remaining portfolios after one is removed.
+- Generate a UI-only identifier for each successful portfolio entry and use it to associate the response data, display label, characteristics snapshot, and color. Keep this identifier in frontend state only; do not add it to the API request or require it from the response.
+- Build the chart series from all retained portfolio entries. Use the frontend label (for example, "Portfolio 1") as each ApexCharts series name so the lines remain distinguishable. Map each API point's x and y directly to the chart without financial calculations. Use the UTC date in tooltips or labels where appropriate. daily_return_pct may be shown as supplemental tooltip information, but never substitute it for y.
+- Assign each portfolio a distinct, readable color. Use the same color for its chart line and characteristics card. Keep each entry's label and color stable when other entries are removed. Do not impose a hardcoded limit on the number of portfolio results.
+- Add an accessible remove action to each characteristics card. Removing a portfolio must remove its card and corresponding chart series together from frontend state; it does not require a backend request.
+- Handle loading, API failures, invalid responses, and a valid empty data array explicitly. Never fall back to fictional chart data or treat errors as empty or zero-valued results.
+- Remove production example values and series, the illustrative-data notice, and the example data table. Keep real API communication, form validation, and reusable chart logic. Test-only API doubles may remain where needed.
+- Preserve existing frontend architecture and styling conventions. Do not change backend behavior or introduce financial calculations or assumptions in this frontend task.
+
+The feature is complete when each successful submission appends its real cumulative-return series and matching characteristics card, the form resets after success, removing a card also removes its line, and no production path displays mock chart data.
+
+#### Assistant progress
+
+I’m applying the `simple-feature-workflow` skill and will first inspect its workflow requirements, the repository guidance, and the existing frontend/backend contract before changing code.
+
+The inspected endpoint does not meet the required prerequisite: it returns only an acknowledgement, so there is no real series for the frontend to append. I’m recording the exact interaction and will stop without changing code.
+
+#### Assistant
+
+The API prerequisite is missing, so I stopped before implementation. `POST /api/portfolio` currently validates the configuration and returns only `{"status":"ok"}`. It does not provide the required `series` array or cumulative-return data points (`x`, `y`, `date`, `daily_return_pct`, `cumulative_return_pct`). The frontend currently accepts that acknowledgement; its chart uses hard-coded example series. The backend must first return one real series with those fields per successful request. No code changes were made, and I did not fabricate results.
