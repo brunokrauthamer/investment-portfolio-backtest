@@ -1,0 +1,18 @@
+Python 3.9.4, FastAPI 0.128.8
+None: valid -> 200; 7 invalid cases -> 422
+'': valid -> 200; 7 invalid cases -> 422
+'application/json': valid -> 200; 7 invalid cases -> 422
+'APPLICATION/JSON; charset=utf-8': valid -> 200; 7 invalid cases -> 422
+'application/vnd.portfolio+json': valid -> 200; 7 invalid cases -> 422
+text/plain with valid JSON -> 422
+Invalid JSON shape with 950 array levels -> 422
+Invalid JSON shape with 1500 array levels -> 422
+Invalid strategy containing escaped lone surrogate -> 500 Internal Server Error
+Error response stack:
+  routing.py:121 in app
+  _exception_handler.py:59 in wrapped_app
+  exception_handlers.py:23 in request_validation_exception_handler
+  responses.py:189 in __init__
+  responses.py:46 in __init__
+  responses.py:192 in render
+  UnicodeEncodeError: surrogates not allowed

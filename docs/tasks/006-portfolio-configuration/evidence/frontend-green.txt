@@ -1,0 +1,10 @@
+$ vitest run
+
+ RUN  v5.1.0 [redacted]/frontend
+
+
+ Test Files  5 passed (5)
+      Tests  18 passed (18)
+   Start at  20:20:11
+   Duration  2.79s (environment 73%, tests 9%, setup 9%, import 8%, transform 1%)
+

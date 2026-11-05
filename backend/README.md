@@ -28,4 +28,30 @@ Start the API from the repository root on Windows:
 .\backend\.venv\Scripts\python.exe -m uvicorn backend.src.api.main:app --reload
 ```
 
+Run the health and portfolio API contract tests from the repository root with:
+
+```powershell
+.\backend\.venv\Scripts\python.exe -m unittest backend.src.api.tests.test_health backend.src.api.tests.test_portfolio -v
+```
+
 `GET http://127.0.0.1:8000/health` returns HTTP 200 with `{"status":"ok"}`. It confirms only that the API process is serving requests. Importing and starting the API do not acquire market data.
+
+## Portfolio setup API
+
+`GET http://127.0.0.1:8000/api/indexes` returns the supported choices in this order: `ibovespa` (IBOVESPA), `ifix` (IFIX), `selic` (Selic) and `sp500` (S&P 500).
+
+`POST http://127.0.0.1:8000/api/portfolio` accepts an `initial_date`, `end_date`, one to four unique `allocations` containing an index ID and percentage, and a `rebalancing` value. Dates must be valid ISO calendar dates in order. Percentages must be JSON numbers with at most two decimal places and sum exactly to 100. Valid rebalancing values are `none`, `3_months`, `6_months`, `1_year`, `2_years` and `3_years`. For example:
+
+```json
+{
+  "initial_date": "2020-01-01",
+  "end_date": "2024-12-31",
+  "allocations": [
+    {"index": "ibovespa", "percentage": 40},
+    {"index": "sp500", "percentage": 60}
+  ],
+  "rebalancing": "6_months"
+}
+```
+
+A valid request returns `{"status":"ok"}`. Invalid requests return HTTP 422. The route applies the same exact JSON validation when `Content-Type` is omitted or empty; `application/json` and `+json` media types are also supported, while other media types are rejected. Duplicate JSON member names, nonfinite numbers, and percentages with more than two decimal places are invalid. The route only validates and acknowledges settings; it does not persist them, acquire market data or calculate portfolio results. The Vite development and preview servers proxy same-origin `/api` requests to `127.0.0.1:8000`. A production host must provide an equivalent same-origin reverse proxy.

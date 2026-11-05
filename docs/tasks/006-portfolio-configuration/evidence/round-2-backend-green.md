@@ -1,0 +1,3 @@
+# Round 2 backend regression tests — green
+
+After the PC-R03 through PC-R04 fixes, `backend/.venv/Scripts/python.exe -m unittest backend.src.api.tests.test_portfolio backend.src.api.tests.test_health -v` passed all 10 tests. Raw tokens `99.9999999999999999`, `100.0000000000000001`, `100.000`, `1e309`, `NaN` and `Infinity` all return serializable HTTP 422 responses. Repeated JSON member names also return 422. Valid one-, two- and four-index requests and the typed OpenAPI body schema continue to pass. See `backend-round-2-green.txt` and the raw request regression tests in `backend/src/api/tests/test_portfolio.py`.

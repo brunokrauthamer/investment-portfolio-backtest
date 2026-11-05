@@ -1,0 +1,4 @@
+Page HTTP 200, Chrome 157.0.8103.38
+PC-R01 settled fields ['25.00', '50.00', '12.50', '12.50'] total 100.00%, POST {'initial_date': '2020-01-01', 'end_date': '2024-12-31', 'allocations': [{'index': 'ibovespa', 'percentage': 25}, {'index': 'ifix', 'percentage': 50}, {'index': 'selic', 'percentage': 12.5}, {'index': 'sp500', 'percentage': 12.5}], 'rebalancing': 'none'} HTTP 200
+PC-R02 invalid focused draft displayed error, Enter sent zero requests, Tab restored the committed share.
+PC-R05 browser computed guidance 6.29:1 and keyboard outline 6.31:1 against white.

@@ -1,0 +1,38 @@
+FastAPI 0.128.8; Starlette 0.49.3
+Content-Type: application/json
+100 200 {"status":"ok"}
+99.9999999999999999 422 {"detail":"The JSON body contains invalid or repeated values."}
+100.0000000000000001 422 {"detail":"The JSON body contains invalid or repeated values."}
+100.000 422 {"detail":"The JSON body contains invalid or repeated values."}
+1e309 422 {"detail":"The JSON body contains invalid or repeated values."}
+NaN 422 {"detail":"The JSON body contains invalid or repeated values."}
+50,"percentage":100 422 {"detail":"The JSON body contains invalid or repeated values."}
+1e-10000000000000000000 422 {"detail":"The JSON body contains invalid or repeated values."}
+Content-Type: application/vnd.portfolio+json
+100 200 {"status":"ok"}
+99.9999999999999999 422 {"detail":"The JSON body contains invalid or repeated values."}
+100.0000000000000001 422 {"detail":"The JSON body contains invalid or repeated values."}
+100.000 422 {"detail":"The JSON body contains invalid or repeated values."}
+1e309 422 {"detail":"The JSON body contains invalid or repeated values."}
+NaN 422 {"detail":"The JSON body contains invalid or repeated values."}
+50,"percentage":100 422 {"detail":"The JSON body contains invalid or repeated values."}
+1e-10000000000000000000 422 {"detail":"The JSON body contains invalid or repeated values."}
+Content-Type: omitted
+100 200 {"status":"ok"}
+99.9999999999999999 200 {"status":"ok"}
+100.0000000000000001 200 {"status":"ok"}
+100.000 200 {"status":"ok"}
+1e309 500 Internal Server Error
+NaN 500 Internal Server Error
+50,"percentage":100 200 {"status":"ok"}
+1e-10000000000000000000 422 {"detail":[{"type":"value_error","loc":["body"],"msg":"Value error, allocation percentages must total exactly 100","input":{"initial_date":"2020-01-01","end_date":"2024-12-31","allocations":[{"index":"ifix","percentage":0.0}],"rebalancing":"none"},"ctx":{"error":{}}}]}
+Content-Type: empty
+100 200 {"status":"ok"}
+99.9999999999999999 200 {"status":"ok"}
+100.0000000000000001 200 {"status":"ok"}
+100.000 200 {"status":"ok"}
+1e309 500 Internal Server Error
+NaN 500 Internal Server Error
+50,"percentage":100 200 {"status":"ok"}
+1e-10000000000000000000 422 {"detail":[{"type":"value_error","loc":["body"],"msg":"Value error, allocation percentages must total exactly 100","input":{"initial_date":"2020-01-01","end_date":"2024-12-31","allocations":[{"index":"ifix","percentage":0.0}],"rebalancing":"none"},"ctx":{"error":{}}}]}
+Deep invalid JSON: 500
