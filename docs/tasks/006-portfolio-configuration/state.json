@@ -1,0 +1,576 @@
+{
+  "schema_version": 1,
+  "state_version": 18,
+  "task_id": "006",
+  "task_slug": "portfolio-configuration",
+  "stage": "correction_planning",
+  "spec_revision": {
+    "id": "s001",
+    "sha256": "1ba23e8edeaf05f02a39fa7e7a95ee9a2ad05ba7be1178d355a29a67a8aabd3f"
+  },
+  "plan_revision": {
+    "id": "p001",
+    "sha256": "106e4271058d71e3ce78f5c8466b0eda50a1c0ec60d867b6eec0d469191bda8e"
+  },
+  "code_revision": "d9f0c83c824cdbcd8d765c19735be400974798b5:sha256:64869d6b7fe975d52977b49489835f5ebe79a7225cfd0da2f7c022191d40b51f",
+  "baseline_revision": {
+    "evidence": "evidence/baseline-snapshot.json",
+    "worktree_status": [
+      " M docs/agent-log/LOG.md",
+      "?? docs/tasks/006-portfolio-configuration/evidence/baseline-snapshot.json",
+      "?? docs/tasks/006-portfolio-configuration/plan.md",
+      "?? docs/tasks/006-portfolio-configuration/review.md",
+      "?? docs/tasks/006-portfolio-configuration/spec.md",
+      "?? docs/tasks/006-portfolio-configuration/state.json",
+      "?? docs/tasks/006-portfolio-configuration/verification.md"
+    ],
+    "code_revision": "d9f0c83c824cdbcd8d765c19735be400974798b5:sha256:45cc08c3727bb8e9afc5600bd6c710337b254b48cce4f45c899538f85085a612",
+    "head": "d9f0c83c824cdbcd8d765c19735be400974798b5"
+  },
+  "model_policy": "correction",
+  "correction_cycle": 1,
+  "model_switch_reason": "Initial review exhausted three rounds with blocking PC-R08; independent QA was interrupted by the computer-use policy stop.",
+  "review_rounds": {
+    "correction": 0,
+    "initial": 3
+  },
+  "limits": {
+    "correction_cycles": 1,
+    "rounds_per_cycle": 3
+  },
+  "state_writer": "tech-lead-correction",
+  "active_assignments": [
+    {
+      "writer_ownership": "Sole writer of assigned implementation files, verification.md, assigned implementation fields in state.json and developer evidence",
+      "status": "completed",
+      "model": "gpt-6-luna",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "input_revisions": {
+        "plan": {
+          "id": "p001",
+          "sha256": "106e4271058d71e3ce78f5c8466b0eda50a1c0ec60d867b6eec0d469191bda8e"
+        },
+        "spec": {
+          "id": "s001",
+          "sha256": "1ba23e8edeaf05f02a39fa7e7a95ee9a2ad05ba7be1178d355a29a67a8aabd3f"
+        },
+        "baseline": "d9f0c83c824cdbcd8d765c19735be400974798b5:sha256:45cc08c3727bb8e9afc5600bd6c710337b254b48cce4f45c899538f85085a612"
+      },
+      "allowed_files": [
+        "backend/src/api/",
+        "backend/requirements.txt",
+        "backend/README.md",
+        "frontend/",
+        "docs/tasks/006-portfolio-configuration/state.json",
+        "docs/tasks/006-portfolio-configuration/verification.md",
+        "docs/tasks/006-portfolio-configuration/evidence/"
+      ],
+      "id": "initial-round-1",
+      "deliverables": [
+        "TDD red/green/refactor evidence",
+        "integrated implementation and documentation",
+        "implementation snapshot",
+        "handoff"
+      ],
+      "effort": "max",
+      "slice": "Integrated backend index and acknowledgement routes, frontend Axios service, allocation form and layout, Vite proxy, dependency and usage documentation",
+      "role": "developer"
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "role": "reviewer",
+      "slice": "Independent review of integrated API, allocation UX and accessibility, service, proxy, tests and documentation",
+      "deliverables": [
+        "dated independent review and findings",
+        "before and after snapshots",
+        "handoff"
+      ],
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "status": "completed",
+      "effort": "high",
+      "writer_ownership": "Sole writer of review.md, review/findings fields in state.json and reviewer evidence",
+      "id": "review-initial-round-1",
+      "input_revisions": {
+        "code": "d9f0c83c824cdbcd8d765c19735be400974798b5:sha256:e98ee29168c73ac180e43e12e4a6a800c55de4ae9b91584a8490f0e27b03fe46",
+        "plan": {
+          "id": "p001",
+          "sha256": "106e4271058d71e3ce78f5c8466b0eda50a1c0ec60d867b6eec0d469191bda8e"
+        },
+        "spec": {
+          "id": "s001",
+          "sha256": "1ba23e8edeaf05f02a39fa7e7a95ee9a2ad05ba7be1178d355a29a67a8aabd3f"
+        }
+      },
+      "allowed_files": [
+        "docs/tasks/006-portfolio-configuration/review.md",
+        "docs/tasks/006-portfolio-configuration/state.json",
+        "docs/tasks/006-portfolio-configuration/evidence/"
+      ]
+    },
+    {
+      "id": "initial-round-2",
+      "input_revisions": {
+        "review": "review.md: Initial round 1",
+        "plan": {
+          "id": "p001",
+          "sha256": "106e4271058d71e3ce78f5c8466b0eda50a1c0ec60d867b6eec0d469191bda8e"
+        },
+        "spec": {
+          "id": "s001",
+          "sha256": "1ba23e8edeaf05f02a39fa7e7a95ee9a2ad05ba7be1178d355a29a67a8aabd3f"
+        },
+        "code": "d9f0c83c824cdbcd8d765c19735be400974798b5:sha256:e98ee29168c73ac180e43e12e4a6a800c55de4ae9b91584a8490f0e27b03fe46"
+      },
+      "criterion_ids": [
+        "AC-002",
+        "AC-004"
+      ],
+      "status": "completed",
+      "allowed_files": [
+        "backend/src/api/",
+        "backend/requirements.txt",
+        "backend/README.md",
+        "frontend/",
+        "docs/tasks/006-portfolio-configuration/state.json",
+        "docs/tasks/006-portfolio-configuration/verification.md",
+        "docs/tasks/006-portfolio-configuration/evidence/"
+      ],
+      "effort": "max",
+      "writer_ownership": "Sole writer of assigned implementation files, verification.md, assigned implementation fields in state.json and developer evidence",
+      "slice": "Regression-first repair of review findings PC-R01 through PC-R05, then integrate and document",
+      "deliverables": [
+        "specific observed red regression for each confirmed defect",
+        "green fixes and related regressions",
+        "integrated snapshot",
+        "handoff"
+      ],
+      "model": "gpt-6-luna",
+      "role": "developer"
+    },
+    {
+      "input_revisions": {
+        "code": "d9f0c83c824cdbcd8d765c19735be400974798b5:sha256:a84d04250e48ad8f658169eab04c74c84fe8206fe7880a85460c0f09cfa3b862",
+        "spec": {
+          "id": "s001",
+          "sha256": "1ba23e8edeaf05f02a39fa7e7a95ee9a2ad05ba7be1178d355a29a67a8aabd3f"
+        },
+        "plan": {
+          "id": "p001",
+          "sha256": "106e4271058d71e3ce78f5c8466b0eda50a1c0ec60d867b6eec0d469191bda8e"
+        }
+      },
+      "id": "review-initial-round-2",
+      "slice": "Independent integrated re-review and regression confirmation of PC-R01 through PC-R05",
+      "allowed_files": [
+        "docs/tasks/006-portfolio-configuration/review.md",
+        "docs/tasks/006-portfolio-configuration/state.json",
+        "docs/tasks/006-portfolio-configuration/evidence/"
+      ],
+      "role": "reviewer",
+      "writer_ownership": "Sole writer of review.md, review/findings fields in state.json and reviewer evidence",
+      "status": "completed",
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "deliverables": [
+        "dated independent review and findings",
+        "before and after snapshots",
+        "handoff"
+      ]
+    },
+    {
+      "effort": "max",
+      "input_revisions": {
+        "review": "review.md: Initial round 2",
+        "spec": {
+          "id": "s001",
+          "sha256": "1ba23e8edeaf05f02a39fa7e7a95ee9a2ad05ba7be1178d355a29a67a8aabd3f"
+        },
+        "code": "d9f0c83c824cdbcd8d765c19735be400974798b5:sha256:a84d04250e48ad8f658169eab04c74c84fe8206fe7880a85460c0f09cfa3b862",
+        "plan": {
+          "id": "p001",
+          "sha256": "106e4271058d71e3ce78f5c8466b0eda50a1c0ec60d867b6eec0d469191bda8e"
+        }
+      },
+      "role": "developer",
+      "slice": "Regression-first repair of PC-R06 and PC-R07, closing remaining paths for PC-R03 and PC-R04",
+      "deliverables": [
+        "specific observed red regression for each confirmed defect",
+        "green fixes and related regressions",
+        "integrated snapshot",
+        "handoff"
+      ],
+      "model": "gpt-6-luna",
+      "allowed_files": [
+        "backend/src/api/",
+        "backend/requirements.txt",
+        "backend/README.md",
+        "frontend/",
+        "docs/tasks/006-portfolio-configuration/state.json",
+        "docs/tasks/006-portfolio-configuration/verification.md",
+        "docs/tasks/006-portfolio-configuration/evidence/"
+      ],
+      "id": "initial-round-3",
+      "criterion_ids": [
+        "AC-004"
+      ],
+      "status": "completed",
+      "writer_ownership": "Sole writer of assigned implementation files, verification.md, assigned implementation fields in state.json and developer evidence"
+    },
+    {
+      "input_revisions": {
+        "code": "d9f0c83c824cdbcd8d765c19735be400974798b5:sha256:64869d6b7fe975d52977b49489835f5ebe79a7225cfd0da2f7c022191d40b51f",
+        "plan": {
+          "id": "p001",
+          "sha256": "106e4271058d71e3ce78f5c8466b0eda50a1c0ec60d867b6eec0d469191bda8e"
+        },
+        "spec": {
+          "id": "s001",
+          "sha256": "1ba23e8edeaf05f02a39fa7e7a95ee9a2ad05ba7be1178d355a29a67a8aabd3f"
+        }
+      },
+      "status": "completed",
+      "deliverables": [
+        "dated independent review and findings",
+        "before and after snapshots",
+        "handoff"
+      ],
+      "role": "reviewer",
+      "allowed_files": [
+        "docs/tasks/006-portfolio-configuration/review.md",
+        "docs/tasks/006-portfolio-configuration/state.json",
+        "docs/tasks/006-portfolio-configuration/evidence/"
+      ],
+      "slice": "Independent integrated re-review and regression confirmation of PC-R03, PC-R04, PC-R06 and PC-R07",
+      "model": "gpt-6.1-sol",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "effort": "high",
+      "id": "review-initial-round-3",
+      "writer_ownership": "Sole writer of review.md, review/findings fields in state.json and reviewer evidence"
+    },
+    {
+      "effort": "max",
+      "role": "qa",
+      "input_revisions": {
+        "review": "review.md: Initial round 3",
+        "plan": {
+          "id": "p001",
+          "sha256": "106e4271058d71e3ce78f5c8466b0eda50a1c0ec60d867b6eec0d469191bda8e"
+        },
+        "spec": {
+          "id": "s001",
+          "sha256": "1ba23e8edeaf05f02a39fa7e7a95ee9a2ad05ba7be1178d355a29a67a8aabd3f"
+        },
+        "code": "d9f0c83c824cdbcd8d765c19735be400974798b5:sha256:64869d6b7fe975d52977b49489835f5ebe79a7225cfd0da2f7c022191d40b51f"
+      },
+      "status": "interrupted",
+      "id": "qa-initial-round-3",
+      "slice": "Independent available integrated QA after initial review exhausted; browser assessment and verification of PC-R08",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006"
+      ],
+      "writer_ownership": "Sole writer of verification.md, acceptance/QA fields in state.json and QA evidence",
+      "model": "gpt-6-luna",
+      "deliverables": [
+        "criterion matrix with actual evidence",
+        "before and after snapshots",
+        "environment and limitations",
+        "handoff"
+      ],
+      "allowed_files": [
+        "docs/tasks/006-portfolio-configuration/verification.md",
+        "docs/tasks/006-portfolio-configuration/state.json",
+        "docs/tasks/006-portfolio-configuration/evidence/"
+      ]
+    }
+  ],
+  "implementation": {
+    "evidence": [
+      "verification.md: Developer TDD, round 2 regressions and implementation checks",
+      "evidence/backend-tdd-red.md",
+      "evidence/backend-tdd-green.txt",
+      "evidence/backend-date-validation-regression.md",
+      "evidence/backend-date-regression-green.txt",
+      "evidence/frontend-tdd-red.txt",
+      "evidence/frontend-pattern-regression.md",
+      "evidence/frontend-green.txt",
+      "evidence/frontend-typecheck-build.txt",
+      "evidence/backend-pip-check.txt",
+      "evidence/round-2-frontend-red.md",
+      "evidence/round-2-frontend-green.md",
+      "evidence/round-2-backend-red.md",
+      "evidence/round-2-backend-green.md",
+      "evidence/backend-decimal-scale-regression.md",
+      "evidence/frontend-round-2-green.txt",
+      "evidence/frontend-round-2-typecheck-build.txt",
+      "evidence/backend-round-2-green.txt",
+      "evidence/backend-round-2-pip-check.txt",
+      "evidence/round-2-implementation-snapshot.json",
+      "verification.md: Developer TDD, initial round 3 repairs",
+      "evidence/round-3-red.md",
+      "evidence/round-3-green.md",
+      "evidence/round-3-implementation-snapshot.json"
+    ],
+    "status": "in_progress",
+    "snapshot": "d9f0c83c824cdbcd8d765c19735be400974798b5:sha256:64869d6b7fe975d52977b49489835f5ebe79a7225cfd0da2f7c022191d40b51f"
+  },
+  "review": {
+    "status": "changes_required",
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "1ba23e8edeaf05f02a39fa7e7a95ee9a2ad05ba7be1178d355a29a67a8aabd3f"
+    },
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "106e4271058d71e3ce78f5c8466b0eda50a1c0ec60d867b6eec0d469191bda8e"
+    },
+    "code_revision": "d9f0c83c824cdbcd8d765c19735be400974798b5:sha256:64869d6b7fe975d52977b49489835f5ebe79a7225cfd0da2f7c022191d40b51f",
+    "evidence": [
+      "review.md: Initial round 3",
+      "evidence/review-initial-round-3-before.json",
+      "evidence/review-initial-round-3-after.json",
+      "evidence/review-initial-round-3-api.py",
+      "evidence/review-initial-round-3-api.txt",
+      "evidence/review-initial-round-3-browser.txt",
+      "evidence/review-initial-round-3-frontend-tests.txt",
+      "evidence/review-initial-round-3-backend-tests.txt"
+    ]
+  },
+  "qa": {
+    "browser": "blocked: computer-use policy stopped the QA turn before interaction",
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "1ba23e8edeaf05f02a39fa7e7a95ee9a2ad05ba7be1178d355a29a67a8aabd3f"
+    },
+    "status": "blocked",
+    "evidence": [
+      "verification.md: Initial QA available assessment",
+      "evidence/qa-interrupted-after.json"
+    ],
+    "code_revision": "d9f0c83c824cdbcd8d765c19735be400974798b5:sha256:64869d6b7fe975d52977b49489835f5ebe79a7225cfd0da2f7c022191d40b51f",
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "106e4271058d71e3ce78f5c8466b0eda50a1c0ec60d867b6eec0d469191bda8e"
+    }
+  },
+  "acceptance_results": [],
+  "open_findings": [
+    {
+      "id": "PC-R01",
+      "source": "review-initial-round-1",
+      "severity": "P1",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-002",
+        "AC-004"
+      ],
+      "location": "frontend/src/pages/ExampleChart/index.tsx:129",
+      "consequence": "Previously edited percentage fields show stale shares. Users can see a total of 115% in the fields while the indicator says 100% and the POST silently sends different weights.",
+      "evidence": [
+        "evidence/review-initial-round-1-browser.py",
+        "evidence/review-initial-round-1-browser.txt"
+      ],
+      "status": "resolved",
+      "resolution_evidence": [
+        "evidence/review-initial-round-2-browser.txt",
+        "review.md#initial-round-2--2026-11-04-americasao_paulo"
+      ]
+    },
+    {
+      "id": "PC-R02",
+      "source": "review-initial-round-1",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-002",
+        "AC-004"
+      ],
+      "location": "frontend/src/pages/ExampleChart/index.tsx:156",
+      "consequence": "Enter from an invalid 101% allocation field submits the prior valid allocation and shows success while the invalid draft remains visible.",
+      "evidence": [
+        "evidence/review-initial-round-1-browser.txt"
+      ],
+      "status": "resolved",
+      "resolution_evidence": [
+        "evidence/review-initial-round-2-browser.txt",
+        "review.md#initial-round-2--2026-11-04-americasao_paulo"
+      ]
+    },
+    {
+      "id": "PC-R03",
+      "source": "review-initial-round-1",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-004"
+      ],
+      "location": "backend/src/api/controller/portfolio.py:33",
+      "consequence": "JSON numeric decoding loses precision before decimal validation. Overprecision requests are acknowledged and invalid nonfinite numeric cases return HTTP 500 instead of 422.",
+      "evidence": [
+        "evidence/review-initial-round-1-api.txt"
+      ],
+      "status": "resolved",
+      "recheck_evidence": [
+        "evidence/review-initial-round-2-api.txt",
+        "Original cases pass with explicit JSON media type. PC-R06 bypass remains."
+      ],
+      "resolution_evidence": [
+        "review.md: Initial round 3",
+        "evidence/review-initial-round-3-api.txt"
+      ]
+    },
+    {
+      "id": "PC-R04",
+      "source": "review-initial-round-1",
+      "severity": "P2",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-004"
+      ],
+      "location": "backend/src/api/controller/portfolio.py:80",
+      "consequence": "Duplicate JSON member names are overwritten before validation, so a repeated percentage field is acknowledged instead of rejected.",
+      "evidence": [
+        "evidence/review-initial-round-1-api.txt"
+      ],
+      "status": "resolved",
+      "recheck_evidence": [
+        "evidence/review-initial-round-2-api.txt",
+        "Original cases pass with explicit JSON media type. PC-R06 bypass remains."
+      ],
+      "resolution_evidence": [
+        "review.md: Initial round 3",
+        "evidence/review-initial-round-3-api.txt"
+      ]
+    },
+    {
+      "id": "PC-R05",
+      "source": "review-initial-round-1",
+      "severity": "P3",
+      "blocking": false,
+      "criterion_ids": [
+        "AC-002"
+      ],
+      "location": "frontend/src/pages/ExampleChart/index.css:100",
+      "consequence": "Essential guidance and custom focus indicator have low contrast against white, making redistribution instructions and keyboard focus harder to see.",
+      "evidence": [
+        "review.md#findings"
+      ],
+      "status": "resolved",
+      "resolution_evidence": [
+        "evidence/review-initial-round-2-browser.txt",
+        "review.md#initial-round-2--2026-11-04-americasao_paulo"
+      ]
+    },
+    {
+      "severity": "P2",
+      "location": "backend/src/api/controller/portfolio.py:60",
+      "evidence": [
+        "evidence/review-initial-round-2-api.txt"
+      ],
+      "source": "review-initial-round-2",
+      "blocking": true,
+      "status": "resolved",
+      "id": "PC-R06",
+      "consequence": "FastAPI parses JSON with omitted or empty Content-Type through its default decoder. Invalid precision and duplicate members return 200, and nonfinite values return 500.",
+      "criterion_ids": [
+        "AC-004"
+      ],
+      "resolution_evidence": [
+        "review.md: Initial round 3",
+        "evidence/review-initial-round-3-api.txt"
+      ]
+    },
+    {
+      "severity": "P3",
+      "location": "backend/src/api/controller/portfolio.py:67",
+      "evidence": [
+        "evidence/review-initial-round-2-api.txt"
+      ],
+      "source": "review-initial-round-2",
+      "blocking": true,
+      "status": "resolved",
+      "id": "PC-R07",
+      "consequence": "A deeply nested invalid JSON body raises an uncaught recursion error and receives HTTP 500 instead of 422.",
+      "criterion_ids": [
+        "AC-004"
+      ],
+      "resolution_evidence": [
+        "review.md: Initial round 3",
+        "evidence/review-initial-round-3-api.txt"
+      ]
+    },
+    {
+      "id": "PC-R08",
+      "source": "review-initial-round-3",
+      "severity": "P3",
+      "blocking": true,
+      "criterion_ids": [
+        "AC-004"
+      ],
+      "location": "backend/src/api/controller/portfolio.py:77",
+      "consequence": "An escaped lone surrogate in an invalid JSON field survives decoding, then the default error renderer raises UnicodeEncodeError and returns HTTP 500 instead of the required 422.",
+      "evidence": [
+        "evidence/review-initial-round-3-api.py",
+        "evidence/review-initial-round-3-api.txt"
+      ],
+      "status": "open"
+    }
+  ],
+  "attempts_without_progress": 0,
+  "approvals": {
+    "correction_plan": null,
+    "specification": {
+      "recorded_at": "2026-11-04 20:00 America/Sao_Paulo",
+      "user_message": "approved",
+      "spec_revision": {
+        "id": "s001",
+        "sha256": "1ba23e8edeaf05f02a39fa7e7a95ee9a2ad05ba7be1178d355a29a67a8aabd3f"
+      },
+      "plan_revision": {
+        "id": "p001",
+        "sha256": "106e4271058d71e3ce78f5c8466b0eda50a1c0ec60d867b6eec0d469191bda8e"
+      },
+      "reference": "Explicit user approval relayed verbatim by main chat.",
+      "decision": "approved"
+    },
+    "final": null
+  },
+  "next_action": "Correction lead diagnoses PC-R08 and presents revised plan for explicit human approval; browser QA remains blocked pending a safe available session.",
+  "discovery": {
+    "head": "bbbbc5c469a898e0a4cf1d245933f081162657a3",
+    "worktree_status": "Clean before creating task records; capture formal baseline before implementation."
+  }
+}

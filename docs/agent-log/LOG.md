@@ -4760,3 +4760,58 @@ what is the remaining defect?
 ```text
 The remaining defect is in API error handling: if the submitted JSON contains an escaped lone Unicode surrogate (for example, in a string field), the portfolio endpoint returns HTTP 500. The approved contract requires invalid requests to return HTTP 422. The reviewer reproduced this on the latest reviewed snapshot; it has not been fixed yet.
 ```
+
+## 2026-11-04 (America/Sao_Paulo)
+
+### User message
+
+```text
+this is a minor issue. Thats perfect so far. [$organize-git-commits](C:\Users\[redacted]\\.codex\skills\organize-git-commits\SKILL.md) and then git push the branch you will have created
+```
+
+The local user path in the skill reference was redacted.
+
+### User message
+
+```text
+<skill>
+<name>organize-git-commits</name>
+<path>C:\Users\[redacted]\\.codex\skills\organize-git-commits\SKILL.md</path>
+---
+name: organize-git-commits
+description: Organize existing Git changes into a suitable branch and focused local commits when asked to commit or organize the work.
+---
+
+# Organize Git commits
+
+Follow repository instructions and conventions. Invocation to organize and commit authorizes creating local branches and commits. Do not push, create a pull request, amend commits, rewrite history, discard changes, or modify remote state without separate authorization.
+
+1. Before changing Git state, inspect the current branch and HEAD, staged and unstaged diffs, renames and deletions, and untracked files. Read relevant changes and surrounding context to understand their purpose and scope. Check for an ongoing merge, rebase, cherry-pick, or unresolved conflicts; stop before changing Git state if they prevent safe organization.
+2. On `master`, create a descriptive branch at the current HEAD while preserving local changes. Follow the repository's branch naming convention, or choose a concise name reflecting the work; resolve name collisions with a different name, never by overwriting a branch. On any other branch, continue there.
+3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
+4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
+5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
+6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+
+</skill>
+```
+
+The local user path was redacted.
+
+### Assistant progress messages
+
+```text
+I’ll use the commit-organization workflow to inspect the branch, index, and full worktree before making Git changes. I’ll preserve the unresolved API edge case in the task records, organize the requested work into focused commits, and push the resulting branch as you authorized.
+```
+
+```text
+The worktree is detached at `3633e23` with no staged changes. The feature implementation and its task evidence are the only uncommitted project changes; the review records preserve the known HTTP 500 edge case and the browser QA limitation. I’m creating the requested feature branch before staging specific files.
+```
+
+```text
+The application changes are now committed on `codex/portfolio-configuration` as `7b644c0`. I’m preparing a separate documentation commit for the task specification, review and QA evidence, plus the required interaction log; those records continue to show the remaining defect and blocked browser checks.
+```
+
+```text
+The separate documentation commit will include the workflow evidence as recorded, including the correction-planning status; I’m not changing the review outcome or claiming the API edge case is fixed. I’ll log both your request and the supplied commit instructions before pushing.
+```

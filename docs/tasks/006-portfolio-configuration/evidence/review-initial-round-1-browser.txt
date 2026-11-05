@@ -1,0 +1,12 @@
+Page HTTP 200, Chrome 157.0.8103.38
+Initial fields: ['25.00', '25.00', '25.00', '25.00']
+After typing 40 in IBOVESPA and 50 in IFIX:
+Visible fields: ['40.00', '50.00', '12.50', '12.50']
+Sliders: ['25', '50', '12.5', '12.5']
+Visible total: 100.00%
+Submitted: {"initial_date":"2020-01-01","end_date":"2024-12-31","allocations":[{"index":"ibovespa","percentage":25},{"index":"ifix","percentage":50},{"index":"selic","percentage":12.5},{"index":"sp500","percentage":12.5}],"rebalancing":"none"} HTTP 200
+Invalid-field alert: ['Enter a percentage from 0 to 100 with at most two decimal places.']
+Enter while showing 101 submitted: {"initial_date":"2020-01-01","end_date":"2024-12-31","allocations":[{"index":"ibovespa","percentage":25},{"index":"ifix","percentage":50},{"index":"selic","percentage":12.5},{"index":"sp500","percentage":12.5}],"rebalancing":"none"} HTTP 200
+Success: Settings were received. Calculations are not available yet.
+Layout 1280: {'client': 1280, 'scroll': 1280, 'chartLeft': 32, 'formLeft': 818}
+Layout 768: {'client': 768, 'scroll': 768, 'chartLeft': 32, 'formLeft': 32}

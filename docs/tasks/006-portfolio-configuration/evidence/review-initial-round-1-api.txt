@@ -1,0 +1,7 @@
+{"index":"ifix","percentage":100} => 200 {"status":"ok"}
+{"index":"ifix","percentage":100.0000000000000001} => 200 {"status":"ok"}
+{"index":"ifix","percentage":99.9999999999999999} => 200 {"status":"ok"}
+{"index":"ifix","percentage":1e309} => 500 Internal Server Error
+{"index":"ifix","percentage":NaN} => 500 Internal Server Error
+{"index":"ifix","percentage":100.000} => 200 {"status":"ok"}
+{"index":"ifix","percentage":50,"percentage":100} => 200 {"status":"ok"}

@@ -1,0 +1,10 @@
+test_indexes_route_returns_the_supported_ordered_indexes (backend.src.api.tests.test_portfolio.PortfolioRouteTests) ... ok
+test_portfolio_route_acknowledges_one_two_and_four_indexes (backend.src.api.tests.test_portfolio.PortfolioRouteTests) ... ok
+test_rejects_invalid_allocation_contract (backend.src.api.tests.test_portfolio.PortfolioRouteTests) ... ok
+test_rejects_missing_or_invalid_dates_and_reversed_range (backend.src.api.tests.test_portfolio.PortfolioRouteTests) ... ok
+test_rejects_unknown_extra_fields_and_strategy_values (backend.src.api.tests.test_portfolio.PortfolioRouteTests) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.063s
+
+OK
