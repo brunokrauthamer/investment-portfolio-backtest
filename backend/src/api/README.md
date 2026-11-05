@@ -1,6 +1,6 @@
 # API
 
-FastAPI routes handle HTTP requests and responses. The ASGI application is exposed as `app` in `backend.src.api.main`; HTTP routes are grouped in `controller`. `service` and `model` are reserved for later use.
+FastAPI routes handle HTTP requests and responses. The ASGI application is exposed as `app` in `backend.src.api.main`; HTTP routes are grouped in `controller`. Controllers delegate behavior to `service`, while request and response schemas live in `model`. HTTP decoding adapters that are not endpoint behavior live in `transport`.
 
 From the repository root, create and prepare the backend environment once:
 
