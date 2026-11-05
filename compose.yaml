@@ -1,0 +1,22 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    volumes:
+      - type: bind
+        source: ./data/normalized/daily_returns_reais.csv
+        target: /app/data/normalized/daily_returns_reais.csv
+        read_only: true
+        bind:
+          create_host_path: false
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    restart: unless-stopped
