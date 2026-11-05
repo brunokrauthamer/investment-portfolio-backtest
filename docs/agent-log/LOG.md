@@ -4716,3 +4716,35 @@ The proposal defines `GET /api/indexes` to return the four stable IDs and names,
 
 Please approve both specification s001 and plan p001 as written, or tell me what to change. Implementation has not started while this approval gate is pending.
 ``` 
+
+### User message
+
+```text
+approved
+```
+
+### Assistant response
+
+```text
+Approval received for specification s001 and plan p001. I’ll record that decision against the approved revisions, then continue with the implementation, independent review, and browser QA required by the feature workflow.
+```
+
+### User message
+
+```text
+About the workflow, which sub-agents worked and in what order so far?
+```
+
+### Assistant response
+
+```text
+The sub-agent sequence so far was:
+
+1. **Tech lead** — interviewed/discovered the feature, prepared specification s001 and plan p001, then recorded your approval and coordinated the implementation workflow.
+2. **Developer** — implemented the backend routes and frontend form in three initial review rounds, adding regression fixes after review findings.
+3. **Independent reviewer** — reviewed each implementation snapshot. The first two rounds found blocking defects that the developer repaired. The third confirmed those fixes but found one remaining API edge case: an escaped lone Unicode surrogate returns HTTP 500 instead of 422.
+4. **Independent QA** — started after the initial review rounds. It observed the development and preview pages load with the four default 25% allocations, but browser automation stopped on a Computer Use policy error before interactive and viewport checks could be completed.
+5. **Correction tech lead** — started to prepare a revised correction plan for the remaining API defect. I interrupted that turn before it produced a plan.
+
+So the feature is currently in correction planning; no correction implementation has started.
+``` 
