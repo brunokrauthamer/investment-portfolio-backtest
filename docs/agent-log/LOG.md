@@ -5400,3 +5400,141 @@ Created local branch `codex/api-service-layer` and commit `2390382` (`Refactor A
 
 [LOG.md](C:/Users/[redacted]/.codex/worktrees/87ce/investment_portfolio_backtest/docs/agent-log/LOG.md) is the only uncommitted change. It records this interaction and final response as required by `AGENTS.md`, so it was updated after the code commit. No changes were pushed, and no tests were run.
 ```
+## 2026-11-04 — Portfolio backtest feature specification and plan
+
+### User
+
+~~~text
+[$feature-workflow](C:\Users\[redacted]\Documents\ChatGPT\investment_portfolio_backtest\\.agents\skills\feature-workflow\SKILL.md) implement the portfolio backtest feature described below. Follow the repository instructions and the simplified workflow: start with the tech lead, prepare a concrete specification and implementation plan, and wait for my approval before making code changes.\
+\
+\## Goal\
+\
+Implement the portfolio calculation behind `POST /api/portfolio`. The endpoint receives the date range, selected indexes and target percentage allocations, and the rebalancing strategy. It must return one result for each available date from `data/normalized/daily_returns_reais.csv` within the requested date range, including both boundary dates when they exist in the file.\
+\
+\## Data and architecture\
+\
+\- Read and filter `daily_returns_reais.csv` in the backend model layer using pandas.\
+\- Keep the portfolio return and rebalancing calculations in the service layer.\
+\- Keep the controller responsible for HTTP request and response handling.\
+\- The CSV contains decimal daily returns in the `ibovespa`, `ifix`, `selic`, and `sp500` columns. Preserve its available dates and chronological order.\
+\- Missing asset observations are represented by a zero return in this file. Use that value as-is.\
+\- Do not generate synthetic market data or make network requests.\
+\- NumPy is not required unless profiling demonstrates a meaningful benefit; pandas is already used for CSV handling.\
+\
+\## Calculation rules\
+\
+\- Initialize the portfolio with the target allocations from the request. The existing request validation requires allocations to total exactly 100%.\
+\- Include the daily returns on the first date in the filtered result.\
+\- For each date, calculate the portfolio's daily return using the weights in force at the start of that day's return: the sum of each asset's weight multiplied by its daily return.\
+\- After each day's returns, let the weights drift according to the assets' relative performance.\
+\- When rebalancing is enabled, restore the user's target allocations at every scheduled interval, not only at the first interval. Anchor the schedule at the first available CSV date in the requested range and use calendar intervals. If an anniversary has no CSV row, use the first available row after it. Calculate that row's return using the weights already in force; apply the target weights starting with the following row.\
+\- Treat the Selic column as a daily return and compound it like the other selected assets.\
+\- Do not introduce an initial currency amount or a starting portfolio value.\
+\
+\## API response and chart format\
+\
+Return a JSON object whose `series` property matches the ApexCharts series format. The frontend must be able to pass `response.series` directly to the chart without mapping, parsing dates, or reshaping the data.\
+\
+The complete chronological date list must be in `series[0].data`, with one point for each available CSV date in the requested range. Each point must contain:\
+\
+\- `x`: the date at 00:00:00 UTC as Unix epoch milliseconds.\
+\- `y`: the cumulative portfolio return in percentage points. ApexCharts uses this as the plotted value.\
+\- `date`: the ISO date string (`YYYY-MM-DD`).\
+\- `daily_return_pct`: the portfolio's return for that date in percentage points.\
+\- `cumulative_return_pct`: the compounded portfolio return through that date in percentage points.\
+\
+For example, `1.0` means `1.0%` and `2.01` means `2.01%. Include the first date's return in both the daily and cumulative values. Do not return an initial portfolio amount or round intermediate calculations.\
+\
+Illustrative response shape only; these numbers are not historical market data:\
+\
+```json\
+{\
+&#x20; "series": [\
+&#x20;   {\
+&#x20;     "name": "Cumulative portfolio return",\
+&#x20;     "data": [\
+&#x20;       {\
+&#x20;         "x": 1294099200000,\
+&#x20;         "y": 1.0,\
+&#x20;         "date": "2011-01-04",\
+&#x20;         "daily_return_pct": 1.0,\
+&#x20;         "cumulative_return_pct": 1.0\
+&#x20;       },\
+&#x20;       {\
+&#x20;         "x": 1294185600000,\
+&#x20;         "y": 1.0,\
+&#x20;         "date": "2011-01-05",\
+&#x20;         "daily_return_pct": 0.0,\
+&#x20;         "cumulative_return_pct": 1.0\
+&#x20;       },\
+&#x20;       {\
+&#x20;         "x": 1294272000000,\
+&#x20;         "y": 2.01,\
+&#x20;         "date": "2011-01-06",\
+&#x20;         "daily_return_pct": 1.0,\
+&#x20;         "cumulative_return_pct": 2.01\
+&#x20;       }\
+&#x20;     ]\
+&#x20;   }\
+&#x20; ]\
+}\
+```\
+\
+\## Acceptance criteria\
+\
+\- The endpoint returns the correct daily and compounded cumulative percentage returns for the requested portfolio.\
+\- Each available date in the requested range appears once, in chronological order, in the chart-ready series data.\
+\- The API's `series` value can be passed directly to ApexCharts and renders the cumulative return chart without frontend data conversion.\
+\- Each chart point includes the date and daily and cumulative return percentages; percentage values are expressed in percentage points.\
+\- Tests cover the first date's return, weight drift, repeated calendar rebalancing, missing-asset zero returns, date filtering, Selic return and the ApexCharts response shape.\
+\- The frontend pre-fills the requested default dates and handles the response contract.\
+\- CSV loading uses pandas in the model layer; calculation logic stays in the service layer.\
+\- CSV or request failures are reported clearly and do not produce a false successful acknowledgement.\
+\- The developer provides test-first evidence and runs the relevant checks required by the workflow. QA independently verifies the approved criteria, including user-facing frontend behavior in a browser when available.
+~~~
+
+### Assistant progress
+
+~~~text
+I’ll follow the requested simplified workflow: first read the feature-workflow guidance and repository context, then have the tech lead prepare a concrete specification and plan. I’ll stop for your approval before any code changes.
+~~~
+
+~~~text
+The tech lead’s initial scan found that `POST /api/portfolio` still returns a placeholder acknowledgement, while the frontend already has default dates and a placeholder chart. The lead is checking the existing request contract and turning your calculation and chart requirements into the proposed spec and plan; no implementation files have been changed.
+~~~
+
+### Assistant
+
+~~~text
+## Awaiting approval: portfolio backtest
+
+The tech lead prepared task `007-portfolio-backtest`. The task is at `awaiting_spec_approval`. No application code, tests, or runtime configuration changed, and no tests were run.
+
+- **Specification s001:** [complete spec](C:/Users/[redacted]/.codex/worktrees/a1ec/investment_portfolio_backtest/docs/tasks/007-portfolio-backtest/spec.md) — SHA-256 `290c59a4ab8d92edbe1d4a3fe946468d04f46a80328bb61d2508d8e716a1ab45`
+- **Plan p001:** [complete plan](C:/Users/[redacted]/.codex/worktrees/a1ec/investment_portfolio_backtest/docs/tasks/007-portfolio-backtest/plan.md) — SHA-256 `88b763d439120a32f0ad01810fb7fae37cb4075e687339b99ddf9a1decff2e98`
+
+### Specification summary
+
+- **AC-001 — Data and range:** pandas reads and filters the existing CSV in the backend model layer. Date boundaries are inclusive; matching dates appear once, in chronological order. A valid range with no rows returns an empty chart series; no rows are invented and the CSV is read-only.
+- **AC-002 — Returns and drift:** target percentages initialize weights. Each row's daily return uses weights at the start of that day; weights drift after the day's return. The first row contributes to daily and cumulative returns. Zero observations and Selic are treated like other daily returns; compounding uses full precision and no starting amount.
+- **AC-003 — Rebalancing:** all existing strategies are scheduled every 3, 6, 12, 24, or 36 calendar months from the first available row. Anniversaries use month-end clamping where needed. A missing anniversary uses the first later CSV row; that row earns its return using existing weights, then targets apply from the following row. Rebalancing repeats, and gaps spanning multiple anniversaries consume each one before one reset.
+- **AC-004 — Chart response:** return one ApexCharts series named “Cumulative portfolio return.” Each point contains exactly `x` (UTC midnight epoch milliseconds), `y` (cumulative percentage points), `date`, `daily_return_pct`, and `cumulative_return_pct`. `y` equals the cumulative field. The frontend passes `response.series` directly to ApexCharts.
+- **AC-005 — Frontend:** keep defaults 2011-01-04 and 2026-10-30; remove the fictional demo chart; provide loading, result, empty, and actionable error states; invalidate old results when settings change; preserve form validation and retry.
+- **AC-006 — Errors and safety:** invalid requests return 422; missing, unreadable, malformed or unusable data and undefined calculations return a clear 503 without local paths or false success. Validate CSV schema, dates, order, duplicate dates, numeric finite values, and returns of at least -100%. Preserve existing strict request validation. If a fully lost portfolio prevents weight drift, return an error. Do not read or fetch data during import/startup or modify source data.
+- **AC-007 — Boundaries and evidence:** keep CSV loading/filtering in `api/model`, calculations in `api/service`, and HTTP handling/delegation in the controller. Cover the required calculations and API shape with test-first evidence, relevant checks, independent review, and independent QA, including browser exercise when available.
+
+The spec proposes HTTP 200 with empty `data` for a valid range without observations. It also proposes 422 for invalid requests and 503 for data/calculation failures. Calendar anniversaries are derived from the original first-row anchor with month-end clamping. The existing unresolved malformed-JSON issue PC-R08 (lone surrogate causing HTTP 500) is included for regression coverage without changing task 006's status. The current checkout lacks `backend/.venv` and `frontend/node_modules`; the plan limits preparation to locally available dependencies, so required checks may be blocked if those are unavailable.
+
+### Implementation plan
+
+1. Capture the pre-development Git and worktree baseline, preserving existing changes and task 006. Start with failing behavior tests using illustrative numeric fixtures only.
+2. Add a pandas CSV adapter under `backend/src/api/model/`. Resolve the normalized CSV independent of the current directory, validate it, filter inclusively, and expose a focused path seam for tests. Avoid import/startup I/O.
+3. Implement return calculation, weight drift, compounding, and repeated calendar rebalancing in `backend/src/api/service/portfolio.py`. Keep pandas and HTTP concerns out of that calculation service; translate API-independent errors at the app boundary.
+4. Replace the acknowledgement with the specified response and error handling. Test filtering, first-row return, drift, repeats, skipped anniversary dates, month-end/leap years, gaps, zero observations, Selic, empty ranges, malformed data and strict request errors. Check fixture results independently, including 1%, 0%, 1% compounding to 2.01%.
+5. Update the frontend response contract and chart. Pass returned series through directly; replace the fictional chart with empty/loading/result/error states; retain defaults, validation, retry, accessibility and responsive behavior.
+6. Update relevant API, frontend and architecture documentation. No dependency addition is expected; use the required backend virtual environment and locally available frontend dependencies.
+
+The developer is planned to run focused backend tests and frontend tests, typecheck and build. An independent reviewer then checks the integrated snapshot; the workflow allows at most one post-review fix pass. Independent QA checks each approved criterion, including the actual browser flow when available. Any missing dependencies or browser access are reported as blocked, not passed.
+
+Please reply **“approve s001 and p001”** to authorize code changes against these exact revisions, or tell me what to revise. I will wait for your approval before editing application code.
+~~~
