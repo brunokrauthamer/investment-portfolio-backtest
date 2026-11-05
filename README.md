@@ -10,3 +10,15 @@ This project will help people explore how hypothetical investment portfolios wou
 - `docs/project-context.md`: confirmed decisions, data safety requirements and open questions.
 
 The backend provides explicit IFIX, IBOVESPA, Selic and S&P 500 acquisition commands. Set up the backend virtual environment as described in the [acquisition and recovery instructions](backend/src/internet_data_getter/README.md), then run `.\backend\.venv\Scripts\python.exe -m backend.src.internet_data_getter --getter selic` from the repository root on Windows to scrape BCB SGS 11 into `data/selic/source/selic_sgs_11.csv`. No application startup or module import initiates a network request. Financial calculations and data alignment conventions remain separate from acquisition. No synthetic market data is included.
+
+## Run with Docker
+
+Install Docker with the Compose plugin and start the Docker engine. From the repository root, run:
+
+```sh
+docker compose up --build
+```
+
+Open http://localhost:8080. The frontend proxies `/api` requests to the API container. The API has access to `data/normalized/daily_returns_reais.csv` at its existing project-relative path via a read-only bind mount; the file must exist on the host before starting. Restart the services after replacing the file. Stop both services with Ctrl+C, or run `docker compose down` from another terminal. Use `docker compose up --build -d` to run in the background.
+
+The current API acknowledges portfolio settings; it does not yet calculate a backtest or read the CSV in its existing endpoints.
