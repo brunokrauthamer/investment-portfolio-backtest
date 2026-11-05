@@ -50,6 +50,11 @@ const stylesheet = readFileSync(
 );
 const cardBackground = colorFromRule(stylesheet, ".chart-card", "background");
 const axisCaptionColor = colorFromRule(stylesheet, ".chart-axis-caption", "color");
+const allocationCardBackground = colorFromRule(stylesheet, ".portfolio-card", "background");
+const allocationGuidanceColor = colorFromRule(stylesheet, ".allocation-guidance", "color");
+const focusOutline = stylesheet.match(
+  /\.percentage-input-label input:focus-visible,[^{]+\{[^}]*outline:\s*3px solid\s*(#[0-9a-fA-F]{6})/,
+);
 
 describe("chart text contrast", () => {
   it("keeps axis labels at 4.5:1 or higher on the chart card", () => {
@@ -60,5 +65,15 @@ describe("chart text contrast", () => {
 
   it("keeps UTC/unit captions at 4.5:1 or higher on the chart card", () => {
     expect(contrastRatio(axisCaptionColor, cardBackground)).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+describe("portfolio controls contrast", () => {
+  it("keeps allocation instructions at 4.5:1 or higher on the form card", () => {
+    expect(contrastRatio(allocationGuidanceColor, allocationCardBackground)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it("keeps visible keyboard focus at 3:1 or higher on the form card", () => {
+    expect(contrastRatio(focusOutline?.[1], allocationCardBackground)).toBeGreaterThanOrEqual(3);
   });
 });
