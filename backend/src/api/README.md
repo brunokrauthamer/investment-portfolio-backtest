@@ -16,5 +16,3 @@ Start the API from the repository root on Windows:
 ```
 
 `GET http://127.0.0.1:8000/health` returns HTTP 200 with `{"status":"ok"}` while the API process is serving requests. This is a liveness response; it does not check data providers or market data. Importing and starting the API do not initiate data acquisition.
-
-`POST http://127.0.0.1:8000/api/portfolio` returns a chart-ready `series` computed from `data/normalized/daily_returns_reais.csv`. The model layer uses pandas to validate and filter the CSV; the service calculates daily portfolio returns, weight drift, compounding and calendar rebalancing; the controller handles the HTTP contract. The response's ApexCharts series can be passed to the chart as received. CSV and calculation failures return HTTP 503, and invalid request bodies return HTTP 422.

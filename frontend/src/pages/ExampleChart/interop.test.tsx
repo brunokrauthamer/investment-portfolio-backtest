@@ -2,10 +2,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { expect, it, vi } from "vitest";
 import ExampleChart from "./index";
 
-vi.mock("axios", () => ({
-  default: { get: vi.fn(), post: vi.fn() },
-}));
-
 vi.mock("react-apexcharts", () => ({
   default: {
     default: () => <div data-testid="wrapped-chart" />,
