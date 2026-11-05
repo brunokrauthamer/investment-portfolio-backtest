@@ -5264,6 +5264,29 @@ in frontend, in form, the initial date and end date should have standard values:
 2011-01-04 and 2026-10-30
 
 do it for me
+## 2026-11-04 — API controller and service separation
+
+### User message
+
+```text
+controller layer should be responsible only for connecting the api. All logic should be on service layer. for exemple: 
+
+@router.get("/indexes")
+def list_indexes() -> list[dict[str, str]]:
+    """Return the fixed set of index identifiers available to the form."""
+    return list(_INDEXES)
+
+
+_INDEXES = (
+    {"id": "ibovespa", "name": "IBOVESPA"},
+    {"id": "ifix", "name": "IFIX"},
+    {"id": "selic", "name": "Selic"},
+    {"id": "sp500", "name": "S&P 500"},
+) should be on services, there should be a service that returns _INDEXES.
+
+This is only an exemple, but you should consider refactor other parts of the api as well.
+
+Also, write this reccomendation in an AGENTS.md inside api directory, so future implementations will follow this spec
 ```
 
 ### Assistant progress
@@ -5274,6 +5297,11 @@ I’ll find the frontend date fields, update their defaults to the requested dat
 
 ```text
 The form initializes both dates as empty, and an existing validation test depends on that. I’ll set the requested defaults and update that test to clear the fields explicitly.
+I’ll trace the API’s router and service boundaries, move business and fixed-data logic into services, add the API guidance for future changes, and record this request and my final summary in the agent log.
+```
+
+```text
+The API currently keeps the index catalog, request validation rules, exact JSON decoding, and response behavior inside the portfolio controller. I’m separating transport contracts from application behavior so each endpoint becomes a thin call into `service`, while preserving the existing HTTP contract.
 ```
 
 ### Assistant
@@ -5293,6 +5321,22 @@ Set the form defaults to **2011-01-04** and **2026-10-30**. Updated the existing
 ### User-supplied skill instructions
 
 ~~~text
+Refactored the API so controllers only define routes and delegate to services. The index catalog, portfolio validation and acknowledgement, and health response logic now live in `service`; request schemas are in `model`; strict JSON decoding is isolated in `transport`. Added API layering guidance in [AGENTS.md](C:/Users/[redacted]/.codex/worktrees/87ce/investment_portfolio_backtest/backend/src/api/AGENTS.md) and updated the API README.
+
+The existing endpoint paths and valid response bodies are preserved, and invalid portfolio submissions still return HTTP 422. No tests were run.
+```
+
+## 2026-11-04 — Commit organization for API refactor
+
+### User message
+
+```text
+[$organize-git-commits]([redacted])
+```
+
+### User message
+
+```text
 <skill>
 <name>organize-git-commits</name>
 <path>[redacted]</path>
@@ -5331,3 +5375,28 @@ Branch creation hit the sandbox boundary because this worktree’s Git metadata 
 ~~~text
 Created `codex/frontend-date-defaults-20261104` from the detached HEAD. I’m staging only the two frontend files and the interaction log, then I’ll review the staged patch before committing.
 ~~~
+
+</skill>
+```
+
+### Assistant progress
+
+```text
+I’ll follow the supplied commit-organization workflow: inspect the current Git state and all changes first, then make focused local commits without pushing.
+```
+
+```text
+The worktree is detached, and its Git metadata is outside the writable workspace. Local branch creation was denied by the sandbox, so I’m requesting the required Git write access; no remote operations are involved.
+```
+
+```text
+The API refactor is committed as `2390382` on `codex/api-service-layer`. I’m adding this interaction and the final summary to the required agent log; that log update will remain uncommitted because it must contain the final response.
+```
+
+### Assistant
+
+```text
+Created local branch `codex/api-service-layer` and commit `2390382` (`Refactor API into service layer`). The commit groups the API controller/service refactor with the API-specific guidance and README update.
+
+[LOG.md](C:/Users/[redacted]/.codex/worktrees/87ce/investment_portfolio_backtest/docs/agent-log/LOG.md) is the only uncommitted change. It records this interaction and final response as required by `AGENTS.md`, so it was updated after the code commit. No changes were pushed, and no tests were run.
+```
