@@ -5253,3 +5253,46 @@ Created and pushed branch `codex/docker-compose-app` with commit `6943a25` (`Add
 
 The deletion of `backend/src/domain/README.md` remains uncommitted as unrelated work. The conversation log records this interaction and also remains uncommitted.
 ```
+
+## 2026-11-04 — API controller and service separation
+
+### User message
+
+```text
+controller layer should be responsible only for connecting the api. All logic should be on service layer. for exemple: 
+
+@router.get("/indexes")
+def list_indexes() -> list[dict[str, str]]:
+    """Return the fixed set of index identifiers available to the form."""
+    return list(_INDEXES)
+
+
+_INDEXES = (
+    {"id": "ibovespa", "name": "IBOVESPA"},
+    {"id": "ifix", "name": "IFIX"},
+    {"id": "selic", "name": "Selic"},
+    {"id": "sp500", "name": "S&P 500"},
+) should be on services, there should be a service that returns _INDEXES.
+
+This is only an exemple, but you should consider refactor other parts of the api as well.
+
+Also, write this reccomendation in an AGENTS.md inside api directory, so future implementations will follow this spec
+```
+
+### Assistant progress
+
+```text
+I’ll trace the API’s router and service boundaries, move business and fixed-data logic into services, add the API guidance for future changes, and record this request and my final summary in the agent log.
+```
+
+```text
+The API currently keeps the index catalog, request validation rules, exact JSON decoding, and response behavior inside the portfolio controller. I’m separating transport contracts from application behavior so each endpoint becomes a thin call into `service`, while preserving the existing HTTP contract.
+```
+
+### Assistant
+
+```text
+Refactored the API so controllers only define routes and delegate to services. The index catalog, portfolio validation and acknowledgement, and health response logic now live in `service`; request schemas are in `model`; strict JSON decoding is isolated in `transport`. Added API layering guidance in [AGENTS.md](C:/Users/[redacted]/.codex/worktrees/87ce/investment_portfolio_backtest/backend/src/api/AGENTS.md) and updated the API README.
+
+The existing endpoint paths and valid response bodies are preserved, and invalid portfolio submissions still return HTTP 422. No tests were run.
+```
