@@ -87,7 +87,7 @@ export function createChartOptions(
     markers: {
       colors: ["#ffffff"],
       hover: { size: 7 },
-      size: 5,
+      size: 0,
       strokeColors: colors,
       strokeWidth: 3,
     },
