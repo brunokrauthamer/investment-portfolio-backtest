@@ -5471,3 +5471,24 @@ The inspected endpoint does not meet the required prerequisite: it returns only 
 #### Assistant
 
 The API prerequisite is missing, so I stopped before implementation. `POST /api/portfolio` currently validates the configuration and returns only `{"status":"ok"}`. It does not provide the required `series` array or cumulative-return data points (`x`, `y`, `date`, `daily_return_pct`, `cumulative_return_pct`). The frontend currently accepts that acknowledgement; its chart uses hard-coded example series. The backend must first return one real series with those fields per successful request. No code changes were made, and I did not fabricate results.
+### Interaction — 2026-11-04 (America/Sao_Paulo)
+
+#### User
+
+I know that, but you can considere that in future api will deliver this shape I told you
+
+#### Assistant progress
+
+Understood. I’ll treat the response shape you specified as the agreed future API contract and keep this work frontend-only. I’ll have the workflow lead prepare the spec and plan, then wait for your approval before implementation.
+
+#### Assistant response
+
+I’ll proceed on the assumption that the backend will later return the response shape you specified; this frontend work will not change backend behavior.
+
+**Spec:** Keep the one-portfolio-per-submit flow. Accept a successful response only when it contains exactly one series with valid points; treat an empty `data` array as a valid result. For each success, append a UI-only entry with a snapshot of the submitted configuration, a monotonically assigned “Portfolio N” label, and a stable color. Build the chart from retained entries using each point’s `x` and `y` directly. Show snapshot-based cards with accessible remove buttons; removing a card also removes its series. Reset the form only after a valid success. On request or response failure, preserve the form and prior results. Remove all production example chart data and example-only UI.
+
+**Plan:** Update the Axios response types and runtime validation; update the page state, submission handling, chart options, cards, and styling; then add or update focused frontend tests and run the frontend checks and browser QA required by the invoked workflow. The current acknowledgement response will count as invalid, and backend files will remain untouched.
+
+Do you approve this spec and plan so I can begin implementation?
+
+Approval is pending; no implementation changes have been made.
