@@ -59,7 +59,7 @@ const focusOutline = stylesheet.match(
 
 describe("chart text contrast", () => {
   it("keeps axis labels at 4.5:1 or higher on the chart card", () => {
-    expect(contrastRatio(exampleChartOptions.chart?.foreColor, cardBackground)).toBeGreaterThanOrEqual(
+    expect(contrastRatio(portfolioChartOptions.chart?.foreColor, cardBackground)).toBeGreaterThanOrEqual(
       4.5,
     );
   });
