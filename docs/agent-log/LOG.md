@@ -4748,3 +4748,15 @@ The sub-agent sequence so far was:
 
 So the feature is currently in correction planning; no correction implementation has started.
 ``` 
+
+### User message
+
+```text
+what is the remaining defect?
+```
+
+### Assistant response
+
+```text
+The remaining defect is in API error handling: if the submitted JSON contains an escaped lone Unicode surrogate (for example, in a string field), the portfolio endpoint returns HTTP 500. The approved contract requires invalid requests to return HTTP 422. The reviewer reproduced this on the latest reviewed snapshot; it has not been fixed yet.
+```
