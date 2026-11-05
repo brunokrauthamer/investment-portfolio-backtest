@@ -1,16 +1,14 @@
 import type { ApexOptions } from "apexcharts";
 
-export const examplePercentageData = [
-  { date: "2024-01-01", value: 0 },
-  { date: "2024-02-01", value: 2.5 },
-  { date: "2024-03-01", value: -1.2 },
-  { date: "2024-04-01", value: 3.8 },
-  { date: "2024-05-01", value: 2 },
-  { date: "2024-06-01", value: 5.1 },
-] as const;
+export interface TooltipPoint {
+  date: string;
+  daily_return_pct: number;
+}
+
+export type TooltipPointLookup = (seriesIndex: number, dataPointIndex: number) => TooltipPoint | undefined;
 
 export function formatPercentage(value: number): string {
-  return `${value.toFixed(1)}%`;
+  return `${value}%`;
 }
 
 export function formatUtcDate(value: string | number): string {
@@ -30,81 +28,120 @@ export function formatUtcMonth(timestamp: number): string {
   });
 }
 
-export const exampleSeriesData = examplePercentageData.map(({ date, value }) => ({
-  x: Date.parse(`${date}T00:00:00.000Z`),
-  y: value,
-}));
+function hslToHex(hue: number, saturation: number, lightness: number): string {
+  const chroma = (1 - Math.abs(2 * lightness - 1)) * saturation;
+  const segment = hue / 60;
+  const secondary = chroma * (1 - Math.abs((segment % 2) - 1));
+  const [red, green, blue] = segment < 1
+    ? [chroma, secondary, 0]
+    : segment < 2
+      ? [secondary, chroma, 0]
+      : segment < 3
+        ? [0, chroma, secondary]
+        : segment < 4
+          ? [0, secondary, chroma]
+          : segment < 5
+            ? [secondary, 0, chroma]
+            : [chroma, 0, secondary];
+  const offset = lightness - chroma / 2;
+  return `#${[red, green, blue]
+    .map((channel) => Math.round((channel + offset) * 255).toString(16).padStart(2, "0"))
+    .join("")}`;
+}
 
-export const exampleSeries = [
-  { name: "Example percentage", data: exampleSeriesData },
-] satisfies NonNullable<ApexOptions["series"]>;
+export function portfolioColor(index: number, previouslyAssigned: readonly string[] = []): string {
+  const used = new Set(previouslyAssigned);
+  let attempt = 0;
+  while (true) {
+    const candidateIndex = index + attempt;
+    const hue = ((candidateIndex * 137.50776405) % 360 + 360) % 360;
+    const saturation = 0.62 + (candidateIndex % 4) * 0.08;
+    const lightness = 0.3 + (Math.floor(candidateIndex / 4) % 3) * 0.035;
+    const color = hslToHex(hue, saturation, lightness);
+    if (!used.has(color)) return color;
+    attempt += 1;
+  }
+}
 
-export const exampleChartOptions: ApexOptions = {
-  chart: {
-    type: "line",
-    animations: { enabled: false },
-    fontFamily: "inherit",
-    foreColor: "#526176",
-    parentHeightOffset: 0,
-    toolbar: { show: false },
-    zoom: { enabled: false },
-  },
-  colors: ["#16816f"],
-  dataLabels: { enabled: false },
-  grid: {
-    borderColor: "#e9edf3",
-    padding: { bottom: 2, left: 12, right: 14, top: 10 },
-    strokeDashArray: 4,
-  },
-  markers: {
-    colors: ["#ffffff"],
-    hover: { size: 7 },
-    size: 5,
-    strokeColors: "#16816f",
-    strokeWidth: 3,
-  },
-  responsive: [{
-    breakpoint: 480,
-    options: {
-      xaxis: {
-        labels: {
-          formatter: (value: string) => new Date(Number(value)).toLocaleDateString("en-US", {
-            month: "short",
-            timeZone: "UTC",
-          }),
+export function createChartOptions(
+  colors: string[],
+  findTooltipPoint: TooltipPointLookup,
+): ApexOptions {
+  return {
+    chart: {
+      type: "line",
+      animations: { enabled: false },
+      fontFamily: "inherit",
+      foreColor: "#526176",
+      parentHeightOffset: 0,
+      toolbar: { show: false },
+      zoom: { enabled: false },
+    },
+    colors,
+    dataLabels: { enabled: false },
+    grid: {
+      borderColor: "#e9edf3",
+      padding: { bottom: 2, left: 12, right: 14, top: 10 },
+      strokeDashArray: 4,
+    },
+    markers: {
+      colors: ["#ffffff"],
+      hover: { size: 7 },
+      size: 5,
+      strokeColors: colors,
+      strokeWidth: 3,
+    },
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        xaxis: {
+          labels: {
+            formatter: (value: string) => new Date(Number(value)).toLocaleDateString("en-US", {
+              month: "short",
+              timeZone: "UTC",
+            }),
+          },
+        },
+      },
+    }],
+    stroke: { curve: "smooth", width: 3 },
+    tooltip: {
+      intersect: true,
+      shared: false,
+      x: {
+        formatter: (value, options) => {
+          const point = findTooltipPoint(options?.seriesIndex ?? -1, options?.dataPointIndex ?? -1);
+          return point?.date ?? formatUtcDate(value);
+        },
+      },
+      y: {
+        formatter: (value, options) => {
+          const point = findTooltipPoint(options?.seriesIndex ?? -1, options?.dataPointIndex ?? -1);
+          const cumulative = formatPercentage(value);
+          return point
+            ? `${cumulative} (daily return: ${formatPercentage(point.daily_return_pct)})`
+            : cumulative;
         },
       },
     },
-  }],
-  stroke: { curve: "smooth", width: 3 },
-  tooltip: {
-    intersect: true,
-    shared: false,
-    x: {
-      formatter: (value, opts) => {
-        const point = examplePercentageData[opts?.dataPointIndex ?? -1];
-        return point ? formatUtcDate(point.date) : String(value);
+    xaxis: {
+      type: "datetime",
+      labels: {
+        formatter: (value) => formatUtcMonth(Number(value)),
+        hideOverlappingLabels: true,
+        rotate: 0,
+        showDuplicates: false,
+        style: { fontSize: "11px" },
       },
+      tickAmount: 5,
+      tooltip: { enabled: false },
     },
-    y: { formatter: formatPercentage },
-  },
-  xaxis: {
-    type: "datetime",
-    labels: {
-      formatter: (value) => formatUtcMonth(Number(value)),
-      hideOverlappingLabels: true,
-      rotate: 0,
-      showDuplicates: false,
-      style: { fontSize: "11px" },
+    yaxis: {
+      labels: {
+        formatter: formatPercentage,
+        style: { fontSize: "11px" },
+      },
+      tickAmount: 4,
     },
-    tickAmount: 5,
-    tooltip: { enabled: false },
-  },
-  yaxis: {
-    labels: {
-      formatter: formatPercentage,
-      style: { fontSize: "11px" },
-    },
-    tickAmount: 4,
-  },
-};
+  };
+}
