@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "state_version": 10,
+  "workflow": "simple-feature-workflow",
+  "task_id": "007",
+  "task_slug": "portfolio-backtest",
+  "stage": "qa_paused",
+  "spec_revision": {
+    "id": "s001",
+    "sha256": "290c59a4ab8d92edbe1d4a3fe946468d04f46a80328bb61d2508d8e716a1ab45"
+  },
+  "plan_revision": {
+    "id": "p001",
+    "sha256": "88b763d439120a32f0ad01810fb7fae37cb4075e687339b99ddf9a1decff2e98"
+  },
+  "baseline_revision": {
+    "head": "7a8ff805db78041bad3ca739ae95ba8a9ec5a8e0",
+    "code_revision": "7a8ff805db78041bad3ca739ae95ba8a9ec5a8e0:sha256:3201b4980f1cc73bc70abf85303b7705941bf2bce7098e5a93a975b51df1a8d8",
+    "snapshot": "evidence/baseline-snapshot.json",
+    "worktree_status": "Modified docs/agent-log/LOG.md; untracked docs/tasks/007-portfolio-backtest/. No other changes.",
+    "discovery_head": "245874d2f063d34b3e1b931d7feeb0eadc4a735f",
+    "head_change_since_discovery": "Commit 7a8ff805 updates docs/agent-log/LOG.md only."
+  },
+  "code_revision": "7a8ff805db78041bad3ca739ae95ba8a9ec5a8e0:sha256:dd920009f3d97b79e637827762023db852039fd9ec1b543f25cec81560ec3a3e",
+  "state_writer": "simple-tech-lead",
+  "active_assignments": [
+    {
+      "id": "implementation-1",
+      "role": "simple-developer",
+      "model": "gpt-6-luna",
+      "reasoning_effort": "max",
+      "status": "completed",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "input_revisions": {
+        "spec": "s001",
+        "plan": "p001",
+        "baseline": "evidence/baseline-snapshot.json"
+      },
+      "slice": "Full approved portfolio backtest feature with tests and affected documentation",
+      "writer_ownership": "Sole writer of verification.md and implementation fields in state.json until handoff; do not modify other task records or the interaction log.",
+      "deliverables": [
+        "integrated changes",
+        "test-first red/green evidence",
+        "relevant check results",
+        "snapshot",
+        "limitations and handoff"
+      ]
+    },
+    {
+      "id": "review-1",
+      "role": "simple-reviewer",
+      "model": "gpt-6.1-terra",
+      "reasoning_effort": "high",
+      "status": "completed",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "input_revisions": {
+        "spec": "s001",
+        "plan": "p001",
+        "code": "7a8ff805db78041bad3ca739ae95ba8a9ec5a8e0:sha256:d492e6c312246aabc65494200edccee888bab631b8ec0ac198af42d24cdf2973"
+      },
+      "writer_ownership": "Sole writer of review.md and review fields in state.json until handoff; preserve other fields.",
+      "deliverables": [
+        "independent integrated review",
+        "actionable findings and evidence",
+        "review snapshot and handoff"
+      ]
+    },
+    {
+      "id": "post-review-fix-1",
+      "role": "simple-developer",
+      "model": "gpt-6-luna",
+      "reasoning_effort": "max",
+      "status": "completed",
+      "criterion_ids": [
+        "AC-001",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "input_revisions": {
+        "spec": "s001",
+        "plan": "p001",
+        "code": "7a8ff805db78041bad3ca739ae95ba8a9ec5a8e0:sha256:d492e6c312246aabc65494200edccee888bab631b8ec0ac198af42d24cdf2973",
+        "review": "review.md PB-R01 through PB-R04"
+      },
+      "slice": "Single post-review fix pass addressing actionable findings PB-R01\u2013PB-R03 where test-first evidence and dependencies permit; preserve PB-R04 evidence gap",
+      "writer_ownership": "Sole writer of verification.md and implementation fields in state.json until handoff; preserve other fields.",
+      "deliverables": [
+        "regression red and green evidence",
+        "fix outcomes and blockers",
+        "updated implementation snapshot",
+        "writer handoff"
+      ]
+    },
+    {
+      "id": "qa-1",
+      "role": "simple-qa",
+      "model": "gpt-6-luna",
+      "reasoning_effort": "max",
+      "status": "interrupted_at_user_request",
+      "criterion_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-003",
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-007"
+      ],
+      "input_revisions": {
+        "spec": "s001",
+        "plan": "p001",
+        "code": "7a8ff805db78041bad3ca739ae95ba8a9ec5a8e0:sha256:dd920009f3d97b79e637827762023db852039fd9ec1b543f25cec81560ec3a3e",
+        "review": "review.md PB-R01\u2013PB-R04",
+        "fix": "verification.md post-review fix pass 1"
+      },
+      "writer_ownership": "Sole writer of verification.md and QA/acceptance fields in state.json until handoff; preserve other fields.",
+      "deliverables": [
+        "independent criterion assessment",
+        "browser actions or explicit blockers",
+        "remaining findings and fix results",
+        "evidence and handoff"
+      ]
+    }
+  ],
+  "implementation": {
+    "status": "ready_for_qa",
+    "evidence": [
+      "verification.md: initial implementation and post-review fix-pass evidence",
+      "evidence/implementation-snapshot.json",
+      "evidence/post-review-fix-snapshot.json",
+      "PB-R02 regression red then green: selected-row pandas filtering",
+      "PB-R03 regression red then green: valid dates, UTC timestamps and ordering",
+      "15 backend model/service tests passed in pandas 3.0.1 partial environment",
+      "frontend tests 30/30, typecheck and build passed",
+      "PB-R01 HTTP regression blocked: FastAPI/httpx absent; PB-R04 historical test-first gap preserved"
+    ],
+    "snapshot": "7a8ff805db78041bad3ca739ae95ba8a9ec5a8e0:sha256:dd920009f3d97b79e637827762023db852039fd9ec1b543f25cec81560ec3a3e"
+  },
+  "review": {
+    "status": "changes_required",
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "290c59a4ab8d92edbe1d4a3fe946468d04f46a80328bb61d2508d8e716a1ab45"
+    },
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "88b763d439120a32f0ad01810fb7fae37cb4075e687339b99ddf9a1decff2e98"
+    },
+    "code_revision": "7a8ff805db78041bad3ca739ae95ba8a9ec5a8e0:sha256:d492e6c312246aabc65494200edccee888bab631b8ec0ac198af42d24cdf2973",
+    "evidence": [
+      "review.md: independent review 2026-11-05"
+    ],
+    "findings": [
+      {
+        "id": "PB-R01",
+        "severity": "P2",
+        "status": "open",
+        "criterion_ids": [
+          "AC-006",
+          "AC-007"
+        ]
+      },
+      {
+        "id": "PB-R02",
+        "severity": "P2",
+        "status": "open",
+        "criterion_ids": [
+          "AC-001",
+          "AC-006"
+        ]
+      },
+      {
+        "id": "PB-R03",
+        "severity": "P2",
+        "status": "open",
+        "criterion_ids": [
+          "AC-004",
+          "AC-005"
+        ]
+      },
+      {
+        "id": "PB-R04",
+        "severity": "P2",
+        "status": "open",
+        "criterion_ids": [
+          "AC-007"
+        ]
+      }
+    ]
+  },
+  "qa": {
+    "status": "paused_incomplete",
+    "browser": "not_verified",
+    "evidence": [
+      "verification.md: QA paused at user request 2026-11-05"
+    ],
+    "pause_reason": "User requested testing stop until the frontend is ready; QA was interrupted before browser verification."
+  },
+  "acceptance_results": [],
+  "open_findings": [
+    {
+      "id": "PB-R01",
+      "status": "blocked",
+      "severity": "P2",
+      "criterion_ids": [
+        "AC-006",
+        "AC-007"
+      ],
+      "evidence": "review.md: independent review 2026-11-05"
+    },
+    {
+      "id": "PB-R02",
+      "status": "fix_applied_pending_qa",
+      "severity": "P2",
+      "criterion_ids": [
+        "AC-001",
+        "AC-006"
+      ],
+      "evidence": "review.md: independent review 2026-11-05",
+      "resolution_evidence": "verification.md: post-review fix pass 1"
+    },
+    {
+      "id": "PB-R03",
+      "status": "fix_applied_pending_qa",
+      "severity": "P2",
+      "criterion_ids": [
+        "AC-004",
+        "AC-005"
+      ],
+      "evidence": "review.md: independent review 2026-11-05",
+      "resolution_evidence": "verification.md: post-review fix pass 1"
+    },
+    {
+      "id": "PB-R04",
+      "status": "open",
+      "severity": "P2",
+      "criterion_ids": [
+        "AC-007"
+      ],
+      "evidence": "review.md: independent review 2026-11-05"
+    }
+  ],
+  "post_review_fix_passes": 1,
+  "approval": {
+    "decision": "approved",
+    "user_message": "approve s001 and p001",
+    "recorded_at": "2026-11-04 23:29 America/Sao_Paulo",
+    "spec_revision": {
+      "id": "s001",
+      "sha256": "290c59a4ab8d92edbe1d4a3fe946468d04f46a80328bb61d2508d8e716a1ab45"
+    },
+    "plan_revision": {
+      "id": "p001",
+      "sha256": "88b763d439120a32f0ad01810fb7fae37cb4075e687339b99ddf9a1decff2e98"
+    },
+    "reference": "User approval relayed verbatim by main chat."
+  },
+  "next_action": "Wait for the user readiness signal, then identify the current snapshot and resume independent QA; preserve PB-R01/PB-R04 and backend dependency limitations."
+}

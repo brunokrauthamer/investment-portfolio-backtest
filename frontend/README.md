@@ -1,6 +1,6 @@
 # Frontend
 
-The React and TypeScript single-page app uses Vite, ApexCharts and Axios. It shows an illustrative date-based percentage chart beside a portfolio setup form. The chart's fixed sample values are for display only; they are not historical market data, actual investment performance, or backtest results.
+The React and TypeScript single-page app uses Vite, ApexCharts and Axios. It shows the cumulative return chart beside a portfolio setup form. The chart appears after a successful request to `POST /api/portfolio`; before that, the page shows an empty state rather than sample performance values.
 
 The chart dependencies are pinned to `apexcharts` 4.7.0 and `react-apexcharts` 1.7.0. ApexCharts changed to a dual-license model in later releases, so review the applicable license before changing either pin; a semver range could otherwise select a version with different terms.
 
@@ -34,9 +34,9 @@ The preview command serves the production build at `http://127.0.0.1:4173`.
 ## Source layout
 
 - `src/main.tsx` mounts the single page.
-- `src/pages/ExampleChart/` contains the page, its example data, chart options, allocation logic, tests and local styles.
-- `src/services/portfolio.ts` owns Axios requests and response validation for the portfolio setup API.
+- `src/pages/ExampleChart/` contains the page, chart options, allocation logic, tests and local styles.
+- `src/services/portfolio.ts` owns Axios requests and response validation for the portfolio API.
 
-If the API is unavailable, the chart still renders and the form displays a retry action when its index list cannot be loaded. A successful form submission only means the server accepted the settings; no portfolio is stored or calculated yet.
+The form uses default dates of 2011-01-04 and 2026-10-30. A successful response's `series` is passed directly to ApexCharts without reshaping. The chart tooltip includes each point's date, daily return and cumulative return. Empty ranges and request failures have separate messages, and changing the form clears the previous result. The development and preview servers use the same-origin API proxy described above.
 
 See [frontend conventions](AGENTS.md) and [project context](../docs/project-context.md).

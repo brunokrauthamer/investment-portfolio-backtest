@@ -1,9 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import ChartImport from "react-apexcharts";
 import {
-  exampleChartOptions,
-  examplePercentageData,
-  exampleSeries,
+  portfolioChartOptions,
   formatPercentage as formatChartPercentage,
 } from "./chart";
 import {
@@ -17,6 +15,7 @@ import {
   fetchIndexes,
   submitPortfolio,
   type IndexOption,
+  type PortfolioResponse,
   type RebalancingStrategy,
 } from "../../services/portfolio";
 import "./index.css";
@@ -67,7 +66,7 @@ export function ExampleChart() {
   const [shareError, setShareError] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [acknowledgement, setAcknowledgement] = useState(false);
+  const [result, setResult] = useState<PortfolioResponse | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -96,7 +95,7 @@ export function ExampleChart() {
   }, [loadVersion]);
 
   const resetResponseState = () => {
-    setAcknowledgement(false);
+    setResult(null);
     setFormError(null);
   };
 
@@ -158,7 +157,7 @@ export function ExampleChart() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setAcknowledgement(false);
+    setResult(null);
     setFormError(null);
     if (activeDraft) {
       const line = allocations.find(({ index }) => index.id === activeDraft.indexId);
@@ -182,7 +181,7 @@ export function ExampleChart() {
 
     setIsSubmitting(true);
     try {
-      await submitPortfolio({
+      const response = await submitPortfolio({
         initial_date: initialDate,
         end_date: endDate,
         allocations: allocations.map(({ index, hundredths }) => ({
@@ -191,9 +190,9 @@ export function ExampleChart() {
         })),
         rebalancing,
       });
-      setAcknowledgement(true);
+      setResult(response);
     } catch {
-      setFormError("Could not submit the settings. Check your connection and try again.");
+      setFormError("Could not calculate this portfolio. Check data availability and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -205,73 +204,56 @@ export function ExampleChart() {
         <section aria-labelledby="page-title" className="chart-card">
           <header className="chart-header">
             <div className="chart-heading-group">
-              <span className="chart-eyebrow">Visual demo</span>
-              <h1 id="page-title">Percentage over time</h1>
+              <span className="chart-eyebrow">Portfolio results</span>
+              <h1 id="page-title">Cumulative portfolio return</h1>
               <p className="chart-description" id="chart-description">
-                A simple line chart plotted against UTC calendar dates.
+                Daily returns compound across the available dates in your selected range.
               </p>
             </div>
-            <div aria-label="Date range: January through June 2024" className="date-range">
-              <span className="date-range-label">Example period</span>
-              <span className="date-range-value">Jan – Jun 2024</span>
-            </div>
+            {result && result.series[0].data.length > 0 && (
+              <div aria-label={`Requested date range: ${initialDate} to ${endDate}`} className="date-range">
+                <span className="date-range-label">Requested period</span>
+                <span className="date-range-value">{initialDate} – {endDate}</span>
+              </div>
+            )}
           </header>
 
-          <figure
-            aria-describedby="chart-description"
-            aria-label="Illustrative percentage line chart. Open the example data table for exact dates and values."
-            className="chart-figure"
-            role="img"
-          >
-            <div className="chart-container">
-              <ReactApexChart
-                height={320}
-                options={exampleChartOptions}
-                series={exampleSeries}
-                type="line"
-                width="100%"
-              />
-            </div>
-            <figcaption className="chart-axis-caption">
-              <span>Dates shown in UTC</span>
-              <span>Percentage</span>
-            </figcaption>
-          </figure>
-
-          <footer className="chart-footer">
-            <p className="data-notice">
-              <span aria-hidden="true" className="notice-dot" />
-              <span>
-                <strong>Illustrative example data.</strong> These values are for
-                display only and are not actual market performance.
-              </span>
-            </p>
-
-            <details className="example-data">
-              <summary>Read the example data</summary>
-              <div className="example-data-table-wrap">
-                <table>
-                  <caption className="visually-hidden">
-                    Illustrative example percentage values by UTC date
-                  </caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">Date (UTC)</th>
-                      <th scope="col">Example percentage</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {examplePercentageData.map(({ date, value }) => (
-                      <tr key={date}>
-                        <td>{date}</td>
-                        <td>{formatChartPercentage(value)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </details>
-          </footer>
+          <div aria-live="polite" className="chart-result" aria-busy={isSubmitting}>
+            {isSubmitting && <p className="chart-empty">Calculating portfolio return…</p>}
+            {!isSubmitting && result && result.series[0].data.length === 0 && (
+              <p className="chart-empty">No available data dates fall within this range.</p>
+            )}
+            {!isSubmitting && !result && (
+              <p className="chart-empty">Submit a portfolio to calculate its historical return.</p>
+            )}
+            {!isSubmitting && result && result.series[0].data.length > 0 && (
+              <>
+                <figure
+                  aria-describedby="chart-description"
+                  aria-label="Cumulative portfolio return by date. Hover a point for its daily and cumulative returns."
+                  className="chart-figure"
+                  role="img"
+                >
+                  <div className="chart-container">
+                    <ReactApexChart
+                      height={320}
+                      options={portfolioChartOptions}
+                      series={result.series}
+                      type="line"
+                      width="100%"
+                    />
+                  </div>
+                  <figcaption className="chart-axis-caption">
+                    <span>Dates shown in UTC</span>
+                    <span>Cumulative return (%)</span>
+                  </figcaption>
+                </figure>
+                <p className="result-summary">
+                  {result.series[0].data.at(-1)?.date} · Daily return: {formatChartPercentage(result.series[0].data.at(-1)?.daily_return_pct ?? 0)} · Cumulative return: {formatChartPercentage(result.series[0].data.at(-1)?.cumulative_return_pct ?? 0)}
+                </p>
+              </>
+            )}
+          </div>
         </section>
 
         <section aria-labelledby="portfolio-heading" className="portfolio-card">
@@ -429,13 +411,8 @@ export function ExampleChart() {
               </label>
 
               {formError && <p className="form-message form-message-error" role="alert">{formError}</p>}
-              {acknowledgement && (
-                <p aria-live="polite" className="form-message form-message-success">
-                  Settings were received. Calculations are not available yet.
-                </p>
-              )}
               <button className="submit-button" disabled={isSubmitting} type="submit">
-                {isSubmitting ? "Sending settings…" : "Submit portfolio"}
+                {isSubmitting ? "Calculating portfolio…" : "Calculate portfolio return"}
               </button>
             </form>
           )}
@@ -443,7 +420,7 @@ export function ExampleChart() {
       </div>
 
       <footer className="page-footer">
-        Sample values are fictional and carry no financial interpretation.
+        Returns are calculated from the available daily data dates in the selected range.
       </footer>
     </main>
   );

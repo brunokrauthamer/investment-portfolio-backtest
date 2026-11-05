@@ -36,9 +36,14 @@ const availableIndexes = [
   { id: "sp500", name: "S&P 500" },
 ];
 
+const portfolioResult = { series: [{
+  name: "Cumulative portfolio return",
+  data: [{ x: 1704153600000, y: 1, date: "2024-01-02", daily_return_pct: 1, cumulative_return_pct: 1 }],
+}] };
+
 beforeEach(() => {
   vi.mocked(axios.get).mockReset().mockResolvedValue({ data: availableIndexes });
-  vi.mocked(axios.post).mockReset().mockResolvedValue({ data: { status: "ok" } });
+  vi.mocked(axios.post).mockReset().mockResolvedValue({ data: portfolioResult });
 });
 
 afterEach(() => cleanup());
@@ -100,7 +105,7 @@ describe("ExampleChart", () => {
     fireEvent.change(screen.getByLabelText("Initial date"), { target: { value: "2020-01-01" } });
     fireEvent.change(screen.getByLabelText("End date"), { target: { value: "2024-12-31" } });
     fireEvent.change(screen.getByLabelText("Rebalancing strategy"), { target: { value: "6_months" } });
-    fireEvent.click(screen.getByRole("button", { name: "Submit portfolio" }));
+    fireEvent.click(screen.getByRole("button", { name: "Calculate portfolio return" }));
 
     await waitFor(() => expect(axios.post).toHaveBeenCalledWith("/api/portfolio", {
       initial_date: "2020-01-01",
@@ -113,8 +118,7 @@ describe("ExampleChart", () => {
       ],
       rebalancing: "6_months",
     }));
-    expect(await screen.findByText(/settings were received/i)).toBeInTheDocument();
-    expect(screen.getByText(/calculations are not available yet/i)).toBeInTheDocument();
+    expect(await screen.findByTestId("apex-chart")).toBeInTheDocument();
   });
 
   it("shows committed shares in all fields after another share redistributes them", async () => {
@@ -146,7 +150,7 @@ describe("ExampleChart", () => {
 
     expect(axios.post).not.toHaveBeenCalled();
     expect(screen.getByText(/at most two decimal places/i)).toHaveAttribute("role", "alert");
-    expect(screen.queryByText(/settings were received/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId("apex-chart")).not.toBeInTheDocument();
 
     fireEvent.blur(screen.getByLabelText("IFIX allocation percentage"));
     expect(Number((screen.getByLabelText("IFIX allocation percentage") as HTMLInputElement).value)).toBe(25);
@@ -163,7 +167,7 @@ describe("ExampleChart", () => {
     fireEvent.change(screen.getByLabelText("Initial date"), { target: { value: "2024-01-01" } });
     fireEvent.change(screen.getByLabelText("End date"), { target: { value: "2024-01-01" } });
     expect((document.querySelector("form") as HTMLFormElement).checkValidity()).toBe(true);
-    fireEvent.click(screen.getByRole("button", { name: "Submit portfolio" }));
+    fireEvent.click(screen.getByRole("button", { name: "Calculate portfolio return" }));
 
     await waitFor(() => expect(axios.post).toHaveBeenCalledWith("/api/portfolio", {
       initial_date: "2024-01-01",
@@ -180,11 +184,11 @@ describe("ExampleChart", () => {
     await screen.findByRole("heading", { name: /configure your portfolio/i });
     fireEvent.change(screen.getByLabelText("Initial date"), { target: { value: "2020-01-01" } });
     fireEvent.change(screen.getByLabelText("End date"), { target: { value: "2024-12-31" } });
-    fireEvent.click(screen.getByRole("button", { name: "Submit portfolio" }));
+    fireEvent.click(screen.getByRole("button", { name: "Calculate portfolio return" }));
 
-    expect(await screen.findByRole("alert")).toHaveTextContent(/could not submit/i);
-    fireEvent.click(screen.getByRole("button", { name: "Submit portfolio" }));
-    expect(await screen.findByText(/settings were received/i)).toBeInTheDocument();
+    expect(await screen.findByRole("alert")).toHaveTextContent(/could not calculate/i);
+    fireEvent.click(screen.getByRole("button", { name: "Calculate portfolio return" }));
+    expect(await screen.findByTestId("apex-chart")).toBeInTheDocument();
     expect(axios.post).toHaveBeenCalledTimes(2);
   });
 
@@ -204,7 +208,7 @@ describe("ExampleChart", () => {
     await screen.findByRole("heading", { name: /configure your portfolio/i });
     fireEvent.change(screen.getByLabelText("Initial date"), { target: { value: "2024-12-31" } });
     fireEvent.change(screen.getByLabelText("End date"), { target: { value: "2020-01-01" } });
-    fireEvent.click(screen.getByRole("button", { name: "Submit portfolio" }));
+    fireEvent.click(screen.getByRole("button", { name: "Calculate portfolio return" }));
 
     expect(await screen.findByRole("alert")).toHaveTextContent(/initial date must be on or before/i);
     expect(axios.post).not.toHaveBeenCalled();
@@ -218,7 +222,7 @@ describe("ExampleChart", () => {
     fireEvent.change(screen.getByLabelText("End date"), { target: { value: "" } });
     expect((screen.getByLabelText("Initial date") as HTMLInputElement).value).toBe("");
     expect((screen.getByLabelText("End date") as HTMLInputElement).value).toBe("");
-    fireEvent.click(screen.getByRole("button", { name: "Submit portfolio" }));
+    fireEvent.click(screen.getByRole("button", { name: "Calculate portfolio return" }));
 
     expect(screen.getByRole("alert")).toHaveTextContent(/enter a valid initial date and end date/i);
     expect(axios.post).not.toHaveBeenCalled();
@@ -235,38 +239,12 @@ describe("ExampleChart", () => {
     expect(axios.get).toHaveBeenCalledTimes(2);
   });
 
-  it("renders the labeled line chart and its accessible example values", () => {
+  it("shows a clear empty state before the first calculation", () => {
     render(<ExampleChart />);
 
     expect(
-      screen.getByRole("heading", { name: /percentage over time/i }),
+      screen.getByText(/submit a portfolio to calculate its historical return/i),
     ).toBeInTheDocument();
-    expect(
-      screen.getByText(/illustrative example data/i),
-    ).toBeInTheDocument();
-
-    const chart = screen.getByTestId("apex-chart");
-    expect(chart).toHaveAttribute("data-type", "line");
-    const series = JSON.parse(chart.getAttribute("data-series") ?? "[]") as {
-      name: string;
-      data: { x: number; y: number }[];
-    }[];
-
-    expect(chart).toHaveAttribute("data-xaxis-type", "datetime");
-    expect(series[0].data).toHaveLength(6);
-    expect(new Date(series[0].data[0].x).toISOString().slice(0, 10)).toBe(
-      "2024-01-01",
-    );
-    expect(series[0].data[2].y).toBe(-1.2);
-    expect(series[0].data[5].y).toBe(5.1);
-
-    const summary = screen.getByText(/read the example data/i);
-    const details = summary.closest("details");
-    expect(details).not.toBeNull();
-    fireEvent.click(summary);
-    const table = within(details as HTMLDetailsElement).getByRole("table");
-    expect(within(table).getAllByRole("row")).toHaveLength(7);
-    expect(within(table).getByText("2024-03-01")).toBeInTheDocument();
-    expect(within(table).getByText("-1.2%")).toBeInTheDocument();
+    expect(screen.queryByTestId("apex-chart")).not.toBeInTheDocument();
   });
 });

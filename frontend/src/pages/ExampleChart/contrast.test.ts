@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
-import { exampleChartOptions } from "./chart";
+import { portfolioChartOptions } from "./chart";
 
 function colorFromRule(stylesheet: string, selector: string, property: string): string {
   const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -58,7 +58,7 @@ const focusOutline = stylesheet.match(
 
 describe("chart text contrast", () => {
   it("keeps axis labels at 4.5:1 or higher on the chart card", () => {
-    expect(contrastRatio(exampleChartOptions.chart?.foreColor, cardBackground)).toBeGreaterThanOrEqual(
+    expect(contrastRatio(portfolioChartOptions.chart?.foreColor, cardBackground)).toBeGreaterThanOrEqual(
       4.5,
     );
   });

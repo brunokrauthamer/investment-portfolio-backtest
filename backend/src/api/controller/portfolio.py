@@ -2,9 +2,9 @@
 
 from fastapi import APIRouter
 
-from backend.src.api.model.portfolio import PortfolioConfiguration
+from backend.src.api.model.portfolio import PortfolioConfiguration, PortfolioResponse
 from backend.src.api.service.indexes import list_indexes as get_indexes
-from backend.src.api.service.portfolio import accept_portfolio as submit_portfolio
+from backend.src.api.service.portfolio import calculate_portfolio as run_portfolio
 from backend.src.api.transport.exact_json import ExactJsonRoute
 
 
@@ -17,7 +17,7 @@ def list_indexes() -> list[dict[str, str]]:
     return get_indexes()
 
 
-@router.post("/portfolio")
-def accept_portfolio(configuration: PortfolioConfiguration) -> dict[str, str]:
-    """Connect the portfolio endpoint to its service."""
-    return submit_portfolio(configuration)
+@router.post("/portfolio", response_model=PortfolioResponse)
+def calculate_portfolio(configuration: PortfolioConfiguration) -> PortfolioResponse:
+    """Run the configured portfolio and return its chart-ready series."""
+    return run_portfolio(configuration)

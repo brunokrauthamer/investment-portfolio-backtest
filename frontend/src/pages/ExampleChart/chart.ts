@@ -1,24 +1,11 @@
 import type { ApexOptions } from "apexcharts";
 
-export const examplePercentageData = [
-  { date: "2024-01-01", value: 0 },
-  { date: "2024-02-01", value: 2.5 },
-  { date: "2024-03-01", value: -1.2 },
-  { date: "2024-04-01", value: 3.8 },
-  { date: "2024-05-01", value: 2 },
-  { date: "2024-06-01", value: 5.1 },
-] as const;
-
 export function formatPercentage(value: number): string {
-  return `${value.toFixed(1)}%`;
+  return `${new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(value)}%`;
 }
 
 export function formatUtcDate(value: string | number): string {
-  const timestamp =
-    typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)
-      ? Date.parse(`${value}T00:00:00.000Z`)
-      : Number(value);
-
+  const timestamp = typeof value === "string" ? Number(value) : value;
   return new Date(timestamp).toISOString().slice(0, 10);
 }
 
@@ -30,16 +17,7 @@ export function formatUtcMonth(timestamp: number): string {
   });
 }
 
-export const exampleSeriesData = examplePercentageData.map(({ date, value }) => ({
-  x: Date.parse(`${date}T00:00:00.000Z`),
-  y: value,
-}));
-
-export const exampleSeries = [
-  { name: "Example percentage", data: exampleSeriesData },
-] satisfies NonNullable<ApexOptions["series"]>;
-
-export const exampleChartOptions: ApexOptions = {
+export const portfolioChartOptions: ApexOptions = {
   chart: {
     type: "line",
     animations: { enabled: false },
@@ -80,13 +58,24 @@ export const exampleChartOptions: ApexOptions = {
   tooltip: {
     intersect: true,
     shared: false,
-    x: {
-      formatter: (value, opts) => {
-        const point = examplePercentageData[opts?.dataPointIndex ?? -1];
-        return point ? formatUtcDate(point.date) : String(value);
-      },
-    },
+    x: { formatter: (value) => formatUtcDate(value) },
     y: { formatter: formatPercentage },
+    custom: ({ dataPointIndex, seriesIndex, w }) => {
+      const configuredSeries = w.config.series?.[seriesIndex] as
+        | { data?: unknown[] }
+        | undefined;
+      const point = configuredSeries?.data?.[dataPointIndex] as {
+        date?: unknown;
+        daily_return_pct?: unknown;
+        cumulative_return_pct?: unknown;
+      } | undefined;
+      if (
+        typeof point?.date !== "string" ||
+        typeof point.daily_return_pct !== "number" ||
+        typeof point.cumulative_return_pct !== "number"
+      ) return "";
+      return `<div class="portfolio-tooltip"><strong>${point.date}</strong><span>Daily return: ${formatPercentage(point.daily_return_pct)}</span><span>Cumulative return: ${formatPercentage(point.cumulative_return_pct)}</span></div>`;
+    },
   },
   xaxis: {
     type: "datetime",
@@ -101,10 +90,7 @@ export const exampleChartOptions: ApexOptions = {
     tooltip: { enabled: false },
   },
   yaxis: {
-    labels: {
-      formatter: formatPercentage,
-      style: { fontSize: "11px" },
-    },
+    labels: { formatter: formatPercentage, style: { fontSize: "11px" } },
     tickAmount: 4,
   },
 };
