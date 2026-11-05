@@ -5197,3 +5197,59 @@ Vou usar a skill `organize-git-commits` para inspecionar e organizar as alteraç
 ```text
 O checkout está sem branch associada, e as alterações correspondem ao novo fluxo e ao histórico da conversa. Vou criar uma branch para publicá-las e separá-las em um commit da configuração e outro do log.
 ```
+
+## 2026-11-04 — Docker application startup
+
+### User
+
+```text
+Implement Docker, so application could be full runned by one command (whats important here is frontend running and api running, so front can communicate with backend. Also api will need to access daily_returns_reais.csv). If you need you can use docker-compose. Its important that everything I told you happens
+```
+
+### Assistant progress
+
+```text
+I’ll inspect the frontend, API, and data paths, then set up a single Docker command that runs both services and lets the frontend reach the API.
+```
+
+```text
+The frontend already sends API requests through `/api`, so I’m configuring a same-origin proxy in the frontend container. The API container will receive the normalized CSV through a read-only mount at the project’s existing data path.
+```
+
+```text
+The Docker configuration is in place, including the read-only CSV mount and frontend proxy. Docker Compose validates the configuration, but the Docker engine is not running here, so I’m checking the application’s existing build and tests separately.
+```
+
+### Assistant
+
+```text
+Docker setup is in place. From the project root, run `docker compose up --build`, then open http://localhost:8080. The frontend proxies `/api` requests to the API, and the API container has read-only access to `data/normalized/daily_returns_reais.csv`. The file must exist before startup. See [README.md](C:/Users/bruno/Documents/ChatGPT/investment_portfolio_backtest/README.md) for details.
+
+Compose configuration validation, the frontend build, and 15 API tests passed. I could not verify the containers or end-to-end communication because the Docker engine was not running in this environment. The existing API does not yet read the CSV or calculate backtests.
+```
+
+## 2026-11-04 — Retry commit and push
+
+### User
+
+```text
+try again and push
+```
+
+### Assistant progress
+
+```text
+I’ll retry the branch and commit operation, then push the resulting branch as you requested. I’ll keep the unrelated deletion out of the commit.
+```
+
+```text
+The branch and Docker commit are now created. The unrelated domain README deletion and the required conversation log entry remain outside that commit; I’m pushing the branch now.
+```
+
+### Assistant
+
+```text
+Created and pushed branch `codex/docker-compose-app` with commit `6943a25` (`Add Docker Compose app startup`). The push succeeded and the branch tracks `origin/codex/docker-compose-app`.
+
+The deletion of `backend/src/domain/README.md` remains uncommitted as unrelated work. The conversation log records this interaction and also remains uncommitted.
+```
