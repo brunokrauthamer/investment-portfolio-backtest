@@ -60,8 +60,8 @@ export function ExampleChart() {
   const [loadVersion, setLoadVersion] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [initialDate, setInitialDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [initialDate, setInitialDate] = useState("2011-01-04");
+  const [endDate, setEndDate] = useState("2026-10-30");
   const [rebalancing, setRebalancing] = useState<RebalancingStrategy>("none");
   const [activeDraft, setActiveDraft] = useState<{ indexId: IndexOption["id"]; value: string } | null>(null);
   const [shareError, setShareError] = useState<string | null>(null);

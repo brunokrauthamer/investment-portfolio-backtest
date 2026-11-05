@@ -214,6 +214,8 @@ describe("ExampleChart", () => {
     render(<ExampleChart />);
 
     await screen.findByRole("heading", { name: /configure your portfolio/i });
+    fireEvent.change(screen.getByLabelText("Initial date"), { target: { value: "" } });
+    fireEvent.change(screen.getByLabelText("End date"), { target: { value: "" } });
     expect((screen.getByLabelText("Initial date") as HTMLInputElement).value).toBe("");
     expect((screen.getByLabelText("End date") as HTMLInputElement).value).toBe("");
     fireEvent.click(screen.getByRole("button", { name: "Submit portfolio" }));
