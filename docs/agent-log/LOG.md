@@ -5253,3 +5253,101 @@ Created and pushed branch `codex/docker-compose-app` with commit `6943a25` (`Add
 
 The deletion of `backend/src/domain/README.md` remains uncommitted as unrelated work. The conversation log records this interaction and also remains uncommitted.
 ```
+
+## 2026-11-04 — API controller and service separation
+
+### User message
+
+```text
+controller layer should be responsible only for connecting the api. All logic should be on service layer. for exemple: 
+
+@router.get("/indexes")
+def list_indexes() -> list[dict[str, str]]:
+    """Return the fixed set of index identifiers available to the form."""
+    return list(_INDEXES)
+
+
+_INDEXES = (
+    {"id": "ibovespa", "name": "IBOVESPA"},
+    {"id": "ifix", "name": "IFIX"},
+    {"id": "selic", "name": "Selic"},
+    {"id": "sp500", "name": "S&P 500"},
+) should be on services, there should be a service that returns _INDEXES.
+
+This is only an exemple, but you should consider refactor other parts of the api as well.
+
+Also, write this reccomendation in an AGENTS.md inside api directory, so future implementations will follow this spec
+```
+
+### Assistant progress
+
+```text
+I’ll trace the API’s router and service boundaries, move business and fixed-data logic into services, add the API guidance for future changes, and record this request and my final summary in the agent log.
+```
+
+```text
+The API currently keeps the index catalog, request validation rules, exact JSON decoding, and response behavior inside the portfolio controller. I’m separating transport contracts from application behavior so each endpoint becomes a thin call into `service`, while preserving the existing HTTP contract.
+```
+
+### Assistant
+
+```text
+Refactored the API so controllers only define routes and delegate to services. The index catalog, portfolio validation and acknowledgement, and health response logic now live in `service`; request schemas are in `model`; strict JSON decoding is isolated in `transport`. Added API layering guidance in [AGENTS.md](C:/Users/[redacted]/.codex/worktrees/87ce/investment_portfolio_backtest/backend/src/api/AGENTS.md) and updated the API README.
+
+The existing endpoint paths and valid response bodies are preserved, and invalid portfolio submissions still return HTTP 422. No tests were run.
+```
+
+## 2026-11-04 — Commit organization for API refactor
+
+### User message
+
+```text
+[$organize-git-commits]([redacted])
+```
+
+### User message
+
+```text
+<skill>
+<name>organize-git-commits</name>
+<path>[redacted]</path>
+---
+name: organize-git-commits
+description: Organize existing Git changes into a suitable branch and focused local commits when asked to commit or organize the work.
+---
+
+# Organize Git commits
+
+Follow repository instructions and conventions. Invocation to organize and commit authorizes creating local branches and commits. Do not push, create a pull request, amend commits, rewrite history, discard changes, or modify remote state without separate authorization.
+
+1. Before changing Git state, inspect the current branch and HEAD, staged and unstaged diffs, renames and deletions, and untracked files. Read relevant changes and surrounding context to understand their purpose and scope. Check for an ongoing merge, rebase, cherry-pick, or unresolved conflicts; stop before changing Git state if they prevent safe organization.
+2. On `master`, create a descriptive branch at the current HEAD while preserving local changes. Follow the repository's branch naming convention, or choose a concise name reflecting the work; resolve name collisions with a different name, never by overwriting a branch. On any other branch, continue there.
+3. Plan cohesive commits by purpose and dependency, in a reviewable order. Related files can share a commit; separate distinct changes within a file when safe. Avoid catch-all commits for unrelated work.
+4. Treat the existing index as evidence of developer intent. Preserve previously staged selections that are not part of a commit, including partial-file staging; do not accidentally include unrelated work. Stage specific files or portions as appropriate, inspect the staged diff before each commit, and use a clear message following repository conventions. If staging cannot be reorganized safely, leave the affected work intact and explain why.
+5. Account for all changes in scope. Leave ambiguous or inseparable work uncommitted and explain what remains and why. Never commit apparent secrets or credentials. Preserve work outside the requested scope.
+6. Report the resulting branch, each commit's short hash and message, and any uncommitted changes and reasons.
+
+</skill>
+```
+
+### Assistant progress
+
+```text
+I’ll follow the supplied commit-organization workflow: inspect the current Git state and all changes first, then make focused local commits without pushing.
+```
+
+```text
+The worktree is detached, and its Git metadata is outside the writable workspace. Local branch creation was denied by the sandbox, so I’m requesting the required Git write access; no remote operations are involved.
+```
+
+```text
+The API refactor is committed as `2390382` on `codex/api-service-layer`. I’m adding this interaction and the final summary to the required agent log; that log update will remain uncommitted because it must contain the final response.
+```
+
+### Assistant
+
+```text
+Created local branch `codex/api-service-layer` and commit `2390382` (`Refactor API into service layer`). The commit groups the API controller/service refactor with the API-specific guidance and README update.
+
+[LOG.md](C:/Users/[redacted]/.codex/worktrees/87ce/investment_portfolio_backtest/docs/agent-log/LOG.md) is the only uncommitted change. It records this interaction and final response as required by `AGENTS.md`, so it was updated after the code commit. No changes were pushed, and no tests were run.
+```
